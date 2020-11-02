@@ -5,6 +5,7 @@ namespace ErcasCollect.Commands.BatchCommand
     {
         public CreateBatchCommand()
         {
+
         }
     }
 }

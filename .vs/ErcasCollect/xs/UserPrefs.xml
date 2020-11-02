@@ -1,120 +1,120 @@
 ﻿<Properties StartupConfiguration="{D0CA5ADA-830B-4B86-B650-F6C8C3672D39}|Default">
-  <MonoDevelop.Ide.Workbench ActiveDocument="ErcasCollect/Commands/Dto/BillerDto/CreateBillerDto.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="ErcasCollect/Controllers/UserController.cs">
     <Files>
-      <File FileName="ErcasCollect/DataAccess/ApplicationDbContext.cs" Line="31" Column="56" />
-      <File FileName="ErcasCollect/Domain/Models/TaxPayer.cs" />
-      <File FileName="ErcasCollect/Migrations/20200825004730_Initial1.cs" />
-      <File FileName="ErcasCollect/Startup.cs" />
-      <File FileName="ErcasCollect/Validators/BaseValidator.cs" />
-      <File FileName="ErcasCollect/PipelineBehaviour/ValidationBehaviour.cs" />
-      <File FileName="ErcasCollect/Program.cs" />
-      <File FileName="ErcasCollect/Commands/Dto/BillerDto/CreateBillerDto.cs" Line="21" Column="29" />
-      <File FileName="ErcasCollect/Helpers/IdGenerator.cs/IdGenerator.cs" />
-      <File FileName="ErcasCollect/Commands/Dto/BaseDto.cs" />
-      <File FileName="ErcasCollect/Domain/Models/Biller.cs" />
-      <File FileName="ErcasCollect/Commands/BillerCommand/CreateBillerCommand.cs" />
-      <File FileName="ErcasCollect/Controllers/BillerController.cs" />
-      <File FileName="ErcasCollect/Migrations/20200825034923_Initial2.cs" />
-      <File FileName="ErcasCollect/AutoMapper/Profiles/BillerProfile.cs" />
-      <File FileName="ErcasCollect/Migrations/20200825042245_Initial3.cs" />
-      <File FileName="ErcasCollect/Migrations/20200825042432_Initial4.cs" />
-      <File FileName="ErcasCollect/Domain/Interfaces/IBillerRepository.cs" />
-      <File FileName="ErcasCollect/Controllers/CollectionController.cs" />
-      <File FileName="ErcasCollect/Domain/Models/BillerBankDetail.cs" />
-      <File FileName="ErcasCollect/Domain/Models/BillerTINDetail.cs" />
-      <File FileName="ErcasCollect/Migrations/20200826111647_Initial5.cs" />
-      <File FileName="ErcasCollect/Commands/BillerCommand/CreateBillerBankCommand.cs" />
-      <File FileName="ErcasCollect/Domain/Interfaces/IGenericRepository.cs" />
-      <File FileName="ErcasCollect/Commands/Dto/BillerDto/AddBankDto.cs" />
-      <File FileName="ErcasCollect/DataAccess/Repository/BillerRepository.cs" />
+      <File FileName="ErcasCollect/Queries/BillerQuery/GetAllBiller.cs" Line="16" Column="1" IsPinned="True" />
+      <File FileName="ErcasCollect/Queries/BillerQuery/GetAllBillerByCategory.cs" Line="21" Column="1" IsPinned="True" />
+      <File FileName="ErcasCollect/Commands/Dto/LevelOneDto/CreateLevelOneDto.cs" IsPinned="True" />
+      <File FileName="ErcasCollect/Controllers/LevelOneController.cs" Line="75" Column="7" IsPinned="True" />
+      <File FileName="ErcasCollect/Queries/Dto/ReadLevelThreeDto.cs" IsPinned="True" />
+      <File FileName="ErcasCollect/Controllers/CollectionController.cs" Line="31" Column="10" IsPinned="True" />
       <File FileName="ErcasCollect/DataAccess/Repository/GenericRepository.cs" />
-      <File FileName="ErcasCollect/Domain/Interfaces/IBillerBankRepository.cs" />
-      <File FileName="ErcasCollect/DataAccess/Repository/BillerBankRepository.cs" />
+      <File FileName="ErcasCollect/Domain/Interfaces/IGenericRepository.cs" />
       <File FileName="ErcasCollect/Domain/BaseEntities/BaseEntity.cs" />
-      <File FileName="ErcasCollect/Migrations/20200827000429_init7.cs" />
-      <File FileName="ErcasCollect/Migrations/20200827000516_init8.cs" />
-      <File FileName="ErcasCollect/DataAccess/Repository/BillerTinRepository.cs" />
-      <File FileName="ErcasCollect/Domain/Interfaces/IBillerTinRepository.cs" />
-      <File FileName="ErcasCollect/Commands/BillerCommand/CreateTinCommand.cs" />
-      <File FileName="ErcasCollect/Commands/Dto/BillerDto/AddTinDto.cs" />
-      <File FileName="ErcasCollect/Helpers/Pagination/Extention.cs" />
-      <File FileName="ErcasCollect/Helpers/Pagination/PagedResult.cs" />
-      <File FileName="ErcasCollect/Helpers/Pagination/PaginationFilter.cs" />
-      <File FileName="ErcasCollect/Queries/BillerQuery/GetBillerByIDQuery.cs" />
-      <File FileName="ErcasCollect/Commands/PosCommand/CreatePosCommand.cs" />
-      <File FileName="ErcasCollect/Commands/Dto/PosDto/CreatePosDto.cs" />
-      <File FileName="ErcasCollect/Domain/Models/Pos.cs" />
-      <File FileName="ErcasCollect/Commands/Dto/UserDto/CreateUserDto.cs" />
-      <File FileName="ErcasCollect/Domain/Models/User.cs" />
+      <File FileName="ErcasCollect/Domain/Interfaces/IBillerBankRepository.cs" />
+      <File FileName="ErcasCollect/DataAccess/Repository/SettlementRepository.cs" />
+      <File FileName="ErcasCollect/Commands/LevelOneCommand/CreateLevelOneCommand.cs" />
+      <File FileName="ErcasCollect/Commands/LevelThreeCommand/CreateLevelThreeCommand.cs" />
+      <File FileName="ErcasCollect/Domain/Models/User.cs" Line="9" Column="7" />
+      <File FileName="ErcasCollect/Commands/Dto/BaseDto.cs" />
+      <File FileName="ErcasCollect/Program.cs" Line="23" Column="54" />
+      <File FileName="ErcasCollect/Startup.cs" Line="1" Column="1" />
+      <File FileName="ErcasCollect/Domain/Interfaces/ITransactionRepository.cs" />
+      <File FileName="ErcasCollect/Controllers/TransactionController.cs" Line="83" Column="28" />
+      <File FileName="ErcasCollect/DataAccess/Repository/TransactionRepository.cs" />
+      <File FileName="ErcasCollect/DataAccess/Repository/TaxPayerRepository.cs" />
+      <File FileName="ErcasCollect/Domain/Interfaces/ITaxPayerReposittory.cs" />
+      <File FileName="ErcasCollect/Domain/Interfaces/ISettlementRepository.cs" />
+      <File FileName="ErcasCollect/Domain/Interfaces/ISessionRepository.cs" />
+      <File FileName="ErcasCollect/Domain/Interfaces/IPosRepository.cs" />
+      <File FileName="ErcasCollect/Commands/Dto/CollectionDto/CreateCollectionCommandDto.cs" />
       <File FileName="ErcasCollect/Commands/Dto/TransactionDto/CreateTransactionDto.cs" />
+      <File FileName="ErcasCollect/appsettings.json" Line="17" Column="1" />
+      <File FileName="ErcasCollect/DataAccess/ApplicationDbContext.cs" />
+      <File FileName="ErcasCollect/Commands/TransactionCommand/CreateCollectionCommand.cs" />
+      <File FileName="ErcasCollect/Commands/Collection/CreateCollectionCommand.cs" />
+      <File FileName="ErcasCollect/Commands/BillerCommand/CreateBillerBankCommand.cs" />
+      <File FileName="ErcasCollect/Commands/BillerCommand/CreateBillerCommand.cs" />
+      <File FileName="ErcasCollect/Commands/BillerCommand/CreateTinCommand.cs" />
+      <File FileName="ErcasCollect/Domain/Models/BillerTINDetail.cs" />
+      <File FileName="ErcasCollect/Commands/LevelTwoCommand/CreateLevelTwoCommand.cs" />
+      <File FileName="ErcasCollect/Commands/PosCommand/CreatePosCommand.cs" />
       <File FileName="ErcasCollect/Commands/TaxPayerCommand/CreateTaxpayer.cs" />
       <File FileName="ErcasCollect/Commands/UserCommand/CreateUserCommand.cs" />
-      <File FileName="ErcasCollect/DataAccess/Repository/PosRepository.cs" />
-      <File FileName="ErcasCollect/Domain/Interfaces/IPosRepository.cs" />
-      <File FileName="ErcasCollect/Domain/Interfaces/IUserRepository.cs" />
-      <File FileName="ErcasCollect/DataAccess/Repository/UserRepository.cs" />
-      <File FileName="ErcasCollect/Controllers/UserController.cs" />
-      <File FileName="ErcasCollect/Controllers/TaxPayerController.cs" />
-      <File FileName="ErcasCollect/Controllers/TransactionController.cs" />
-      <File FileName="ErcasCollect/Domain/Interfaces/ITransactionRepository.cs" />
-      <File FileName="ErcasCollect/AutoMapper/Profiles/TransactionProfile.cs" />
-      <File FileName="ErcasCollect/AutoMapper/Profiles/PosProfile.cs" />
-      <File FileName="ErcasCollect/Controllers/PosController.cs" />
-      <File FileName="ErcasCollect/AutoMapper/Profiles/UserProfile.cs" />
-      <File FileName="ErcasCollect/AutoMapper/Profiles/CollectionProfile.cs" />
-      <File FileName="ErcasCollect/Controllers/ReportController.cs" />
-      <File FileName="ErcasCollect/Domain/Models/OS.cs" />
-      <File FileName="ErcasCollect/Domain/Models/Role.cs" />
-      <File FileName="ErcasCollect/Domain/Models/PaymentChannel.cs" />
-      <File FileName="ErcasCollect/Domain/Models/BillerType.cs" />
-      <File FileName="ErcasCollect/Domain/Models/Bank.cs" />
-      <File FileName="ErcasCollect/ErcasCollect.csproj" />
-      <File FileName="ErcasCollect/Domain/BaseEntities/TransactionBaseEntity.cs" />
-      <File FileName="ErcasCollect/Commands/LevelTwoCommand/CreateLevelTwoCommand.cs" />
-      <File FileName="ErcasCollect/Commands/LevelThreeCommand/CreateLevelThreeCommand.cs" />
-      <File FileName="ErcasCollect/Controllers/LevelOneController.cs" />
-      <File FileName="ErcasCollect/AutoMapper/Profiles/LevelOneProfile.cs" />
-      <File FileName="ErcasCollect/AutoMapper/Profiles/LevelThreeProfile.cs" />
-      <File FileName="ErcasCollect/Commands/Dto/LevelThreeDto/CreateLevelThreeDto.cs" />
-      <File FileName="ErcasCollect/Commands/Dto/LevelOneDto/CreateLevelOneDto.cs" />
-      <File FileName="ErcasCollect/Commands/Dto/LevelTwoDto/CreateLevelTwoDto.cs" />
-      <File FileName="ErcasCollect/AutoMapper/Profiles/LevelTwoProfile.cs" />
-      <File FileName="ErcasCollect/Controllers/LevelThreeController.cs" />
-      <File FileName="ErcasCollect/Controllers/LevelTwoController.cs" />
-      <File FileName="ErcasCollect/DataAccess/Repository/LevelTwoRepository.cs" />
-      <File FileName="ErcasCollect/Migrations/20200906091104_Updated.cs" />
-      <File FileName="ErcasCollect/Domain/Models/NumberSeries.cs" />
-      <File FileName="ErcasCollect/Migrations/20200907101920_UpdatedAdd-NumberSeries.cs" />
-      <File FileName="ErcasCollect/Migrations/20200907102359_UpdatedAdd-NumberSeriess.cs" />
-      <File FileName="ErcasCollect/Domain/Models/Settlement.cs" />
-      <File FileName="ErcasCollect/DataAccess/Repository/LevelOneRepository.cs" />
-      <File FileName="ErcasCollect/appsettings.json" />
-      <File FileName="ErcasCollect/Migrations/ApplicationDbContextModelSnapshot.cs" />
-      <File FileName="ErcasCollect/Migrations/20200909144819_Updated-012.cs" />
-      <File FileName="ErcasCollect/Migrations/20200909153608_Updated-015.cs" />
-      <File FileName="ErcasCollect/Domain/Models/LevelTwo.cs" />
-      <File FileName="ErcasCollect/Commands/Dto/TaxpayerDto/CreateTaxpayerDto.cs" />
-      <File FileName="ErcasCollect/Domain/Interfaces/ITaxPayerReposittory.cs" />
-      <File FileName="ErcasCollect/DataAccess/Repository/TaxPayerRepository.cs" />
-      <File FileName="ErcasCollect/AutoMapper/Profiles/TaxPayerProfile.cs" />
-      <File FileName="ErcasCollect/Commands/BatchCommand/CreateBatchCommand.cs" />
-      <File FileName="ErcasCollect/Domain/Models/Batch.cs" />
-      <File FileName="ErcasCollect/Domain/Models/Session.cs" />
-      <File FileName="ErcasCollect/Controllers/SessionController.cs" />
-      <File FileName="ErcasCollect/Controllers/BatchController.cs" />
-      <File FileName="ErcasCollect/AutoMapper/Profiles/BatchProfile.cs" />
-      <File FileName="ErcasCollect/AutoMapper/Profiles/SessionProfile.cs" />
-      <File FileName="ErcasCollect/Domain/Interfaces/ISessionRepository.cs" />
-      <File FileName="ErcasCollect/Domain/Interfaces/IBatchRepository.cs" />
-      <File FileName="ErcasCollect/Commands/Dto/SessionDto/CreateSessionDto.cs" />
-      <File FileName="ErcasCollect/Commands/Dto/TransactionBaseDto.cs" />
-      <File FileName="ErcasCollect/Migrations/20200910110953_Updated-019.cs" />
+      <File FileName="ErcasCollect/Queries/Transaction/GetTransactionDetailbyBatchId.cs" Line="15" Column="18" />
+      <File FileName="ErcasCollect/Queries/LevelOneQuery/GetAllLevelOneByBiller.cs" />
+      <File FileName="ErcasCollect/Controllers/BillerController.cs" Line="101" Column="1" />
+      <File FileName="ErcasCollect/Domain/Models/Transaction.cs" Line="33" Column="58" />
+      <File FileName="ErcasCollect/Migrations/20201102120118_Collect.cs" Line="18" Column="18" />
+      <File FileName="ErcasCollect/Controllers/TaxPayerController.cs" Line="53" Column="1" />
+      <File FileName="ErcasCollect/Migrations/20201102120453_Collect2.cs" Line="22" Column="10" />
+      <File FileName="ErcasCollect/Queries/Dto/ReadBillerDto.cs" Line="1" Column="1" />
+      <File FileName="ErcasCollect/Queries/Dto/ReadTransactionDto/ReadTransactionDto.cs" Line="26" Column="44" />
+      <File FileName="ErcasCollect/Queries/Transaction/GetTransactionDetailById.cs" Line="19" Column="120" />
+      <File FileName="ErcasCollect/Queries/Transaction/GetTransactionDetailbyBiller.cs" Line="27" Column="35" />
+      <File FileName="ErcasCollect/Queries/ApplicationData/GetAllStatus.cs" Line="39" Column="21" />
+      <File FileName="ErcasCollect/Queries/Dto/ReadStatusDto.cs" Line="13" Column="1" />
+      <File FileName="ErcasCollect/Domain/Models/Status.cs" Line="10" Column="8" />
+      <File FileName="ErcasCollect/Queries/ApplicationData/GetAllPaymentChannel.cs" Line="25" Column="46" />
+      <File FileName="ErcasCollect/Queries/Dto/ReadPaymentChannelDto.cs" Line="7" Column="3" />
+      <File FileName="ErcasCollect/Domain/Models/PaymentChannel.cs" Line="10" Column="5" />
+      <File FileName="ErcasCollect/Queries/ApplicationData/GetAllBillerType.cs" Line="18" Column="64" />
+      <File FileName="ErcasCollect/Queries/ApplicationData/GetAllBanks.cs" Line="25" Column="30" />
+      <File FileName="ErcasCollect/Queries/Dto/ReadAllBanks.cs" Line="8" Column="7" />
+      <File FileName="ErcasCollect/Domain/Models/Bank.cs" Line="10" Column="6" />
+      <File FileName="ErcasCollect/Queries/Dto/ReadAllBillerTypes.cs" Line="12" Column="1" />
+      <File FileName="ErcasCollect/Domain/Models/BillerType.cs" Line="10" Column="1" />
+      <File FileName="ErcasCollect/Controllers/LevelThreeController.cs" Line="90" Column="7" />
+      <File FileName="ErcasCollect/Controllers/LevelTwoController.cs" Line="20" Column="5" />
+      <File FileName="ErcasCollect/Queries/TaxPayerQuery/GetAllTaxPayer.cs" Line="37" Column="36" />
+      <File FileName="ErcasCollect/Domain/Models/TaxPayer.cs" Line="11" Column="5" />
+      <File FileName="ErcasCollect/Queries/Dto/ReadTaxPayerDto.cs" Line="15" Column="8" />
+      <File FileName="ErcasCollect/Queries/TaxPayerQuery/GetTaxPayerByBiller.cs" Line="36" Column="82" />
+      <File FileName="ErcasCollect/Queries/TaxPayerQuery/GetTaxPayerById.cs" Line="33" Column="36" />
+      <File FileName="ErcasCollect/Queries/Dto/ReadUserDto.cs" Line="6" Column="18" />
+      <File FileName="ErcasCollect/Queries/UserQuery/GetUserById.cs" Line="37" Column="18" />
+      <File FileName="ErcasCollect/Queries/BillerQuery/GetBillerByIDQuery.cs" Line="16" Column="91" />
+      <File FileName="ErcasCollect/Queries/UserQuery/GetUserByBiller.cs" Line="34" Column="1" />
+      <File FileName="ErcasCollect/Queries/UserQuery/GetAllUsers.cs" Line="39" Column="21" />
+      <File FileName="ErcasCollect/Queries/PosQuery/GetAllPOS.cs" Line="33" Column="106" />
+      <File FileName="ErcasCollect/Queries/Dto/ReadPosDto.cs" Line="17" Column="1" />
+      <File FileName="ErcasCollect/Domain/Models/Pos.cs" Line="30" Column="1" />
+      <File FileName="ErcasCollect/AutoMapper/Profiles/TaxPayerProfile.cs" Line="11" Column="33" />
+      <File FileName="ErcasCollect/AutoMapper/Profiles/TransactionProfile.cs" Line="13" Column="10" />
+      <File FileName="ErcasCollect/AutoMapper/Profiles/UserProfile.cs" Line="17" Column="6" />
+      <File FileName="ErcasCollect/AutoMapper/Profiles/PosProfile.cs" Line="15" Column="27" />
+      <File FileName="ErcasCollect/AutoMapper/Profiles/ApplicationData.cs" Line="21" Column="1" />
+      <File FileName="ErcasCollect/AutoMapper/Profiles/BatchProfile.cs" Line="1" Column="1" />
+      <File FileName="ErcasCollect/AutoMapper/Profiles/BillerProfile.cs" Line="12" Column="12" />
+      <File FileName="ErcasCollect/AutoMapper/Profiles/CollectionProfile.cs" Line="1" Column="1" />
+      <File FileName="ErcasCollect/Controllers/ApplicationDataController.cs" Line="136" Column="23" />
+      <File FileName="ErcasCollect/Queries/ApplicationData/GetAllTransactionType.cs" Line="36" Column="57" />
+      <File FileName="ErcasCollect/Domain/Models/TransactionType.cs" Line="9" Column="7" />
+      <File FileName="ErcasCollect/Queries/Dto/ReadAllTransactionTypes.cs" Line="11" Column="1" />
+      <File FileName="ErcasCollect/Controllers/PosController.cs" Line="32" Column="1" />
+      <File FileName="ErcasCollect/Controllers/UserController.cs" Line="28" Column="6" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
         <State name="__root__">
           <Node name="ErcasCollect" expanded="True">
-            <Node name="ErcasCollect" selected="True" />
+            <Node name="ErcasCollect" expanded="True">
+              <Node name="AutoMapper" expanded="True">
+                <Node name="Profiles" expanded="True" />
+              </Node>
+              <Node name="Controllers" expanded="True">
+                <Node name="UserController.cs" selected="True" />
+              </Node>
+              <Node name="Domain" expanded="True">
+                <Node name="Models" expanded="True" />
+              </Node>
+              <Node name="Queries" expanded="True">
+                <Node name="ApplicationData" expanded="True" />
+                <Node name="Dto" expanded="True" />
+                <Node name="PosQuery" expanded="True" />
+                <Node name="TaxPayerQuery" expanded="True" />
+                <Node name="Transaction" expanded="True" />
+              </Node>
+            </Node>
           </Node>
         </State>
       </Pad>
@@ -124,9 +124,7 @@
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
-    <BreakpointStore>
-      <Breakpoint file="/Users/macbook/Desktop/ErcasCollect/ocelot.json" line="540" column="1" />
-    </BreakpointStore>
+    <BreakpointStore />
   </MonoDevelop.Ide.DebuggingService.Breakpoints>
   <MultiItemStartupConfigurations />
 </Properties>

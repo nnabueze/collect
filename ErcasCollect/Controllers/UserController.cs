@@ -5,6 +5,8 @@ using System.Threading.Tasks;
 using ErcasCollect.Commands.UserCommand;
 using ErcasCollect.Domain.Models;
 using ErcasCollect.Exceptions;
+using ErcasCollect.Queries.BillerQuery;
+using ErcasCollect.Queries.Dto;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
@@ -25,22 +27,7 @@ namespace ErcasCollect.Controllers
             this._logger = logger ?? throw new ArgumentNullException(nameof(logger));
         }
         // GET: api/values
-        [HttpGet]
-        [Route("getall")]
-        public IEnumerable<string> GetAllUsers(string status, int role, string billerid, string department, string branch )
-        {
-            return new string[] { "value1", "value2" };
-        }
-
- 
-
-        // GET api/values/5
-        [HttpGet]
-        [Route("byid")]
-        public string GetUserbyId(int id)
-        {
-            return "value";
-        }
+     
 
         // POST api/values
         [HttpPost]
@@ -65,17 +52,78 @@ namespace ErcasCollect.Controllers
             }
         }
 
-        // PUT api/values/5
-        [HttpPut]
-        [Route("update")]
-        public void Put(int id, [FromBody] string value)
+
+        [HttpGet]
+        [Route("GetAllUser")]
+        public async Task<IEnumerable<ReadUserDto>> BillerTypes()
         {
+            try
+            {
+                GetAllUsersQuery request = new GetAllUsersQuery();
+
+                return await mediator.Send(request);
+            }
+            catch (AppException ex)
+            {
+                _logger.LogError(ex, "An Application exception occurred on the Get Specific action of the Igr");
+                // return await BadRequest(new { message = ex.Message });
+                throw;
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "An unknown error occurred on the Get Specific action of the Igr");
+                throw;
+            }
         }
 
-        // DELETE api/values/5
-        [HttpDelete("{id}")]
-        public void Delete(int id)
+        [HttpGet]
+        [Route("GetUserByID")]
+        public async Task<ReadUserDto> GetUserByID(string id)
         {
+            try
+            {
+                GetUserByIDQuery request = new GetUserByIDQuery();
+                request.id = id;
+                return await mediator.Send(request);
+            }
+            catch (AppException ex)
+            {
+                _logger.LogError(ex, "An Application exception occurred on the Get Specific action of the Igr");
+                // return await BadRequest(new { message = ex.Message });
+                throw;
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "An unknown error occurred on the Get Specific action of the Igr");
+                throw;
+            }
         }
+
+
+        [HttpGet]
+        [Route("GetUserByBiller")]
+        public async Task<IEnumerable<ReadUserDto>> GetUserByBiller(string id)
+        {
+            try
+            {
+                GetAllUserByBillerQuery request = new GetAllUserByBillerQuery();
+                request.id = id;
+                return await mediator.Send(request);
+            }
+            catch (AppException ex)
+            {
+                _logger.LogError(ex, "An Application exception occurred on the Get Specific action of the Igr");
+                // return await BadRequest(new { message = ex.Message });
+                throw;
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "An unknown error occurred on the Get Specific action of the Igr");
+                throw;
+            }
+        }
+
     }
+
+
 }

@@ -11,15 +11,11 @@ namespace ErcasCollect.Commands.Dto.UserDto
         public int SsoId { get; set; }
         public int RoleId { get; set; }
         public string BillerId { get; set; }
-   
         public string LevelOneId { get; set; }
-     
         public string LevelTwoId { get; set; }
-       
-
-
         public string StatusId { get; set; }
-       
         public decimal CollectionLimit { get; set; }
+        public string Password { get; set; }
+        public string  Pin { get; set; }
     }
 }

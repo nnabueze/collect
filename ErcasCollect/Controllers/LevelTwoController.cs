@@ -6,6 +6,8 @@ using System.Threading.Tasks;
 using ErcasCollect.Commands.LevelTwoCommand;
 using ErcasCollect.Domain.Models;
 using ErcasCollect.Exceptions;
+using ErcasCollect.Queries.BillerQuery;
+using ErcasCollect.Queries.Dto;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
@@ -33,10 +35,27 @@ namespace ErcasCollect.Controllers
         }
 
         // GET api/values/5
-        [HttpGet("{id}")]
-        public string Get(int id)
+        [HttpGet]
+        [Route("GetAllLevelTwoByID")]
+        public async Task<IEnumerable<ReadLevelTwoDto>> GetAllLevelTwoByBiller(string id)
         {
-            return "value";
+            try
+            {
+                GetAllLevelTwoByBillerQuery request = new GetAllLevelTwoByBillerQuery();
+                request.id = id;
+                return await mediator.Send(request);
+            }
+            catch (AppException ex)
+            {
+                _logger.LogError(ex, "An Application exception occurred on the Get Specific action of the Igr");
+                // return await BadRequest(new { message = ex.Message });
+                throw;
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "An unknown error occurred on the Get Specific action of the Igr");
+                throw;
+            }
         }
 
         // POST api/values

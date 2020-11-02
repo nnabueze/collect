@@ -27,7 +27,7 @@ namespace ErcasCollect.DataAccess
         public DbSet<LevelThree> LevelThree { get; set; }
         public DbSet<State> State { get; set; }
         public DbSet<Batch> Batchs { get; set; }
-        public DbSet<Session> Sessions{ get; set; }
+      
         public DbSet<Transaction> Transactions{ get; set; }
         public DbSet<TransactionType> TransactionTypes { get; set; }
         public DbSet<User> Users { get; set; }

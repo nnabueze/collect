@@ -3,8 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using ErcasCollect.Commands.BillerCommand;
+using ErcasCollect.Commands.Dto.BillerDto;
 using ErcasCollect.Domain.Models;
 using ErcasCollect.Exceptions;
+using ErcasCollect.Queries.BillerQuery;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
@@ -49,11 +51,16 @@ namespace ErcasCollect.Controllers
 
         [HttpPost]
         [Route("Addbank")]
-        public async Task<ActionResult> CreateBank([FromBody] CreateBillerBankCommand request)
+        public async Task<IActionResult> CreateBank([FromBody] CreateBillerBankCommand request)
         {
             try
             {
                 var result = await mediator.Send(request);
+
+                if (result == 0)
+                {
+                    return BadRequest("Not Found");
+                }
                 return new JsonResult(result);
             }
             catch (AppException ex)
@@ -93,31 +100,75 @@ namespace ErcasCollect.Controllers
 
         [HttpGet]
         [Route("GetBillerByID")]
-        public async Task<ActionResult> GetBillerByID(int id)
+        public async Task<ReadBillerDto> GetBillerByID( string id)
         {
-            return Ok();
+            try
+            {
+                GetBillerByIDQuery request = new GetBillerByIDQuery();
+                request.id = id;
+                return await mediator.Send(request);
+            }
+            catch (AppException ex)
+            {
+                _logger.LogError(ex, "An Application exception occurred on the Get Specific action of the Igr");
+                // return await BadRequest(new { message = ex.Message });
+                throw;
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "An unknown error occurred on the Get Specific action of the Igr");
+                throw;
+            }
         }
+
 
         [HttpGet]
         [Route("GetAllBillers")]
-        public async Task<ActionResult> GetAllBillers(int id)
+        public async Task<IEnumerable<ReadBillerDto>> GetAllBillers()
         {
-            return Ok();
+            try
+            {
+                GetAllBillerQuery request = new GetAllBillerQuery();
+             
+                return await mediator.Send(request);
+            }
+            catch (AppException ex)
+            {
+                _logger.LogError(ex, "An Application exception occurred on the Get Specific action of the Igr");
+                // return await BadRequest(new { message = ex.Message });
+                throw;
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "An unknown error occurred on the Get Specific action of the Igr");
+                throw;
+            }
         }
 
         [HttpGet]
-        [Route("GetBillerByStatus")]
-        public async Task<ActionResult> GetBillerByStatus(int id)
+        [Route("GetAllBillerByCategory")]
+        public async Task<IEnumerable<ReadBillerDto>> GetAllBillersByCategory(string id)
         {
-            return Ok();
+            try
+            {
+                GetAllBillerByCategoryQuery request = new GetAllBillerByCategoryQuery();
+                request.id = id;
+                return await mediator.Send(request);
+            }
+            catch (AppException ex)
+            {
+                _logger.LogError(ex, "An Application exception occurred on the Get Specific action of the Igr");
+                // return await BadRequest(new { message = ex.Message });
+                throw;
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "An unknown error occurred on the Get Specific action of the Igr");
+                throw;
+            }
         }
 
-        [HttpGet]
-        [Route("GetBillerByType")]
-        public async Task<ActionResult> GetBillerByType(int id)
-        {
-            return Ok();
-        }
+     
 
         [HttpDelete]
         [Route("DeleteBiller")]

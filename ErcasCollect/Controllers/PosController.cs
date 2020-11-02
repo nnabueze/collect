@@ -6,6 +6,8 @@ using ErcasCollect.Commands.PosCommand;
 
 using ErcasCollect.Domain.Models;
 using ErcasCollect.Exceptions;
+using ErcasCollect.Queries.BillerQuery;
+using ErcasCollect.Queries.Dto;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
@@ -28,16 +30,26 @@ namespace ErcasCollect.Controllers
         }
         // GET: api/values
         [HttpGet]
-        public IEnumerable<string> Get()
+        [Route("GetAllPoses")]
+        public async Task<IEnumerable<ReadPosDto>> AllPOS()
         {
-            return new string[] { "value1", "value2" };
-        }
+            try
+            {
+                GetAllPOSQuery request = new GetAllPOSQuery();
 
-        // GET api/values/5
-        [HttpGet("{id}")]
-        public string Get(int id)
-        {
-            return "value";
+                return await mediator.Send(request);
+            }
+            catch (AppException ex)
+            {
+                _logger.LogError(ex, "An Application exception occurred on the Get Specific action of the Igr");
+                // return await BadRequest(new { message = ex.Message });
+                throw;
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "An unknown error occurred on the Get Specific action of the Igr");
+                throw;
+            }
         }
 
         // POST api/values

@@ -26,7 +26,8 @@ namespace ErcasCollect.Commands.LevelThreeCommand
             {
 
                 LevelThree levelthree = mapper.Map<LevelThree>(request.createLevelthreeDto);
-                await levelthreeRepository.Insert(levelthree);
+                await levelthreeRepository.Add(levelthree);
+                await levelthreeRepository.CommitAsync();
                 return levelthree.Id;
             }
         }

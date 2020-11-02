@@ -5,6 +5,8 @@ using System.Threading.Tasks;
 using ErcasCollect.Commands.TaxPayerCommand;
 using ErcasCollect.Domain.Models;
 using ErcasCollect.Exceptions;
+using ErcasCollect.Queries.BillerQuery;
+using ErcasCollect.Queries.Dto;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
@@ -27,22 +29,79 @@ namespace ErcasCollect.Controllers
         // 
         // GET: api/values
         [HttpGet]
-        public IEnumerable<string> Get()
+        [Route("GetTaxPayerByID")]
+        public async Task<ReadTaxPayerDto> GetTaxPayerByID(string id)
         {
-            return new string[] { "value1", "value2" };
+            try
+            {
+                GetTexPayerByIDQuery request = new GetTexPayerByIDQuery();
+                request.id = id;
+                return await mediator.Send(request);
+            }
+            catch (AppException ex)
+            {
+                _logger.LogError(ex, "An Application exception occurred on the Get Specific action of the Igr");
+                // return await BadRequest(new { message = ex.Message });
+                throw;
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "An unknown error occurred on the Get Specific action of the Igr");
+                throw;
+            }
+        }
+        [HttpGet]
+        [Route("GetTaxPayerByBillerID")]
+        public async Task<IEnumerable<ReadTaxPayerDto>> GetTaxPayerBiller(string id)
+        {
+            try
+            {
+                GetAllTaxPayerByBillerQuery request = new GetAllTaxPayerByBillerQuery();
+                request.id = id;
+                return await mediator.Send(request);
+            }
+            catch (AppException ex)
+            {
+                _logger.LogError(ex, "An Application exception occurred on the Get Specific action of the Igr");
+                // return await BadRequest(new { message = ex.Message });
+                throw;
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "An unknown error occurred on the Get Specific action of the Igr");
+                throw;
+            }
         }
 
-        // GET api/values/5
-        [HttpGet("{id}")]
-        public string Get(int id)
+        [HttpGet]
+        [Route("GetAllTaxPayers")]
+        public async Task<IEnumerable<ReadTaxPayerDto>> GetAllTaxPayer(string id)
         {
-            return "value";
+            try
+            {
+                GetAllTaxPayerQuery request = new GetAllTaxPayerQuery();
+           
+                return await mediator.Send(request);
+            }
+            catch (AppException ex)
+            {
+                _logger.LogError(ex, "An Application exception occurred on the Get Specific action of the Igr");
+                // return await BadRequest(new { message = ex.Message });
+                throw;
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "An unknown error occurred on the Get Specific action of the Igr");
+                throw;
+            }
         }
+
+
 
         // POST api/values
         [HttpPost]
         [Route("create")]
-        public async Task<ActionResult> CreateSettlement([FromBody] CreateTaxPayerCommand request)
+        public async Task<ActionResult> CreateTaxPayer([FromBody] CreateTaxPayerCommand request)
         {
             try
             {
@@ -63,15 +122,6 @@ namespace ErcasCollect.Controllers
         }
 
         // PUT api/values/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
-        {
-        }
-
-        // DELETE api/values/5
-        [HttpDelete("{id}")]
-        public void Delete(int id)
-        {
-        }
+      
     }
 }

@@ -26,7 +26,8 @@ namespace ErcasCollect.Commands.TaxPayerCommand
             {
 
                 TaxPayer user = mapper.Map<TaxPayer>(request.createTaxpayerDto);
-                await taxpayerRepository.Insert(user);
+                await taxpayerRepository.Add(user);
+                await taxpayerRepository.CommitAsync();
 
                 return user.Id;
             }

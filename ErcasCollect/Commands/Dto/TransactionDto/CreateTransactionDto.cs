@@ -14,6 +14,8 @@ namespace ErcasCollect.Commands.Dto.TransactionDto
         public string TransactionId { get; set; }
         public string PosId { get; set; }
         public string UserId { get; set; }
-       
+        public int TransactionTypeId { get; set; }
+        public int PaymentChannelId { get; set; }
+
     }
 }

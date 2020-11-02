@@ -27,7 +27,8 @@ namespace ErcasCollect.Commands.BillerCommand
             {
 
                 Biller biller  = mapper.Map<Biller>(request.createBillerDto);
-                await billerRepository.Insert(biller);
+                await billerRepository.Add(biller);
+                await billerRepository.CommitAsync();
 
                 return biller.Id;
             }

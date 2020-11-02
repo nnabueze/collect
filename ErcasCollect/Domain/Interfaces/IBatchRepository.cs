@@ -3,7 +3,7 @@ using ErcasCollect.Domain.Models;
 
 namespace ErcasCollect.Domain.Interfaces
 {
-    public interface IBatchRepository : IGenericTransactionRepository<Batch>
+    public interface IBatchRepository : IGenericRepository<Batch>
     {
 
     }

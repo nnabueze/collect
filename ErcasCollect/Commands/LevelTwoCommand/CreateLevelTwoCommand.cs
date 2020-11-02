@@ -26,7 +26,8 @@ namespace ErcasCollect.Commands.LevelTwoCommand
             {
 
                 LevelTwo leveltwo = mapper.Map<LevelTwo>(request.createLeveltwoDto);
-                await leveltwoRepository.Insert(leveltwo);
+                await leveltwoRepository.Add(leveltwo);
+                await leveltwoRepository.CommitAsync();
 
          return leveltwo.Id;
             }

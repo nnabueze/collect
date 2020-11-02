@@ -26,7 +26,8 @@ namespace ErcasCollect.Commands.BranchCommand
             {
 
                 LevelOne levelone = mapper.Map<LevelOne>(request.createLevelOneDto);
-                await leveloneRepository.Insert(levelone);
+                await leveloneRepository.Add(levelone);
+                await leveloneRepository.CommitAsync();
                 return levelone.Id;
             }
         }

@@ -2,6 +2,7 @@
 using AutoMapper;
 using ErcasCollect.Commands.Dto.TaxpayerDto;
 using ErcasCollect.Domain.Models;
+using ErcasCollect.Queries.Dto;
 
 namespace ErcasCollect.AutoMapper.Profiles
 {
@@ -11,6 +12,7 @@ namespace ErcasCollect.AutoMapper.Profiles
         {
 
             CreateMap<CreateTaxpayerDto, TaxPayer>().ReverseMap();
+            CreateMap<ReadTaxPayerDto, TaxPayer>().ReverseMap();
         }
     }
 }

@@ -12,7 +12,7 @@ namespace ErcasCollect.Commands.Dto.PosDto
  
         public string LevelTwoId { get; set; }
 
-
+        public string BillerId { get; set; }
 
         public string StatusId { get; set; }
       

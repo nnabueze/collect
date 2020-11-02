@@ -26,7 +26,8 @@ namespace ErcasCollect.Commands.PosCommand
             {
 
                 Pos pos = mapper.Map<Pos>(request.createPosDto);
-                await posRepository.Insert(pos);
+                await posRepository.Add(pos);
+                await posRepository.CommitAsync();
 
                 return pos.Id;
             }
