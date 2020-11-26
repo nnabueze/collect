@@ -11,9 +11,13 @@ namespace ErcasCollect.AutoMapper.Profiles
         {
             CreateMap<ReadStatusDto, Status>().ReverseMap();
             CreateMap<ReadAllBanksDto, Bank>().ReverseMap();
+            CreateMap<ReadAllStatesDto, State>().ReverseMap();
             CreateMap<ReadPaymentChannelDto, PaymentChannel>().ReverseMap();
-            CreateMap<ReadStatusDto, Status>().ReverseMap();
+            CreateMap<ReadAllBillerTypesDto, BillerType>().ReverseMap();
             CreateMap<ReadAllTransactionTypes, TransactionType >().ReverseMap();
+            CreateMap<ReadAllRolesDto, Role>().ReverseMap();
+            CreateMap<ReadAllOs, OS>().ReverseMap();
+            CreateMap<ReadAllMetaDataDto, MetaData>().ReverseMap();
 
         }
     }

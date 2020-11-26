@@ -70,6 +70,7 @@ namespace ErcasCollect
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
             services.AddScoped<IBillerBankRepository, BillerBankRepository>();
             services.AddScoped<IBillerRepository, BillerRepository>();
+            services.AddScoped<IBatchRepository, BatchRepository>();
             services.AddScoped<ILevelOneRepository, LevelOneRepository>();
             services.AddScoped<ILevelTwoRepository, LevelTwoRepository>();
             services.AddScoped<ITransactionRepository, TransactionRepository>();
@@ -78,6 +79,7 @@ namespace ErcasCollect
             {
                 options.SuppressModelStateInvalidFilter = true;
             });
+            services.AddMvc().AddXmlSerializerFormatters();
 
             services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"), b => b.MigrationsAssembly(typeof(ApplicationDbContext).Assembly.FullName)));
           
@@ -89,6 +91,7 @@ namespace ErcasCollect
                     Version = "v1",
                     Title = "ERCAS Collect",
                 });
+                   
             });
            
         }
@@ -118,7 +121,9 @@ namespace ErcasCollect
             app.UseSwaggerUI(c =>
             {
                 c.SwaggerEndpoint("/swagger/v1/swagger.json", "Collect API");
+
             });
+
 
             if (env.IsDevelopment())
             {

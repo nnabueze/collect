@@ -13,7 +13,8 @@ namespace ErcasCollect.Queries.Dto
     
         public LevelTwo LevelTwo { get; set; }
 
-    
+        public BillerType BillerType { get; set; }
+
         public LevelOne LevelOne { get; set; }
 
     

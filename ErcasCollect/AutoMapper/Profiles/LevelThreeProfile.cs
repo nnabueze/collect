@@ -2,6 +2,7 @@
 using AutoMapper;
 using ErcasCollect.Commands.Dto.LevelThreeDto;
 using ErcasCollect.Domain.Models;
+using ErcasCollect.Queries.Dto;
 
 namespace ErcasCollect.AutoMapper.Profiles
 {
@@ -11,6 +12,8 @@ namespace ErcasCollect.AutoMapper.Profiles
         {
 
             CreateMap<CreateLevelThreeDto, LevelThree>().ReverseMap();
+            CreateMap<ReadLevelThreeDto, LevelThree>().ReverseMap();
+
         }
     }
 }

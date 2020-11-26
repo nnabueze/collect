@@ -8,6 +8,7 @@ namespace ErcasCollect.Commands.Dto.BatchDto
         public bool isOffline { get; set; }
         public string OfflineId { get; set; }
         public string StatusId { get; set; }
-        
+        public string BillerId { get; set; }
+
     }
 }

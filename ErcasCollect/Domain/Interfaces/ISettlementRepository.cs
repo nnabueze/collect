@@ -4,7 +4,7 @@ using ErcasCollect.Domain.Models;
 
 namespace ErcasCollect.Domain.Interfaces
 {
-    public interface ISettlementRepository: IGenericTransactionRepository<Settlement>
+    public interface ISettlementRepository: IGenericRepository<Settlement>
     {
 
     }

@@ -15,7 +15,7 @@ using Microsoft.Extensions.Logging;
 
 namespace ErcasCollect.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/[controller]/[action]")]
     public class LevelOneController : Controller
     {
 
@@ -28,8 +28,8 @@ namespace ErcasCollect.Controllers
             this._logger = logger ?? throw new ArgumentNullException(nameof(logger));
         }
         [HttpPost]
-        [Route("Create")]
-        public async Task<ActionResult> CreateBiller([FromBody] List<CreateLevelOneCommand>request)
+    
+        public async Task<ActionResult> CreateLevelOne([FromBody] CreateLevelOneCommand request)
         {
             try
             {
@@ -49,8 +49,8 @@ namespace ErcasCollect.Controllers
             }
         }
         // GET: api/values
-        [HttpGet]
-        [Route("GetAllLevelOne")]
+        [HttpGet("{id}")]
+
         public async Task<IEnumerable<ReadLevelOneDto>> GetAllLevelOneByBiller(string id)
         {
             try
@@ -72,6 +72,28 @@ namespace ErcasCollect.Controllers
             }
         }
 
-      
+        [HttpGet("{id}")]
+
+        public async Task<ReadLevelOneDto> GetAllLevelOneByID(string id)
+        {
+            try
+            {
+                GetAllLevelOneByIDQuery request = new GetAllLevelOneByIDQuery();
+                request.id = id;
+                return await mediator.Send(request);
+            }
+            catch (AppException ex)
+            {
+                _logger.LogError(ex, "An Application exception occurred on the Get Specific action of the Igr");
+                // return await BadRequest(new { message = ex.Message });
+                throw;
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "An unknown error occurred on the Get Specific action of the Igr");
+                throw;
+            }
+        }
+
     }
 }

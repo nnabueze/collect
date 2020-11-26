@@ -29,7 +29,7 @@ namespace ErcasCollect.Queries.BillerQuery
             public async Task<ReadUserDto> Handle(GetUserByIDQuery query, CancellationToken cancellationToken)
             {
 
-                var result = await taxpayerRepository.FindSingleInclude(x => x.Id.Equals(query.id), x => x.Biller, x => x.Status);
+                var result = await taxpayerRepository.FindSingleInclude(x => x.Id==query.id, x => x.Biller, x => x.Status);
                 if (result != null)
                 {
                     var biller = mapper.Map<ReadUserDto>(result);

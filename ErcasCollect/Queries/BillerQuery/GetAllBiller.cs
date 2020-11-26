@@ -29,7 +29,7 @@ namespace ErcasCollect.Queries.BillerQuery
             public async Task<IEnumerable<ReadBillerDto>> Handle(GetAllBillerQuery query, CancellationToken cancellationToken)
             {
 
-                var result = await billerRepository.FindAllInclude(x=>x.IsDeleted==false,x=>x.State,x=>x.BillerType);
+                var result = await billerRepository.FindAllInclude(x=>x.IsDeleted==false,x=>x.State,x=>x.BillerType,x=>x.Status);
                 if (result != null)
                 {
                     var biller = mapper.Map<IEnumerable<ReadBillerDto>>(result);

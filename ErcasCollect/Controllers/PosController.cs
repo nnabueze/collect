@@ -17,7 +17,7 @@ using Microsoft.Extensions.Logging;
 namespace ErcasCollect.Controllers
 {
 
-    [Route("api/[controller]")]
+    [Route("api/[controller]/[action]")]
     public class PosController : Controller
     {
         private readonly IMediator mediator;
@@ -29,8 +29,7 @@ namespace ErcasCollect.Controllers
             this._logger = logger ?? throw new ArgumentNullException(nameof(logger));
         }
         // GET: api/values
-        [HttpGet]
-        [Route("GetAllPoses")]
+      [HttpGet]
         public async Task<IEnumerable<ReadPosDto>> AllPOS()
         {
             try
@@ -52,10 +51,32 @@ namespace ErcasCollect.Controllers
             }
         }
 
+        [HttpGet("{id}")]
+        public async Task<ReadPosDto> GetPosByID(string id)
+        {
+            try
+            {
+                GetPOSByIDQuery request = new GetPOSByIDQuery();
+                request.id = id;
+                return await mediator.Send(request);
+            }
+            catch (AppException ex)
+            {
+                _logger.LogError(ex, "An Application exception occurred on the Get Specific action of the Igr");
+                // return await BadRequest(new { message = ex.Message });
+                throw;
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "An unknown error occurred on the Get Specific action of the Igr");
+                throw;
+            }
+        }
+
         // POST api/values
         [HttpPost]
-        [Route("CreatePos")]
-        public async Task<ActionResult> CreateBiller([FromBody] CreatePosCommand request)
+      
+        public async Task<ActionResult> CreatePos([FromBody] CreatePosCommand request)
         {
             try
             {
@@ -75,16 +96,28 @@ namespace ErcasCollect.Controllers
             }
         }
 
-        // PUT api/values/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
+        [HttpPost]
+       
+        public async Task<ActionResult> ActivatePOS([FromBody] ActivatePosCommand request)
         {
+            try
+            {
+                var result = await mediator.Send(request);
+                return new JsonResult(result);
+            }
+            catch (AppException ex)
+            {
+                _logger.LogError(ex, "An Application exception occurred on the make transaction action of the NonIgr");
+                // return await BadRequest(new { message = ex.Message });
+                throw;
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "An unknown error occurred on the make transaction action of the NonIgr");
+                throw;
+            }
         }
 
-        // DELETE api/values/5
-        [HttpDelete("{id}")]
-        public void Delete(int id)
-        {
-        }
+ 
     }
 }

@@ -73,3 +73,7 @@
 /Users/macbook/Desktop/ErcasCollect/ErcasCollect/ErcasCollect/obj/Release/netcoreapp3.1/ErcasCollect.dll
 /Users/macbook/Desktop/ErcasCollect/ErcasCollect/ErcasCollect/obj/Release/netcoreapp3.1/ErcasCollect.pdb
 /Users/macbook/Desktop/ErcasCollect/ErcasCollect/ErcasCollect/obj/Release/netcoreapp3.1/ErcasCollect.genruntimeconfig.cache
+/Users/macbook/Desktop/ErcasCollect/ErcasCollect/ErcasCollect/bin/Release/netcoreapp3.1/System.Net.Http.Extensions.dll
+/Users/macbook/Desktop/ErcasCollect/ErcasCollect/ErcasCollect/bin/Release/netcoreapp3.1/System.Net.Http.Formatting.dll
+/Users/macbook/Desktop/ErcasCollect/ErcasCollect/ErcasCollect/bin/Release/netcoreapp3.1/System.Net.Http.Primitives.dll
+/Users/macbook/Desktop/ErcasCollect/ErcasCollect/ErcasCollect/bin/Release/netcoreapp3.1/DynamicApis.Api.Documentation.dll

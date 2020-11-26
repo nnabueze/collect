@@ -3,6 +3,7 @@ using ErcasCollect.Commands.Dto.CollectionDto;
 using ErcasCollect.Domain.Interfaces;
 using ErcasCollect.Domain.Models;
 using MediatR;
+using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Threading;
@@ -12,55 +13,104 @@ namespace ErcasCollect.Commands.CollectionCommand
 {
     public partial class CreateCollectionCommand : IRequest<string>
     {
-        public CreateCollectionComandDto collectionDto { get; set; }
+        public SettlementCollectionComandDto collectionDto { get; set; }
         public class CreateCollectionCommandHandler : IRequestHandler<CreateCollectionCommand, string>
         {
             private readonly ITransactionRepository collectionRepository;
             private readonly IBatchRepository batchRepository;
+            private readonly IBillerRepository billerRepository;
+            private readonly IUserRepository userRepository;
+        
             private readonly IMapper mapper;
 
-            public CreateCollectionCommandHandler(ITransactionRepository collectionRepository, IMapper mapper)
+
+            public CreateCollectionCommandHandler(ITransactionRepository collectionRepository,
+                IBatchRepository batchRepository,
+                IUserRepository userRepository, IMapper mapper)
             {
                 this.collectionRepository = collectionRepository ?? throw new ArgumentNullException(nameof(collectionRepository));
+                this.userRepository = userRepository ?? throw new ArgumentNullException(nameof(userRepository));
+                this.batchRepository = batchRepository ?? throw new ArgumentNullException(nameof(batchRepository));
                 this.mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
             }
             public async Task<string> Handle(CreateCollectionCommand request, CancellationToken cancellationToken)
             {
+
+
+
+
                 var collection = mapper.Map<List<SessionData>, List<Transaction>>(request.collectionDto.sessionData);
 
                 List<Transaction> transactions = new List<Transaction>();
 
-                foreach (var collectionbatch in collection)
+      
+
+                var getuser = await userRepository.GetSingle(x => x.Id == request.collectionDto.AgentId);
+
+                if ((getuser.CollectionLimit - getuser.CashAtHand) < request.collectionDto.Amount || getuser.StatusId=="350" )
                 {
-                    if (await collectionRepository.GetSingle(x => x.Id == collectionbatch.Id) == null)
+                    return null; 
+
+                }
+                else
+                {
+                    if (request.collectionDto.TransactionTypeId == 1)
                     {
 
-                        collectionbatch.OfflineBatchId = request.collectionDto.OfflineBatchId;
-                        collectionbatch.OfflineSessionId = request.collectionDto.OfflineSessionId;
-                        collectionbatch.BatchId = request.collectionDto.BatchId;
-                        collectionbatch.SessionId = request.collectionDto.SessionId;
 
-                        transactions.Add(collectionbatch);
                     }
-                    else
+                    getuser.CashAtHand += request.collectionDto.Amount;
+                    userRepository.Update(getuser);
+                    Batch batch = new Batch();
+                    batch.AgentId = request.collectionDto.AgentId;
+                    batch.Id = request.collectionDto.BatchId;
+                    batch.ItemCount = request.collectionDto.ItemCount;
+                    batch.OfflineId = request.collectionDto.OfflineBatchId;
+                    batch.Amount = request.collectionDto.Amount;
+                  
+                    await batchRepository.Add(batch);
+                    await  batchRepository.CommitAsync();
+                    
+           
+                    foreach (var collectionbatch in collection)
                     {
-                        var existingdata = await collectionRepository.GetSingle(x => x.Id == collectionbatch.Id);
-                        if (existingdata != null)
+                        if (await collectionRepository.GetSingle(x => x.Id == collectionbatch.Id) == null)
                         {
-                            var transaction = new Transaction();
 
-                            transaction.IsDeleted = false;
-                            transaction.BatchId = collectionbatch.BatchId;
+                            collectionbatch.OfflineBatchId = request.collectionDto.OfflineBatchId;
+                            collectionbatch.OfflineSessionId = request.collectionDto.OfflineSessionId;
+                            collectionbatch.BatchId = request.collectionDto.BatchId;
+                            collectionbatch.SessionId = request.collectionDto.SessionId;
+                            collectionbatch.AgentId= request.collectionDto.AgentId;
+                            collectionbatch.BillerId = request.collectionDto.BillerId;
+                            collectionbatch.TransactionTypeId = request.collectionDto.TransactionTypeId;
+                
 
-                            collectionRepository.Update(transaction);
+
+
+                          
+
+                            transactions.Add(collectionbatch);
+                        }
+                        else
+                        {
+                            var existingdata = await collectionRepository.GetSingle(x => x.Id == collectionbatch.Id);
+                            if (existingdata != null)
+                            {
+                                var transaction = new Transaction();
+
+                                transaction.IsDeleted = false;
+                                transaction.BatchId = collectionbatch.BatchId;
+
+                                collectionRepository.Update(transaction);
+                            }
                         }
                     }
+                    
+                    await collectionRepository.Add(transactions);
+                    await collectionRepository.CommitAsync();
+                    return "Ok";
                 }
-
-                await collectionRepository.Add(transactions);
-                await collectionRepository.CommitAsync();
-                return "Ok";
-
             }
         }
     }

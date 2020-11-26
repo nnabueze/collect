@@ -15,7 +15,7 @@ using Microsoft.Extensions.Logging;
 
 namespace ErcasCollect.Controllers
 {
-    [Route("api/taxpayer")]
+    [Route("api/[controller]/[action]")]
     public class TaxPayerController : Controller
     {
         private readonly IMediator mediator;
@@ -28,8 +28,8 @@ namespace ErcasCollect.Controllers
         }
         // 
         // GET: api/values
-        [HttpGet]
-        [Route("GetTaxPayerByID")]
+        [HttpGet("{id}")]
+
         public async Task<ReadTaxPayerDto> GetTaxPayerByID(string id)
         {
             try
@@ -50,8 +50,7 @@ namespace ErcasCollect.Controllers
                 throw;
             }
         }
-        [HttpGet]
-        [Route("GetTaxPayerByBillerID")]
+        [HttpGet("{id}")]
         public async Task<IEnumerable<ReadTaxPayerDto>> GetTaxPayerBiller(string id)
         {
             try
@@ -74,8 +73,7 @@ namespace ErcasCollect.Controllers
         }
 
         [HttpGet]
-        [Route("GetAllTaxPayers")]
-        public async Task<IEnumerable<ReadTaxPayerDto>> GetAllTaxPayer(string id)
+        public async Task<IEnumerable<ReadTaxPayerDto>> GetAllTaxPayer()
         {
             try
             {
@@ -100,7 +98,7 @@ namespace ErcasCollect.Controllers
 
         // POST api/values
         [HttpPost]
-        [Route("create")]
+    
         public async Task<ActionResult> CreateTaxPayer([FromBody] CreateTaxPayerCommand request)
         {
             try

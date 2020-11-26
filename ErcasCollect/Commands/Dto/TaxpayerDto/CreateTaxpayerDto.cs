@@ -11,7 +11,8 @@ namespace ErcasCollect.Commands.Dto.TaxpayerDto
         public string BillerId { get; set; }
         public string Email { get; set; }
         public string PhoneNumber { get; set; }
-        public string StatustId { get; set; }
-     
+        public string StatusId { get; set; }
+        public DateTime LastPaidDate { get; set; }
+
     }
 }

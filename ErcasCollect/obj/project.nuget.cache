@@ -1,11 +1,12 @@
 {
   "version": 2,
-  "dgSpecHash": "covKuerIm3QgSR/nIuZ9SGzrt55YimIoNp0S9r6Dn9hDZ6pXRrY5FbtFrEYROipN/TGf7uVlVhZ5B7hrlu5oGg==",
+  "dgSpecHash": "1BhDd0EQrZDXeax8PhmSAZWIQq6Df2DxKj0BmOcjetq+xCHAfeX+wY0w5UuhzuDR2afmFplwg1q/znBXSAZFKA==",
   "success": true,
   "projectFilePath": "/Users/macbook/Desktop/ErcasCollect/ErcasCollect/ErcasCollect/ErcasCollect.csproj",
   "expectedPackageFiles": [
     "/Users/macbook/.nuget/packages/automapper/10.0.0/automapper.10.0.0.nupkg.sha512",
     "/Users/macbook/.nuget/packages/automapper.extensions.microsoft.dependencyinjection/8.0.1/automapper.extensions.microsoft.dependencyinjection.8.0.1.nupkg.sha512",
+    "/Users/macbook/.nuget/packages/dynamicapis.api.documentation/2.26.0/dynamicapis.api.documentation.2.26.0.nupkg.sha512",
     "/Users/macbook/.nuget/packages/fluentvalidation/9.1.3/fluentvalidation.9.1.3.nupkg.sha512",
     "/Users/macbook/.nuget/packages/fluentvalidation.aspnetcore/9.1.3/fluentvalidation.aspnetcore.9.1.3.nupkg.sha512",
     "/Users/macbook/.nuget/packages/fluentvalidation.dependencyinjectionextensions/9.1.3/fluentvalidation.dependencyinjectionextensions.9.1.3.nupkg.sha512",
@@ -43,7 +44,7 @@
     "/Users/macbook/.nuget/packages/microsoft.identitymodel.tokens/5.5.0/microsoft.identitymodel.tokens.5.5.0.nupkg.sha512",
     "/Users/macbook/.nuget/packages/microsoft.netcore.platforms/2.0.0/microsoft.netcore.platforms.2.0.0.nupkg.sha512",
     "/Users/macbook/.nuget/packages/microsoft.netcore.targets/1.1.0/microsoft.netcore.targets.1.1.0.nupkg.sha512",
-    "/Users/macbook/.nuget/packages/microsoft.openapi/1.1.4/microsoft.openapi.1.1.4.nupkg.sha512",
+    "/Users/macbook/.nuget/packages/microsoft.openapi/1.2.3/microsoft.openapi.1.2.3.nupkg.sha512",
     "/Users/macbook/.nuget/packages/microsoft.win32.registry/4.5.0/microsoft.win32.registry.4.5.0.nupkg.sha512",
     "/Users/macbook/.nuget/packages/newtonsoft.json/12.0.3/newtonsoft.json.12.0.3.nupkg.sha512",
     "/Users/macbook/.nuget/packages/newtonsoft.json.bson/1.0.2/newtonsoft.json.bson.1.0.2.nupkg.sha512",
@@ -117,6 +118,16 @@
     "/Users/macbook/.nuget/packages/system.xml.xmlserializer/4.3.0/system.xml.xmlserializer.4.3.0.nupkg.sha512"
   ],
   "logs": [
+    {
+      "code": "NU1701",
+      "level": "Warning",
+      "warningLevel": 1,
+      "message": "Package 'DynamicApis.Api.Documentation 2.26.0' was restored using '.NETFramework,Version=v4.6.1, .NETFramework,Version=v4.6.2, .NETFramework,Version=v4.7, .NETFramework,Version=v4.7.1, .NETFramework,Version=v4.7.2, .NETFramework,Version=v4.8' instead of the project target framework '.NETCoreApp,Version=v3.1'. This package may not be fully compatible with your project.",
+      "libraryId": "DynamicApis.Api.Documentation",
+      "targetGraphs": [
+        ".NETCoreApp,Version=v3.1"
+      ]
+    },
     {
       "code": "NU1701",
       "level": "Warning",

@@ -12,11 +12,11 @@ namespace ErcasCollect.DataAccess.Repository
 
 
         protected readonly ApplicationDbContext context;
-        private DbSet<BillerBankDetail> entities;
+        private DbSet<BankDetail> entities;
         public BillerBankRepository(ApplicationDbContext context)
         {
             this.context = context;
-            entities = context.Set<BillerBankDetail>();
+            entities = context.Set<BankDetail>();
         }
 
         public void Delete(string id)
@@ -24,17 +24,17 @@ namespace ErcasCollect.DataAccess.Repository
             throw new NotImplementedException();
         }
 
-        public Task<IEnumerable<BillerBankDetail>> GetAll()
+        public Task<IEnumerable<BankDetail>> GetAll()
         {
             throw new NotImplementedException();
         }
 
-        public Task<BillerBankDetail> GetById(string id)
+        public Task<BankDetail> GetById(string id)
         {
             throw new NotImplementedException();
         }
 
-        public async Task Insert(BillerBankDetail entity)
+        public async Task Insert(BankDetail entity)
         {
             if (entity == null) throw new ArgumentNullException("entity");
 
@@ -42,7 +42,7 @@ namespace ErcasCollect.DataAccess.Repository
             await context.SaveChangesAsync();
         }
 
-        public void Update(BillerBankDetail entity)
+        public void Update(BankDetail entity)
         {
             throw new NotImplementedException();
         }

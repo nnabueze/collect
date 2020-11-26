@@ -6,6 +6,7 @@ using ErcasCollect.Domain.Models;
 using ErcasCollect.Exceptions;
 using ErcasCollect.Queries.BillerQuery;
 using ErcasCollect.Queries.Dto;
+using ErcasCollect.Queries.osQuery;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
@@ -14,6 +15,7 @@ using Microsoft.Extensions.Logging;
 
 namespace ErcasCollect.Controllers
 {
+    [Route("api/[controller]/[action]")]
     public class ApplicationDataController : Controller
     {
         // GET: /<controller>/
@@ -27,7 +29,7 @@ namespace ErcasCollect.Controllers
         }
 
         [HttpGet]
-        [Route("GetStatus")]
+
         public async Task<IEnumerable<ReadStatusDto>> GetAllStatus()
         {
             try
@@ -50,9 +52,77 @@ namespace ErcasCollect.Controllers
         }
 
 
+        [HttpGet("{id}")]
+        public async Task<ReadAllMetaDataDto> GetMetaData(string id)
+        {
+            try
+            {
+                GetAllMetaDataQuery request = new GetAllMetaDataQuery();
+                request.id = id;
+                return await mediator.Send(request);
+            }
+            catch (AppException ex)
+            {
+                _logger.LogError(ex, "An Application exception occurred on the Get Specific action of the Igr");
+                // return await BadRequest(new { message = ex.Message });
+                throw;
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "An unknown error occurred on the Get Specific action of the Igr");
+                throw;
+            }
+        }
+
+
         [HttpGet]
-        [Route("GetPaymentChannel")]
-        public async Task<IEnumerable<ReadPaymentChannelDto>> PaymentType()
+        
+        public async Task<IEnumerable<ReadAllRolesDto>> GetAllRole()
+        {
+            try
+            {
+                GetAllRolesQuery request = new GetAllRolesQuery();
+
+                return await mediator.Send(request);
+            }
+            catch (AppException ex)
+            {
+                _logger.LogError(ex, "An Application exception occurred on the Get Specific action of the Igr");
+                // return await BadRequest(new { message = ex.Message });
+                throw;
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "An unknown error occurred on the Get Specific action of the Igr");
+                throw;
+            }
+        }
+
+        [HttpGet]
+    
+        public async Task<IEnumerable<ReadAllOs>> GetAllOs()
+        {
+            try
+            {
+                GetOsQuery request = new GetOsQuery();
+
+                return await mediator.Send(request);
+            }
+            catch (AppException ex)
+            {
+                _logger.LogError(ex, "An Application exception occurred on the Get Specific action of the Igr");
+                // return await BadRequest(new { message = ex.Message });
+                throw;
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "An unknown error occurred on the Get Specific action of the Igr");
+                throw;
+            }
+        }
+        [HttpGet]
+       
+        public async Task<IEnumerable<ReadPaymentChannelDto>> PaymentChannels()
         {
             try
             {
@@ -74,7 +144,7 @@ namespace ErcasCollect.Controllers
         }
 
         [HttpGet]
-        [Route("GetTransactionType")]
+       
         public async Task<IEnumerable<ReadAllTransactionTypes>> TransactionType()
         {
             try
@@ -97,8 +167,8 @@ namespace ErcasCollect.Controllers
         }
 
         [HttpGet]
-        [Route("GetBillerTypes")]
-        public async Task<IEnumerable<ReadAllBillerTypes>> BillerTypes()
+       
+        public async Task<IEnumerable<ReadAllBillerTypesDto>> BillerTypes()
         {
             try
             {
@@ -120,8 +190,8 @@ namespace ErcasCollect.Controllers
         }
 
         [HttpGet]
-        [Route("GetAllBanks")]
-        public async Task<IEnumerable<ReadAllBanksDto>> Banks()
+      
+        public async Task<IEnumerable<ReadAllBanksDto>> GetAllBanks()
         {
             try
             {
@@ -142,5 +212,27 @@ namespace ErcasCollect.Controllers
             }
         }
 
+        [HttpGet]
+
+        public async Task<IEnumerable<ReadAllStatesDto>> AllStates()
+        {
+            try
+            {
+                GetAllStatesQuery request = new GetAllStatesQuery();
+
+                return await mediator.Send(request);
+            }
+            catch (AppException ex)
+            {
+                _logger.LogError(ex, "An Application exception occurred on the Get Specific action of the Igr");
+                // return await BadRequest(new { message = ex.Message });
+                throw;
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "An unknown error occurred on the Get Specific action of the Igr");
+                throw;
+            }
+        }
     }
 }

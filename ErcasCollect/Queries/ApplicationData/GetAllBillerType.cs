@@ -11,11 +11,11 @@ using MediatR;
 
 namespace ErcasCollect.Queries.BillerQuery
 {
-    public class GetAllBillerTypesQuery : IRequest<IEnumerable<ReadAllBillerTypes>>
+    public class GetAllBillerTypesQuery : IRequest<IEnumerable<ReadAllBillerTypesDto>>
     {
 
 
-        public class GetAllBillerTypesHandler : IRequestHandler<GetAllBillerTypesQuery, IEnumerable<ReadAllBillerTypes>>
+        public class GetAllBillerTypesHandler : IRequestHandler<GetAllBillerTypesQuery, IEnumerable<ReadAllBillerTypesDto>>
         {
             private readonly IGenericRepository<BillerType> billertypesRepository;
             private readonly IMapper mapper;
@@ -27,13 +27,13 @@ namespace ErcasCollect.Queries.BillerQuery
 
             }
 
-            public async Task<IEnumerable<ReadAllBillerTypes>> Handle(GetAllBillerTypesQuery query, CancellationToken cancellationToken)
+            public async Task<IEnumerable<ReadAllBillerTypesDto>> Handle(GetAllBillerTypesQuery query, CancellationToken cancellationToken)
             {
 
                 var result = await billertypesRepository.GetAll();
                 if (result != null)
                 {
-                    var biller = mapper.Map<IEnumerable<ReadAllBillerTypes>>(result);
+                    var biller = mapper.Map<IEnumerable<ReadAllBillerTypesDto>>(result);
                     return biller;
                 }
                 else

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Ercas.Pay.Service.Commands;
 using ErcasCollect.Commands.BillerCommand;
 using ErcasCollect.Commands.Dto.BillerDto;
 using ErcasCollect.Domain.Models;
@@ -15,7 +16,7 @@ using Microsoft.Extensions.Logging;
 
 namespace ErcasCollect.Controllers
 {
-    [Route("api/biller")]
+    [Route("api/[controller]/[action]")]
     public class BillerController : Controller
     {
         // GET: api/values
@@ -28,7 +29,7 @@ namespace ErcasCollect.Controllers
             this._logger = logger ?? throw new ArgumentNullException(nameof(logger));
         }
         [HttpPost]
-        [Route("CreateBiller")]
+
         public async Task<ActionResult> CreateBiller([FromBody] CreateBillerCommand request)
         {
             try
@@ -48,19 +49,18 @@ namespace ErcasCollect.Controllers
                 throw;
             }
         }
+        /// <summary>
+        /// Update  Biller Detail
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns>uthj</returns>
+        [HttpPut("{id}")]
 
-        [HttpPost]
-        [Route("Addbank")]
-        public async Task<IActionResult> CreateBank([FromBody] CreateBillerBankCommand request)
+        public async Task<ActionResult> UpdateBiller([FromBody] UpdateBillerDetailCommand request)
         {
             try
             {
                 var result = await mediator.Send(request);
-
-                if (result == 0)
-                {
-                    return BadRequest("Not Found");
-                }
                 return new JsonResult(result);
             }
             catch (AppException ex)
@@ -77,7 +77,31 @@ namespace ErcasCollect.Controllers
         }
 
         [HttpPost]
-        [Route("AddTinDetail")]
+      
+        public async Task<IActionResult> AddBank([FromBody] CreateBillerBankCommand request)
+        {
+            try
+            {
+                var result = await mediator.Send(request);
+
+
+                return new JsonResult(result);
+            }
+            catch (AppException ex)
+            {
+                _logger.LogError(ex, "An Application exception occurred on the make transaction action of the NonIgr");
+                // return await BadRequest(new { message = ex.Message });
+                throw;
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "An unknown error occurred on the make transaction action of the NonIgr");
+                throw;
+            }
+        }
+
+        [HttpPost]
+       
         public async Task<ActionResult> CreateTIN([FromBody] CreateTinCommand request)
         {
             try
@@ -98,9 +122,11 @@ namespace ErcasCollect.Controllers
             }
         }
 
-        [HttpGet]
-        [Route("GetBillerByID")]
-        public async Task<ReadBillerDto> GetBillerByID( string id)
+
+
+
+        [HttpGet("{id}")]
+        public async Task<ReadBillerDto> GetBillerByID(string id)
         {
             try
             {
@@ -123,13 +149,13 @@ namespace ErcasCollect.Controllers
 
 
         [HttpGet]
-        [Route("GetAllBillers")]
+
         public async Task<IEnumerable<ReadBillerDto>> GetAllBillers()
         {
             try
             {
                 GetAllBillerQuery request = new GetAllBillerQuery();
-             
+
                 return await mediator.Send(request);
             }
             catch (AppException ex)
@@ -145,8 +171,8 @@ namespace ErcasCollect.Controllers
             }
         }
 
-        [HttpGet]
-        [Route("GetAllBillerByCategory")]
+        [HttpGet("{id}")]
+
         public async Task<IEnumerable<ReadBillerDto>> GetAllBillersByCategory(string id)
         {
             try
@@ -170,12 +196,7 @@ namespace ErcasCollect.Controllers
 
      
 
-        [HttpDelete]
-        [Route("DeleteBiller")]
-        public async Task<ActionResult> DeleteBiller(int id)
-        {
-            return Ok();
-        }
+
 
 
     }

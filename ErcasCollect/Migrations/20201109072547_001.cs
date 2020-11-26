@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace ErcasCollect.Migrations
 {
-    public partial class Collect : Migration
+    public partial class _001 : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -125,26 +125,52 @@ namespace ErcasCollect.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Batchs",
+                name: "BankDetails",
                 columns: table => new
                 {
-                    Id = table.Column<string>(type: "nvarchar(32)", nullable: false),
-                    CreatedDate = table.Column<DateTime>(nullable: false),
-                    ModifiedDate = table.Column<DateTime>(nullable: false),
-                    ModifiedBy = table.Column<int>(nullable: false),
-                    Createdby = table.Column<int>(nullable: false),
-                    IsDeleted = table.Column<bool>(nullable: false),
-                    ItemCount = table.Column<int>(nullable: false),
-                    OfflineId = table.Column<string>(nullable: true),
-                    StatusId = table.Column<string>(nullable: true)
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    OwnerId = table.Column<string>(nullable: true),
+                    BankId = table.Column<string>(nullable: true),
+                    AccountNumber = table.Column<string>(nullable: true),
+                    BVN = table.Column<string>(nullable: true),
+                    IsValidated = table.Column<bool>(nullable: false),
+                    AccountName = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Batchs", x => x.Id);
+                    table.PrimaryKey("PK_BankDetails", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Batchs_Statuses_StatusId",
-                        column: x => x.StatusId,
-                        principalTable: "Statuses",
+                        name: "FK_BankDetails_Banks_BankId",
+                        column: x => x.BankId,
+                        principalTable: "Banks",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "MetaData",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    BillerTypeId = table.Column<string>(nullable: true),
+                    FieldOne = table.Column<string>(nullable: true),
+                    FieldTwo = table.Column<string>(nullable: true),
+                    FieldThree = table.Column<string>(nullable: true),
+                    FieldFour = table.Column<string>(nullable: true),
+                    FieldFive = table.Column<string>(nullable: true),
+                    FieldSix = table.Column<string>(nullable: true),
+                    FieldSeven = table.Column<string>(nullable: true),
+                    FieldEight = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_MetaData", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_MetaData_BillerTypes_BillerTypeId",
+                        column: x => x.BillerTypeId,
+                        principalTable: "BillerTypes",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                 });
@@ -190,36 +216,6 @@ namespace ErcasCollect.Migrations
                         name: "FK_Billers_Statuses_StatusId",
                         column: x => x.StatusId,
                         principalTable: "Statuses",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "BillerBankDetails",
-                columns: table => new
-                {
-                    Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    BillerId = table.Column<string>(nullable: true),
-                    BankId = table.Column<string>(nullable: true),
-                    AccountNumber = table.Column<string>(nullable: true),
-                    BVN = table.Column<string>(nullable: true),
-                    IsValidated = table.Column<bool>(nullable: false),
-                    AccountName = table.Column<string>(nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_BillerBankDetails", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_BillerBankDetails_Banks_BankId",
-                        column: x => x.BankId,
-                        principalTable: "Banks",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
-                        name: "FK_BillerBankDetails_Billers_BillerId",
-                        column: x => x.BillerId,
-                        principalTable: "Billers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                 });
@@ -401,6 +397,53 @@ namespace ErcasCollect.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "FundSweep",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    BillerId = table.Column<string>(nullable: true),
+                    LevelOneId = table.Column<string>(nullable: true),
+                    LevelTwoId = table.Column<string>(nullable: true),
+                    BankId = table.Column<string>(nullable: true),
+                    AccountNumber = table.Column<string>(nullable: true),
+                    Amount = table.Column<decimal>(nullable: false),
+                    DateProcessed = table.Column<DateTime>(nullable: false),
+                    DateCreated = table.Column<DateTime>(nullable: false),
+                    isProcessed = table.Column<bool>(nullable: false),
+                    isConfirmed = table.Column<bool>(nullable: false),
+                    ConfirmedBy = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_FundSweep", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_FundSweep_Banks_BankId",
+                        column: x => x.BankId,
+                        principalTable: "Banks",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_FundSweep_Billers_BillerId",
+                        column: x => x.BillerId,
+                        principalTable: "Billers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_FundSweep_LevelOne_LevelOneId",
+                        column: x => x.LevelOneId,
+                        principalTable: "LevelOne",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_FundSweep_LevelTwo_LevelTwoId",
+                        column: x => x.LevelTwoId,
+                        principalTable: "LevelTwo",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "LevelThree",
                 columns: table => new
                 {
@@ -441,6 +484,44 @@ namespace ErcasCollect.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "TransactionSummaryViews",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    BillerId = table.Column<string>(nullable: true),
+                    LevelOneId = table.Column<string>(nullable: true),
+                    LevelTwoId = table.Column<string>(nullable: true),
+                    AmountCollected = table.Column<decimal>(nullable: false),
+                    AmountPaid = table.Column<decimal>(nullable: false),
+                    isClosed = table.Column<bool>(nullable: false),
+                    DateCreated = table.Column<DateTime>(nullable: false),
+                    DateClosed = table.Column<DateTime>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_TransactionSummaryViews", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_TransactionSummaryViews_Billers_BillerId",
+                        column: x => x.BillerId,
+                        principalTable: "Billers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_TransactionSummaryViews_LevelOne_LevelOneId",
+                        column: x => x.LevelOneId,
+                        principalTable: "LevelOne",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_TransactionSummaryViews_LevelTwo_LevelTwoId",
+                        column: x => x.LevelTwoId,
+                        principalTable: "LevelTwo",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Users",
                 columns: table => new
                 {
@@ -456,7 +537,8 @@ namespace ErcasCollect.Migrations
                     LevelTwoId = table.Column<string>(nullable: true),
                     LevelOneId = table.Column<string>(nullable: true),
                     StatusId = table.Column<string>(nullable: true),
-                    CollectionLimit = table.Column<decimal>(type: "decimal(18,2)", nullable: false)
+                    CollectionLimit = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    CashAtHand = table.Column<decimal>(type: "decimal(18,2)", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -565,7 +647,6 @@ namespace ErcasCollect.Migrations
                     SessionId = table.Column<string>(nullable: true),
                     OfflineSessionId = table.Column<string>(nullable: true),
                     BillerId = table.Column<string>(nullable: true),
-                    Count = table.Column<int>(nullable: false),
                     BatchId = table.Column<string>(nullable: true),
                     OfflineBatchId = table.Column<string>(nullable: true),
                     TransactionTypeId = table.Column<int>(nullable: false),
@@ -613,19 +694,9 @@ namespace ErcasCollect.Migrations
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_Batchs_StatusId",
-                table: "Batchs",
-                column: "StatusId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_BillerBankDetails_BankId",
-                table: "BillerBankDetails",
+                name: "IX_BankDetails_BankId",
+                table: "BankDetails",
                 column: "BankId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_BillerBankDetails_BillerId",
-                table: "BillerBankDetails",
-                column: "BillerId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Billers_BillerTypeId",
@@ -646,6 +717,26 @@ namespace ErcasCollect.Migrations
                 name: "IX_BillerTinDetails_BillerId",
                 table: "BillerTinDetails",
                 column: "BillerId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_FundSweep_BankId",
+                table: "FundSweep",
+                column: "BankId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_FundSweep_BillerId",
+                table: "FundSweep",
+                column: "BillerId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_FundSweep_LevelOneId",
+                table: "FundSweep",
+                column: "LevelOneId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_FundSweep_LevelTwoId",
+                table: "FundSweep",
+                column: "LevelTwoId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_LevelOne_BillerId",
@@ -686,6 +777,11 @@ namespace ErcasCollect.Migrations
                 name: "IX_LevelTwo_StatusId",
                 table: "LevelTwo",
                 column: "StatusId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_MetaData_BillerTypeId",
+                table: "MetaData",
+                column: "BillerTypeId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Poses_BillerId",
@@ -773,6 +869,21 @@ namespace ErcasCollect.Migrations
                 column: "TransactionTypeId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_TransactionSummaryViews_BillerId",
+                table: "TransactionSummaryViews",
+                column: "BillerId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_TransactionSummaryViews_LevelOneId",
+                table: "TransactionSummaryViews",
+                column: "LevelOneId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_TransactionSummaryViews_LevelTwoId",
+                table: "TransactionSummaryViews",
+                column: "LevelTwoId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Users_BillerId",
                 table: "Users",
                 column: "BillerId");
@@ -801,16 +912,19 @@ namespace ErcasCollect.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "Batchs");
-
-            migrationBuilder.DropTable(
-                name: "BillerBankDetails");
+                name: "BankDetails");
 
             migrationBuilder.DropTable(
                 name: "BillerTinDetails");
 
             migrationBuilder.DropTable(
+                name: "FundSweep");
+
+            migrationBuilder.DropTable(
                 name: "LevelThree");
+
+            migrationBuilder.DropTable(
+                name: "MetaData");
 
             migrationBuilder.DropTable(
                 name: "NumberSeries");
@@ -823,6 +937,9 @@ namespace ErcasCollect.Migrations
 
             migrationBuilder.DropTable(
                 name: "Transactions");
+
+            migrationBuilder.DropTable(
+                name: "TransactionSummaryViews");
 
             migrationBuilder.DropTable(
                 name: "Banks");

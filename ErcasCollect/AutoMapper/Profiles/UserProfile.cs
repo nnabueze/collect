@@ -13,6 +13,7 @@ namespace ErcasCollect.AutoMapper.Profiles
 
             CreateMap<CreateUserDto, User>().ReverseMap();
             CreateMap<ReadUserDto, User>().ReverseMap();
+            CreateMap<ReadUserDto, Role>().ReverseMap();
         }
     }
 }

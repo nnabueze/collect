@@ -15,7 +15,7 @@ using Microsoft.Extensions.Logging;
 
 namespace ErcasCollect.Controllers
 {
-    [Route("api/user")]
+    [Route("api/[controller]/[action]")]
     public class UserController : Controller
     {
         private readonly IMediator mediator;
@@ -31,7 +31,7 @@ namespace ErcasCollect.Controllers
 
         // POST api/values
         [HttpPost]
-        [Route("createuser")]
+      
         public async Task<ActionResult> CreateUser([FromBody] CreateUserCommand request)
         {
             try
@@ -54,8 +54,8 @@ namespace ErcasCollect.Controllers
 
 
         [HttpGet]
-        [Route("GetAllUser")]
-        public async Task<IEnumerable<ReadUserDto>> BillerTypes()
+      
+        public async Task<IEnumerable<ReadUserDto>> GetAllUsers()
         {
             try
             {
@@ -76,8 +76,7 @@ namespace ErcasCollect.Controllers
             }
         }
 
-        [HttpGet]
-        [Route("GetUserByID")]
+        [HttpGet("{id}")]
         public async Task<ReadUserDto> GetUserByID(string id)
         {
             try
@@ -98,10 +97,29 @@ namespace ErcasCollect.Controllers
                 throw;
             }
         }
+        [HttpGet("{id}")]
+        public async Task<ReadUserDto> GetUserBySsoID(int id)
+        {
+            try
+            {
+                GetUserBySsoIDQuery request = new GetUserBySsoIDQuery();
+                request.id = id;
+                return await mediator.Send(request);
+            }
+            catch (AppException ex)
+            {
+                _logger.LogError(ex, "An Application exception occurred on the Get Specific action of the Igr");
+                // return await BadRequest(new { message = ex.Message });
+                throw;
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "An unknown error occurred on the Get Specific action of the Igr");
+                throw;
+            }
+        }
 
-
-        [HttpGet]
-        [Route("GetUserByBiller")]
+        [HttpGet("{id}")]
         public async Task<IEnumerable<ReadUserDto>> GetUserByBiller(string id)
         {
             try

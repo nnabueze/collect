@@ -30,62 +30,63 @@ namespace ErcasCollect.Commands.UserCommand
 
             public async Task<string> Handle(CreateUserCommand request, CancellationToken cancellationToken)
             {
-                //using (var client = new HttpClient())
-                //{
+                using (var client = new HttpClient())
+                    {
 
-                //    client.BaseAddress = new Uri("http://35.193.238.146/");
-                //    client.DefaultRequestHeaders.TryAddWithoutValidation("Content-Type", "application/json; charset=utf-8");
-                //    client.DefaultRequestHeaders
-                //    .Accept
-                //   .Add(new MediaTypeWithQualityHeaderValue("application/json"));
-                //    client.DefaultRequestHeaders.Add("Authorization", "Bearer " + "sk_live_e1ee5fd989c97597e2f0431f09f8ccbacecbe215");
-
-
-
-                //    var result = client.PostAsync("/gateway/register", new
-                //    {
-                //        //type = "nuban",
-                //        //account_number = update.AccountNumber,
-                //        //name = wallet.Name,
-                //        //bank_code = update.SortCode,
-                //        //currency = "NGN"
-
-                //    }, new JsonMediaTypeFormatter()).Result;
-
-                //    if (result.IsSuccessStatusCode)
-                //    {
-                //        var response = new HttpResponseMessage(HttpStatusCode.OK);
-                //        response.Content = new StringContent(result.Content.ReadAsStringAsync().Result, Encoding.UTF8, "application/json");
-                //        var content = await response.Content.ReadAsStringAsync();
-                //        var ItemsSet = JsonConvert.DeserializeObject<dynamic>(content);
-                //        if (ItemsSet["status"] == true)
-                //        {
+                     client.BaseAddress = new Uri("http://35.193.238.146/");
+                     client.DefaultRequestHeaders.TryAddWithoutValidation("Content-Type", "application/json; charset=utf-8");
+                     client.DefaultRequestHeaders
+                    .Accept
+                     .Add(new MediaTypeWithQualityHeaderValue("application/json"));
+                    client.DefaultRequestHeaders.Add("Authorization", "Bearer " + "sk_live_e1ee5fd989c97597e2f0431f09f8ccbacecbe215");
 
 
-                            User user = mapper.Map<User>(request.createUserDto);
-                            await userRepository.Add(user);
-                            await userRepository.CommitAsync();
 
-                            return user.Id;
+                      var result = client.PostAsync("/gateway/register", new
+                     {
+                          firstName= request.createUserDto.firstname,
+                          lastName= request.createUserDto.lastname,
+                          phone= request.createUserDto.phone,
+                         email= request.createUserDto.email,
+                         password= request.createUserDto.password,
+                       passwordConfirmation= request.createUserDto.password
 
-                         
+                      }, new JsonMediaTypeFormatter()).Result;
+
+                     if (result.IsSuccessStatusCode)
+                     {
+                     var response = new HttpResponseMessage(HttpStatusCode.OK);
+                     response.Content = new StringContent(result.Content.ReadAsStringAsync().Result, Encoding.UTF8, "application/json");
+                     var content = await response.Content.ReadAsStringAsync();
+                     var ItemsSet = JsonConvert.DeserializeObject<dynamic>(content);
+                     if (ItemsSet["id"] != null)
+                     {
+
+                      request.createUserDto.SsoId = ItemsSet["id"];
+                      User user = mapper.Map<User>(request.createUserDto);
+                      await userRepository.Add(user);
+                      await userRepository.CommitAsync();
+
+                       return user.Id;
 
 
-                    //    }
-                    //    else
-                    //    {
-                    //        return "Ok";
-                    //    }
-                    //}
-                    //else
-                    //{
-                    //    return "Bad";
-                    //}
 
+
+                  }
+                  else
+                 {
+                   return "Ok";
+                 }
                 }
+               else
+               {
+                 return "Bad";
+              }
+
             }
+        }
           
             
         }
     }
-//}
+}

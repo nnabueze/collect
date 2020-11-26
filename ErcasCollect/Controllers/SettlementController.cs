@@ -11,7 +11,7 @@ using Microsoft.Extensions.Logging;
 
 namespace ErcasCollect.Controllers
 {
-    [Route("api/settlement")]
+    [Route("api/[controller]/[action]")]
     public class SettlementController : Controller
     {
         private readonly IMediator mediator;
@@ -26,7 +26,7 @@ namespace ErcasCollect.Controllers
   
 
         [HttpPost]
-        [Route("create")]
+
         public async Task<ActionResult> CreateSettlement([FromBody] CreateSettlementCommand request)
         {
             try

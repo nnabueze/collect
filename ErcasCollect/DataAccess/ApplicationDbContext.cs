@@ -14,7 +14,7 @@ namespace ErcasCollect.DataAccess
         public DbSet<Status> Statuses{ get; set; }
         public DbSet<Bank> Banks { get; set; }
         public DbSet<Biller> Billers { get; set; }
-        public DbSet<BillerBankDetail> BillerBankDetails { get; set; }
+        public DbSet<BankDetail> BankDetails { get; set; }
         public DbSet<BillerTINDetail> BillerTinDetails{ get; set; }
         public DbSet<BillerType> BillerTypes { get; set; }
         public DbSet<LevelOne> LevelOne{ get; set; }
@@ -27,12 +27,15 @@ namespace ErcasCollect.DataAccess
         public DbSet<LevelThree> LevelThree { get; set; }
         public DbSet<State> State { get; set; }
         public DbSet<Batch> Batchs { get; set; }
-      
+        public DbSet<MetaData> MetaData { get; set; }
+
         public DbSet<Transaction> Transactions{ get; set; }
         public DbSet<TransactionType> TransactionTypes { get; set; }
         public DbSet<User> Users { get; set; }
         public DbSet<TaxPayer> TaxPayers { get; set; }
         public DbSet<NumberSeries> NumberSeries { get; set; }
+        public DbSet<FundSweep> FundSweep{ get; set; }
+        public DbSet<TransactionSummaryView> TransactionSummaryViews { get; set; }
 
 
 

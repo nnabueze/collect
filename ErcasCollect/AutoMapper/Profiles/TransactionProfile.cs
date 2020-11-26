@@ -3,7 +3,9 @@ using System.Collections.Generic;
 
 using AutoMapper;
 using ErcasCollect.Commands.Dto.CollectionDto;
+using ErcasCollect.Commands.Dto.SettlementDto;
 using ErcasCollect.Domain.Models;
+using ErcasCollect.Queries.Dto.ReadTransactionDto;
 
 namespace ErcasCollect.AutoMapper.Profiles
 {
@@ -11,10 +13,12 @@ namespace ErcasCollect.AutoMapper.Profiles
     {
         public TransactionProfile()
         {
-            CreateMap<CreateCollectionComandDto, Transaction>().ReverseMap();
+            CreateMap<SettlementCollectionComandDto, Transaction>().ReverseMap();
           
             CreateMap<SessionData, Transaction>().ReverseMap();
-            CreateMap<SessionData, CreateCollectionComandDto>().ReverseMap();
+
+            CreateMap<TransactionDetail, Transaction>().ReverseMap();
+            CreateMap<ReadTransactionDto, Transaction>().ReverseMap();
 
 
         }

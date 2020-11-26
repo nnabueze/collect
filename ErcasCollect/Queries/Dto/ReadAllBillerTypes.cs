@@ -1,7 +1,7 @@
 ﻿using System;
 namespace ErcasCollect.Queries.Dto
 {
-    public class ReadAllBillerTypes
+    public class ReadAllBillerTypesDto
     {
      
         public string Id { get; set; }

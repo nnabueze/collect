@@ -12,7 +12,7 @@ namespace ErcasCollect.AutoMapper.Profiles
             CreateMap<CreateBillerDto, Biller>().ReverseMap();
             CreateMap<ReadBillerDto, Biller>().ReverseMap();
             CreateMap<ReadBillerDto, State>().ReverseMap();
-            CreateMap<AddBankDto, BillerBankDetail>().ReverseMap();
+            CreateMap<AddBankDto, BankDetail>().ReverseMap();
             CreateMap<AddTinDto, BillerTINDetail>().ReverseMap();
 
 

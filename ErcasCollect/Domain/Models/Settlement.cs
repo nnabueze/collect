@@ -22,6 +22,11 @@ namespace ErcasCollect.Domain.Models
         public string PayerPhone { get; set; }
         [Column(TypeName = "nvarchar(32)")]
         public string ReferenceID { get; set; }
+        [Column(TypeName = "nvarchar(32)")]
+        public string TransactionID { get; set; }
+        public Status Status { get; set; }
+        public string StatusId { get; set; }
+
 
 
     }

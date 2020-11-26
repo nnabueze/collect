@@ -7,10 +7,10 @@ namespace ErcasCollect.Domain.Interfaces
 {
     public interface IBillerBankRepository
     {
-        Task<IEnumerable<BillerBankDetail>> GetAll();
-        Task<BillerBankDetail> GetById(string id);
-        Task Insert(BillerBankDetail entity);
-        void Update(BillerBankDetail entity);
+        Task<IEnumerable<BankDetail>> GetAll();
+        Task<BankDetail> GetById(string id);
+        Task Insert(BankDetail entity);
+        void Update(BankDetail entity);
         void Delete(string id);
 
     }

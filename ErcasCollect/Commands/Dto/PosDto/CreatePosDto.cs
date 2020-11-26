@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Text.Json.Serialization;
 using ErcasCollect.Domain.Models;
 
 namespace ErcasCollect.Commands.Dto.PosDto
@@ -15,14 +16,17 @@ namespace ErcasCollect.Commands.Dto.PosDto
         public string BillerId { get; set; }
 
         public string StatusId { get; set; }
-      
-        public string Activationpin { get; set; }
+
+        [JsonIgnore]
+        public string Activationpin { get; set; }= Helpers.IdGenerator.IdGenerator.GetUniqueKey(4, 1);
 
         public decimal Version { get; set; }
 
-  
-     
 
-  
+        public string UserId { get; set; }
+
+
+
+
     }
 }

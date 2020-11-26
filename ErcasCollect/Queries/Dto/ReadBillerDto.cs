@@ -16,7 +16,9 @@ namespace ErcasCollect.Commands.Dto.BillerDto
         public BillerType BillerType { get; set; }
         public decimal Latitude { get; set; }
         public decimal Longitude { get; set; }
-        public string StatusId { get; set; }
+        public Status Status { get; set; }
         public string Abbreviation { get; set; }
+        public DateTime CreatedDate { get; set; }
+        public DateTime ModifiedDate { get; set; }
     }
 }

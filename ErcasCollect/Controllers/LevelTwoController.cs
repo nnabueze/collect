@@ -15,7 +15,7 @@ using Microsoft.Extensions.Logging;
 
 namespace ErcasCollect.Controllers
 {
-    [Route("api/leveltwo")]
+    [Route("api/[controller]/[action]")]
     public class LevelTwoController : Controller
     {
 
@@ -27,16 +27,10 @@ namespace ErcasCollect.Controllers
             this.mediator = mediator ?? throw new ArgumentNullException(nameof(mediator));
             this._logger = logger ?? throw new ArgumentNullException(nameof(logger));
         }
-        // GET: api/values
-        [HttpGet]
-        public IEnumerable<string> Get()
-        {
-            return new string[] { "value1", "value2" };
-        }
+
 
         // GET api/values/5
-        [HttpGet]
-        [Route("GetAllLevelTwoByID")]
+        [HttpGet("{id}")]
         public async Task<IEnumerable<ReadLevelTwoDto>> GetAllLevelTwoByBiller(string id)
         {
             try
@@ -58,10 +52,32 @@ namespace ErcasCollect.Controllers
             }
         }
 
+        [HttpGet("{id}")]
+        public async Task<ReadLevelTwoDto> GetAllLevelTwoByID(string id)
+        {
+            try
+            {
+                GetAllLevelTwoByIdQuery request = new GetAllLevelTwoByIdQuery();
+                request.id = id;
+                return await mediator.Send(request);
+            }
+            catch (AppException ex)
+            {
+                _logger.LogError(ex, "An Application exception occurred on the Get Specific action of the Igr");
+                // return await BadRequest(new { message = ex.Message });
+                throw;
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "An unknown error occurred on the Get Specific action of the Igr");
+                throw;
+            }
+        }
+
         // POST api/values
         [HttpPost]
-        [Route("create")]
-        public async Task<ActionResult> CreateBiller([FromBody] CreateLevelTwoCommand request)
+        
+        public async Task<ActionResult> CreateLevelTwo([FromBody] CreateLevelTwoCommand request)
         {
             try
             {
@@ -82,16 +98,16 @@ namespace ErcasCollect.Controllers
         }
     
 
-        // PUT api/values/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
-        {
-        }
+        //// PUT api/values/5
+        //[HttpPut("{id}")]
+        //public void Put(int id, [FromBody] string value)
+        //{
+        //}
 
-        // DELETE api/values/5
-        [HttpDelete("{id}")]
-        public void Delete(int id)
-        {
-        }
+        //// DELETE api/values/5
+        //[HttpDelete("{id}")]
+        //public void Delete(int id)
+        //{
+        //}
     }
 }

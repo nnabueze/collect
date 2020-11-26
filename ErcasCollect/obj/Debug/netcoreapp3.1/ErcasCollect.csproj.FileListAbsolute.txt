@@ -50,6 +50,9 @@
 /Users/macbook/Desktop/ErcasCollect/ErcasCollect/ErcasCollect/bin/Debug/netcoreapp3.1/System.Configuration.ConfigurationManager.dll
 /Users/macbook/Desktop/ErcasCollect/ErcasCollect/ErcasCollect/bin/Debug/netcoreapp3.1/System.Diagnostics.DiagnosticSource.dll
 /Users/macbook/Desktop/ErcasCollect/ErcasCollect/ErcasCollect/bin/Debug/netcoreapp3.1/System.IdentityModel.Tokens.Jwt.dll
+/Users/macbook/Desktop/ErcasCollect/ErcasCollect/ErcasCollect/bin/Debug/netcoreapp3.1/System.Net.Http.Extensions.dll
+/Users/macbook/Desktop/ErcasCollect/ErcasCollect/ErcasCollect/bin/Debug/netcoreapp3.1/System.Net.Http.Formatting.dll
+/Users/macbook/Desktop/ErcasCollect/ErcasCollect/ErcasCollect/bin/Debug/netcoreapp3.1/System.Net.Http.Primitives.dll
 /Users/macbook/Desktop/ErcasCollect/ErcasCollect/ErcasCollect/bin/Debug/netcoreapp3.1/System.Runtime.Caching.dll
 /Users/macbook/Desktop/ErcasCollect/ErcasCollect/ErcasCollect/bin/Debug/netcoreapp3.1/System.Security.Cryptography.ProtectedData.dll
 /Users/macbook/Desktop/ErcasCollect/ErcasCollect/ErcasCollect/bin/Debug/netcoreapp3.1/runtimes/unix/lib/netcoreapp2.1/Microsoft.Data.SqlClient.dll
@@ -60,7 +63,6 @@
 /Users/macbook/Desktop/ErcasCollect/ErcasCollect/ErcasCollect/bin/Debug/netcoreapp3.1/runtimes/unix/lib/netcoreapp2.0/System.Runtime.Caching.dll
 /Users/macbook/Desktop/ErcasCollect/ErcasCollect/ErcasCollect/bin/Debug/netcoreapp3.1/runtimes/win/lib/netcoreapp2.0/System.Runtime.Caching.dll
 /Users/macbook/Desktop/ErcasCollect/ErcasCollect/ErcasCollect/bin/Debug/netcoreapp3.1/runtimes/win/lib/netstandard2.0/System.Security.Cryptography.ProtectedData.dll
-/Users/macbook/Desktop/ErcasCollect/ErcasCollect/ErcasCollect/obj/Debug/netcoreapp3.1/ErcasCollect.csprojAssemblyReference.cache
 /Users/macbook/Desktop/ErcasCollect/ErcasCollect/ErcasCollect/obj/Debug/netcoreapp3.1/ErcasCollect.AssemblyInfoInputs.cache
 /Users/macbook/Desktop/ErcasCollect/ErcasCollect/ErcasCollect/obj/Debug/netcoreapp3.1/ErcasCollect.AssemblyInfo.cs
 /Users/macbook/Desktop/ErcasCollect/ErcasCollect/ErcasCollect/obj/Debug/netcoreapp3.1/ErcasCollect.csproj.CoreCompileInputs.cache
@@ -73,6 +75,5 @@
 /Users/macbook/Desktop/ErcasCollect/ErcasCollect/ErcasCollect/obj/Debug/netcoreapp3.1/ErcasCollect.dll
 /Users/macbook/Desktop/ErcasCollect/ErcasCollect/ErcasCollect/obj/Debug/netcoreapp3.1/ErcasCollect.pdb
 /Users/macbook/Desktop/ErcasCollect/ErcasCollect/ErcasCollect/obj/Debug/netcoreapp3.1/ErcasCollect.genruntimeconfig.cache
-/Users/macbook/Desktop/ErcasCollect/ErcasCollect/ErcasCollect/bin/Debug/netcoreapp3.1/System.Net.Http.Extensions.dll
-/Users/macbook/Desktop/ErcasCollect/ErcasCollect/ErcasCollect/bin/Debug/netcoreapp3.1/System.Net.Http.Formatting.dll
-/Users/macbook/Desktop/ErcasCollect/ErcasCollect/ErcasCollect/bin/Debug/netcoreapp3.1/System.Net.Http.Primitives.dll
+/Users/macbook/Desktop/ErcasCollect/ErcasCollect/ErcasCollect/obj/Debug/netcoreapp3.1/ErcasCollect.csprojAssemblyReference.cache
+/Users/macbook/Desktop/ErcasCollect/ErcasCollect/ErcasCollect/bin/Debug/netcoreapp3.1/DynamicApis.Api.Documentation.dll

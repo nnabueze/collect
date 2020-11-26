@@ -13,7 +13,7 @@ using Microsoft.Extensions.Logging;
 
 namespace ErcasCollect.Controllers
 {
-    [Route("api/collection")]
+    [Route("api/[controller]/[action]")]
     public class CollectionController : Controller
     {
 
@@ -26,8 +26,30 @@ namespace ErcasCollect.Controllers
             this._logger = logger ?? throw new ArgumentNullException(nameof(logger));
         }
         [HttpPost]
-        [Route("Create")]
-        public async Task<ActionResult> CreateCollection([FromBody] CreateCollectionCommand request)
+
+        public async Task<IActionResult> CreateCollection([FromBody] CreateCollectionCommand request)
+        {
+            try
+            {
+                var result = await mediator.Send(request);
+                return new JsonResult(result);
+            }
+            catch (AppException ex)
+            {
+                _logger.LogError(ex, "An Application exception occurred on the make transaction action of the NonIgr");
+                // return await BadRequest(new { message = ex.Message });
+                throw;
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "An unknown error occurred on the make transaction action of the NonIgr");
+                throw;
+            }
+        }
+
+        [HttpPost]
+    
+        public async Task<IActionResult> GenerateRemittance([FromBody] GenerateRemittanceCommand request)
         {
             try
             {
@@ -48,6 +70,6 @@ namespace ErcasCollect.Controllers
         }
         // GET: api/values
 
-        }
+    }
     
 }

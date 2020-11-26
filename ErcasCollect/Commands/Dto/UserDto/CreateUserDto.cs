@@ -15,7 +15,11 @@ namespace ErcasCollect.Commands.Dto.UserDto
         public string LevelTwoId { get; set; }
         public string StatusId { get; set; }
         public decimal CollectionLimit { get; set; }
-        public string Password { get; set; }
-        public string  Pin { get; set; }
+        public string email { get; set; }
+        public string password { get; set; }
+        public string phone{ get; set; }
+        public string firstname { get; set; }
+        public string lastname { get; set; }
+
     }
 }

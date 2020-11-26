@@ -5,14 +5,15 @@ using AutoMapper;
 using ErcasCollect.Commands.Dto.BillerDto;
 using ErcasCollect.Domain.Interfaces;
 using ErcasCollect.Domain.Models;
+using ErcasCollect.Responses;
 using MediatR;
 
 namespace ErcasCollect.Commands.BillerCommand
 {
-    public class CreateBillerBankCommand : IRequest<int>
+    public class CreateBillerBankCommand : IRequest<SuccessfulResponse>
     {
         public AddBankDto createBillerBankDto { get; set; }
-        public class CreateBillerBankCommandHandler : IRequestHandler<CreateBillerBankCommand, int>
+        public class CreateBillerBankCommandHandler : IRequestHandler<CreateBillerBankCommand, SuccessfulResponse>
         {
             private readonly IBillerBankRepository billerRepository;
             private readonly IMapper mapper;
@@ -22,13 +23,13 @@ namespace ErcasCollect.Commands.BillerCommand
                 this.mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
             }
 
-            public async Task<int> Handle(CreateBillerBankCommand request, CancellationToken cancellationToken)
+            public async Task<SuccessfulResponse> Handle(CreateBillerBankCommand request, CancellationToken cancellationToken)
             { 
 
-                BillerBankDetail billerbank = mapper.Map<BillerBankDetail>(request.createBillerBankDto);
+                BankDetail billerbank = mapper.Map<BankDetail>(request.createBillerBankDto);
                 await billerRepository.Insert(billerbank);
 
-                return billerbank.Id;
+                return new SuccessfulResponse { StatusCode="200", Message="Successfully Added"};
             }
 
         

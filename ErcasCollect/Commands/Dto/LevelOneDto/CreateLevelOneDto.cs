@@ -15,6 +15,7 @@ namespace ErcasCollect.Commands.Dto.LevelOneDto
         public decimal Latitude { get; set; }
         public decimal Longitude { get; set; }
         public string StatusId { get; set; }
+        public decimal FundsweepPercentage { get; set; }
     }
 
 }

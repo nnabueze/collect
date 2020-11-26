@@ -15,7 +15,7 @@ using Microsoft.Extensions.Logging;
 
 namespace ErcasCollect.Controllers
 {
-    [Route("api/levelthree")]
+    [Route("api/[controller]/[action]")]
     public class LevelThreeController : Controller
     {
         private readonly IMediator mediator;
@@ -27,23 +27,10 @@ namespace ErcasCollect.Controllers
             this._logger = logger ?? throw new ArgumentNullException(nameof(logger));
         }
         // GET: api/values
-        [HttpGet]
-        public IEnumerable<string> Get()
-        {
-            return new string[] { "value1", "value2" };
-        }
-
-        // GET api/values/5
-        [HttpGet("{id}")]
-
-        public string Get(int id)
-        {
-            return "value";
-        }
 
         // POST api/values
         [HttpPost]
-        [Route("CreateLevelThree")]
+     
         public async Task<ActionResult> CreateLevelThree([FromBody] CreateLevelThreeCommand request)
         {
             try
@@ -64,9 +51,9 @@ namespace ErcasCollect.Controllers
             }
         }
 
-        [HttpGet]
-        [Route("GetAllLevelThreeByID")]
-        public async Task<IEnumerable<ReadLevelThreeDto>> GetAllLevelTwoByBiller(string id)
+        [HttpGet("{id}")]
+
+        public async Task<IEnumerable<ReadLevelThreeDto>> GetAllLevelThreeByBiller(string id)
         {
             try
             {
@@ -87,6 +74,28 @@ namespace ErcasCollect.Controllers
             }
         }
 
-      
+        [HttpGet("{id}")]
+
+        public async Task<ReadLevelThreeDto> GetAllLevelThreeByID(string id)
+        {
+            try
+            {
+                GetAllLevelThreeByIDQuery request = new GetAllLevelThreeByIDQuery();
+                request.id = id;
+                return await mediator.Send(request);
+            }
+            catch (AppException ex)
+            {
+                _logger.LogError(ex, "An Application exception occurred on the Get Specific action of the Igr");
+                // return await BadRequest(new { message = ex.Message });
+                throw;
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "An unknown error occurred on the Get Specific action of the Igr");
+                throw;
+            }
+        }
+
     }
 }

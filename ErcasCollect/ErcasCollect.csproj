@@ -29,6 +29,8 @@
     <PackageReference Include="FluentValidation" Version="9.1.3" />
     <PackageReference Include="FluentValidation.DependencyInjectionExtensions" Version="9.1.3" />
     <PackageReference Include="System.Net.Http.Formatting.Extension" Version="5.2.3" />
+    <PackageReference Include="DynamicApis.Api.Documentation" Version="2.26.0" />
+    <PackageReference Include="Microsoft.OpenApi" Version="1.2.3" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Commands\" />
@@ -68,7 +70,6 @@
     <Folder Include="Commands\Dto\PosDto\" />
     <Folder Include="Commands\Dto\UserDto\" />
     <Folder Include="Commands\Dto\SettlementDto\" />
-    <Folder Include="Commands\Dto\TransactionDto\" />
     <Folder Include="Commands\SettlementCommand\" />
     <Folder Include="Commands\Dto\TaxpayerDto\" />
     <Folder Include="Commands\BatchCommand\" />
@@ -85,5 +86,7 @@
     <Folder Include="Queries\PosQuery\" />
     <Folder Include="Queries\UserQuery\" />
     <Folder Include="Queries\TaxPayerQuery\" />
+    <Folder Include="ViewModels\" />
+    <Folder Include="Responses\" />
   </ItemGroup>
 </Project>

@@ -4,7 +4,7 @@ namespace ErcasCollect.Commands.Dto.BillerDto
     public class AddBankDto
     {
    
-        public string BillerId { get; set; }
+        public string OwnerId { get; set; }
         public string BankId { get; set; }
 
         public string AccountNumber { get; set; }
