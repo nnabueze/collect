@@ -6,17 +6,19 @@ using AutoMapper;
 
 using ErcasCollect.Domain.Interfaces;
 using ErcasCollect.Domain.Models;
+using ErcasCollect.Helpers;
 using ErcasCollect.Queries.Dto;
 using ErcasCollect.Queries.Dto.ReadTransactionDto;
+using ErcasCollect.Responses;
 using MediatR;
 
 namespace ErcasCollect.Queries.BillerQuery
 {
-    public class GetTransactionDetailByIDNIBBSQuery : IRequest<ReadTransactionDto>
+    public class GetTransactionDetailByIDNIBBSQuery : IRequest<ValidationResponse>
     {
 
         public string id { get; set; }
-        public class GetTransactionDetailByIDNIBBSHandler : IRequestHandler<GetTransactionDetailByIDNIBBSQuery, ReadTransactionDto>
+        public class GetTransactionDetailByIDNIBBSHandler : IRequestHandler<GetTransactionDetailByIDNIBBSQuery, ValidationResponse>
         {
             private readonly IGenericRepository<Transaction> transactionbybatchidRepository;
             private readonly IMapper mapper;
@@ -28,14 +30,15 @@ namespace ErcasCollect.Queries.BillerQuery
 
             }
 
-            public async Task<ReadTransactionDto> Handle(GetTransactionDetailByIDNIBBSQuery query, CancellationToken cancellationToken)
+            public async Task<ValidationResponse> Handle(GetTransactionDetailByIDNIBBSQuery query, CancellationToken cancellationToken)
             {
 
                 var result = await transactionbybatchidRepository.FindSingleInclude(x => x.Id == query.id, x => x.Status, x => x.Agent, x => x.Biller, x => x.PaymentChannel, x => x.TransactionType);
                 if (result != null)
                 {
-                    var transactionbybatchid = mapper.Map<ReadTransactionDto>(result);
-                    return transactionbybatchid;
+                    //var transactionbybatchid = mapper.Map<ReadTransactionDto>(result);
+                    //return transactionbybatchid;
+                    return new ValidationResponse { ResponseCode = 0, NextStep = 0, BillerID = result.BillerId, Params = Helpers.XmlSerializer.ValidationParamArray(V) };
                 }
                 else
                 {

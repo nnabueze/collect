@@ -12,6 +12,7 @@ namespace ErcasCollect.Responses
         public int NextStep { get; set; }
 
         public List<Param> Params { get; set; }
+
     }
 
 

@@ -1,45 +1,40 @@
 ﻿<Properties StartupConfiguration="{D0CA5ADA-830B-4B86-B650-F6C8C3672D39}|Default">
   <MonoDevelop.Ide.Workbench ActiveDocument="ErcasCollect/Queries/Transaction/GetTransactionSetailByIDNIBSS..cs">
     <Files>
-      <File FileName="ErcasCollect/Responses/ValidationRequest.cs" Line="36" Column="1" />
+      <File FileName="ErcasCollect/Responses/ValidationRequest.cs" Line="37" Column="1" />
       <File FileName="ErcasCollect/Responses/ValidationResponse.cs" />
       <File FileName="ErcasCollect/Controllers/TransactionController.cs" />
       <File FileName="ErcasCollect/AutoMapper/Profiles/TransactionProfile.cs" />
       <File FileName="ErcasCollect/Queries/Transaction/GetTransactionDetailById.cs" />
       <File FileName="ErcasCollect/Startup.cs" />
-      <File FileName="ErcasCollect/Queries/Transaction/GetTransactionSetailByIDNIBSS..cs" Line="1" Column="1" />
+      <File FileName="ErcasCollect/Queries/Transaction/GetTransactionSetailByIDNIBSS..cs" Line="40" Column="51" />
       <File FileName="ErcasCollect/Queries/Transaction/GetTransactionDetailbyBiller.cs" />
       <File FileName="ErcasCollect/Queries/Transaction/GetTransactionDetailbyBatchId.cs" />
       <File FileName="ErcasCollect/Queries/Transaction/GetTransactionForAdminQuery.cs" />
+      <File FileName="ErcasCollect/Helpers/XmlSerializer.cs" />
+      <File FileName="ErcasCollect/Commands/Dto/BillerDto/AddBankDto.cs" />
+      <File FileName="ErcasCollect/Commands/Dto/BillerDto/CreateBillerDto.cs" />
+      <File FileName="ErcasCollect/Helpers/IdGenerator.cs/IdGenerator.cs" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
         <State name="__root__">
           <Node name="ErcasCollect" expanded="True">
             <Node name="ErcasCollect" expanded="True">
-              <Node name="AutoMapper" expanded="True">
-                <Node name="Profiles" expanded="True" />
-              </Node>
+              <Node name="AutoMapper" expanded="True" />
               <Node name="Commands" expanded="True">
                 <Node name="Dto" expanded="True">
                   <Node name="BillerDto" expanded="True" />
-                  <Node name="SettlementDto" expanded="True" />
                 </Node>
-                <Node name="LevelTwoCommand" expanded="True" />
               </Node>
-              <Node name="Controllers" expanded="True" />
-              <Node name="Domain" expanded="True">
-                <Node name="Models" expanded="True" />
+              <Node name="Helpers" expanded="True">
+                <Node name="IdGenerator.cs" expanded="True" />
               </Node>
               <Node name="Queries" expanded="True">
-                <Node name="ApplicationData" expanded="True" />
-                <Node name="Dto" expanded="True" />
                 <Node name="Transaction" expanded="True">
                   <Node name="GetTransactionSetailByIDNIBSS..cs" selected="True" />
                 </Node>
               </Node>
-              <Node name="Responses" expanded="True" />
-              <Node name="ViewModels" expanded="True" />
             </Node>
           </Node>
         </State>
