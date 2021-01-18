@@ -32,6 +32,7 @@ namespace ErcasCollect.Domain.Models
         public string StatusId { get; set; }
         public Status Status { get; set; }
         public string Abbreviation { get; set; }
+        public int Commission { get; set; }
 
 
     }

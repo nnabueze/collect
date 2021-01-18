@@ -33,7 +33,7 @@ namespace ErcasCollect.Commands.UserCommand
                 using (var client = new HttpClient())
                     {
 
-                     client.BaseAddress = new Uri("http://35.193.238.146/");
+                     client.BaseAddress = new Uri("http://155.93.117.250/");
                      client.DefaultRequestHeaders.TryAddWithoutValidation("Content-Type", "application/json; charset=utf-8");
                      client.DefaultRequestHeaders
                     .Accept
@@ -63,6 +63,7 @@ namespace ErcasCollect.Commands.UserCommand
                      {
 
                       request.createUserDto.SsoId = ItemsSet["id"];
+                      request.createUserDto.Name = request.createUserDto.lastname +" "+ request.createUserDto.firstname;
                       User user = mapper.Map<User>(request.createUserDto);
                       await userRepository.Add(user);
                       await userRepository.CommitAsync();

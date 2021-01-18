@@ -1,40 +1,41 @@
 ﻿<Properties StartupConfiguration="{D0CA5ADA-830B-4B86-B650-F6C8C3672D39}|Default">
-  <MonoDevelop.Ide.Workbench ActiveDocument="ErcasCollect/Queries/Transaction/GetTransactionSetailByIDNIBSS..cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="ErcasCollect/Startup.cs">
     <Files>
-      <File FileName="ErcasCollect/Responses/ValidationRequest.cs" Line="37" Column="1" />
-      <File FileName="ErcasCollect/Responses/ValidationResponse.cs" />
-      <File FileName="ErcasCollect/Controllers/TransactionController.cs" />
-      <File FileName="ErcasCollect/AutoMapper/Profiles/TransactionProfile.cs" />
-      <File FileName="ErcasCollect/Queries/Transaction/GetTransactionDetailById.cs" />
-      <File FileName="ErcasCollect/Startup.cs" />
-      <File FileName="ErcasCollect/Queries/Transaction/GetTransactionSetailByIDNIBSS..cs" Line="40" Column="51" />
-      <File FileName="ErcasCollect/Queries/Transaction/GetTransactionDetailbyBiller.cs" />
-      <File FileName="ErcasCollect/Queries/Transaction/GetTransactionDetailbyBatchId.cs" />
-      <File FileName="ErcasCollect/Queries/Transaction/GetTransactionForAdminQuery.cs" />
-      <File FileName="ErcasCollect/Helpers/XmlSerializer.cs" />
-      <File FileName="ErcasCollect/Commands/Dto/BillerDto/AddBankDto.cs" />
+      <File FileName="ErcasCollect/Commands/UserCommand/CreateUserCommand.cs" Line="61" Column="45" />
+      <File FileName="ErcasCollect/Queries/BillerQuery/GetAllBillerByCategory.cs" />
+      <File FileName="ErcasCollect/Queries/BillerQuery/GetBillerByIDQuery.cs" />
+      <File FileName="ErcasCollect/Queries/ApplicationData/GetMetaData.cs" />
+      <File FileName="ErcasCollect/Commands/BillerCommand/CreateBillerBankCommand.cs" />
+      <File FileName="ErcasCollect/Commands/BillerCommand/CreateBillerCommand.cs" />
+      <File FileName="ErcasCollect/Controllers/BillerController.cs" />
+      <File FileName="ErcasCollect/Domain/Models/Biller.cs" />
+      <File FileName="ErcasCollect/Migrations/20210117132020_16-01-2021-1.cs" />
       <File FileName="ErcasCollect/Commands/Dto/BillerDto/CreateBillerDto.cs" />
-      <File FileName="ErcasCollect/Helpers/IdGenerator.cs/IdGenerator.cs" />
+      <File FileName="ErcasCollect/Domain/Models/User.cs" />
+      <File FileName="ErcasCollect/Commands/Dto/UserDto/CreateUserDto.cs" />
+      <File FileName="ErcasCollect/Controllers/UserController.cs" />
+      <File FileName="ErcasCollect/Queries/Dto/ReadUserDto.cs" />
+      <File FileName="ErcasCollect/Migrations/20210118083717_new-56.cs" />
+      <File FileName="ErcasCollect/Startup.cs" Line="123" Column="1" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
         <State name="__root__">
           <Node name="ErcasCollect" expanded="True">
             <Node name="ErcasCollect" expanded="True">
-              <Node name="AutoMapper" expanded="True" />
               <Node name="Commands" expanded="True">
-                <Node name="Dto" expanded="True">
-                  <Node name="BillerDto" expanded="True" />
-                </Node>
+                <Node name="Dto" expanded="True" />
+                <Node name="UserCommand" expanded="True" />
               </Node>
-              <Node name="Helpers" expanded="True">
-                <Node name="IdGenerator.cs" expanded="True" />
+              <Node name="Controllers" expanded="True" />
+              <Node name="Domain" expanded="True">
+                <Node name="Models" expanded="True" />
               </Node>
+              <Node name="Migrations" expanded="True" />
               <Node name="Queries" expanded="True">
-                <Node name="Transaction" expanded="True">
-                  <Node name="GetTransactionSetailByIDNIBSS..cs" selected="True" />
-                </Node>
+                <Node name="Dto" expanded="True" />
               </Node>
+              <Node name="Startup.cs" selected="True" />
             </Node>
           </Node>
         </State>

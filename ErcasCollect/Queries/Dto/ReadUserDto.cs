@@ -5,6 +5,7 @@ namespace ErcasCollect.Queries.Dto
 {
     public class ReadUserDto
     {
+        public string Name { get; set; }
         public int SsoId { get; set; }
     
         public Role Role { get; set; }

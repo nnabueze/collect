@@ -38,7 +38,7 @@ namespace ErcasCollect.Queries.BillerQuery
                 {
                     //var transactionbybatchid = mapper.Map<ReadTransactionDto>(result);
                     //return transactionbybatchid;
-                    return new ValidationResponse { ResponseCode = 0, NextStep = 0, BillerID = result.BillerId, Params = Helpers.XmlSerializer.ValidationParamArray(V) };
+                    return new ValidationResponse { ResponseCode = 0, NextStep = 0, BillerID = result.BillerId };
                 }
                 else
                 {
