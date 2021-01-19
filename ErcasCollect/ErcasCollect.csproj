@@ -44,7 +44,6 @@
     <Folder Include="Domain\BaseEntities\" />
     <Folder Include="Domain\Interfaces\" />
     <Folder Include="AutoMapper\Profiles\" />
-    <Folder Include="Helpers\" />
     <Folder Include="Helpers\IdGenerator.cs\" />
     <Folder Include="Controllers\" />
     <Folder Include="Commands\Dto\" />
