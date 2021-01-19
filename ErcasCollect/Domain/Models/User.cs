@@ -11,10 +11,10 @@ namespace ErcasCollect.Domain.Models
         public Role Role { get; set; }
         public int BillerId { get; set; }
         public Biller Biller { get; set; }
-        public int LevelTwoId { get; set; }
+        public int? LevelTwoId { get; set; }
         public LevelTwo LevelTwo { get; set; }
 
-        public int LevelOneId { get; set; }
+        public int? LevelOneId { get; set; }
         public LevelOne LevelOne { get; set; }
 
         public int StatusCode { get; set; }

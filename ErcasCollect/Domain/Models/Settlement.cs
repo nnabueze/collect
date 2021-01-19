@@ -6,7 +6,6 @@ namespace ErcasCollect.Domain.Models
 {
     public class Settlement:TransactionBaseEntity
     {
-        [Column(TypeName = "nvarchar(32)")]
         public int BankId { get; set; }
         public Bank Bank { get; set; } 
         public int BillerId { get; set; }

@@ -13,7 +13,7 @@ namespace ErcasCollect.Queries.BillerQuery
     public class GetAllBillerByCategoryQuery : IRequest<IEnumerable<ReadBillerDto>>
     {
 
-        public string id { get; set; }
+        public int id { get; set; }
         public class GetAllBillerByCategoryHandler : IRequestHandler<GetAllBillerByCategoryQuery, IEnumerable<ReadBillerDto>>
         {
             private readonly IGenericRepository<Biller> billerRepository;

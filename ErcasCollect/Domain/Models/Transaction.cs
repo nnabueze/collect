@@ -23,7 +23,7 @@ namespace ErcasCollect.Domain.Models
         public User Agent { get; set; }
         public string SessionId { get; set; }
         public string OfflineSessionId { get; set; }
-        public int BillerId { get; set; }
+        public int? BillerId { get; set; }
         public Biller Biller { get; set; }
         public int BatchId { get; set; }
         public string OfflineBatchId { get; set; }
@@ -33,11 +33,11 @@ namespace ErcasCollect.Domain.Models
 
         public string TransactionNumber { get; set; }
         public PaymentChannel PaymentChannel{ get; set; }
-        public int LevelOneId { get; set; }
+        public int? LevelOneId { get; set; }
         public LevelOne LevelOne { get; set; }
-        public int LevelTwoId { get; set; }
+        public int? LevelTwoId { get; set; }
         public LevelTwo LevelTwo { get; set; }
-        public int LevelThreeId { get; set; }
+        public int? LevelThreeId { get; set; }
         public LevelThree LevelThree { get; set; }
 
 

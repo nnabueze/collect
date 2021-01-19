@@ -17,7 +17,7 @@ namespace ErcasCollect.Domain.Models
         public decimal Amount { get; set; }
         public int AgentId { get; set; }
         public User Agent { get; set; }
-        public int BillerId { get; set; }
+        public int? BillerId { get; set; }
         public Biller  Biller { get; set; }
       
 

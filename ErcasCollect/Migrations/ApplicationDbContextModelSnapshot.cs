@@ -21,8 +21,10 @@ namespace ErcasCollect.Migrations
 
             modelBuilder.Entity("ErcasCollect.Domain.Models.Bank", b =>
                 {
-                    b.Property<string>("Id")
-                        .HasColumnType("nvarchar(32)");
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("BankName")
                         .HasColumnType("nvarchar(32)");
@@ -49,7 +51,10 @@ namespace ErcasCollect.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("BankId")
-                        .HasColumnType("nvarchar(32)");
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("BankId1")
+                        .HasColumnType("int");
 
                     b.Property<bool>("IsValidated")
                         .HasColumnType("bit");
@@ -59,7 +64,7 @@ namespace ErcasCollect.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("BankId");
+                    b.HasIndex("BankId1");
 
                     b.ToTable("BankDetails");
                 });
@@ -77,7 +82,7 @@ namespace ErcasCollect.Migrations
                     b.Property<decimal>("Amount")
                         .HasColumnType("decimal(18,2)");
 
-                    b.Property<int>("BillerId")
+                    b.Property<int?>("BillerId")
                         .HasColumnType("int");
 
                     b.Property<int>("ItemCount")
@@ -108,8 +113,8 @@ namespace ErcasCollect.Migrations
                     b.Property<string>("Address")
                         .HasColumnType("nvarchar(32)");
 
-                    b.Property<string>("BillerTypeId")
-                        .HasColumnType("nvarchar(32)");
+                    b.Property<int>("BillerTypeId")
+                        .HasColumnType("int");
 
                     b.Property<int>("Commission")
                         .HasColumnType("int");
@@ -150,16 +155,14 @@ namespace ErcasCollect.Migrations
                     b.Property<int>("StateId")
                         .HasColumnType("int");
 
-                    b.Property<string>("StatusId")
-                        .HasColumnType("nvarchar(32)");
+                    b.Property<string>("StatusCode")
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
                     b.HasIndex("BillerTypeId");
 
                     b.HasIndex("StateId");
-
-                    b.HasIndex("StatusId");
 
                     b.ToTable("Billers");
                 });
@@ -192,8 +195,10 @@ namespace ErcasCollect.Migrations
 
             modelBuilder.Entity("ErcasCollect.Domain.Models.BillerType", b =>
                 {
-                    b.Property<string>("Id")
-                        .HasColumnType("nvarchar(32)");
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("Category")
                         .HasColumnType("nvarchar(32)");
@@ -216,13 +221,10 @@ namespace ErcasCollect.Migrations
                     b.Property<decimal>("Amount")
                         .HasColumnType("decimal(18,2)");
 
-                    b.Property<string>("BankId")
-                        .HasColumnType("nvarchar(32)");
+                    b.Property<int>("BankId")
+                        .HasColumnType("int");
 
-                    b.Property<string>("BillerId")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int?>("BillerId1")
+                    b.Property<int>("BillerId")
                         .HasColumnType("int");
 
                     b.Property<int>("ConfirmedBy")
@@ -234,16 +236,10 @@ namespace ErcasCollect.Migrations
                     b.Property<DateTime>("DateProcessed")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("LevelOneId")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int?>("LevelOneId1")
+                    b.Property<int?>("LevelOneId")
                         .HasColumnType("int");
 
-                    b.Property<string>("LevelTwoId")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int?>("LevelTwoId1")
+                    b.Property<int?>("LevelTwoId")
                         .HasColumnType("int");
 
                     b.Property<bool>("isConfirmed")
@@ -256,11 +252,11 @@ namespace ErcasCollect.Migrations
 
                     b.HasIndex("BankId");
 
-                    b.HasIndex("BillerId1");
+                    b.HasIndex("BillerId");
 
-                    b.HasIndex("LevelOneId1");
+                    b.HasIndex("LevelOneId");
 
-                    b.HasIndex("LevelTwoId1");
+                    b.HasIndex("LevelTwoId");
 
                     b.ToTable("FundSweep");
                 });
@@ -272,10 +268,7 @@ namespace ErcasCollect.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("BillerId")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int?>("BillerId1")
+                    b.Property<int>("BillerId")
                         .HasColumnType("int");
 
                     b.Property<DateTime>("CreatedDate")
@@ -308,14 +301,12 @@ namespace ErcasCollect.Migrations
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(32)");
 
-                    b.Property<string>("StatusId")
-                        .HasColumnType("nvarchar(32)");
+                    b.Property<int>("StatusCode")
+                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("BillerId1");
-
-                    b.HasIndex("StatusId");
+                    b.HasIndex("BillerId");
 
                     b.ToTable("LevelOne");
                 });
@@ -330,10 +321,7 @@ namespace ErcasCollect.Migrations
                     b.Property<decimal>("Amount")
                         .HasColumnType("decimal(18,2)");
 
-                    b.Property<string>("BillerId")
-                        .HasColumnType("nvarchar(32)");
-
-                    b.Property<int?>("BillerId1")
+                    b.Property<int>("BillerId")
                         .HasColumnType("int");
 
                     b.Property<DateTime>("CreatedDate")
@@ -348,11 +336,10 @@ namespace ErcasCollect.Migrations
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
 
-                    b.Property<string>("LevelOneId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(32)");
+                    b.Property<int?>("LevelOneId")
+                        .HasColumnType("int");
 
-                    b.Property<int>("LevelTwoId")
+                    b.Property<int?>("LevelTwoId")
                         .HasColumnType("int");
 
                     b.Property<int>("ModifiedBy")
@@ -366,7 +353,7 @@ namespace ErcasCollect.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("BillerId1");
+                    b.HasIndex("BillerId");
 
                     b.HasIndex("LevelOneId");
 
@@ -382,10 +369,7 @@ namespace ErcasCollect.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("BillerId")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int?>("BillerId1")
+                    b.Property<int>("BillerId")
                         .HasColumnType("int");
 
                     b.Property<DateTime>("CreatedDate")
@@ -400,10 +384,7 @@ namespace ErcasCollect.Migrations
                     b.Property<decimal>("Latitude")
                         .HasColumnType("decimal(18,6)");
 
-                    b.Property<string>("LevelOneId")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int?>("LevelOneId1")
+                    b.Property<int?>("LevelOneId")
                         .HasColumnType("int");
 
                     b.Property<decimal>("Longitude")
@@ -418,16 +399,14 @@ namespace ErcasCollect.Migrations
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(32)");
 
-                    b.Property<string>("StatusId")
-                        .HasColumnType("nvarchar(32)");
+                    b.Property<int>("StatusCode")
+                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("BillerId1");
+                    b.HasIndex("BillerId");
 
-                    b.HasIndex("LevelOneId1");
-
-                    b.HasIndex("StatusId");
+                    b.HasIndex("LevelOneId");
 
                     b.ToTable("LevelTwo");
                 });
@@ -439,8 +418,8 @@ namespace ErcasCollect.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("BillerTypeId")
-                        .HasColumnType("nvarchar(32)");
+                    b.Property<int>("BillerTypeId")
+                        .HasColumnType("int");
 
                     b.Property<string>("FieldEight")
                         .HasColumnType("nvarchar(max)");
@@ -499,8 +478,10 @@ namespace ErcasCollect.Migrations
 
             modelBuilder.Entity("ErcasCollect.Domain.Models.OS", b =>
                 {
-                    b.Property<string>("Id")
-                        .HasColumnType("nvarchar(32)");
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(32)");
@@ -535,9 +516,8 @@ namespace ErcasCollect.Migrations
                     b.Property<string>("Activationpin")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("BillerId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(32)");
+                    b.Property<int>("BillerId")
+                        .HasColumnType("int");
 
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2");
@@ -548,13 +528,11 @@ namespace ErcasCollect.Migrations
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
 
-                    b.Property<string>("LevelOneId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(32)");
+                    b.Property<int?>("LevelOneId")
+                        .HasColumnType("int");
 
-                    b.Property<string>("LevelTwoId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(32)");
+                    b.Property<int?>("LevelTwoId")
+                        .HasColumnType("int");
 
                     b.Property<int>("ModifiedBy")
                         .HasColumnType("int");
@@ -562,15 +540,14 @@ namespace ErcasCollect.Migrations
                     b.Property<DateTime>("ModifiedDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("OSId")
-                        .HasColumnType("nvarchar(32)");
+                    b.Property<int>("OSId")
+                        .HasColumnType("int");
 
                     b.Property<int>("StatusCode")
                         .HasColumnType("int");
 
-                    b.Property<string>("UserId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(32)");
+                    b.Property<int?>("UserId")
+                        .HasColumnType("int");
 
                     b.Property<decimal>("Version")
                         .HasColumnType("decimal(18,2)");
@@ -618,12 +595,8 @@ namespace ErcasCollect.Migrations
                     b.Property<decimal>("Amount")
                         .HasColumnType("decimal(18,2)");
 
-                    b.Property<string>("BankId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(32)");
-
-                    b.Property<string>("BankId1")
-                        .HasColumnType("nvarchar(32)");
+                    b.Property<int>("BankId")
+                        .HasColumnType("int");
 
                     b.Property<int>("BillerId")
                         .HasColumnType("int");
@@ -660,7 +633,7 @@ namespace ErcasCollect.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("BankId1");
+                    b.HasIndex("BankId");
 
                     b.HasIndex("BillerId");
 
@@ -686,19 +659,6 @@ namespace ErcasCollect.Migrations
                     b.ToTable("State");
                 });
 
-            modelBuilder.Entity("ErcasCollect.Domain.Models.Status", b =>
-                {
-                    b.Property<string>("Id")
-                        .HasColumnType("nvarchar(32)");
-
-                    b.Property<string>("Name")
-                        .HasColumnType("nvarchar(32)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Status");
-                });
-
             modelBuilder.Entity("ErcasCollect.Domain.Models.TaxPayer", b =>
                 {
                     b.Property<int>("Id")
@@ -706,9 +666,8 @@ namespace ErcasCollect.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("BillerId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(32)");
+                    b.Property<int>("BillerId")
+                        .HasColumnType("int");
 
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2");
@@ -737,9 +696,8 @@ namespace ErcasCollect.Migrations
                     b.Property<string>("PhoneNumber")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("StatusCode")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(32)");
+                    b.Property<int>("StatusCode")
+                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
@@ -764,7 +722,7 @@ namespace ErcasCollect.Migrations
                     b.Property<int>("BatchId")
                         .HasColumnType("int");
 
-                    b.Property<int>("BillerId")
+                    b.Property<int?>("BillerId")
                         .HasColumnType("int");
 
                     b.Property<DateTime>("CreatedDate")
@@ -776,13 +734,13 @@ namespace ErcasCollect.Migrations
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
 
-                    b.Property<int>("LevelOneId")
+                    b.Property<int?>("LevelOneId")
                         .HasColumnType("int");
 
-                    b.Property<int>("LevelThreeId")
+                    b.Property<int?>("LevelThreeId")
                         .HasColumnType("int");
 
-                    b.Property<int>("LevelTwoId")
+                    b.Property<int?>("LevelTwoId")
                         .HasColumnType("int");
 
                     b.Property<int>("ModifiedBy")
@@ -858,10 +816,7 @@ namespace ErcasCollect.Migrations
                     b.Property<decimal>("AmountPaid")
                         .HasColumnType("decimal(18,2)");
 
-                    b.Property<string>("BillerId")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int?>("BillerId1")
+                    b.Property<int>("BillerId")
                         .HasColumnType("int");
 
                     b.Property<DateTime>("DateClosed")
@@ -870,16 +825,10 @@ namespace ErcasCollect.Migrations
                     b.Property<DateTime>("DateCreated")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("LevelOneId")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int?>("LevelOneId1")
+                    b.Property<int?>("LevelOneId")
                         .HasColumnType("int");
 
-                    b.Property<string>("LevelTwoId")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int?>("LevelTwoId1")
+                    b.Property<int?>("LevelTwoId")
                         .HasColumnType("int");
 
                     b.Property<bool>("isClosed")
@@ -887,11 +836,11 @@ namespace ErcasCollect.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("BillerId1");
+                    b.HasIndex("BillerId");
 
-                    b.HasIndex("LevelOneId1");
+                    b.HasIndex("LevelOneId");
 
-                    b.HasIndex("LevelTwoId1");
+                    b.HasIndex("LevelTwoId");
 
                     b.ToTable("TransactionSummaryViews");
                 });
@@ -936,10 +885,10 @@ namespace ErcasCollect.Migrations
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
 
-                    b.Property<int>("LevelOneId")
+                    b.Property<int?>("LevelOneId")
                         .HasColumnType("int");
 
-                    b.Property<int>("LevelTwoId")
+                    b.Property<int?>("LevelTwoId")
                         .HasColumnType("int");
 
                     b.Property<int>("ModifiedBy")
@@ -977,7 +926,7 @@ namespace ErcasCollect.Migrations
                 {
                     b.HasOne("ErcasCollect.Domain.Models.Bank", "Bank")
                         .WithMany()
-                        .HasForeignKey("BankId");
+                        .HasForeignKey("BankId1");
                 });
 
             modelBuilder.Entity("ErcasCollect.Domain.Models.Batch", b =>
@@ -990,26 +939,22 @@ namespace ErcasCollect.Migrations
 
                     b.HasOne("ErcasCollect.Domain.Models.Biller", "Biller")
                         .WithMany()
-                        .HasForeignKey("BillerId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("BillerId");
                 });
 
             modelBuilder.Entity("ErcasCollect.Domain.Models.Biller", b =>
                 {
                     b.HasOne("ErcasCollect.Domain.Models.BillerType", "BillerType")
                         .WithMany()
-                        .HasForeignKey("BillerTypeId");
+                        .HasForeignKey("BillerTypeId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("ErcasCollect.Domain.Models.State", "State")
                         .WithMany()
                         .HasForeignKey("StateId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.HasOne("ErcasCollect.Domain.Models.Status", "Status")
-                        .WithMany()
-                        .HasForeignKey("StatusId");
                 });
 
             modelBuilder.Entity("ErcasCollect.Domain.Models.BillerTINDetail", b =>
@@ -1023,71 +968,71 @@ namespace ErcasCollect.Migrations
                 {
                     b.HasOne("ErcasCollect.Domain.Models.Bank", "Bank")
                         .WithMany()
-                        .HasForeignKey("BankId");
+                        .HasForeignKey("BankId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("ErcasCollect.Domain.Models.Biller", "Biller")
                         .WithMany()
-                        .HasForeignKey("BillerId1");
+                        .HasForeignKey("BillerId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("ErcasCollect.Domain.Models.LevelOne", "LevelOne")
                         .WithMany()
-                        .HasForeignKey("LevelOneId1");
+                        .HasForeignKey("LevelOneId");
 
                     b.HasOne("ErcasCollect.Domain.Models.LevelTwo", "LevelTwo")
                         .WithMany()
-                        .HasForeignKey("LevelTwoId1");
+                        .HasForeignKey("LevelTwoId");
                 });
 
             modelBuilder.Entity("ErcasCollect.Domain.Models.LevelOne", b =>
                 {
                     b.HasOne("ErcasCollect.Domain.Models.Biller", "Biller")
                         .WithMany()
-                        .HasForeignKey("BillerId1");
-
-                    b.HasOne("ErcasCollect.Domain.Models.Status", "Status")
-                        .WithMany()
-                        .HasForeignKey("StatusId");
+                        .HasForeignKey("BillerId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("ErcasCollect.Domain.Models.LevelThree", b =>
                 {
                     b.HasOne("ErcasCollect.Domain.Models.Biller", "Biller")
                         .WithMany()
-                        .HasForeignKey("BillerId1");
+                        .HasForeignKey("BillerId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("ErcasCollect.Domain.Models.LevelOne", "LevelOne")
                         .WithMany()
-                        .HasForeignKey("LevelOneId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("LevelOneId");
 
                     b.HasOne("ErcasCollect.Domain.Models.LevelTwo", "LevelTwo")
                         .WithMany()
-                        .HasForeignKey("LevelTwoId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("LevelTwoId");
                 });
 
             modelBuilder.Entity("ErcasCollect.Domain.Models.LevelTwo", b =>
                 {
                     b.HasOne("ErcasCollect.Domain.Models.Biller", "Biller")
                         .WithMany()
-                        .HasForeignKey("BillerId1");
+                        .HasForeignKey("BillerId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("ErcasCollect.Domain.Models.LevelOne", "LevelOne")
                         .WithMany()
-                        .HasForeignKey("LevelOneId1");
-
-                    b.HasOne("ErcasCollect.Domain.Models.Status", "Status")
-                        .WithMany()
-                        .HasForeignKey("StatusId");
+                        .HasForeignKey("LevelOneId");
                 });
 
             modelBuilder.Entity("ErcasCollect.Domain.Models.MetaData", b =>
                 {
                     b.HasOne("ErcasCollect.Domain.Models.BillerType", "BillerTypes")
                         .WithMany()
-                        .HasForeignKey("BillerTypeId");
+                        .HasForeignKey("BillerTypeId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("ErcasCollect.Domain.Models.Pos", b =>
@@ -1100,32 +1045,30 @@ namespace ErcasCollect.Migrations
 
                     b.HasOne("ErcasCollect.Domain.Models.LevelOne", "LevelOne")
                         .WithMany()
-                        .HasForeignKey("LevelOneId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("LevelOneId");
 
                     b.HasOne("ErcasCollect.Domain.Models.LevelTwo", "LevelTwo")
                         .WithMany()
-                        .HasForeignKey("LevelTwoId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("LevelTwoId");
 
                     b.HasOne("ErcasCollect.Domain.Models.OS", "OS")
                         .WithMany()
-                        .HasForeignKey("OSId");
+                        .HasForeignKey("OSId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("ErcasCollect.Domain.Models.User", "User")
                         .WithMany()
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("UserId");
                 });
 
             modelBuilder.Entity("ErcasCollect.Domain.Models.Settlement", b =>
                 {
                     b.HasOne("ErcasCollect.Domain.Models.Bank", "Bank")
                         .WithMany()
-                        .HasForeignKey("BankId1");
+                        .HasForeignKey("BankId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("ErcasCollect.Domain.Models.Biller", "Biller")
                         .WithMany()
@@ -1165,27 +1108,19 @@ namespace ErcasCollect.Migrations
 
                     b.HasOne("ErcasCollect.Domain.Models.Biller", "Biller")
                         .WithMany()
-                        .HasForeignKey("BillerId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("BillerId");
 
                     b.HasOne("ErcasCollect.Domain.Models.LevelOne", "LevelOne")
                         .WithMany()
-                        .HasForeignKey("LevelOneId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("LevelOneId");
 
                     b.HasOne("ErcasCollect.Domain.Models.LevelThree", "LevelThree")
                         .WithMany()
-                        .HasForeignKey("LevelThreeId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("LevelThreeId");
 
                     b.HasOne("ErcasCollect.Domain.Models.LevelTwo", "LevelTwo")
                         .WithMany()
-                        .HasForeignKey("LevelTwoId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("LevelTwoId");
 
                     b.HasOne("ErcasCollect.Domain.Models.PaymentChannel", "PaymentChannel")
                         .WithMany()
@@ -1210,15 +1145,17 @@ namespace ErcasCollect.Migrations
                 {
                     b.HasOne("ErcasCollect.Domain.Models.Biller", "Biller")
                         .WithMany()
-                        .HasForeignKey("BillerId1");
+                        .HasForeignKey("BillerId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("ErcasCollect.Domain.Models.LevelOne", "LevelOne")
                         .WithMany()
-                        .HasForeignKey("LevelOneId1");
+                        .HasForeignKey("LevelOneId");
 
                     b.HasOne("ErcasCollect.Domain.Models.LevelTwo", "LevelTwo")
                         .WithMany()
-                        .HasForeignKey("LevelTwoId1");
+                        .HasForeignKey("LevelTwoId");
                 });
 
             modelBuilder.Entity("ErcasCollect.Domain.Models.User", b =>
@@ -1231,15 +1168,11 @@ namespace ErcasCollect.Migrations
 
                     b.HasOne("ErcasCollect.Domain.Models.LevelOne", "LevelOne")
                         .WithMany()
-                        .HasForeignKey("LevelOneId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("LevelOneId");
 
                     b.HasOne("ErcasCollect.Domain.Models.LevelTwo", "LevelTwo")
                         .WithMany()
-                        .HasForeignKey("LevelTwoId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("LevelTwoId");
 
                     b.HasOne("ErcasCollect.Domain.Models.Role", "Role")
                         .WithMany()

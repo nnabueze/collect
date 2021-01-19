@@ -51,7 +51,7 @@ namespace ErcasCollect.Controllers
         // GET: api/values
         [HttpGet("{id}")]
 
-        public async Task<IEnumerable<ReadLevelOneDto>> GetAllLevelOneByBiller(string id)
+        public async Task<IEnumerable<ReadLevelOneDto>> GetAllLevelOneByBiller(int id)
         {
             try
             {

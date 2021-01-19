@@ -22,15 +22,14 @@ namespace ErcasCollect.Domain.Models
         public int  StateId { get; set; }
         public State State { get; set; }
 
-        public string BillerTypeId{ get; set; }
+        public int BillerTypeId{ get; set; }
         public BillerType BillerType{ get; set; }
         [Column(TypeName = "decimal(18,6)")]
         public decimal Latitude { get; set; }
         [Column(TypeName = "decimal(18,6)")]
         public decimal  Longitude { get; set; }
 
-        public string StatusId { get; set; }
-        public Status Status { get; set; }
+        public string StatusCode { get; set; }
         public string Abbreviation { get; set; }
         public int Commission { get; set; }
 

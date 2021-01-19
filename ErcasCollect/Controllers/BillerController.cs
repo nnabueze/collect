@@ -173,7 +173,7 @@ namespace ErcasCollect.Controllers
 
         [HttpGet("{id}")]
 
-        public async Task<IEnumerable<ReadBillerDto>> GetAllBillersByCategory(string id)
+        public async Task<IEnumerable<ReadBillerDto>> GetAllBillersByCategory(int id)
         {
             try
             {
