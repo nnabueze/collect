@@ -1,8 +1,8 @@
 {
   "runtimeOptions": {
     "additionalProbingPaths": [
-      "/Users/macbook/.dotnet/store/|arch|/|tfm|",
-      "/Users/macbook/.nuget/packages"
+      "C:\\Users\\Eze\\.dotnet\\store\\|arch|\\|tfm|",
+      "C:\\Users\\Eze\\.nuget\\packages"
     ]
   }
 }
