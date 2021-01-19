@@ -77,7 +77,7 @@ namespace ErcasCollect.Controllers
         }
 
         [HttpGet("{id}")]
-        public async Task<ReadUserDto> GetUserByID(string id)
+        public async Task<ReadUserDto> GetUserByID(int id)
         {
             try
             {
@@ -120,7 +120,7 @@ namespace ErcasCollect.Controllers
         }
 
         [HttpGet("{id}")]
-        public async Task<IEnumerable<ReadUserDto>> GetUserByBiller(string id)
+        public async Task<IEnumerable<ReadUserDto>> GetUserByBiller(int id)
         {
             try
             {

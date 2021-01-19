@@ -51,7 +51,7 @@ namespace ErcasCollect.Controllers
             }
         }
         [HttpGet("{id}")]
-        public async Task<IEnumerable<ReadTaxPayerDto>> GetTaxPayerBiller(string id)
+        public async Task<IEnumerable<ReadTaxPayerDto>> GetTaxPayerBiller(int id)
         {
             try
             {

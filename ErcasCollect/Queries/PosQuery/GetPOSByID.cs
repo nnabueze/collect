@@ -14,7 +14,7 @@ namespace ErcasCollect.Queries.BillerQuery
     public class GetPOSByIDQuery : IRequest<ReadPosDto>
     {
 
-        public string id { get; set; }
+        public int id { get; set; }
         public class GetPOSByIDHandler : IRequestHandler<GetPOSByIDQuery, ReadPosDto>
         {
             private readonly IGenericRepository<Pos> posRepository;
@@ -30,7 +30,7 @@ namespace ErcasCollect.Queries.BillerQuery
             public async Task<ReadPosDto> Handle(GetPOSByIDQuery query, CancellationToken cancellationToken)
             {
 
-                var result = await posRepository.FindSingleInclude(x => x.Id == query.id, x => x.Biller, x => x.Status, x => x.OS);
+                var result = await posRepository.FindSingleInclude(x => x.Id == query.id, x => x.Biller, x => x.StatusCode, x => x.OS);
                 if (result != null)
                 {
                     var pos = mapper.Map<ReadPosDto>(result);

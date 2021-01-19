@@ -53,7 +53,7 @@ namespace ErcasCollect.Controllers
 
         [HttpGet("{id}")]
 
-        public async Task<IEnumerable<ReadLevelThreeDto>> GetAllLevelThreeByBiller(string id)
+        public async Task<IEnumerable<ReadLevelThreeDto>> GetAllLevelThreeByBiller(int id)
         {
             try
             {
@@ -76,7 +76,7 @@ namespace ErcasCollect.Controllers
 
         [HttpGet("{id}")]
 
-        public async Task<ReadLevelThreeDto> GetAllLevelThreeByID(string id)
+        public async Task<ReadLevelThreeDto> GetAllLevelThreeByID(int id)
         {
             try
             {

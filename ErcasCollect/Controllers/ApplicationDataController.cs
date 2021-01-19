@@ -53,7 +53,7 @@ namespace ErcasCollect.Controllers
 
 
         [HttpGet("{id}")]
-        public async Task<ReadAllMetaDataDto> GetMetaData(string id)
+        public async Task<ReadAllMetaDataDto> GetMetaData(int id)
         {
             try
             {

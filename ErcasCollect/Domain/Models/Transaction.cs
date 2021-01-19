@@ -7,34 +7,37 @@ namespace ErcasCollect.Domain.Models
 {
     public class Transaction:BaseEntity
     {
-        [Column(TypeName = "nvarchar(32)")]
-       
-        public string StatusId { get; set; }
-        public Status Status { get; set; }
+
+        public int StatusCode { get; set; }
+
         [Column(TypeName = "decimal(18,2)")]
         public decimal Amount { get; set; }
-        public string TransactionId { get; set; }
-        public string PosId { get; set; }
+
+        [Column(TypeName = "nvarchar(32)")]
+        public string RemittanceNumber { get; set; }
+        public int PosId { get; set; }
         public Pos Pos { get; set; }
         public string PayerName { get; set; }
         public string PayerPhone{ get; set; }
-        public string AgentId { get; set; }
+        public int AgentId { get; set; }
         public User Agent { get; set; }
         public string SessionId { get; set; }
         public string OfflineSessionId { get; set; }
-        public string BillerId { get; set; }
+        public int BillerId { get; set; }
         public Biller Biller { get; set; }
-        public string BatchId { get; set; }
+        public int BatchId { get; set; }
         public string OfflineBatchId { get; set; }
         public int TransactionTypeId { get; set; }
         public TransactionType TransactionType { get; set; }
         public int PaymentChannelId { get; set; }
+
+        public string TransactionNumber { get; set; }
         public PaymentChannel PaymentChannel{ get; set; }
-        public string LevelOneId { get; set; }
+        public int LevelOneId { get; set; }
         public LevelOne LevelOne { get; set; }
-        public string LevelTwoId { get; set; }
+        public int LevelTwoId { get; set; }
         public LevelTwo LevelTwo { get; set; }
-        public string LevelThreeId { get; set; }
+        public int LevelThreeId { get; set; }
         public LevelThree LevelThree { get; set; }
 
 

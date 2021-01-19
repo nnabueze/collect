@@ -14,7 +14,7 @@ namespace ErcasCollect.Queries.BillerQuery
     public class GetAllLevelThreeByBillerQuery : IRequest<IEnumerable<ReadLevelThreeDto>>
     {
 
-        public string id { get; set; }
+        public int id { get; set; }
         public class GetAllLevelThreeByBillerHandler : IRequestHandler<GetAllLevelThreeByBillerQuery, IEnumerable<ReadLevelThreeDto>>
         {
             private readonly IGenericRepository<LevelThree> levelthreeRepository;

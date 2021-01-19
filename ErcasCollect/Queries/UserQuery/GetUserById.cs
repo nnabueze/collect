@@ -12,7 +12,7 @@ namespace ErcasCollect.Queries.BillerQuery
 {
     public class GetUserByIDQuery : IRequest<ReadUserDto>
     {
-        public string id { get; set; }
+        public int id { get; set; }
 
         public class GetUserByIDHandler : IRequestHandler<GetUserByIDQuery, ReadUserDto>
         {
@@ -29,7 +29,7 @@ namespace ErcasCollect.Queries.BillerQuery
             public async Task<ReadUserDto> Handle(GetUserByIDQuery query, CancellationToken cancellationToken)
             {
 
-                var result = await taxpayerRepository.FindSingleInclude(x => x.Id==query.id, x => x.Biller, x => x.Status);
+                var result = await taxpayerRepository.FindSingleInclude(x => x.Id==query.id, x => x.Biller, x => x.StatusCode);
                 if (result != null)
                 {
                     var biller = mapper.Map<ReadUserDto>(result);

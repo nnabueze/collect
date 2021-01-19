@@ -9,10 +9,10 @@ using MediatR;
 
 namespace ErcasCollect.Commands.PosCommand
 {
-    public class CreatePosCommand : IRequest<string>
+    public class CreatePosCommand : IRequest<int>
     {
         public CreatePosDto createPosDto { get; set; }
-        public class CreateBillerCommandHandler : IRequestHandler<CreatePosCommand, string>
+        public class CreateBillerCommandHandler : IRequestHandler<CreatePosCommand, int>
         {
             private readonly IPosRepository posRepository;
             private readonly IMapper mapper;
@@ -22,7 +22,7 @@ namespace ErcasCollect.Commands.PosCommand
                 this.mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
             }
 
-            public async Task<string> Handle(CreatePosCommand request, CancellationToken cancellationToken)
+            public async Task<int> Handle(CreatePosCommand request, CancellationToken cancellationToken)
             {
 
                 Pos pos = mapper.Map<Pos>(request.createPosDto);

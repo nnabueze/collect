@@ -14,7 +14,7 @@ namespace ErcasCollect.Queries.BillerQuery
     public class GetAllLevelOneByIDQuery : IRequest<ReadLevelOneDto>
     {
 
-        public string id { get; set; }
+        public int id { get; set; }
         public class GetAllLevelOneByIDHandler : IRequestHandler<GetAllLevelOneByIDQuery,ReadLevelOneDto>
         {
             private readonly IGenericRepository<LevelOne> leveloneRepository;

@@ -7,7 +7,9 @@ using ErcasCollect.Commands.Dto.SettlementDto;
 
 using ErcasCollect.Domain.Interfaces;
 using ErcasCollect.Domain.Models;
+using ErcasCollect.Helpers;
 using MediatR;
+using Microsoft.Extensions.Options;
 
 namespace ErcasCollect.Commands.SettlementCommand
 {
@@ -20,12 +22,16 @@ namespace ErcasCollect.Commands.SettlementCommand
             private readonly IMapper mapper;
             private readonly ITransactionRepository transactionRepository;
             private readonly IUserRepository userRepository;
-            public CreateSettlementCommandHandler(ISettlementRepository settlementRepository,IUserRepository userRepository,ITransactionRepository transactionRepository, IMapper mapper)
+            private readonly ResponseCode _response;
+            public CreateSettlementCommandHandler(ISettlementRepository settlementRepository, IUserRepository userRepository, ITransactionRepository transactionRepository,
+                
+                IMapper mapper, IOptions<ResponseCode> response)
             {
                 this.transactionRepository = transactionRepository ?? throw new ArgumentNullException(nameof(transactionRepository));
                 this.settlementRepository = settlementRepository ?? throw new ArgumentNullException(nameof(settlementRepository));
                 this.mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
                 this.userRepository = userRepository ?? throw new ArgumentNullException(nameof(userRepository));
+                _response = response.Value;
             }
 
             public async Task<string> Handle(CreateSettlementCommand request, CancellationToken cancellationToken)
@@ -37,7 +43,6 @@ namespace ErcasCollect.Commands.SettlementCommand
                 //Create Settlement
        
                 Settlement settlement = new Settlement();
-                settlement.Id = Helpers.IdGenerator.IdGenerator.GetUniqueKey(10, 2);
                 settlement.Amount = request.createSettlementDto.Amount;
                 settlement.BankId= request.createSettlementDto.BankId;
                 settlement.BillerId = request.createSettlementDto.BillerId;
@@ -46,18 +51,18 @@ namespace ErcasCollect.Commands.SettlementCommand
                 settlement.PaidBy = request.createSettlementDto.PaidBy;
                 settlement.PayerPhone = request.createSettlementDto.PayerPhone;
                 settlement.ReferenceID = request.createSettlementDto.ReferenceID;
-                settlement.TransactionID = request.createSettlementDto.TransactionID;
-                settlement.StatusId = request.createSettlementDto.StatusId;
+                settlement.TransactionNumber = request.createSettlementDto.TransactionNumber;
+                settlement.StatusCode = request.createSettlementDto.StatusCode;
                 await  settlementRepository.Add(settlement);
                 await  settlementRepository.CommitAsync();
-                var gettransaction = await transactionRepository.GetSingle(x => x.Id == request.createSettlementDto.TransactionID);
+                var gettransaction = await transactionRepository.GetSingle(x => x.TransactionNumber == request.createSettlementDto.TransactionNumber);
                 var getagent = await userRepository.GetSingle(x => x.Id == request.createSettlementDto.AgentId);
                 if (gettransaction != null)
                 {
-                    if (request.createSettlementDto.StatusId == "200")
+                    if (request.createSettlementDto.StatusCode == _response.OK)
                     {
 
-                        gettransaction.StatusId = "200";
+                        gettransaction.StatusCode = _response.OK;
 
 
                         transactionRepository.Update(gettransaction);
@@ -65,7 +70,7 @@ namespace ErcasCollect.Commands.SettlementCommand
 
 
                         getagent.CashAtHand = 0;
-                        getagent.StatusId = "300";
+                        getagent.StatusCode = _response.AccountActivated;
                         userRepository.Update(getagent);
                         await userRepository.CommitAsync();
 
@@ -88,7 +93,7 @@ namespace ErcasCollect.Commands.SettlementCommand
                         transactionbatch.PaymentChannelId = request.createSettlementDto.PaymentChannelId;
                         transactionbatch.TransactionTypeId = request.createSettlementDto.TransactionTypeId;
                         transactionbatch.BillerId = request.createSettlementDto.BillerId;
-                        transactionbatch.StatusId = request.createSettlementDto.StatusId;
+                        transactionbatch.StatusCode = request.createSettlementDto.StatusCode;
                         transactionbatch.PayerName = request.createSettlementDto.PaidBy;
                         transactions.Add(transactionbatch);
                     }

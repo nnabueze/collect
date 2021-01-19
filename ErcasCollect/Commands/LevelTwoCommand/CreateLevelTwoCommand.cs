@@ -9,10 +9,10 @@ using MediatR;
 
 namespace ErcasCollect.Commands.LevelTwoCommand
 {
-    public class CreateLevelTwoCommand : IRequest<string>
+    public class CreateLevelTwoCommand : IRequest<int>
     {
         public CreateLevelTwoDto createLeveltwoDto { get; set; }
-        public class CreateLevelTwoCommandHandler : IRequestHandler<CreateLevelTwoCommand, string>
+        public class CreateLevelTwoCommandHandler : IRequestHandler<CreateLevelTwoCommand, int>
         {
             private readonly ILevelTwoRepository leveltwoRepository;
             private readonly IMapper mapper;
@@ -22,14 +22,14 @@ namespace ErcasCollect.Commands.LevelTwoCommand
                 this.mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
             }
 
-            public async Task<string> Handle(CreateLevelTwoCommand request, CancellationToken cancellationToken)
+            public async Task<int> Handle(CreateLevelTwoCommand request, CancellationToken cancellationToken)
             {
 
                 LevelTwo leveltwo = mapper.Map<LevelTwo>(request.createLeveltwoDto);
                 await leveltwoRepository.Add(leveltwo);
                 await leveltwoRepository.CommitAsync();
 
-         return leveltwo.Id;
+                return leveltwo.Id;
             }
         }
     }

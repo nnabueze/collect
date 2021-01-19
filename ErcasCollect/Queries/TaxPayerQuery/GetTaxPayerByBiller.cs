@@ -14,7 +14,7 @@ namespace ErcasCollect.Queries.BillerQuery
     public class GetAllTaxPayerByBillerQuery : IRequest<IEnumerable<ReadTaxPayerDto>>
     {
 
-        public string id { get; set; }
+        public int id { get; set; }
         public class GetAllTaxPayerByBillerHandler : IRequestHandler<GetAllTaxPayerByBillerQuery, IEnumerable<ReadTaxPayerDto>>
         {
             private readonly IGenericRepository<TaxPayer> taxpayerRepository;
@@ -30,7 +30,7 @@ namespace ErcasCollect.Queries.BillerQuery
             public async Task<IEnumerable<ReadTaxPayerDto>> Handle(GetAllTaxPayerByBillerQuery query, CancellationToken cancellationToken)
             {
 
-                var result = await taxpayerRepository.FindAllInclude(x => x.BillerId == query.id, x => x.Biller, x => x.Status);
+                var result = await taxpayerRepository.FindAllInclude(x => x.BillerId == query.id, x => x.Biller, x => x.StatusCode);
                 if (result != null)
                 {
                     var taxpayer = mapper.Map<IEnumerable<ReadTaxPayerDto>>(result);

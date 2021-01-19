@@ -15,7 +15,7 @@ namespace ErcasCollect.Queries.BillerQuery
     public class GetTransactionByBillerIDQuery : IRequest<IEnumerable<ReadTransactionDto>>
     {
 
-        public string id { get; set; }
+        public int id { get; set; }
         public class GetTransactionByBillerIDHandler : IRequestHandler<GetTransactionByBillerIDQuery, IEnumerable<ReadTransactionDto>>
         {
             private readonly IGenericRepository<Transaction> transactionbybatchidRepository;
@@ -31,7 +31,7 @@ namespace ErcasCollect.Queries.BillerQuery
             public async Task<IEnumerable<ReadTransactionDto>> Handle(GetTransactionByBillerIDQuery query, CancellationToken cancellationToken)
             {
 
-                var result = await transactionbybatchidRepository.FindAllInclude(x => x.BillerId == query.id, x => x.Status, x => x.Agent, x => x.Biller, x => x.PaymentChannel, x => x.TransactionType);
+                var result = await transactionbybatchidRepository.FindAllInclude(x => x.BillerId == query.id, x => x.StatusCode, x => x.Agent, x => x.Biller, x => x.PaymentChannel, x => x.TransactionType);
                 if (result != null)
                 {
                     var transactionbybatchid = mapper.Map<IEnumerable<ReadTransactionDto>>(result);

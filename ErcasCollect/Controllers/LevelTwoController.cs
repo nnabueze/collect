@@ -53,7 +53,7 @@ namespace ErcasCollect.Controllers
         }
 
         [HttpGet("{id}")]
-        public async Task<ReadLevelTwoDto> GetAllLevelTwoByID(string id)
+        public async Task<ReadLevelTwoDto> GetAllLevelTwoByID(int id)
         {
             try
             {

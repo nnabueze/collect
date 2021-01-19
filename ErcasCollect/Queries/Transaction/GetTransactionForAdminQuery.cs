@@ -31,7 +31,7 @@ namespace ErcasCollect.Queries.BillerQuery
             public async Task<IEnumerable<ReadTransactionDto>> Handle(GetTransactionForAdminQuery query, CancellationToken cancellationToken)
             {
 
-                var result = await transactionbybatchidRepository.AllIncluding(x => x.Status, x => x.Agent, x => x.Biller, x => x.PaymentChannel, x => x.TransactionType);
+                var result = await transactionbybatchidRepository.AllIncluding(x => x.StatusCode, x => x.Agent, x => x.Biller, x => x.PaymentChannel, x => x.TransactionType);
                 if (result != null)
                 {
                     var transactionbybatchid = mapper.Map<IEnumerable<ReadTransactionDto>>(result);

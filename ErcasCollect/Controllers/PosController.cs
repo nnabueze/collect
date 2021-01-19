@@ -52,7 +52,7 @@ namespace ErcasCollect.Controllers
         }
 
         [HttpGet("{id}")]
-        public async Task<ReadPosDto> GetPosByID(string id)
+        public async Task<ReadPosDto> GetPosByID(int id)
         {
             try
             {

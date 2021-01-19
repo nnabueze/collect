@@ -14,7 +14,7 @@ namespace ErcasCollect.Queries.BillerQuery
     public class GetAllMetaDataQuery : IRequest<ReadAllMetaDataDto>
     {
 
-        public string id { get; set; }
+        public int id { get; set; }
         public class GetAllMetaDataHandler : IRequestHandler<GetAllMetaDataQuery,ReadAllMetaDataDto>
         {
             private readonly IGenericRepository<MetaData> metaDataRepository;

@@ -9,11 +9,11 @@ namespace ErcasCollect.Commands.Dto.CollectionDto
         [JsonIgnore]
         public string SessionId { get; set; }= Helpers.IdGenerator.IdGenerator.GetUniqueKey(10,2);
         [JsonIgnore]
-        public string BatchId { get; set; }= Helpers.IdGenerator.IdGenerator.GetUniqueKey(10, 2);
+        public int BatchId { get; set; }
         public string OfflineSessionId { get; set; }
         public string OfflineBatchId { get; set; }
-        public string AgentId { get; set; }
-        public string BillerId { get; set; }
+        public int AgentId { get; set; }
+        public int BillerId { get; set; }
         public int ItemCount { get; set; }
         public decimal Amount { get; set; }
         public List<SessionData> sessionData{ get; set; }
@@ -32,15 +32,15 @@ namespace ErcasCollect.Commands.Dto.CollectionDto
         public DateTime ModifiedDate { get; set; }
         public int ModifiedBy { get; set; }
         public int Createdby { get; set; }
-        public string LevelThreeId { get; set; }
-        public string LevelOneId { get; set; }
-        public string LevelTwoId { get; set; }
+        public int LevelThreeId { get; set; }
+        public int LevelOneId { get; set; }
+        public int LevelTwoId { get; set; }
         public string StatusId { get; set; }
        
         public SessionData sessionData { get; set; }
         public decimal Amount { get; set; }
         public string TransactionId { get; set; }
-        public string PosId { get; set; }
+        public int PosId { get; set; }
 
         public string PayerName { get; set; }
         public string PayerPhone { get; set; }

@@ -14,22 +14,25 @@ namespace ErcasCollect.Commands.BillerCommand
     public class CreateBillerCommand:IRequest<SuccessfulResponse>
     {
         public CreateBillerDto createBillerDto { get; set; }
+
         public class CreateBillerCommandHandler : IRequestHandler<CreateBillerCommand, SuccessfulResponse>
         {
-            private readonly IBillerRepository billerRepository;
-            private readonly IMapper mapper;
+            private readonly IBillerRepository _billerRepository;
+
+            private readonly IMapper _mapper;
             public CreateBillerCommandHandler(IBillerRepository billerRepository, IMapper mapper)
             {
-                this.billerRepository= billerRepository?? throw new ArgumentNullException(nameof(billerRepository));
-                this.mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
+                _billerRepository= billerRepository?? throw new ArgumentNullException(nameof(billerRepository));
+
+                _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
             }
 
             public async Task<SuccessfulResponse> Handle(CreateBillerCommand request, CancellationToken cancellationToken)
             {
 
-                Biller biller  = mapper.Map<Biller>(request.createBillerDto);
-                await billerRepository.Add(biller);
-                await billerRepository.CommitAsync();
+                Biller biller  = _mapper.Map<Biller>(request.createBillerDto);
+                await _billerRepository.Add(biller);
+                await _billerRepository.CommitAsync();
 
                 return new SuccessfulResponse { Message="Biller Created",StatusCode="200"};
             }

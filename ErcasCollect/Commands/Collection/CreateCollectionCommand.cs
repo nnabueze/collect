@@ -2,8 +2,10 @@
 using ErcasCollect.Commands.Dto.CollectionDto;
 using ErcasCollect.Domain.Interfaces;
 using ErcasCollect.Domain.Models;
+using ErcasCollect.Helpers;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Options;
 using System;
 using System.Collections.Generic;
 using System.Threading;
@@ -11,10 +13,10 @@ using System.Threading.Tasks;
 
 namespace ErcasCollect.Commands.CollectionCommand
 {
-    public partial class CreateCollectionCommand : IRequest<string>
+    public partial class CreateCollectionCommand : IRequest<int>
     {
         public SettlementCollectionComandDto collectionDto { get; set; }
-        public class CreateCollectionCommandHandler : IRequestHandler<CreateCollectionCommand, string>
+        public class CreateCollectionCommandHandler : IRequestHandler<CreateCollectionCommand, int>
         {
             private readonly ITransactionRepository collectionRepository;
             private readonly IBatchRepository batchRepository;
@@ -23,17 +25,20 @@ namespace ErcasCollect.Commands.CollectionCommand
         
             private readonly IMapper mapper;
 
+            private readonly ResponseCode _responseCode;
+
 
             public CreateCollectionCommandHandler(ITransactionRepository collectionRepository,
                 IBatchRepository batchRepository,
-                IUserRepository userRepository, IMapper mapper)
+                IUserRepository userRepository, IMapper mapper, IOptions<ResponseCode> responseCode)
             {
                 this.collectionRepository = collectionRepository ?? throw new ArgumentNullException(nameof(collectionRepository));
                 this.userRepository = userRepository ?? throw new ArgumentNullException(nameof(userRepository));
                 this.batchRepository = batchRepository ?? throw new ArgumentNullException(nameof(batchRepository));
                 this.mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
+                _responseCode = responseCode.Value;
             }
-            public async Task<string> Handle(CreateCollectionCommand request, CancellationToken cancellationToken)
+            public async Task<int> Handle(CreateCollectionCommand request, CancellationToken cancellationToken)
             {
 
 
@@ -47,9 +52,9 @@ namespace ErcasCollect.Commands.CollectionCommand
 
                 var getuser = await userRepository.GetSingle(x => x.Id == request.collectionDto.AgentId);
 
-                if ((getuser.CollectionLimit - getuser.CashAtHand) < request.collectionDto.Amount || getuser.StatusId=="350" )
+                if ((getuser.CollectionLimit - getuser.CashAtHand) < request.collectionDto.Amount || getuser.StatusCode==_responseCode.RemmitanceGenerated )
                 {
-                    return null; 
+                    return 0; 
 
                 }
                 else
@@ -109,7 +114,7 @@ namespace ErcasCollect.Commands.CollectionCommand
                     
                     await collectionRepository.Add(transactions);
                     await collectionRepository.CommitAsync();
-                    return "Ok";
+                    return _responseCode.OK;
                 }
             }
         }

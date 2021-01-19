@@ -17,10 +17,9 @@ namespace ErcasCollect.Domain.Models
         public string BillerId { get; set; }
         public Biller Biller { get; set; }
         [Column(TypeName = "nvarchar(32)")]
-        public string LevelOneId { get; set; }
+        public int LevelOneId { get; set; }
         public LevelOne LevelOne { get; set; }
-        [Column(TypeName = "nvarchar(32)")]
-        public string LevelTwoId { get; set; }
+        public int LevelTwoId { get; set; }
         public LevelTwo  LevelTwo{ get; set; }
         public bool IsAmountFixed { get; set; }
 

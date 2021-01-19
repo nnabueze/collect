@@ -7,7 +7,7 @@ namespace ErcasCollect.Responses
     {
      
 
-        public string BillerID { get; set; }
+        public int BillerID { get; set; }
         public int ResponseCode { get; set; }
         public int NextStep { get; set; }
 

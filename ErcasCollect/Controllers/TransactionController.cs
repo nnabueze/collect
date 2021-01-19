@@ -28,7 +28,7 @@ namespace ErcasCollect.Controllers
         }
 
         [HttpGet("{id}")]
-        public async Task<IEnumerable<ReadTransactionDto>> GetTransactionBiller(string id)
+        public async Task<IEnumerable<ReadTransactionDto>> GetTransactionBiller(int id)
         {
             try
             {
@@ -51,7 +51,7 @@ namespace ErcasCollect.Controllers
 
 
         [HttpGet("{id}")]
-        public async Task<IEnumerable<ReadTransactionDto>> GetTransactionBatch(string id)
+        public async Task<IEnumerable<ReadTransactionDto>> GetTransactionBatch(int id)
         {
             try
             {
@@ -73,12 +73,12 @@ namespace ErcasCollect.Controllers
         }
 
         [HttpGet("{id}")]
-        public async Task<ReadTransactionDto> GetTransactionByID(string id)
+        public async Task<ReadTransactionDto> GetTransactionByID(string transactionNumber)
         {
             try
             {
                 GetTransactionDetailByIDQuery request = new GetTransactionDetailByIDQuery();
-                request.id = id;
+                request.transactionNumber = transactionNumber;
                 return await mediator.Send(request);
             }
             catch (AppException ex)
@@ -101,7 +101,7 @@ namespace ErcasCollect.Controllers
             try
             {
                 GetTransactionDetailByIDQuery request = new GetTransactionDetailByIDQuery();
-                request.id = validation.RemitttanceID;
+                request.transactionNumber = validation.RemitttanceID;
                 return await mediator.Send(request);
             }
             catch (AppException ex)

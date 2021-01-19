@@ -30,7 +30,7 @@ namespace ErcasCollect.Queries.BillerQuery
             public async Task<IEnumerable<ReadUserDto>> Handle(GetAllUsersQuery query, CancellationToken cancellationToken)
             {
 
-                var result = await taxpayerRepository.FindAllInclude(x => x.IsDeleted == false, x => x.Biller, x => x.Status);
+                var result = await taxpayerRepository.FindAllInclude(x => x.IsDeleted == false, x => x.Biller, x => x.StatusCode);
                 if (result != null)
                 {
                     var taxpayer = mapper.Map<IEnumerable<ReadUserDto>>(result);

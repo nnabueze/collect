@@ -37,7 +37,7 @@ namespace ErcasCollect.Controllers
 
         // GET: api/values
         [HttpGet("{id}")]
-        public async Task<IActionResult> GetBillerCount( string id) 
+        public async Task<IActionResult> GetBillerCount( int id) 
         {
              
         
@@ -61,7 +61,7 @@ namespace ErcasCollect.Controllers
 
 
         [HttpGet("{id}")]
-        public async Task<IActionResult> GetAmountBillerCount(string id)
+        public async Task<IActionResult> GetAmountBillerCount(int id)
         {
 
 

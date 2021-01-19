@@ -36,10 +36,10 @@ namespace ErcasCollect.Domain.Interfaces
     public interface IGenericTransactionRepository<T> where T : TransactionBaseEntity
     {
         Task<IEnumerable<T>> GetAll();
-        Task<T> GetById(string id);
+        Task<T> GetById(int id);
         Task Insert(T entity);
         void Update(T entity);
-        void Delete(string id);
+        void Delete(int id);
 
     }
 }

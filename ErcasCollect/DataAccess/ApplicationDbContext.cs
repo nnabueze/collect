@@ -11,7 +11,7 @@ namespace ErcasCollect.DataAccess
     public class ApplicationDbContext : DbContext
     {
 
-        public DbSet<Status> Statuses{ get; set; }
+        //public DbSet<Status> Statuses{ get; set; }
         public DbSet<Bank> Banks { get; set; }
         public DbSet<Biller> Billers { get; set; }
         public DbSet<BankDetail> BankDetails { get; set; }

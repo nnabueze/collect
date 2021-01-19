@@ -7,6 +7,7 @@ namespace ErcasCollect.Responses
     {
         public string SourceBankCode { get; set; }
 
+
         public string SourceBankName { get; set; }
 
         public string InstitutionCode { get; set; }
@@ -21,7 +22,7 @@ namespace ErcasCollect.Responses
 
         public string CustomerAccountNumber { get; set; }
 
-        public string BillerID { get; set; }
+        public int BillerID { get; set; }
 
         public string BillerName { get; set; }
 

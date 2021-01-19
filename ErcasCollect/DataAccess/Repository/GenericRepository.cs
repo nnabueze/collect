@@ -208,7 +208,7 @@ namespace ErcasCollect.DataAccess.Repository
             this.context = context;
             entities = context.Set<T>();
         }
-        public void Delete(string id)
+        public void Delete(int id)
         {
             T entity = entities.SingleOrDefault(s => s.Id == id);
             entities.Remove(entity);
@@ -221,7 +221,7 @@ namespace ErcasCollect.DataAccess.Repository
             return await entities.ToListAsync();
         }
 
-        public async Task<T> GetById(string id)
+        public async Task<T> GetById(int id)
         {
             return await entities.SingleOrDefaultAsync(s => s.Id == id);
         }

@@ -17,7 +17,7 @@ namespace ErcasCollect.Queries.BillerQuery
     public class GetTransactionDetailByIDNIBBSQuery : IRequest<ValidationResponse>
     {
 
-        public string id { get; set; }
+        public int id { get; set; }
         public class GetTransactionDetailByIDNIBBSHandler : IRequestHandler<GetTransactionDetailByIDNIBBSQuery, ValidationResponse>
         {
             private readonly IGenericRepository<Transaction> transactionbybatchidRepository;
@@ -33,7 +33,7 @@ namespace ErcasCollect.Queries.BillerQuery
             public async Task<ValidationResponse> Handle(GetTransactionDetailByIDNIBBSQuery query, CancellationToken cancellationToken)
             {
 
-                var result = await transactionbybatchidRepository.FindSingleInclude(x => x.Id == query.id, x => x.Status, x => x.Agent, x => x.Biller, x => x.PaymentChannel, x => x.TransactionType);
+                var result = await transactionbybatchidRepository.FindSingleInclude(x => x.Id == query.id, x => x.StatusCode, x => x.Agent, x => x.Biller, x => x.PaymentChannel, x => x.TransactionType);
                 if (result != null)
                 {
                     //var transactionbybatchid = mapper.Map<ReadTransactionDto>(result);

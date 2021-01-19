@@ -9,10 +9,10 @@ using ErcasCollect.Domain.Models;
 using MediatR;
 namespace ErcasCollect.Commands.BranchCommand
 {
-    public class CreateLevelOneCommand : IRequest<string>
+    public class CreateLevelOneCommand : IRequest<int>
     {
         public CreateLevelOneDto createLevelOneDto { get; set; }
-        public class CreateLevelOneCommandHandler : IRequestHandler<CreateLevelOneCommand, string>
+        public class CreateLevelOneCommandHandler : IRequestHandler<CreateLevelOneCommand, int>
         {
             private readonly ILevelOneRepository leveloneRepository;
             private readonly IMapper mapper;
@@ -22,7 +22,7 @@ namespace ErcasCollect.Commands.BranchCommand
                 this.mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
             }
 
-            public async Task<string> Handle(CreateLevelOneCommand request, CancellationToken cancellationToken)
+            public async Task<int> Handle(CreateLevelOneCommand request, CancellationToken cancellationToken)
             {
 
                 LevelOne levelone = mapper.Map<LevelOne>(request.createLevelOneDto);

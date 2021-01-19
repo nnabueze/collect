@@ -44,5 +44,7 @@ namespace ErcasCollect.Helpers
         public int PendingTaxes { get; set; }
 
         public int ClearedTaxes { get; set; }
+
+        public int RemittanceChecking { get; set; }
     }
 }

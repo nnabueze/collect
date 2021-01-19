@@ -9,10 +9,10 @@ using MediatR;
 
 namespace ErcasCollect.Commands.TaxPayerCommand
 {
-    public class CreateTaxPayerCommand : IRequest<string>
+    public class CreateTaxPayerCommand : IRequest<int>
     {
         public CreateTaxpayerDto createTaxpayerDto { get; set; }
-        public class CreateTaxPayerCommandHandler : IRequestHandler<CreateTaxPayerCommand, string>
+        public class CreateTaxPayerCommandHandler : IRequestHandler<CreateTaxPayerCommand, int>
         {
             private readonly ITaxPayerRepository taxpayerRepository;
             private readonly IMapper mapper;
@@ -22,7 +22,7 @@ namespace ErcasCollect.Commands.TaxPayerCommand
                 this.mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
             }
 
-            public async Task<string> Handle(CreateTaxPayerCommand request, CancellationToken cancellationToken)
+            public async Task<int> Handle(CreateTaxPayerCommand request, CancellationToken cancellationToken)
             {
 
                 TaxPayer user = mapper.Map<TaxPayer>(request.createTaxpayerDto);

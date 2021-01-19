@@ -7,9 +7,9 @@ namespace ErcasCollect.Domain.Models
     public class Settlement:TransactionBaseEntity
     {
         [Column(TypeName = "nvarchar(32)")]
-        public string BankId { get; set; }
+        public int BankId { get; set; }
         public Bank Bank { get; set; } 
-        public string BillerId { get; set; }
+        public int BillerId { get; set; }
         public Biller Biller{ get; set; }
         public int PaymentChannelId { get; set; }
         public PaymentChannel PaymentChannel{ get; set; }
@@ -23,9 +23,8 @@ namespace ErcasCollect.Domain.Models
         [Column(TypeName = "nvarchar(32)")]
         public string ReferenceID { get; set; }
         [Column(TypeName = "nvarchar(32)")]
-        public string TransactionID { get; set; }
-        public Status Status { get; set; }
-        public string StatusId { get; set; }
+        public string TransactionNumber { get; set; }
+        public int StatusCode { get; set; }
 
 
 

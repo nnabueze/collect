@@ -12,23 +12,27 @@ using ErcasCollect.Domain.Interfaces;
 using ErcasCollect.Domain.Models;
 using MediatR;
 using Newtonsoft.Json;
+using ErcasCollect.Helpers;
+using Microsoft.Extensions.Options;
 
 namespace ErcasCollect.Commands.UserCommand
 {
-    public class CreateUserCommand : IRequest<string>
+    public class CreateUserCommand : IRequest<int>
     {
         public CreateUserDto createUserDto { get; set; }
-        public class CreateUserCommandHandler : IRequestHandler<CreateUserCommand, string>
+        public class CreateUserCommandHandler : IRequestHandler<CreateUserCommand, int>
         {
             private readonly IUserRepository userRepository;
             private readonly IMapper mapper;
-            public CreateUserCommandHandler(IUserRepository userRepository, IMapper mapper)
+            private readonly ResponseCode _response;
+            public CreateUserCommandHandler(IUserRepository userRepository, IMapper mapper, IOptions<ResponseCode> response)
             {
                 this.userRepository = userRepository ?? throw new ArgumentNullException(nameof(userRepository));
                 this.mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
+                _response = response.Value;
             }
 
-            public async Task<string> Handle(CreateUserCommand request, CancellationToken cancellationToken)
+            public async Task<int> Handle(CreateUserCommand request, CancellationToken cancellationToken)
             {
                 using (var client = new HttpClient())
                     {
@@ -76,12 +80,12 @@ namespace ErcasCollect.Commands.UserCommand
                   }
                   else
                  {
-                   return "Ok";
+                   return _response.OK;
                  }
                 }
                else
                {
-                 return "Bad";
+                 return _response.BadRequest;
               }
 
             }
