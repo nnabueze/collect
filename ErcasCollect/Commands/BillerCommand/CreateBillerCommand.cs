@@ -6,8 +6,10 @@ using ErcasCollect.Commands.Dto.BillerDto;
 using ErcasCollect.DataAccess.Repository;
 using ErcasCollect.Domain.Interfaces;
 using ErcasCollect.Domain.Models;
+using ErcasCollect.Helpers;
 using ErcasCollect.Responses;
 using MediatR;
+using Microsoft.Extensions.Options;
 
 namespace ErcasCollect.Commands.BillerCommand
 {
@@ -20,21 +22,34 @@ namespace ErcasCollect.Commands.BillerCommand
             private readonly IBillerRepository _billerRepository;
 
             private readonly IMapper _mapper;
-            public CreateBillerCommandHandler(IBillerRepository billerRepository, IMapper mapper)
+
+            private readonly ResponseCode responseCode;
+
+            public CreateBillerCommandHandler(IBillerRepository billerRepository, IMapper mapper, IOptions<ResponseCode> responseCode)
             {
-                _billerRepository= billerRepository?? throw new ArgumentNullException(nameof(billerRepository));
+                _billerRepository = billerRepository ?? throw new ArgumentNullException(nameof(billerRepository));
 
                 _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
+
+                this.responseCode = responseCode.Value;
             }
 
             public async Task<SuccessfulResponse> Handle(CreateBillerCommand request, CancellationToken cancellationToken)
             {
 
                 Biller biller  = _mapper.Map<Biller>(request.createBillerDto);
-                await _billerRepository.Add(biller);
-                await _billerRepository.CommitAsync();
 
-                return new SuccessfulResponse { Message="Biller Created",StatusCode="200"};
+                //await _billerRepository.Add(biller);
+
+                //await _billerRepository.CommitAsync();
+
+                var StatusCode = responseCode.Created;
+
+                return new SuccessfulResponse()
+                {
+                    Message ="Biller Created",
+                    StatusCode = responseCode.Created
+                };
             }
         }
         }

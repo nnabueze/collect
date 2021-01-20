@@ -35,6 +35,9 @@ namespace ErcasCollect.Controllers
             try
             {
                 var result = await mediator.Send(request);
+
+                Console.WriteLine(result);
+
                 return new JsonResult(result);
             }
             catch (AppException ex)

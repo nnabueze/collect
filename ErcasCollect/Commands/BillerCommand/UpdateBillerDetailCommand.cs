@@ -1,8 +1,10 @@
 ﻿
 using ErcasCollect.Commands.Dto.BillerDto;
 using ErcasCollect.Domain.Interfaces;
+using ErcasCollect.Helpers;
 using ErcasCollect.Responses;
 using MediatR;
+using Microsoft.Extensions.Options;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -20,9 +22,12 @@ namespace Ercas.Pay.Service.Commands
         {
             private readonly IBillerRepository billerRepository;
 
-            public UpdateBillerDetailCommandHandler(IBillerRepository billerRepository)
+            private readonly ResponseCode _responseCode;
+
+            public UpdateBillerDetailCommandHandler(IBillerRepository billerRepository, IOptions<ResponseCode> responseCode)
             {
                 this.billerRepository = billerRepository ?? throw new ArgumentNullException(nameof(billerRepository));
+                _responseCode = responseCode.Value;
             }
             public async Task<SuccessfulResponse> Handle(UpdateBillerDetailCommand request, CancellationToken cancellationToken)
             {
@@ -37,12 +42,12 @@ namespace Ercas.Pay.Service.Commands
                 
                     billerRepository.Update(biller);
                         await billerRepository.CommitAsync();
-                    return new SuccessfulResponse { Message = "Updated Successfully", StatusCode = "200" };
+                    return new SuccessfulResponse { Message = "Updated Successfully", StatusCode = _responseCode.OK };
 
                 }
                 else
                 {
-                    return new SuccessfulResponse { Message = "Opps Something Went Wrong", StatusCode = "400" };
+                    return new SuccessfulResponse { Message = "Opps Something Went Wrong", StatusCode = _responseCode.BadRequest };
                 }
             
 

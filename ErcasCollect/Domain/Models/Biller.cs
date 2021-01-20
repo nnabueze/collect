@@ -19,7 +19,7 @@ namespace ErcasCollect.Domain.Models
         [Column(TypeName = "nvarchar(32)")]
         public string  Description{ get; set; }
 
-        public int  StateId { get; set; }
+        public int?  StateId { get; set; }
         public State State { get; set; }
 
         public int? BillerTypeId{ get; set; }
@@ -28,7 +28,6 @@ namespace ErcasCollect.Domain.Models
         public decimal Latitude { get; set; }
         [Column(TypeName = "decimal(18,6)")]
         public decimal  Longitude { get; set; }
-
         public string StatusCode { get; set; }
         public string Abbreviation { get; set; }
         public int Commission { get; set; }

@@ -5,8 +5,10 @@ using AutoMapper;
 using ErcasCollect.Commands.Dto.BillerDto;
 using ErcasCollect.Domain.Interfaces;
 using ErcasCollect.Domain.Models;
+using ErcasCollect.Helpers;
 using ErcasCollect.Responses;
 using MediatR;
+using Microsoft.Extensions.Options;
 
 namespace ErcasCollect.Commands.BillerCommand
 {
@@ -17,10 +19,12 @@ namespace ErcasCollect.Commands.BillerCommand
         {
             private readonly IBillerBankRepository billerRepository;
             private readonly IMapper mapper;
-            public CreateBillerBankCommandHandler(IBillerBankRepository billerRepository, IMapper mapper)
+            private readonly ResponseCode responseCode;
+            public CreateBillerBankCommandHandler(IBillerBankRepository billerRepository, IMapper mapper, IOptions<ResponseCode> responseCode)
             {
                 this.billerRepository = billerRepository ?? throw new ArgumentNullException(nameof(billerRepository));
                 this.mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
+                this.responseCode = responseCode.Value;
             }
 
             public async Task<SuccessfulResponse> Handle(CreateBillerBankCommand request, CancellationToken cancellationToken)
@@ -29,7 +33,7 @@ namespace ErcasCollect.Commands.BillerCommand
                 BankDetail billerbank = mapper.Map<BankDetail>(request.createBillerBankDto);
                 await billerRepository.Insert(billerbank);
 
-                return new SuccessfulResponse { StatusCode="200", Message="Successfully Added"};
+                return new SuccessfulResponse { StatusCode=responseCode.Created, Message="Successfully Added"};
             }
 
         
