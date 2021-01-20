@@ -146,7 +146,7 @@ namespace ErcasCollect.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    BillerTypeId = table.Column<int>(nullable: false),
+                    BillerTypeId = table.Column<int>(nullable: true),
                     FieldOne = table.Column<string>(nullable: true),
                     FieldTwo = table.Column<string>(nullable: true),
                     FieldThree = table.Column<string>(nullable: true),
@@ -164,7 +164,7 @@ namespace ErcasCollect.Migrations
                         column: x => x.BillerTypeId,
                         principalTable: "BillerTypes",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -184,7 +184,7 @@ namespace ErcasCollect.Migrations
                     Email = table.Column<string>(type: "nvarchar(32)", nullable: true),
                     Description = table.Column<string>(type: "nvarchar(32)", nullable: true),
                     StateId = table.Column<int>(nullable: false),
-                    BillerTypeId = table.Column<int>(nullable: false),
+                    BillerTypeId = table.Column<int>(nullable: true),
                     Latitude = table.Column<decimal>(type: "decimal(18,6)", nullable: false),
                     Longitude = table.Column<decimal>(type: "decimal(18,6)", nullable: false),
                     StatusCode = table.Column<string>(nullable: true),
@@ -199,7 +199,7 @@ namespace ErcasCollect.Migrations
                         column: x => x.BillerTypeId,
                         principalTable: "BillerTypes",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_Billers_State_StateId",
                         column: x => x.StateId,
@@ -214,8 +214,7 @@ namespace ErcasCollect.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    BillerId = table.Column<string>(type: "nvarchar(32)", nullable: true),
-                    BillerId1 = table.Column<int>(nullable: true),
+                    BillerId = table.Column<int>(nullable: true),
                     TIN = table.Column<string>(nullable: true),
                     IsValidated = table.Column<bool>(nullable: false)
                 },
@@ -223,8 +222,8 @@ namespace ErcasCollect.Migrations
                 {
                     table.PrimaryKey("PK_BillerTinDetails", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_BillerTinDetails_Billers_BillerId1",
-                        column: x => x.BillerId1,
+                        name: "FK_BillerTinDetails_Billers_BillerId",
+                        column: x => x.BillerId,
                         principalTable: "Billers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
@@ -243,7 +242,7 @@ namespace ErcasCollect.Migrations
                     IsDeleted = table.Column<bool>(nullable: false),
                     Name = table.Column<string>(type: "nvarchar(32)", nullable: true),
                     Description = table.Column<string>(type: "nvarchar(32)", nullable: true),
-                    BillerId = table.Column<int>(nullable: false),
+                    BillerId = table.Column<int>(nullable: true),
                     Latitude = table.Column<decimal>(type: "decimal(18,6)", nullable: false),
                     Longitude = table.Column<decimal>(type: "decimal(18,6)", nullable: false),
                     StatusCode = table.Column<int>(nullable: false),
@@ -257,7 +256,7 @@ namespace ErcasCollect.Migrations
                         column: x => x.BillerId,
                         principalTable: "Billers",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -270,10 +269,10 @@ namespace ErcasCollect.Migrations
                     CreatedDate = table.Column<DateTime>(nullable: false),
                     ModifiedDate = table.Column<DateTime>(nullable: false),
                     ModifiedBy = table.Column<int>(nullable: false),
-                    BankId = table.Column<int>(nullable: false),
-                    BillerId = table.Column<int>(nullable: false),
-                    PaymentChannelId = table.Column<int>(nullable: false),
-                    TransactionTypeId = table.Column<int>(nullable: false),
+                    BankId = table.Column<int>(nullable: true),
+                    BillerId = table.Column<int>(nullable: true),
+                    PaymentChannelId = table.Column<int>(nullable: true),
+                    TransactionTypeId = table.Column<int>(nullable: true),
                     PaidBy = table.Column<string>(type: "nvarchar(32)", nullable: true),
                     PayerPhone = table.Column<string>(type: "nvarchar(32)", nullable: true),
                     ReferenceID = table.Column<string>(type: "nvarchar(32)", nullable: true),
@@ -288,25 +287,25 @@ namespace ErcasCollect.Migrations
                         column: x => x.BankId,
                         principalTable: "Banks",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_Settlements_Billers_BillerId",
                         column: x => x.BillerId,
                         principalTable: "Billers",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_Settlements_PaymentChannels_PaymentChannelId",
                         column: x => x.PaymentChannelId,
                         principalTable: "PaymentChannels",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_Settlements_TransactionTypes_TransactionTypeId",
                         column: x => x.TransactionTypeId,
                         principalTable: "TransactionTypes",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -321,7 +320,7 @@ namespace ErcasCollect.Migrations
                     Createdby = table.Column<int>(nullable: false),
                     IsDeleted = table.Column<bool>(nullable: false),
                     Name = table.Column<string>(nullable: true),
-                    BillerId = table.Column<int>(nullable: false),
+                    BillerId = table.Column<int>(nullable: true),
                     Email = table.Column<string>(nullable: true),
                     PhoneNumber = table.Column<string>(nullable: true),
                     StatusCode = table.Column<int>(nullable: false),
@@ -335,7 +334,7 @@ namespace ErcasCollect.Migrations
                         column: x => x.BillerId,
                         principalTable: "Billers",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -350,7 +349,7 @@ namespace ErcasCollect.Migrations
                     Createdby = table.Column<int>(nullable: false),
                     IsDeleted = table.Column<bool>(nullable: false),
                     Name = table.Column<string>(type: "nvarchar(32)", nullable: true),
-                    BillerId = table.Column<int>(nullable: false),
+                    BillerId = table.Column<int>(nullable: true),
                     LevelOneId = table.Column<int>(nullable: true),
                     Longitude = table.Column<decimal>(type: "decimal(18,6)", nullable: false),
                     Latitude = table.Column<decimal>(type: "decimal(18,6)", nullable: false),
@@ -364,7 +363,7 @@ namespace ErcasCollect.Migrations
                         column: x => x.BillerId,
                         principalTable: "Billers",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_LevelTwo_LevelOne_LevelOneId",
                         column: x => x.LevelOneId,
@@ -379,10 +378,10 @@ namespace ErcasCollect.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    BillerId = table.Column<int>(nullable: false),
+                    BillerId = table.Column<int>(nullable: true),
                     LevelOneId = table.Column<int>(nullable: true),
                     LevelTwoId = table.Column<int>(nullable: true),
-                    BankId = table.Column<int>(nullable: false),
+                    BankId = table.Column<int>(nullable: true),
                     AccountNumber = table.Column<string>(nullable: true),
                     Amount = table.Column<decimal>(nullable: false),
                     DateProcessed = table.Column<DateTime>(nullable: false),
@@ -399,13 +398,13 @@ namespace ErcasCollect.Migrations
                         column: x => x.BankId,
                         principalTable: "Banks",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_FundSweep_Billers_BillerId",
                         column: x => x.BillerId,
                         principalTable: "Billers",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_FundSweep_LevelOne_LevelOneId",
                         column: x => x.LevelOneId,
@@ -433,7 +432,7 @@ namespace ErcasCollect.Migrations
                     IsDeleted = table.Column<bool>(nullable: false),
                     Name = table.Column<string>(type: "nvarchar(32)", nullable: true),
                     Amount = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
-                    BillerId = table.Column<int>(nullable: false),
+                    BillerId = table.Column<int>(nullable: true),
                     LevelOneId = table.Column<int>(nullable: true),
                     LevelTwoId = table.Column<int>(nullable: true),
                     IsAmountFixed = table.Column<bool>(nullable: false)
@@ -446,7 +445,7 @@ namespace ErcasCollect.Migrations
                         column: x => x.BillerId,
                         principalTable: "Billers",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_LevelThree_LevelOne_LevelOneId",
                         column: x => x.LevelOneId,
@@ -467,7 +466,7 @@ namespace ErcasCollect.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    BillerId = table.Column<int>(nullable: false),
+                    BillerId = table.Column<int>(nullable: true),
                     LevelOneId = table.Column<int>(nullable: true),
                     LevelTwoId = table.Column<int>(nullable: true),
                     AmountCollected = table.Column<decimal>(nullable: false),
@@ -484,7 +483,7 @@ namespace ErcasCollect.Migrations
                         column: x => x.BillerId,
                         principalTable: "Billers",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_TransactionSummaryViews_LevelOne_LevelOneId",
                         column: x => x.LevelOneId,
@@ -511,8 +510,8 @@ namespace ErcasCollect.Migrations
                     Createdby = table.Column<int>(nullable: false),
                     IsDeleted = table.Column<bool>(nullable: false),
                     SsoId = table.Column<int>(nullable: false),
-                    RoleId = table.Column<int>(nullable: false),
-                    BillerId = table.Column<int>(nullable: false),
+                    RoleId = table.Column<int>(nullable: true),
+                    BillerId = table.Column<int>(nullable: true),
                     LevelTwoId = table.Column<int>(nullable: true),
                     LevelOneId = table.Column<int>(nullable: true),
                     StatusCode = table.Column<int>(nullable: false),
@@ -528,7 +527,7 @@ namespace ErcasCollect.Migrations
                         column: x => x.BillerId,
                         principalTable: "Billers",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_Users_LevelOne_LevelOneId",
                         column: x => x.LevelOneId,
@@ -546,7 +545,7 @@ namespace ErcasCollect.Migrations
                         column: x => x.RoleId,
                         principalTable: "Roles",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -592,7 +591,7 @@ namespace ErcasCollect.Migrations
                     OSId = table.Column<int>(nullable: false),
                     Version = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
                     StatusCode = table.Column<int>(nullable: false),
-                    BillerId = table.Column<int>(nullable: false),
+                    BillerId = table.Column<int>(nullable: true),
                     LevelOneId = table.Column<int>(nullable: true),
                     Activationpin = table.Column<string>(nullable: true),
                     LevelTwoId = table.Column<int>(nullable: true),
@@ -606,7 +605,7 @@ namespace ErcasCollect.Migrations
                         column: x => x.BillerId,
                         principalTable: "Billers",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_Poses_LevelOne_LevelOneId",
                         column: x => x.LevelOneId,
@@ -647,7 +646,7 @@ namespace ErcasCollect.Migrations
                     StatusCode = table.Column<int>(nullable: false),
                     Amount = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
                     RemittanceNumber = table.Column<string>(type: "nvarchar(32)", nullable: true),
-                    PosId = table.Column<int>(nullable: false),
+                    PosId = table.Column<int>(nullable: true),
                     PayerName = table.Column<string>(nullable: true),
                     PayerPhone = table.Column<string>(nullable: true),
                     AgentId = table.Column<int>(nullable: false),
@@ -656,7 +655,7 @@ namespace ErcasCollect.Migrations
                     BillerId = table.Column<int>(nullable: true),
                     BatchId = table.Column<int>(nullable: false),
                     OfflineBatchId = table.Column<string>(nullable: true),
-                    TransactionTypeId = table.Column<int>(nullable: false),
+                    TransactionTypeId = table.Column<int>(nullable: true),
                     PaymentChannelId = table.Column<int>(nullable: false),
                     TransactionNumber = table.Column<string>(nullable: true),
                     LevelOneId = table.Column<int>(nullable: true),
@@ -707,13 +706,13 @@ namespace ErcasCollect.Migrations
                         column: x => x.PosId,
                         principalTable: "Poses",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_Transactions_TransactionTypes_TransactionTypeId",
                         column: x => x.TransactionTypeId,
                         principalTable: "TransactionTypes",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateIndex(
@@ -742,9 +741,9 @@ namespace ErcasCollect.Migrations
                 column: "StateId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_BillerTinDetails_BillerId1",
+                name: "IX_BillerTinDetails_BillerId",
                 table: "BillerTinDetails",
-                column: "BillerId1");
+                column: "BillerId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_FundSweep_BankId",

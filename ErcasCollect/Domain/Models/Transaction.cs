@@ -15,7 +15,7 @@ namespace ErcasCollect.Domain.Models
 
         [Column(TypeName = "nvarchar(32)")]
         public string RemittanceNumber { get; set; }
-        public int PosId { get; set; }
+        public int? PosId { get; set; }
         public Pos Pos { get; set; }
         public string PayerName { get; set; }
         public string PayerPhone{ get; set; }
@@ -27,7 +27,7 @@ namespace ErcasCollect.Domain.Models
         public Biller Biller { get; set; }
         public int BatchId { get; set; }
         public string OfflineBatchId { get; set; }
-        public int TransactionTypeId { get; set; }
+        public int? TransactionTypeId { get; set; }
         public TransactionType TransactionType { get; set; }
         public int PaymentChannelId { get; set; }
 

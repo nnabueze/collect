@@ -12,7 +12,7 @@ namespace ErcasCollect.Domain.Models
         public string Name { get; set; }
         [Column(TypeName = "nvarchar(32)")]
         public string Description { get; set; }
-        public int BillerId { get; set; }
+        public int? BillerId { get; set; }
         public Biller Biller { get; set; }
         [Column(TypeName = "decimal(18,6)")]
         public decimal Latitude { get; set; }

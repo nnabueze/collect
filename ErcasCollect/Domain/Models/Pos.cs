@@ -13,7 +13,7 @@ namespace ErcasCollect.Domain.Models
         public decimal Version { get; set; }
         public int StatusCode { get; set; }
 
-        public int BillerId{ get; set; }
+        public int? BillerId{ get; set; }
         public Biller Biller { get; set; }
         public int? LevelOneId { get; set; }
         public LevelOne LevelOne{ get; set; }

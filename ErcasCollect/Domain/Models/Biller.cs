@@ -22,7 +22,7 @@ namespace ErcasCollect.Domain.Models
         public int  StateId { get; set; }
         public State State { get; set; }
 
-        public int BillerTypeId{ get; set; }
+        public int? BillerTypeId{ get; set; }
         public BillerType BillerType{ get; set; }
         [Column(TypeName = "decimal(18,6)")]
         public decimal Latitude { get; set; }

@@ -13,7 +13,7 @@ namespace ErcasCollect.Domain.Models
         [Column(TypeName = "nvarchar(32)")]
         public string Name { get; set; }
 
-        public int BillerId { get; set; }
+        public int? BillerId { get; set; }
         public Biller Biller { get; set; }
 
         public int? LevelOneId { get; set; }

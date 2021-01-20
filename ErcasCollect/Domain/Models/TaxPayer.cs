@@ -9,7 +9,7 @@ namespace ErcasCollect.Domain.Models
     {
       
         public string Name { get; set; }
-        public int BillerId { get; set; }
+        public int? BillerId { get; set; }
         public Biller Biller{ get; set; }
         public string Email{ get; set; }
         public string PhoneNumber{ get; set; }
