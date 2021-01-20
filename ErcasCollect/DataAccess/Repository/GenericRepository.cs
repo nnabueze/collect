@@ -20,18 +20,21 @@ namespace ErcasCollect.DataAccess.Repository
             _context = context;
         }
 
-        public virtual async Task Add(T entity)
+        public virtual async Task<T> Add(T entity)
         {
-            //EntityEntry dbEntityEntry = _context.Entry<T>(entity);
             await _context.Set<T>().AddAsync(entity);
+
+            return entity;
         }
 
-        public virtual async Task Add(List<T> entity)
+        public virtual async Task<List<T>> Add(List<T> entity)
         {
             foreach (var item in entity)
             {
                 await _context.Set<T>().AddAsync(item);
             }
+
+            return entity;
         }
 
         public virtual async Task<IEnumerable<T>> AllIncluding(params Expression<Func<T, object>>[] includeProperties)

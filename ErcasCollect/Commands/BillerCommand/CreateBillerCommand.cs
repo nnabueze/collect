@@ -39,16 +39,22 @@ namespace ErcasCollect.Commands.BillerCommand
 
                 Biller biller  = _mapper.Map<Biller>(request.createBillerDto);
 
-                //await _billerRepository.Add(biller);
+                var addedBiller = await _billerRepository.Add(biller);
 
-                //await _billerRepository.CommitAsync();
-
-                var StatusCode = responseCode.Created;
+                 await _billerRepository.CommitAsync();
 
                 return new SuccessfulResponse()
                 {
                     Message ="Biller Created",
-                    StatusCode = responseCode.Created
+
+                    StatusCode = responseCode.Created,
+
+                    IsSuccess = true,
+
+                    Data = new
+                    {
+                        BillerId = addedBiller.Id
+                    }
                 };
             }
         }

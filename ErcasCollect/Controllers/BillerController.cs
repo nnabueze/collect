@@ -7,10 +7,12 @@ using ErcasCollect.Commands.BillerCommand;
 using ErcasCollect.Commands.Dto.BillerDto;
 using ErcasCollect.Domain.Models;
 using ErcasCollect.Exceptions;
+using ErcasCollect.Helpers;
 using ErcasCollect.Queries.BillerQuery;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -22,11 +24,13 @@ namespace ErcasCollect.Controllers
         // GET: api/values
         private readonly IMediator mediator;
         private readonly ILogger<Biller> _logger;
+        private readonly ResponseCode _responseCode;
 
-        public BillerController(ILogger<Biller> logger, IMediator mediator)
+        public BillerController(ILogger<Biller> logger, IMediator mediator, IOptions<ResponseCode> responseCode)
         {
             this.mediator = mediator ?? throw new ArgumentNullException(nameof(mediator));
             this._logger = logger ?? throw new ArgumentNullException(nameof(logger));
+            _responseCode = responseCode.Value;
         }
         [HttpPost]
 
@@ -36,19 +40,22 @@ namespace ErcasCollect.Controllers
             {
                 var result = await mediator.Send(request);
 
-                Console.WriteLine(result);
+                var response = new JsonResult(result);
 
-                return new JsonResult(result);
-            }
-            catch (AppException ex)
-            {
-                _logger.LogError(ex, "An Application exception occurred on the make transaction action of the NonIgr");
-                // return await BadRequest(new { message = ex.Message });
-                throw;
+                response.StatusCode = result.StatusCode;
+
+                return response;
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "An unknown error occurred on the make transaction action of the NonIgr");
+                _logger.LogError(ex.Message.ToString(), "An Application exception occurred on the make transaction action of the NonIgr");
+
+                var response = new JsonResult(new { message = "Internal Server Error" });
+
+                response.StatusCode = _responseCode.InternalServerError;
+
+                return response;
+                
                 throw;
             }
         }

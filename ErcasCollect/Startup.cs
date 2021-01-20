@@ -20,6 +20,7 @@ using FluentValidation.AspNetCore;
 using ErcasCollect.Validators;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Http;
+using ErcasCollect.Helpers;
 
 namespace ErcasCollect
 {
@@ -81,7 +82,12 @@ namespace ErcasCollect
             services.AddMvc().AddXmlSerializerFormatters();
 
             services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"), b => b.MigrationsAssembly(typeof(ApplicationDbContext).Assembly.FullName)));
-          
+
+            //adding api authentication settings
+            var responseCodeSection = Configuration.GetSection("ResponseCode");
+            services
+                .Configure<ResponseCode>(responseCodeSection);
+
             // Register the Swagger generator, defining 1 or more Swagger documents
             services.AddSwaggerGen(c =>
             {

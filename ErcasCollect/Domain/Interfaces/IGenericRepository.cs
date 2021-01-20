@@ -20,8 +20,8 @@ namespace ErcasCollect.Domain.Interfaces
         Task<IEnumerable<T>> FindAllInclude(Expression<Func<T, bool>> predicate, params Expression<Func<T, object>>[] includeProperties);
         Task<T> FindSingleInclude(Expression<Func<T, bool>> predicate, params Expression<Func<T, object>>[] includeProperties);
         Task<IEnumerable<T>> FindBy(Expression<Func<T, bool>> predicate);
-        Task Add(T entity);
-        Task Add(List<T> entity);
+        Task<T> Add(T entity);
+        Task<List<T>> Add(List<T> entity);
         void Update(T entity);
         T FindFirst(Expression<Func<T, bool>> predicate);
         void UndoAdd(T entity);

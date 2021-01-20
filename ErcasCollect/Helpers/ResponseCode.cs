@@ -46,5 +46,9 @@ namespace ErcasCollect.Helpers
         public int ClearedTaxes { get; set; }
 
         public int RemittanceChecking { get; set; }
+
+        public int NotAccepted { get; set; }
+
+        public int InternalServerError { get; set; }
     }
 }
