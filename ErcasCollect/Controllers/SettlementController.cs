@@ -47,6 +47,22 @@ namespace ErcasCollect.Controllers
             }
         }
 
+        [HttpPost]
+        public ActionResult FlexSettlement([FromBody] FlexSettlementCommand request)
+        {
+            try
+            {
+
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+
+            return null;
+        }
+
 
     }
 }

@@ -4,12 +4,14 @@ using System.Linq;
 using System.Threading.Tasks;
 using ErcasCollect.Domain.Models;
 using ErcasCollect.Exceptions;
+using ErcasCollect.Helpers;
 using ErcasCollect.Queries.BillerQuery;
 using ErcasCollect.Queries.Dto;
 using ErcasCollect.Queries.osQuery;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
 
 // For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -21,33 +23,40 @@ namespace ErcasCollect.Controllers
         // GET: /<controller>/
         private readonly IMediator mediator;
         private readonly ILogger<Status> _logger;
+        private readonly ResponseCode _responseCode;
 
-        public ApplicationDataController(ILogger<Status> logger, IMediator mediator)
+        public ApplicationDataController(ILogger<Status> logger, IMediator mediator, IOptions<ResponseCode> responseCode)
         {
             this.mediator = mediator ?? throw new ArgumentNullException(nameof(mediator));
             this._logger = logger ?? throw new ArgumentNullException(nameof(logger));
+            _responseCode = responseCode.Value;
         }
 
         [HttpGet]
 
-        public async Task<IEnumerable<ReadStatusDto>> GetAllStatus()
+        public async Task<ActionResult> GetAllStatus()
         {
             try
             {
                 GetAllStatusQuery request = new GetAllStatusQuery();
 
-                return await mediator.Send(request);
-            }
-            catch (AppException ex)
-            {
-                _logger.LogError(ex, "An Application exception occurred on the Get Specific action of the Igr");
-                // return await BadRequest(new { message = ex.Message });
-                throw;
+                var result = await mediator.Send(request);
+
+                var response = new JsonResult(result);
+
+                response.StatusCode = result.StatusCode;
+
+                return response;
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "An unknown error occurred on the Get Specific action of the Igr");
-                throw;
+                _logger.LogError(ex.Message.ToString(), "An Application exception occurred on the Get Specific action of the Igr");
+
+                var response = new JsonResult(new { Message = ex.Message.ToString() });
+
+                response.StatusCode = _responseCode.InternalServerError;
+
+                return response;
             }
         }
 

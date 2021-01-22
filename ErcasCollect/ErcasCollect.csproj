@@ -33,7 +33,6 @@
     <PackageReference Include="Microsoft.OpenApi" Version="1.2.3" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Commands\" />
     <Folder Include="Queries\" />
     <Folder Include="Domain\" />
     <Folder Include="DataAccess\" />
@@ -46,7 +45,6 @@
     <Folder Include="AutoMapper\Profiles\" />
     <Folder Include="Helpers\IdGenerator.cs\" />
     <Folder Include="Controllers\" />
-    <Folder Include="Commands\Dto\" />
     <Folder Include="Commands\Dto\BillerDto\" />
     <Folder Include="Commands\BillerCommand\" />
     <Folder Include="Exceptions\" />
@@ -68,8 +66,6 @@
     <Folder Include="Queries\Dto\" />
     <Folder Include="Commands\Dto\PosDto\" />
     <Folder Include="Commands\Dto\UserDto\" />
-    <Folder Include="Commands\Dto\SettlementDto\" />
-    <Folder Include="Commands\SettlementCommand\" />
     <Folder Include="Commands\Dto\TaxpayerDto\" />
     <Folder Include="Commands\BatchCommand\" />
     <Folder Include="Commands\Dto\BatchDto\" />
