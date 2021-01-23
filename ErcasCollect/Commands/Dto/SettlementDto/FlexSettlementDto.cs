@@ -7,7 +7,7 @@ namespace ErcasCollect.Commands.Dto.SettlementDto
 {
     public class FlexSettlementDto
     {
-        public int BillerId { get; set; }        
+        public string BillerId { get; set; }        
 
         public string PayerName { get; set; }
 
@@ -20,6 +20,8 @@ namespace ErcasCollect.Commands.Dto.SettlementDto
         public decimal TotalAmount { get; set; }
 
         public string TransactionStatus { get; set; }
+
+        public int StatusCode { get; set; }
 
         public List<TransactionItem> transactionItems { get; set; }
     }

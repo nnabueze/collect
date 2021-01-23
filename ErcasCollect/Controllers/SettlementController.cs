@@ -5,25 +5,33 @@ using System.Threading.Tasks;
 using ErcasCollect.Commands.SettlementCommand;
 using ErcasCollect.Domain.Models;
 using ErcasCollect.Exceptions;
+using ErcasCollect.Helpers;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
 
 namespace ErcasCollect.Controllers
 {
     [Route("api/[controller]/[action]")]
     public class SettlementController : Controller
     {
-        private readonly IMediator mediator;
+        private readonly IMediator _mediator;
+
         private readonly ILogger<Settlement> _logger;
 
-        public SettlementController(ILogger<Settlement> logger, IMediator mediator)
+        private readonly ResponseCode _responseCode;
+
+        public SettlementController(ILogger<Settlement> logger, IMediator mediator, IOptions<ResponseCode> responseCode)
         {
-            this.mediator = mediator ?? throw new ArgumentNullException(nameof(mediator));
-            this._logger = logger ?? throw new ArgumentNullException(nameof(logger));
+            _mediator = mediator ?? throw new ArgumentNullException(nameof(mediator));
+
+            _logger = logger ?? throw new ArgumentNullException(nameof(logger));
+
+            _responseCode = responseCode.Value;
         }
         // GET: api/values
-  
+
 
         [HttpPost]
 
@@ -31,36 +39,40 @@ namespace ErcasCollect.Controllers
         {
             try
             {
-                var result = await mediator.Send(request);
+                var result = await _mediator.Send(request);
+
                 return new JsonResult(result);
             }
             catch (AppException ex)
             {
                 _logger.LogError(ex, "An Application exception occurred on the make transaction action of the NonIgr");
-                // return await BadRequest(new { message = ex.Message });
-                throw;
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError(ex, "An unknown error occurred on the make transaction action of the NonIgr");
+               
                 throw;
             }
         }
 
         [HttpPost]
-        public ActionResult FlexSettlement([FromBody] FlexSettlementCommand request)
+        public async Task<ActionResult> FlexSettlement([FromBody] FlexSettlementCommand request)
         {
             try
             {
+                var result = await _mediator.Send(request);
 
+                var response = new JsonResult(result);
+
+                response.StatusCode = result.StatusCode;
+
+                return response;
             }
             catch (Exception)
             {
 
-                throw;
-            }
+                var response = new JsonResult(new {Message = "Internal Server Error" });
 
-            return null;
+                response.StatusCode = _responseCode.InternalServerError;
+
+                return response;
+            }
         }
 
 

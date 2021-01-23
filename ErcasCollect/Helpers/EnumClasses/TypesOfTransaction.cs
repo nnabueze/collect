@@ -5,12 +5,13 @@ using System.Threading.Tasks;
 
 namespace ErcasCollect.Helpers.EnumClasses
 {
-    public enum TransactionType
+    public enum TypesOfTransaction
     {
         Collection,
         Remittance,
         Tax,
         Invoice,
-        NonTax
+        NonTax,
+        SelfService
     }
 }

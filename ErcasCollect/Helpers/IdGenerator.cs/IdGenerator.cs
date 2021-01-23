@@ -104,5 +104,18 @@ namespace ErcasCollect.Helpers.IdGenerator
            
         
         }
+
+        public static string RandomInt(int length)
+        {
+            var rnd = new Random(DateTime.UtcNow.Millisecond);
+            string rNum = DateTime.UtcNow.Millisecond + rnd.Next(0, 900000000).ToString();
+            string temp = "";
+            for (int i = 0; i < length; i++)
+            {
+                temp += rNum[rnd.Next(0, rNum.Length)].ToString();
+            }
+
+            return temp;
+        }
     }
 }
