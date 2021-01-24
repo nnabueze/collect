@@ -94,7 +94,7 @@ namespace ErcasCollect.Commands.SettlementCommand
 
                     PayerPhone = request.FlexSettlementDto.PayerPhone,
 
-                    PaymentChannelId = (int?)PaymentChannels.Card,
+                    PaymentChannel = PaymentChannels.Card,
 
                     ReferenceID = request.FlexSettlementDto.ReferenceNumber,
 
@@ -102,7 +102,7 @@ namespace ErcasCollect.Commands.SettlementCommand
 
                     TransactionStatus = request.FlexSettlementDto.TransactionStatus,
 
-                    TransactionTypeId = (int?)TypesOfTransaction.SelfService,
+                    TransactionType = TypesOfTransaction.SelfService,
 
                     StatusCode = request.FlexSettlementDto.StatusCode
 
@@ -137,9 +137,9 @@ namespace ErcasCollect.Commands.SettlementCommand
 
                         TransactionNumber = addSettlement.TransactionNumber,
 
-                        PaymentChannelId = (int) addSettlement.PaymentChannelId,
+                        PaymentChannel = addSettlement.PaymentChannel,
 
-                        TransactionTypeId = addSettlement.TransactionTypeId,
+                        TransactionType = addSettlement.TransactionType,
 
                         StatusCode = addSettlement.StatusCode
 

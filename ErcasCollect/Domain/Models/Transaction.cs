@@ -2,6 +2,7 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using ErcasCollect.Domain.BaseEntities;
+using ErcasCollect.Helpers.EnumClasses;
 
 namespace ErcasCollect.Domain.Models
 {
@@ -27,12 +28,9 @@ namespace ErcasCollect.Domain.Models
         public Biller Biller { get; set; }
         public int BatchId { get; set; }
         public string OfflineBatchId { get; set; }
-        public int? TransactionTypeId { get; set; }
-        public TransactionType TransactionType { get; set; }
-        public int PaymentChannelId { get; set; }
-
+        public TypesOfTransaction TransactionType { get; set; }
         public string TransactionNumber { get; set; }
-        public PaymentChannel PaymentChannel{ get; set; }
+        public PaymentChannels PaymentChannel{ get; set; }
         public int? LevelOneId { get; set; }
         public LevelOne LevelOne { get; set; }
         public int? LevelTwoId { get; set; }

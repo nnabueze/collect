@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ErcasCollect.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20210123054616_adjustBillerAndSettlement")]
+    [Migration("20210123074638_adjustBillerAndSettlement")]
     partial class adjustBillerAndSettlement
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -115,7 +115,7 @@ namespace ErcasCollect.Migrations
                     b.Property<string>("Address")
                         .HasColumnType("nvarchar(32)");
 
-                    b.Property<int?>("BillerTypeId")
+                    b.Property<int>("BillerType")
                         .HasColumnType("int");
 
                     b.Property<int>("Commission")
@@ -157,17 +157,14 @@ namespace ErcasCollect.Migrations
                     b.Property<string>("ReferenceKey")
                         .HasColumnType("nvarchar(32)");
 
-                    b.Property<int?>("StateId")
+                    b.Property<int>("State")
                         .HasColumnType("int");
-
-                    b.Property<string>("StatusCode")
-                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("BillerTypeId");
-
-                    b.HasIndex("StateId");
+                    b.HasIndex("ReferenceKey")
+                        .IsUnique()
+                        .HasFilter("[ReferenceKey] IS NOT NULL");
 
                     b.ToTable("Billers");
                 });
@@ -597,8 +594,8 @@ namespace ErcasCollect.Migrations
                     b.Property<decimal>("Amount")
                         .HasColumnType("decimal(18,2)");
 
-                    b.Property<int?>("BankId")
-                        .HasColumnType("int");
+                    b.Property<string>("Bank")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int?>("BillerId")
                         .HasColumnType("int");
@@ -618,7 +615,7 @@ namespace ErcasCollect.Migrations
                     b.Property<string>("PayerPhone")
                         .HasColumnType("nvarchar(32)");
 
-                    b.Property<int?>("PaymentChannelId")
+                    b.Property<int>("PaymentChannel")
                         .HasColumnType("int");
 
                     b.Property<string>("ReferenceID")
@@ -633,18 +630,12 @@ namespace ErcasCollect.Migrations
                     b.Property<string>("TransactionStatus")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("TransactionTypeId")
+                    b.Property<int>("TransactionType")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("BankId");
-
                     b.HasIndex("BillerId");
-
-                    b.HasIndex("PaymentChannelId");
-
-                    b.HasIndex("TransactionTypeId");
 
                     b.ToTable("Settlements");
                 });
@@ -766,7 +757,7 @@ namespace ErcasCollect.Migrations
                     b.Property<string>("PayerPhone")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("PaymentChannelId")
+                    b.Property<int>("PaymentChannel")
                         .HasColumnType("int");
 
                     b.Property<int?>("PosId")
@@ -784,7 +775,7 @@ namespace ErcasCollect.Migrations
                     b.Property<string>("TransactionNumber")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("TransactionTypeId")
+                    b.Property<int>("TransactionType")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
@@ -799,11 +790,7 @@ namespace ErcasCollect.Migrations
 
                     b.HasIndex("LevelTwoId");
 
-                    b.HasIndex("PaymentChannelId");
-
                     b.HasIndex("PosId");
-
-                    b.HasIndex("TransactionTypeId");
 
                     b.ToTable("Transactions");
                 });
@@ -947,17 +934,6 @@ namespace ErcasCollect.Migrations
                         .HasForeignKey("BillerId");
                 });
 
-            modelBuilder.Entity("ErcasCollect.Domain.Models.Biller", b =>
-                {
-                    b.HasOne("ErcasCollect.Domain.Models.BillerType", "BillerType")
-                        .WithMany()
-                        .HasForeignKey("BillerTypeId");
-
-                    b.HasOne("ErcasCollect.Domain.Models.State", "State")
-                        .WithMany()
-                        .HasForeignKey("StateId");
-                });
-
             modelBuilder.Entity("ErcasCollect.Domain.Models.BillerTINDetail", b =>
                 {
                     b.HasOne("ErcasCollect.Domain.Models.Biller", "Biller")
@@ -1051,21 +1027,9 @@ namespace ErcasCollect.Migrations
 
             modelBuilder.Entity("ErcasCollect.Domain.Models.Settlement", b =>
                 {
-                    b.HasOne("ErcasCollect.Domain.Models.Bank", "Bank")
-                        .WithMany()
-                        .HasForeignKey("BankId");
-
                     b.HasOne("ErcasCollect.Domain.Models.Biller", "Biller")
                         .WithMany()
                         .HasForeignKey("BillerId");
-
-                    b.HasOne("ErcasCollect.Domain.Models.PaymentChannel", "PaymentChannel")
-                        .WithMany()
-                        .HasForeignKey("PaymentChannelId");
-
-                    b.HasOne("ErcasCollect.Domain.Models.TransactionType", "TransactionType")
-                        .WithMany()
-                        .HasForeignKey("TransactionTypeId");
                 });
 
             modelBuilder.Entity("ErcasCollect.Domain.Models.TaxPayer", b =>
@@ -1099,19 +1063,9 @@ namespace ErcasCollect.Migrations
                         .WithMany()
                         .HasForeignKey("LevelTwoId");
 
-                    b.HasOne("ErcasCollect.Domain.Models.PaymentChannel", "PaymentChannel")
-                        .WithMany()
-                        .HasForeignKey("PaymentChannelId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("ErcasCollect.Domain.Models.Pos", "Pos")
                         .WithMany()
                         .HasForeignKey("PosId");
-
-                    b.HasOne("ErcasCollect.Domain.Models.TransactionType", "TransactionType")
-                        .WithMany()
-                        .HasForeignKey("TransactionTypeId");
                 });
 
             modelBuilder.Entity("ErcasCollect.Domain.Models.TransactionSummaryView", b =>

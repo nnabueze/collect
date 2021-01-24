@@ -4,6 +4,15 @@
     <TargetFramework>netcoreapp3.1</TargetFramework>
   </PropertyGroup>
 
+  <ItemGroup>
+    <Compile Remove="Migrations\20210123054616_adjustBillerAndSettlement.cs" />
+    <Compile Remove="Migrations\20210123054616_adjustBillerAndSettlement.Designer.cs" />
+    <Compile Remove="Migrations\20210123062902_adjustBillerAndSettlement.cs" />
+    <Compile Remove="Migrations\20210123062902_adjustBillerAndSettlement.Designer.cs" />
+    <Compile Remove="Migrations\20210123070720_adjustBillerAndSettlement.cs" />
+    <Compile Remove="Migrations\20210123070720_adjustBillerAndSettlement.Designer.cs" />
+  </ItemGroup>
+
 
   <ItemGroup>
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="3.1.7" />

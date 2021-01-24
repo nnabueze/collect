@@ -3,6 +3,7 @@ using ErcasCollect.Commands.Dto.CollectionDto;
 using ErcasCollect.Domain.Interfaces;
 using ErcasCollect.Domain.Models;
 using ErcasCollect.Helpers;
+using ErcasCollect.Helpers.EnumClasses;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
@@ -88,7 +89,7 @@ namespace ErcasCollect.Commands.CollectionCommand
                             collectionbatch.SessionId = request.collectionDto.SessionId;
                             collectionbatch.AgentId= request.collectionDto.AgentId;
                             collectionbatch.BillerId = request.collectionDto.BillerId;
-                            collectionbatch.TransactionTypeId = request.collectionDto.TransactionTypeId;
+                            collectionbatch.TransactionType = TypesOfTransaction.Collection;
                 
 
 

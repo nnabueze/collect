@@ -53,5 +53,12 @@ namespace ErcasCollect.DataAccess
         public ApplicationDbContext()
         {
         }
+
+        protected override void OnModelCreating(ModelBuilder builder)
+        {
+            builder.Entity<Biller>()
+              .HasIndex(x => x.ReferenceKey)
+                .IsUnique();
+        }
     }
 }

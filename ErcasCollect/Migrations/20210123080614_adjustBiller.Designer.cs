@@ -4,14 +4,16 @@ using ErcasCollect.DataAccess;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace ErcasCollect.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210123080614_adjustBiller")]
+    partial class adjustBiller
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -113,7 +115,7 @@ namespace ErcasCollect.Migrations
                     b.Property<string>("Address")
                         .HasColumnType("nvarchar(32)");
 
-                    b.Property<int?>("BillerTypeId")
+                    b.Property<int>("BillerType")
                         .HasColumnType("int");
 
                     b.Property<int>("Commission")
@@ -155,21 +157,14 @@ namespace ErcasCollect.Migrations
                     b.Property<string>("ReferenceKey")
                         .HasColumnType("nvarchar(32)");
 
-                    b.Property<int?>("StateId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("StatusCode")
+                    b.Property<string>("State")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("BillerTypeId");
-
                     b.HasIndex("ReferenceKey")
                         .IsUnique()
                         .HasFilter("[ReferenceKey] IS NOT NULL");
-
-                    b.HasIndex("StateId");
 
                     b.ToTable("Billers");
                 });
@@ -937,17 +932,6 @@ namespace ErcasCollect.Migrations
                     b.HasOne("ErcasCollect.Domain.Models.Biller", "Biller")
                         .WithMany()
                         .HasForeignKey("BillerId");
-                });
-
-            modelBuilder.Entity("ErcasCollect.Domain.Models.Biller", b =>
-                {
-                    b.HasOne("ErcasCollect.Domain.Models.BillerType", "BillerType")
-                        .WithMany()
-                        .HasForeignKey("BillerTypeId");
-
-                    b.HasOne("ErcasCollect.Domain.Models.State", "State")
-                        .WithMany()
-                        .HasForeignKey("StateId");
                 });
 
             modelBuilder.Entity("ErcasCollect.Domain.Models.BillerTINDetail", b =>

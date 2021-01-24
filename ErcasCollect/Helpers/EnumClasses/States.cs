@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace ErcasCollect.Helpers.EnumClasses
 {
-    public enum Banks
+    public enum States
     {
         Abia,
         Adamawa,

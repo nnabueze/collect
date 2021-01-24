@@ -7,6 +7,7 @@ using ErcasCollect.DataAccess.Repository;
 using ErcasCollect.Domain.Interfaces;
 using ErcasCollect.Domain.Models;
 using ErcasCollect.Helpers;
+using ErcasCollect.Helpers.EnumClasses;
 using ErcasCollect.Responses;
 using MediatR;
 using Microsoft.Extensions.Options;
@@ -37,15 +38,17 @@ namespace ErcasCollect.Commands.BillerCommand
             public async Task<SuccessfulResponse> Handle(CreateBillerCommand request, CancellationToken cancellationToken)
             {
 
-                Biller biller  = _mapper.Map<Biller>(request.createBillerDto);
+                Biller biller = _mapper.Map<Biller>(request.createBillerDto);
+
+                biller.ReferenceKey = Helpers.IdGenerator.IdGenerator.RandomInt(15);
 
                 var addedBiller = await _billerRepository.Add(biller);
 
-                 await _billerRepository.CommitAsync();
+                await _billerRepository.CommitAsync();
 
                 return new SuccessfulResponse()
                 {
-                    Message ="Biller Created",
+                    Message = "Biller Created",
 
                     StatusCode = responseCode.Created,
 
@@ -53,12 +56,12 @@ namespace ErcasCollect.Commands.BillerCommand
 
                     Data = new
                     {
-                        BillerId = addedBiller.Id
+                        BillerId = addedBiller.ReferenceKey
                     }
                 };
             }
         }
-        }
+    }
 }
 
 

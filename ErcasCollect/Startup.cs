@@ -73,6 +73,7 @@ namespace ErcasCollect
             services.AddScoped<IBatchRepository, BatchRepository>();
             services.AddScoped<ILevelOneRepository, LevelOneRepository>();
             services.AddScoped<ILevelTwoRepository, LevelTwoRepository>();
+            services.AddScoped<IWebCallService, WebCallService>();
             services.AddScoped<ITransactionRepository, TransactionRepository>();
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
             services.Configure<ApiBehaviorOptions>(options =>

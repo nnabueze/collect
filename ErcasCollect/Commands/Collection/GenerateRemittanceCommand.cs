@@ -6,6 +6,7 @@ using ErcasCollect.Commands.Dto.CollectionDto;
 using ErcasCollect.Domain.Interfaces;
 using ErcasCollect.Domain.Models;
 using ErcasCollect.Helpers;
+using ErcasCollect.Helpers.EnumClasses;
 using ErcasCollect.Responses;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
@@ -91,11 +92,11 @@ namespace ErcasCollect.Commands.CollectionCommand
 
                     transaction.BatchId = batch.Id;
 
-                    transaction.TransactionTypeId = 2;
+                    transaction.TransactionType = TypesOfTransaction.Remittance;
 
                     transaction.RemittanceNumber= Helpers.IdGenerator.IdGenerator.GetUniqueKey(10, 2);
 
-                    transaction.PaymentChannelId = 1;
+                    transaction.PaymentChannel = PaymentChannels.POS;
 
                     await _transactionRepository.Add(transaction);
 

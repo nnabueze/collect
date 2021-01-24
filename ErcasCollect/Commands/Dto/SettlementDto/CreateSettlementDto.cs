@@ -7,7 +7,7 @@ namespace ErcasCollect.Commands.Dto.SettlementDto
 {
     public class CreateSettlementDto
     {
-        public int BankId { get; set; }
+        public string Bank { get; set; }
    
         public int BillerId { get; set; }
    

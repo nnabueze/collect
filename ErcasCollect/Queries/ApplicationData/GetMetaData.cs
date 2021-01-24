@@ -34,16 +34,18 @@ namespace ErcasCollect.Queries.BillerQuery
 
                 var user = await billerDataRepository.GetSingle(x => x.Id == query.id);
 
-                var result = await metaDataRepository.GetSingle(x => x.BillerTypeId == user.BillerTypeId);
-                if (result != null)
-                {
-                    var biller = mapper.Map<ReadAllMetaDataDto>(result);
-                    return biller;
-                }
-                else
-                {
-                    return null;
-                }
+                //var result = await metaDataRepository.GetSingle(x => x.BillerTypeId == user.BillerTypeId);
+                //if (result != null)
+                //{
+                //    var biller = mapper.Map<ReadAllMetaDataDto>(result);
+                //    return biller;
+                //}
+                //else
+                //{
+                //    return null;
+                //}
+
+                return null;
 
             }
 

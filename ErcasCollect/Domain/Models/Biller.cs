@@ -8,7 +8,7 @@ namespace ErcasCollect.Domain.Models
     public class Biller:BaseEntity
     {
         [Column(TypeName = "nvarchar(32)")]
-        public string ReferenceKey { get; set; } = Helpers.IdGenerator.IdGenerator.RandomInt(15);
+        public string ReferenceKey { get; set; } 
 
         [Column(TypeName = "nvarchar(32)")]
         public string Name { get; set; }

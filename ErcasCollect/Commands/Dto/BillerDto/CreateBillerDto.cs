@@ -4,6 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text.Json.Serialization;
 using ErcasCollect.Domain.Models;
+using ErcasCollect.Helpers.EnumClasses;
 using ErcasCollect.Validators;
 
 namespace ErcasCollect.Commands.Dto.BillerDto
@@ -19,7 +20,6 @@ namespace ErcasCollect.Commands.Dto.BillerDto
         public int BillerTypeId { get; set; }
         public decimal Latitude { get; set; }
         public decimal Longitude { get; set; }
-        public string StatusId{ get; set; }
         public string Abbreviation { get; set; }
         public int Commission { get; set; }
 

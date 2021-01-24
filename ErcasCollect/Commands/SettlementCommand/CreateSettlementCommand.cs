@@ -8,6 +8,7 @@ using ErcasCollect.Commands.Dto.SettlementDto;
 using ErcasCollect.Domain.Interfaces;
 using ErcasCollect.Domain.Models;
 using ErcasCollect.Helpers;
+using ErcasCollect.Helpers.EnumClasses;
 using MediatR;
 using Microsoft.Extensions.Options;
 
@@ -44,10 +45,10 @@ namespace ErcasCollect.Commands.SettlementCommand
        
                 Settlement settlement = new Settlement();
                 settlement.Amount = request.createSettlementDto.Amount;
-                settlement.BankId= request.createSettlementDto.BankId;
+                settlement.Bank= request.createSettlementDto.Bank;
                 settlement.BillerId = request.createSettlementDto.BillerId;
-                settlement.PaymentChannelId = request.createSettlementDto.PaymentChannelId;
-                settlement.TransactionTypeId = request.createSettlementDto.TransactionTypeId;
+                settlement.PaymentChannel = PaymentChannels.Nibss;
+                settlement.TransactionType = TypesOfTransaction.NonTax;
                 settlement.PaidBy = request.createSettlementDto.PaidBy;
                 settlement.PayerPhone = request.createSettlementDto.PayerPhone;
                 settlement.ReferenceID = request.createSettlementDto.ReferenceID;
@@ -90,8 +91,8 @@ namespace ErcasCollect.Commands.SettlementCommand
                     foreach (var transactionbatch in transaction)
                     {
                         transactionbatch.PayerPhone = request.createSettlementDto.PayerPhone;
-                        transactionbatch.PaymentChannelId = request.createSettlementDto.PaymentChannelId;
-                        transactionbatch.TransactionTypeId = request.createSettlementDto.TransactionTypeId;
+                        transactionbatch.PaymentChannel = PaymentChannels.Nibss;
+                        transactionbatch.TransactionType = TypesOfTransaction.NonTax;
                         transactionbatch.BillerId = request.createSettlementDto.BillerId;
                         transactionbatch.StatusCode = request.createSettlementDto.StatusCode;
                         transactionbatch.PayerName = request.createSettlementDto.PaidBy;
