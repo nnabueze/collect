@@ -11,6 +11,7 @@ using ErcasCollect.Helpers.EnumClasses;
 using ErcasCollect.Responses;
 using MediatR;
 using Microsoft.Extensions.Options;
+using Newtonsoft.Json;
 
 namespace ErcasCollect.Commands.BillerCommand
 {
@@ -24,15 +25,25 @@ namespace ErcasCollect.Commands.BillerCommand
 
             private readonly IMapper _mapper;
 
-            private readonly ResponseCode responseCode;
+            private readonly ResponseCode _responseCode;
 
-            public CreateBillerCommandHandler(IBillerRepository billerRepository, IMapper mapper, IOptions<ResponseCode> responseCode)
+            private readonly IWebCallService _webCallService;
+
+            private readonly WebEndpoint _webEndpoint;
+
+            public CreateBillerCommandHandler(IBillerRepository billerRepository, IMapper mapper, IOptions<ResponseCode> responseCode, 
+                
+                IWebCallService webCallService, IOptions<WebEndpoint> webEndpoint)
             {
                 _billerRepository = billerRepository ?? throw new ArgumentNullException(nameof(billerRepository));
 
                 _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
 
-                this.responseCode = responseCode.Value;
+                _responseCode = responseCode.Value;
+
+                _webCallService = webCallService;
+
+                _webEndpoint = webEndpoint.Value;
             }
 
             public async Task<SuccessfulResponse> Handle(CreateBillerCommand request, CancellationToken cancellationToken)
@@ -42,15 +53,27 @@ namespace ErcasCollect.Commands.BillerCommand
 
                 biller.ReferenceKey = Helpers.IdGenerator.IdGenerator.RandomInt(15);
 
+                //call api gateway to onboard biller
+
+
+
+                await OnboardBillerOnGateway(biller);
+
+                //is onboarding biller on api gateway failed
+
+                //save biller
                 var addedBiller = await _billerRepository.Add(biller);
 
                 await _billerRepository.CommitAsync();
 
+                //send notification to biller
+
+                //return response
                 return new SuccessfulResponse()
                 {
                     Message = "Biller Created",
 
-                    StatusCode = responseCode.Created,
+                    StatusCode = _responseCode.Created,
 
                     IsSuccess = true,
 
@@ -59,6 +82,35 @@ namespace ErcasCollect.Commands.BillerCommand
                         BillerId = addedBiller.ReferenceKey
                     }
                 };
+            }
+
+            private async Task OnboardBillerOnGateway(Biller biller)
+            {
+                var gatewayData = new
+                {
+                    billerData = new
+                    {
+                        companyName = biller.Name,
+
+                        companyEmail = biller.Email,
+
+                        companyPhone = biller.PhoneNumber,
+
+                        companyInformation = biller.Description,
+
+                        address = biller.Address,
+
+                        services = [new
+                        {
+
+                            id = 2
+                        }]
+                    }
+                };
+
+                var gatewayDataJson = JsonConvert.SerializeObject(gatewayData);
+
+                var gatewayResponse = await _webCallService.PostDataCall(_webEndpoint.GatewayOnBoard, gatewayDataJson);
             }
         }
     }

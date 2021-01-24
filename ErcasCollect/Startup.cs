@@ -86,8 +86,10 @@ namespace ErcasCollect
 
             //adding api authentication settings
             var responseCodeSection = Configuration.GetSection("ResponseCode");
+            var endpoint = Configuration.GetSection("WebEndpoint");
             services
-                .Configure<ResponseCode>(responseCodeSection);
+                .Configure<ResponseCode>(responseCodeSection)
+                .Configure<WebEndpoint>(endpoint);
 
             // Register the Swagger generator, defining 1 or more Swagger documents
             services.AddSwaggerGen(c =>

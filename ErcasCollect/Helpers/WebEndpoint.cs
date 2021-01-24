@@ -1,0 +1,20 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+
+namespace ErcasCollect.Helpers
+{
+    public class WebEndpoint
+    {
+        public string GatewayOnBoard { get; set; }
+
+        public string GatewayServices { get; set; }
+
+        public string GatewayCallbackUrl { get; set; }
+
+        public string Mail { get; set; }
+
+        public string MailTransaction { get; set; }
+    }
+}

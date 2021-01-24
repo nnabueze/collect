@@ -6,6 +6,13 @@ namespace ErcasCollect.Helpers
 {
     public class XmlSerializer
     {
+        private Type type;
+
+        public XmlSerializer(Type type)
+        {
+            this.type = type;
+        }
+
         public static List<Param> ValidationParamArray(ValidationResponse response )
         {
             Dictionary<string, string> Result = new Dictionary<string, string>();
