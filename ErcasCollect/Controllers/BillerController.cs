@@ -198,24 +198,31 @@ namespace ErcasCollect.Controllers
 
         [HttpGet("{id}")]
 
-        public async Task<IEnumerable<ReadBillerDto>> GetAllBillersByCategory(int id)
+        public async Task<ActionResult> GetAllBillersByCategory(int id)
         {
             try
             {
                 GetAllBillerByCategoryQuery request = new GetAllBillerByCategoryQuery();
+
                 request.id = id;
-                return await mediator.Send(request);
-            }
-            catch (AppException ex)
-            {
-                _logger.LogError(ex, "An Application exception occurred on the Get Specific action of the Igr");
-                // return await BadRequest(new { message = ex.Message });
-                throw;
+
+                var result = await mediator.Send(request);
+
+                var response = new JsonResult(result);
+
+                response.StatusCode = result.StatusCode;
+
+                return response;
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "An unknown error occurred on the Get Specific action of the Igr");
-                throw;
+                _logger.LogError(ex.Message.ToString(), "An Application exception occurred on the Get Specific action of the Igr");
+
+                var response = new JsonResult(new { Message = ex.Message.ToString()});
+
+                response.StatusCode = _responseCode.InternalServerError;
+
+                return response;
             }
         }
 
