@@ -54,32 +54,26 @@ namespace ErcasCollect.Controllers
         [HttpPost]
         public async Task<ActionResult> FlexSettlement([FromBody] FlexSettlementCommand request)
         {
-            //try
-            //{
-            //    var result = await _mediator.Send(request);
+            try
+            {
+                var result = await _mediator.Send(request);
 
-            //    var response = new JsonResult(result);
+                var response = new JsonResult(result);
 
-            //    response.StatusCode = result.StatusCode;
+                response.StatusCode = result.StatusCode;
 
-            //    return response;
-            //}
-            //catch (Exception ex)
-            //{
+                return response;
+            }
+            catch (Exception ex)
+            {
 
-            //    var response = new JsonResult(new {Message = ex.Message.ToString() });
+                var response = new JsonResult(new { Message = ex.Message.ToString() });
 
-            //    response.StatusCode = _responseCode.InternalServerError;
+                response.StatusCode = _responseCode.InternalServerError;
 
-            //    return response;
-            //}
-            var result = await _mediator.Send(request);
+                return response;
+            }
 
-            var response = new JsonResult(result);
-
-            response.StatusCode = result.StatusCode;
-
-            return response;
         }
 
 

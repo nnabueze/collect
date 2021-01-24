@@ -14,9 +14,9 @@ namespace ErcasCollect.Domain.Models
         public string OfflineId { get; set; }
    
         [Column(TypeName = "decimal(18,2)")]
-        public decimal Amount { get; set; }
-        public int AgentId { get; set; }
-        public User Agent { get; set; }
+        public decimal TotalAmount { get; set; }
+        public int UserId { get; set; }
+        public User User { get; set; }
         public int? BillerId { get; set; }
         public Biller  Biller { get; set; }
       

@@ -26,7 +26,7 @@ namespace ErcasCollect.Domain.Models
         public string OfflineSessionId { get; set; }
         public int? BillerId { get; set; }
         public Biller Biller { get; set; }
-        public int? BatchId { get; set; }
+        public int BatchId { get; set; }
         public string OfflineBatchId { get; set; }
         public TypesOfTransaction TransactionType { get; set; }
         public string TransactionNumber { get; set; }

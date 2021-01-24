@@ -25,6 +25,8 @@ namespace ErcasCollect.Commands.SettlementCommand
 
             private readonly IGenericRepository<Biller> _billerRepository;
 
+            private readonly IGenericRepository<Batch> _batchResponsitory;
+
             private readonly IMapper _mapper;
 
             private readonly ITransactionRepository _transactionRepository;
@@ -33,7 +35,9 @@ namespace ErcasCollect.Commands.SettlementCommand
 
             public FlexSettlementCommandHandler(ISettlementRepository settlementRepository, IMapper mapper,
 
-                ITransactionRepository transactionRepository, IOptions<ResponseCode> response, IGenericRepository<Biller> billerRepository)
+                ITransactionRepository transactionRepository, IOptions<ResponseCode> response, 
+                
+                IGenericRepository<Biller> billerRepository, IGenericRepository<Batch> batchResponsitory)
             {
                 _settlementRepository = settlementRepository;
 
@@ -44,6 +48,8 @@ namespace ErcasCollect.Commands.SettlementCommand
                 _response = response.Value;
 
                 _billerRepository = billerRepository;
+
+                _batchResponsitory = batchResponsitory;
             }
             public async Task<SuccessfulResponse> Handle(FlexSettlementCommand request, CancellationToken cancellationToken)
             {
@@ -55,31 +61,34 @@ namespace ErcasCollect.Commands.SettlementCommand
 
                 if (biller == null)
                 {
-                    return new SuccessfulResponse()
-                    {
-                        StatusCode = _response.NotFound,
-
-                        IsSuccess = false,
-
-                        Message = "Wrong Biller Id",
-
-                        Data = request.FlexSettlementDto
-                    };
+                    return ResponseGenerator.Response("Wrong Biller Id", _response.NotFound, false, request.FlexSettlementDto);
                 }
 
                 Settlement addSettlement = await SaveSettlement(request, biller);
 
-                await SaveTransaction(request, addSettlement);
+                var savedBatch = await SaveBatch(request, biller);
 
-                return new SuccessfulResponse()
+                await SaveTransaction(request, addSettlement, savedBatch);
+
+                return ResponseGenerator.Response("Transaction Accepted", _response.OK, true);
+
+            }
+
+            public async Task<Batch> SaveBatch(FlexSettlementCommand request, Biller biller)
+            {
+                var batch = new Batch()
                 {
-                    StatusCode = _response.OK,
+                    TotalAmount = request.FlexSettlementDto.TotalAmount,
 
-                    IsSuccess = true,
+                    BillerId = biller.Id,
 
-                    Message = "Transaction Accepted",
+                    ItemCount = 1
+                    
                 };
 
+                var savedBatch = await _batchResponsitory.Add(batch);
+
+                return savedBatch;
             }
 
             private async Task<Settlement> SaveSettlement(FlexSettlementCommand request, Biller biller)
@@ -115,7 +124,7 @@ namespace ErcasCollect.Commands.SettlementCommand
                 return addSettlement;
             }
 
-            private async Task SaveTransaction(FlexSettlementCommand request, Settlement addSettlement)
+            private async Task SaveTransaction(FlexSettlementCommand request, Settlement addSettlement, Batch batch)
             {
                 foreach (var item in request.FlexSettlementDto.transactionItems)
                 {
@@ -141,7 +150,9 @@ namespace ErcasCollect.Commands.SettlementCommand
 
                         TransactionType = addSettlement.TransactionType,
 
-                        StatusCode = addSettlement.StatusCode
+                        StatusCode = addSettlement.StatusCode,
+
+                        BatchId = batch.Id
 
                     };
 
