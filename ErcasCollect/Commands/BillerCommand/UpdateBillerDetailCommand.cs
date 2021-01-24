@@ -64,6 +64,8 @@ namespace Ercas.Pay.Service.Commands
 
                 biller.Abbreviation = request.updateBillerDetailDto.Abbreviation;
 
+                biller.BillerTin = request.updateBillerDetailDto.BillerTin;
+
                 _billerRepository.Update(biller);
 
                 await _billerRepository.CommitAsync();

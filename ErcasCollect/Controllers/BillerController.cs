@@ -89,51 +89,51 @@ namespace ErcasCollect.Controllers
             }
         }
 
-        [HttpPost]
+        //[HttpPost]
       
-        public async Task<IActionResult> AddBank([FromBody] CreateBillerBankCommand request)
-        {
-            try
-            {
-                var result = await mediator.Send(request);
+        //public async Task<IActionResult> AddBank([FromBody] CreateBillerBankCommand request)
+        //{
+        //    try
+        //    {
+        //        var result = await mediator.Send(request);
 
 
-                return new JsonResult(result);
-            }
-            catch (AppException ex)
-            {
-                _logger.LogError(ex, "An Application exception occurred on the make transaction action of the NonIgr");
-                // return await BadRequest(new { message = ex.Message });
-                throw;
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError(ex, "An unknown error occurred on the make transaction action of the NonIgr");
-                throw;
-            }
-        }
+        //        return new JsonResult(result);
+        //    }
+        //    catch (AppException ex)
+        //    {
+        //        _logger.LogError(ex, "An Application exception occurred on the make transaction action of the NonIgr");
+        //        // return await BadRequest(new { message = ex.Message });
+        //        throw;
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        _logger.LogError(ex, "An unknown error occurred on the make transaction action of the NonIgr");
+        //        throw;
+        //    }
+        //}
 
         [HttpPost]
        
-        public async Task<ActionResult> CreateTIN([FromBody] CreateTinCommand request)
-        {
-            try
-            {
-                var result = await mediator.Send(request);
-                return new JsonResult(result);
-            }
-            catch (AppException ex)
-            {
-                _logger.LogError(ex, "An Application exception occurred on the make transaction action of the NonIgr");
-                // return await BadRequest(new { message = ex.Message });
-                throw;
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError(ex, "An unknown error occurred on the make transaction action of the NonIgr");
-                throw;
-            }
-        }
+        //public async Task<ActionResult> CreateTIN([FromBody] CreateTinCommand request)
+        //{
+        //    try
+        //    {
+        //        var result = await mediator.Send(request);
+        //        return new JsonResult(result);
+        //    }
+        //    catch (AppException ex)
+        //    {
+        //        _logger.LogError(ex, "An Application exception occurred on the make transaction action of the NonIgr");
+        //        // return await BadRequest(new { message = ex.Message });
+        //        throw;
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        _logger.LogError(ex, "An unknown error occurred on the make transaction action of the NonIgr");
+        //        throw;
+        //    }
+        //}
 
 
 

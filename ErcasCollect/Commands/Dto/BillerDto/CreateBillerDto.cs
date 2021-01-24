@@ -24,7 +24,7 @@ namespace ErcasCollect.Commands.Dto.BillerDto
         public bool IsGatewayOnbaord { get; set; }
 
         public string ValidationUrl { get; set; }
-
+        public string BillerTin { get; set; }
         public string NotificationUrl { get; set; }
         public int Commission { get; set; }
 

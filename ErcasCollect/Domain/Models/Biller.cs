@@ -39,6 +39,9 @@ namespace ErcasCollect.Domain.Models
 
         public BillerType BillerType{ get; set; }
 
+        [Column(TypeName = "nvarchar(32)")]
+        public string BillerTin { get; set; }
+
         [Column(TypeName = "decimal(18,6)")]
 
         public decimal Latitude { get; set; }
@@ -47,6 +50,7 @@ namespace ErcasCollect.Domain.Models
 
         public decimal  Longitude { get; set; }
 
+        [Column(TypeName = "nvarchar(16)")]
         public string Abbreviation { get; set; }
 
         public int Commission { get; set; }
