@@ -40,17 +40,14 @@
     <PackageReference Include="System.Net.Http.Formatting.Extension" Version="5.2.3" />
     <PackageReference Include="DynamicApis.Api.Documentation" Version="2.26.0" />
     <PackageReference Include="Microsoft.OpenApi" Version="1.2.3" />
+    <PackageReference Include="System.Xml.XmlSerializer" Version="4.3.0" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Queries\" />
-    <Folder Include="Domain\" />
-    <Folder Include="DataAccess\" />
     <Folder Include="AutoMapper\" />
     <Folder Include="Validators\" />
-    <Folder Include="DataAccess\Repository\" />
     <Folder Include="Domain\Models\" />
     <Folder Include="Domain\BaseEntities\" />
-    <Folder Include="Domain\Interfaces\" />
     <Folder Include="AutoMapper\Profiles\" />
     <Folder Include="Helpers\IdGenerator.cs\" />
     <Folder Include="Controllers\" />

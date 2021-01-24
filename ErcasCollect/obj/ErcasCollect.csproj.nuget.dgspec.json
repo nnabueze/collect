@@ -117,10 +117,6 @@
             "System.Net.Http.Formatting.Extension": {
               "target": "Package",
               "version": "[5.2.3, )"
-            },
-            "System.Xml.XmlSerializer": {
-              "target": "Package",
-              "version": "[4.3.0, )"
             }
           },
           "imports": [
