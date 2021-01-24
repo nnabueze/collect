@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using AutoMapper;
@@ -8,6 +9,7 @@ using ErcasCollect.Domain.Interfaces;
 using ErcasCollect.Domain.Models;
 using ErcasCollect.Helpers;
 using ErcasCollect.Helpers.EnumClasses;
+using ErcasCollect.Helpers.NIbbs;
 using ErcasCollect.Responses;
 using MediatR;
 using Microsoft.Extensions.Options;
@@ -52,43 +54,64 @@ namespace ErcasCollect.Commands.BillerCommand
                 Biller biller = _mapper.Map<Biller>(request.createBillerDto);
 
                 biller.ReferenceKey = Helpers.IdGenerator.IdGenerator.RandomInt(15);
+                
 
-                //call api gateway to onboard biller
+                if (biller.IsGatewayOnbaord)
+                {
+                    var service = await GatewayService();
 
+                    if (service == null)
+                    {
+                        return ResponseGenerator.Response("No service name EbillsPay on gateway", _responseCode.NotAccepted, false);
+                    }
 
+                    var gatewayResponse = await OnboardBillerOnGateway(biller, service);
 
-                await OnboardBillerOnGateway(biller);
+                    if (gatewayResponse == null)
+                    {
+                        return ResponseGenerator.Response("Unable to onboard biller on gateway", _responseCode.NotAccepted, false);
+                    }
 
-                //is onboarding biller on api gateway failed
+                    biller.GatewayUsername = gatewayResponse.data.username;
 
-                //save biller
+                    biller.GatewaySecretKey = gatewayResponse.data.secretKey;
+
+                    biller.GatewayKeyVector = gatewayResponse.data.keyVector;
+
+                    //await SendMail(biller, gatewayResponse);
+                }
+
                 var addedBiller = await _billerRepository.Add(biller);
 
-                await _billerRepository.CommitAsync();
+                await _billerRepository.CommitAsync();                
 
-                //send notification to biller
-
-                //return response
-                return new SuccessfulResponse()
-                {
-                    Message = "Biller Created",
-
-                    StatusCode = _responseCode.Created,
-
-                    IsSuccess = true,
-
-                    Data = new
-                    {
-                        BillerId = addedBiller.ReferenceKey
-                    }
-                };
+                return ResponseGenerator.Response("Biller Created", _responseCode.Created, true, new { BillerId = addedBiller.ReferenceKey });
             }
 
-            private async Task OnboardBillerOnGateway(Biller biller)
+            public async Task<Data> GatewayService()
             {
+                var gatewayServiceString = await _webCallService.GetWebCall(_webEndpoint.GatewayServices);
+
+                var gatewayService = JsonXmlObjectConverter.Deserialize<GatewayServiceResponse>(gatewayServiceString);
+
+                var service = gatewayService.data.Find(x => x.serviceName == _webEndpoint.EbillsPay);
+
+                return service;
+            }
+
+            private async Task<GatewayOnboardResponse> OnboardBillerOnGateway(Biller biller, Data service)
+            {
+                List<Services> listService = new List<Services>()
+                {
+                    new Services()
+                    {
+                        id = service.id
+                    }
+                };
+
                 var gatewayData = new
                 {
-                    billerData = new
+                    billerData = new BillerData()
                     {
                         companyName = biller.Name,
 
@@ -100,17 +123,39 @@ namespace ErcasCollect.Commands.BillerCommand
 
                         address = biller.Address,
 
-                        services = [new
-                        {
+                        services = listService
 
-                            id = 2
-                        }]
                     }
                 };
 
                 var gatewayDataJson = JsonConvert.SerializeObject(gatewayData);
 
-                var gatewayResponse = await _webCallService.PostDataCall(_webEndpoint.GatewayOnBoard, gatewayDataJson);
+                var gatewayResponseString = await _webCallService.PostDataCall(_webEndpoint.GatewayOnBoard, gatewayDataJson);
+
+                var gatewayResponse = JsonXmlObjectConverter.Deserialize<GatewayOnboardResponse>(gatewayResponseString);
+
+                return gatewayResponse;
+            }
+
+            public async Task SendMail(Biller biller, GatewayOnboardResponse response)
+            {
+                var msg = "Kindly find below api keys. \r\n Username: "+biller.GatewayUsername+"\r\n SecretKey: "
+                    
+                    +biller.GatewaySecretKey+"\r\n KeyVector: "+biller.GatewayKeyVector+"\n\n Thanks \n Ercas Team";
+
+                var mailToSend = new
+                {
+                    to = biller.Email,
+
+                    subject = "Api Keys",
+
+                    message = msg
+                };
+
+                var mailToSendJson = JsonConvert.SerializeObject(mailToSend);
+
+                await _webCallService.PostDataCall(_webEndpoint.Mail, mailToSendJson);
+
             }
         }
     }

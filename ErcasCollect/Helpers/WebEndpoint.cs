@@ -16,5 +16,7 @@ namespace ErcasCollect.Helpers
         public string Mail { get; set; }
 
         public string MailTransaction { get; set; }
+
+        public string EbillsPay { get; set; }
     }
 }

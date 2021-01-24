@@ -40,7 +40,6 @@
     <PackageReference Include="System.Net.Http.Formatting.Extension" Version="5.2.3" />
     <PackageReference Include="DynamicApis.Api.Documentation" Version="2.26.0" />
     <PackageReference Include="Microsoft.OpenApi" Version="1.2.3" />
-    <PackageReference Include="System.Xml.XmlSerializer" Version="4.3.0" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Queries\" />
