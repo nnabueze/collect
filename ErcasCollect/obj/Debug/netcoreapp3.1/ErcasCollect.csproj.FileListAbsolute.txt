@@ -147,9 +147,6 @@ C:\Users\Eze\Documents\Visual Studio 2019\source\repos\ErcasNewCollectService\Er
 C:\Users\Eze\Documents\Visual Studio 2019\source\repos\ErcasNewCollectService\ErcasCollect\obj\Debug\netcoreapp3.1\ErcasCollect.csprojAssemblyReference.cache
 C:\Users\Eze\Documents\Visual Studio 2019\source\repos\ErcasNewCollectService\ErcasCollect\obj\Debug\netcoreapp3.1\ErcasCollect.AssemblyInfoInputs.cache
 C:\Users\Eze\Documents\Visual Studio 2019\source\repos\ErcasNewCollectService\ErcasCollect\obj\Debug\netcoreapp3.1\ErcasCollect.AssemblyInfo.cs
-C:\Users\Eze\Documents\Visual Studio 2019\source\repos\ErcasNewCollectService\ErcasCollect\obj\Debug\netcoreapp3.1\ErcasCollect.csproj.CoreCompileInputs.cache
-C:\Users\Eze\Documents\Visual Studio 2019\source\repos\ErcasNewCollectService\ErcasCollect\obj\Debug\netcoreapp3.1\ErcasCollect.MvcApplicationPartsAssemblyInfo.cs
-C:\Users\Eze\Documents\Visual Studio 2019\source\repos\ErcasNewCollectService\ErcasCollect\obj\Debug\netcoreapp3.1\ErcasCollect.MvcApplicationPartsAssemblyInfo.cache
 C:\Users\Eze\Documents\Visual Studio 2019\source\repos\ErcasNewCollectService\ErcasCollect\obj\Debug\netcoreapp3.1\ErcasCollect.RazorTargetAssemblyInfo.cache
 C:\Users\Eze\Documents\Visual Studio 2019\source\repos\ErcasNewCollectService\ErcasCollect\obj\Debug\netcoreapp3.1\ErcasCollect.csproj.CopyComplete
 C:\Users\Eze\Documents\Visual Studio 2019\source\repos\ErcasNewCollectService\ErcasCollect\obj\Debug\netcoreapp3.1\staticwebassets\ErcasCollect.StaticWebAssets.Manifest.cache
