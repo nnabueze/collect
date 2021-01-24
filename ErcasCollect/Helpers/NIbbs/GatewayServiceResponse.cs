@@ -49,6 +49,15 @@ namespace ErcasCollect.Helpers.NIbbs
         public int id { get; set; }
     }
 
+    public class CallbackUrl
+    {
+        public string secretKey { get; set; }
 
+        public string validationUrl { get; set; }
+
+        public string notificationUrl { get; set; }
+
+        public string keyVector { get; set; }
+    }
 
 }

@@ -11,6 +11,8 @@
     <Compile Remove="Migrations\20210123062902_adjustBillerAndSettlement.Designer.cs" />
     <Compile Remove="Migrations\20210123070720_adjustBillerAndSettlement.cs" />
     <Compile Remove="Migrations\20210123070720_adjustBillerAndSettlement.Designer.cs" />
+    <Compile Remove="Migrations\20210124100054_billerGatewayBillerId.cs" />
+    <Compile Remove="Migrations\20210124100054_billerGatewayBillerId.Designer.cs" />
   </ItemGroup>
 
 

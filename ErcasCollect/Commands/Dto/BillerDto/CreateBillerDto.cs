@@ -22,6 +22,10 @@ namespace ErcasCollect.Commands.Dto.BillerDto
         public decimal Longitude { get; set; }
         public string Abbreviation { get; set; }
         public bool IsGatewayOnbaord { get; set; }
+
+        public string ValidationUrl { get; set; }
+
+        public string NotificationUrl { get; set; }
         public int Commission { get; set; }
 
         IEnumerable<ValidationResult> IValidatableObject.Validate(ValidationContext validationContext)

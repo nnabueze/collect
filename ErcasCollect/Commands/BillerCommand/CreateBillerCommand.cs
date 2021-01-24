@@ -72,11 +72,23 @@ namespace ErcasCollect.Commands.BillerCommand
                         return ResponseGenerator.Response("Unable to onboard biller on gateway", _responseCode.NotAccepted, false);
                     }
 
+                    if ((! string.IsNullOrEmpty(request.createBillerDto.ValidationUrl)) 
+                        
+                        && (! string.IsNullOrEmpty(request.createBillerDto.NotificationUrl)) )
+                    {
+                        var gatewayCallbackResponse = await AddCallbackUrlOnGateway(request, gatewayResponse);
+
+                        if (gatewayCallbackResponse == null)
+                        {
+                            return ResponseGenerator.Response("Unable to add callback urls", _responseCode.NotAccepted, false);
+                        }
+                    }
+
                     biller.GatewayUsername = gatewayResponse.data.username;
 
                     biller.GatewaySecretKey = gatewayResponse.data.secretKey;
 
-                    biller.GatewayKeyVector = gatewayResponse.data.keyVector;
+                    biller.GatewayKeyVector = gatewayResponse.data.keyVector;                    
 
                     //await SendMail(biller, gatewayResponse);
                 }
@@ -137,7 +149,32 @@ namespace ErcasCollect.Commands.BillerCommand
                 return gatewayResponse;
             }
 
-            public async Task SendMail(Biller biller, GatewayOnboardResponse response)
+            private async Task<GatewayCallbackResponse> AddCallbackUrlOnGateway(CreateBillerCommand request, GatewayOnboardResponse urlCallback)
+            {
+                var gatewayData = new
+                {
+                    ebillsPayService = new CallbackUrl()
+                    {
+                        keyVector = urlCallback.data.keyVector,
+
+                        secretKey = urlCallback.data.secretKey,
+
+                        validationUrl = request.createBillerDto.ValidationUrl,
+
+                        notificationUrl = request.createBillerDto.NotificationUrl
+                    }
+                };
+
+                var gatewayDataJson = JsonConvert.SerializeObject(gatewayData);
+
+                var gatewayResponseString = await _webCallService.PostDataCall(_webEndpoint.GatewayCallbackUrl, gatewayDataJson);
+
+                var gatewayResponse = JsonXmlObjectConverter.Deserialize<GatewayCallbackResponse>(gatewayResponseString);
+
+                return gatewayResponse;
+            }
+
+            private async Task SendMail(Biller biller, GatewayOnboardResponse response)
             {
                 var msg = "Kindly find below api keys. \r\n Username: "+biller.GatewayUsername+"\r\n SecretKey: "
                     

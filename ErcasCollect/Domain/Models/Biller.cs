@@ -47,8 +47,6 @@ namespace ErcasCollect.Domain.Models
 
         public decimal  Longitude { get; set; }
 
-        public string StatusCode { get; set; }
-
         public string Abbreviation { get; set; }
 
         public int Commission { get; set; }
@@ -66,6 +64,7 @@ namespace ErcasCollect.Domain.Models
         [Column(TypeName = "nvarchar(32)")]
 
         public string GatewayKeyVector { get; set; }
+
 
 
     }
