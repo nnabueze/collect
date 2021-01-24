@@ -20,13 +20,13 @@ namespace ErcasCollect.Domain.Models
         public Pos Pos { get; set; }
         public string PayerName { get; set; }
         public string PayerPhone{ get; set; }
-        public int AgentId { get; set; }
-        public User Agent { get; set; }
+        public int? UserId { get; set; }
+        public User User { get; set; }
         public string SessionId { get; set; }
         public string OfflineSessionId { get; set; }
         public int? BillerId { get; set; }
         public Biller Biller { get; set; }
-        public int BatchId { get; set; }
+        public int? BatchId { get; set; }
         public string OfflineBatchId { get; set; }
         public TypesOfTransaction TransactionType { get; set; }
         public string TransactionNumber { get; set; }

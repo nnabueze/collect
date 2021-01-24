@@ -33,7 +33,7 @@ namespace ErcasCollect.Queries.BillerQuery
             public async Task<ValidationResponse> Handle(GetTransactionDetailByIDNIBBSQuery query, CancellationToken cancellationToken)
             {
 
-                var result = await transactionbybatchidRepository.FindSingleInclude(x => x.Id == query.id, x => x.StatusCode, x => x.Agent, x => x.Biller, x => x.PaymentChannel, x => x.TransactionType);
+                var result = await transactionbybatchidRepository.FindSingleInclude(x => x.Id == query.id, x => x.StatusCode, x => x.User, x => x.Biller, x => x.PaymentChannel, x => x.TransactionType);
                 if (result != null)
                 {
                     //var transactionbybatchid = mapper.Map<ReadTransactionDto>(result);

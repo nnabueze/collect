@@ -4,14 +4,16 @@ using ErcasCollect.DataAccess;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace ErcasCollect.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210124103648_TransactionUser")]
+    partial class TransactionUser
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -726,7 +728,7 @@ namespace ErcasCollect.Migrations
                     b.Property<decimal>("Amount")
                         .HasColumnType("decimal(18,2)");
 
-                    b.Property<int?>("BatchId")
+                    b.Property<int>("BatchId")
                         .HasColumnType("int");
 
                     b.Property<int?>("BillerId")
@@ -789,7 +791,7 @@ namespace ErcasCollect.Migrations
                     b.Property<int>("TransactionType")
                         .HasColumnType("int");
 
-                    b.Property<int?>("UserId")
+                    b.Property<int>("UserId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
@@ -1088,7 +1090,9 @@ namespace ErcasCollect.Migrations
 
                     b.HasOne("ErcasCollect.Domain.Models.User", "User")
                         .WithMany()
-                        .HasForeignKey("UserId");
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("ErcasCollect.Domain.Models.TransactionSummaryView", b =>

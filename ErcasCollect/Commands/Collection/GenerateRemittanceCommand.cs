@@ -76,7 +76,7 @@ namespace ErcasCollect.Commands.CollectionCommand
 
                     Transaction transaction = new Transaction();
 
-                    transaction.AgentId = request.transactionDto.AgentId;
+                    transaction.UserId = request.transactionDto.AgentId;
 
                     transaction.Amount = getuser.CashAtHand;
 

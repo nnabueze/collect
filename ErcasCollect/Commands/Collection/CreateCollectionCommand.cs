@@ -87,7 +87,7 @@ namespace ErcasCollect.Commands.CollectionCommand
                             collectionbatch.OfflineSessionId = request.collectionDto.OfflineSessionId;
                             collectionbatch.BatchId = request.collectionDto.BatchId;
                             collectionbatch.SessionId = request.collectionDto.SessionId;
-                            collectionbatch.AgentId= request.collectionDto.AgentId;
+                            collectionbatch.UserId= request.collectionDto.AgentId;
                             collectionbatch.BillerId = request.collectionDto.BillerId;
                             collectionbatch.TransactionType = TypesOfTransaction.Collection;
                 
