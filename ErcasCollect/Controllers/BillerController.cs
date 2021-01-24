@@ -63,25 +63,29 @@ namespace ErcasCollect.Controllers
         /// </summary>
         /// <param name="request"></param>
         /// <returns>uthj</returns>
-        [HttpPut("{id}")]
+        [HttpPut]
 
         public async Task<ActionResult> UpdateBiller([FromBody] UpdateBillerDetailCommand request)
         {
             try
             {
                 var result = await mediator.Send(request);
-                return new JsonResult(result);
-            }
-            catch (AppException ex)
-            {
-                _logger.LogError(ex, "An Application exception occurred on the make transaction action of the NonIgr");
-                // return await BadRequest(new { message = ex.Message });
-                throw;
+
+                var response = new JsonResult(result);
+
+                response.StatusCode = result.StatusCode;
+
+                return response;
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "An unknown error occurred on the make transaction action of the NonIgr");
-                throw;
+                _logger.LogError(ex.Message.ToString(), "An Application exception occurred on the make transaction action of the NonIgr");
+
+                var response = new JsonResult(new { Message = ex.Message.ToString()});
+
+                response.StatusCode = _responseCode.InternalServerError;
+
+                return response;
             }
         }
 

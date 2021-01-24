@@ -64,11 +64,11 @@ namespace ErcasCollect.Commands.CollectionCommand
                  } else{
                     Batch batch = new Batch();
 
-                    batch.AgentId = request.transactionDto.AgentId;
+                    batch.UserId = request.transactionDto.AgentId;
                
                     batch.ItemCount = 1;
                   
-                    batch.Amount = getuser.CashAtHand;
+                    batch.TotalAmount = getuser.CashAtHand;
 
                     await _batchRepository.Add(batch);
 

@@ -68,11 +68,11 @@ namespace ErcasCollect.Commands.CollectionCommand
                     getuser.CashAtHand += request.collectionDto.Amount;
                     userRepository.Update(getuser);
                     Batch batch = new Batch();
-                    batch.AgentId = request.collectionDto.AgentId;
+                    batch.UserId = request.collectionDto.AgentId;
                     batch.Id = request.collectionDto.BatchId;
                     batch.ItemCount = request.collectionDto.ItemCount;
                     batch.OfflineId = request.collectionDto.OfflineBatchId;
-                    batch.Amount = request.collectionDto.Amount;
+                    batch.TotalAmount = request.collectionDto.Amount;
                   
                     await batchRepository.Add(batch);
                     await  batchRepository.CommitAsync();
