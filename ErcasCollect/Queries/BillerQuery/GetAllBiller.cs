@@ -59,19 +59,7 @@ namespace ErcasCollect.Queries.BillerQuery
                     listBiller.Add(item);
                 }
 
-                return new SuccessfulResponse()
-                {
-                    Message = "Successful",
-
-                    StatusCode = _responseCode.OK,
-
-                    IsSuccess = true,
-
-                    Data = new
-                    {
-                        Billers = listBiller
-                    }
-                };
+                return ResponseGenerator.Response("Successful", _responseCode.OK, true, listBiller);
 
             }
 
