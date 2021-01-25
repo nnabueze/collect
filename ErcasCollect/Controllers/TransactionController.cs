@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
 using ErcasCollect.Domain.Interfaces;
 using ErcasCollect.Domain.Models;
@@ -101,40 +103,47 @@ namespace ErcasCollect.Controllers
                 throw;
             }
         }
-        //[Consumes("application/xml")]
-        //[Produces("application/xml")]
-        //[HttpPost]
-        //public async Task<ValidationResponse> Verify([FromBody]  ValidationRequest request)
-        //{
-        //    //try
-        //    //{
-        //    //    GetTransactionDetailByIDQuery request = new GetTransactionDetailByIDQuery();
-        //    //    request.transactionNumber = validation.RemitttanceID;
-        //    //    return await mediator.Send(request);
-        //    //}
-        //    //catch (AppException ex)
-        //    //{
-        //    //    _logger.LogError(ex, "An Application exception occurred on the Get Specific action of the Igr");
-        //    //    // return await BadRequest(new { message = ex.Message });
-        //    //    throw;
-        //    //}
-        //    //catch (Exception ex)
-        //    //{
-        //    //    _logger.LogError(ex, "An unknown error occurred on the Get Specific action of the Igr");
-        //    //    throw;
-        //    //}
-        //    try
-        //    {
-        //        var response = await _nibssEbills.Validation(request);
-        //    }
-        //    catch (Exception)
-        //    {
+        [Consumes("application/xml")]
+        [Produces("application/xml")]
+        [HttpPost]
+        public async Task<ValidationResponse> EbillsValidation()
+        {
+            //try
+            //{
+            //    GetTransactionDetailByIDQuery request = new GetTransactionDetailByIDQuery();
+            //    request.transactionNumber = validation.RemitttanceID;
+            //    return await mediator.Send(request);
+            //}
+            //catch (AppException ex)
+            //{
+            //    _logger.LogError(ex, "An Application exception occurred on the Get Specific action of the Igr");
+            //    // return await BadRequest(new { message = ex.Message });
+            //    throw;
+            //}
+            //catch (Exception ex)
+            //{
+            //    _logger.LogError(ex, "An unknown error occurred on the Get Specific action of the Igr");
+            //    throw;
+            //}
+            try
+            {
+                var requestText = string.Empty;
 
-        //        throw;
-        //    }
+                using (StreamReader reader = new StreamReader(Request.Body, Encoding.UTF8))
+                {
+                    requestText = await reader.ReadToEndAsync();
+                }
 
-        //    return null;
-        //}
+                var response = await _nibssEbills.Validation(requestText);
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+
+            return null;
+        }
 
         [HttpGet]
         public async Task<IEnumerable<ReadTransactionDto>> GetAllTransaction()

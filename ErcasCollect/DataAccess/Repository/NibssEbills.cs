@@ -3,10 +3,13 @@ using ErcasCollect.Domain.Models;
 using ErcasCollect.Domain.Models.Nibss;
 using ErcasCollect.Helpers;
 using Microsoft.Extensions.Options;
+using Newtonsoft.Json;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Xml;
 
 namespace ErcasCollect.DataAccess.Repository
 {
@@ -20,6 +23,8 @@ namespace ErcasCollect.DataAccess.Repository
 
         private readonly IGenericRepository<BillerEbillsProduct> _billerEbillsProductRepository;
 
+        private readonly ITransactionRepository _transactionRepository;
+
         public NibssEbills(IOptions<NameConstant> nameConstant, IGenericRepository<Biller> billerRepository, IGenericRepository<BillerValidation> billerValidationRepository, IGenericRepository<BillerEbillsProduct> billerEbillsProductRepository)
         {
             _nameConstant = nameConstant.Value;
@@ -31,13 +36,18 @@ namespace ErcasCollect.DataAccess.Repository
             _billerEbillsProductRepository = billerEbillsProductRepository;
         }
 
-        public async Task<NotificationResponse> Notification(NotificationRequest request)
+        public async Task<NotificationResponse> Notification(string request)
         {
             throw new NotImplementedException();
         }
 
-        public async Task<ValidationResponse> Validation(ValidationRequest request)
-        {
+        public async Task<ValidationResponse> Validation(string stringRequest)
+        {            
+
+
+            var request = JsonXmlObjectConverter.XmlToObject<ValidationRequest>(stringRequest);
+
+
             switch (request.ProductName)
             {
                 case "Remittance":
@@ -54,7 +64,8 @@ namespace ErcasCollect.DataAccess.Repository
         {
             var remittanceId = GetRemittanceParameter(request);
 
-            //var productId = 
+            //var transaction 
+            
         }
 
         private string GetRemittanceParameter(ValidationRequest request)
@@ -71,7 +82,7 @@ namespace ErcasCollect.DataAccess.Repository
                 }
             }
 
-            var billerId =  _billerRepository.FindFirst(x => x.ReferenceKey == referenceId).Id;
+            var billerId = _billerRepository.FindFirst(x => x.ReferenceKey == referenceId).Id;
 
             var productId = _billerEbillsProductRepository.FindFirst(x => x.BillerId == billerId && x.ProductName == _nameConstant.Remittance).Id;
 

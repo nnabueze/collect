@@ -1,10 +1,12 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Runtime.Serialization.Json;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml;
 using System.Xml.Serialization;
 
 namespace ErcasCollect.Helpers
@@ -64,6 +66,23 @@ namespace ErcasCollect.Helpers
             obj = (T)serializer.ReadObject(ms);
             ms.Close();
             return obj;
+        }
+
+        public static T XmlToObject<T>(string xmlString)
+        {
+            XmlDocument doc = new XmlDocument();
+
+            doc.LoadXml(xmlString);
+
+            if (doc.FirstChild.NodeType == XmlNodeType.XmlDeclaration)
+                doc.RemoveChild(doc.FirstChild);
+
+
+            var json = JsonConvert.SerializeXmlNode(doc, Newtonsoft.Json.Formatting.None, true);
+
+            var request = Deserialize<T>(json);
+
+            return request;
         }
     }       
 }
