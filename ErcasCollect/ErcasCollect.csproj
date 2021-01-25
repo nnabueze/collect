@@ -53,8 +53,6 @@
     <Folder Include="AutoMapper\Profiles\" />
     <Folder Include="Helpers\IdGenerator.cs\" />
     <Folder Include="Controllers\" />
-    <Folder Include="Commands\Dto\BillerDto\" />
-    <Folder Include="Commands\BillerCommand\" />
     <Folder Include="Exceptions\" />
     <Folder Include="Extentions\" />
     <Folder Include="PipelineBehaviour\" />
