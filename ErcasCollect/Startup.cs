@@ -75,6 +75,7 @@ namespace ErcasCollect
             services.AddScoped<ILevelTwoRepository, LevelTwoRepository>();
             services.AddScoped<IWebCallService, WebCallService>();
             services.AddScoped<ITransactionRepository, TransactionRepository>();
+            services.AddScoped<INibssEbills, NibssEbills>();
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
             services.Configure<ApiBehaviorOptions>(options =>
             {
@@ -87,9 +88,11 @@ namespace ErcasCollect
             //adding api authentication settings
             var responseCodeSection = Configuration.GetSection("ResponseCode");
             var endpoint = Configuration.GetSection("WebEndpoint");
+            var nameConstant = Configuration.GetSection("NameConstant");
             services
                 .Configure<ResponseCode>(responseCodeSection)
-                .Configure<WebEndpoint>(endpoint);
+                .Configure<WebEndpoint>(endpoint)
+                .Configure<NameConstant>(nameConstant);
 
             // Register the Swagger generator, defining 1 or more Swagger documents
             services.AddSwaggerGen(c =>

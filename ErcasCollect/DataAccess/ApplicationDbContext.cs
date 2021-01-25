@@ -37,6 +37,8 @@ namespace ErcasCollect.DataAccess
         public DbSet<FundSweep> FundSweep{ get; set; }
         public DbSet<TransactionSummaryView> TransactionSummaryViews { get; set; }
 
+        public DbSet<BillerValidation> BillerValidations { get; set; }
+
 
 
 

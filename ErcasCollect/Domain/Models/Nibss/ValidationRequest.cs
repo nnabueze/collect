@@ -1,12 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
-namespace ErcasCollect.Responses
+namespace ErcasCollect.Domain.Models.Nibss
 {
     public class ValidationRequest
     {
         public string SourceBankCode { get; set; }
-
 
         public string SourceBankName { get; set; }
 
@@ -22,22 +23,21 @@ namespace ErcasCollect.Responses
 
         public string CustomerAccountNumber { get; set; }
 
-        public int BillerID { get; set; }
+        public string BillerID { get; set; }
 
         public string BillerName { get; set; }
 
-        public string RemitttanceID { get; set; }
+        public string ProductID { get; set; }
 
         public string ProductName { get; set; }
 
         public string Amount { get; set; }
-        public List<Param> Param { get; set; }
-    }
+        public List<Params> Param { get; set; }
 
-
-    public class Param
-    {
-        public string Key { get; set; }
-        public string Value { get; set; }
+        public class Params
+        {
+            public string Key { get; set; }
+            public string Value { get; set; }
+        }
     }
 }

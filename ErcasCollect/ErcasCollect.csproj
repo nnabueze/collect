@@ -13,6 +13,8 @@
     <Compile Remove="Migrations\20210123070720_adjustBillerAndSettlement.Designer.cs" />
     <Compile Remove="Migrations\20210124100054_billerGatewayBillerId.cs" />
     <Compile Remove="Migrations\20210124100054_billerGatewayBillerId.Designer.cs" />
+    <Compile Remove="Migrations\20210125041711_EbillsValidation.cs" />
+    <Compile Remove="Migrations\20210125041711_EbillsValidation.Designer.cs" />
   </ItemGroup>
 
 
@@ -47,7 +49,6 @@
     <Folder Include="Queries\" />
     <Folder Include="AutoMapper\" />
     <Folder Include="Validators\" />
-    <Folder Include="Domain\Models\" />
     <Folder Include="Domain\BaseEntities\" />
     <Folder Include="AutoMapper\Profiles\" />
     <Folder Include="Helpers\IdGenerator.cs\" />

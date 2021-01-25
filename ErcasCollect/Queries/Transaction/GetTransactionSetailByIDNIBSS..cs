@@ -6,6 +6,7 @@ using AutoMapper;
 
 using ErcasCollect.Domain.Interfaces;
 using ErcasCollect.Domain.Models;
+using ErcasCollect.Domain.Models.Nibss;
 using ErcasCollect.Helpers;
 using ErcasCollect.Queries.Dto;
 using ErcasCollect.Queries.Dto.ReadTransactionDto;
@@ -38,12 +39,13 @@ namespace ErcasCollect.Queries.BillerQuery
                 {
                     //var transactionbybatchid = mapper.Map<ReadTransactionDto>(result);
                     //return transactionbybatchid;
-                    return new ValidationResponse { ResponseCode = 0, NextStep = 0, BillerID = result.BillerId };
+                    //return new ValidationResponse { ResponseCode = 0, NextStep = 0, BillerID = result.BillerId };
                 }
                 else
                 {
                     return null;
                 }
+                return null;
 
             }
 

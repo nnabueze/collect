@@ -2,7 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using ErcasCollect.Domain.Interfaces;
 using ErcasCollect.Domain.Models;
+using ErcasCollect.Domain.Models.Nibss;
 using ErcasCollect.Exceptions;
 using ErcasCollect.Queries.BillerQuery;
 using ErcasCollect.Queries.Dto.ReadTransactionDto;
@@ -19,12 +21,18 @@ namespace ErcasCollect.Controllers
     public class TransactionController : Controller
     {
         private readonly IMediator mediator;
+
         private readonly ILogger<Transaction> _logger;
 
-        public TransactionController(ILogger<Transaction> logger, IMediator mediator)
+        private readonly INibssEbills _nibssEbills;
+
+        public TransactionController(ILogger<Transaction> logger, IMediator mediator, INibssEbills nibssEbills)
         {
             this.mediator = mediator ?? throw new ArgumentNullException(nameof(mediator));
+
             this._logger = logger ?? throw new ArgumentNullException(nameof(logger));
+
+            _nibssEbills = nibssEbills;
         }
 
         [HttpGet("{id}")]
@@ -96,25 +104,36 @@ namespace ErcasCollect.Controllers
         [Consumes("application/xml")]
         [Produces("application/xml")]
         [HttpPost]
-        public async Task<ReadTransactionDto> Verify([FromBody]  ValidationRequest validation)
+        public async Task<ValidationResponse> Verify([FromBody]  ValidationRequest request)
         {
+            //try
+            //{
+            //    GetTransactionDetailByIDQuery request = new GetTransactionDetailByIDQuery();
+            //    request.transactionNumber = validation.RemitttanceID;
+            //    return await mediator.Send(request);
+            //}
+            //catch (AppException ex)
+            //{
+            //    _logger.LogError(ex, "An Application exception occurred on the Get Specific action of the Igr");
+            //    // return await BadRequest(new { message = ex.Message });
+            //    throw;
+            //}
+            //catch (Exception ex)
+            //{
+            //    _logger.LogError(ex, "An unknown error occurred on the Get Specific action of the Igr");
+            //    throw;
+            //}
             try
             {
-                GetTransactionDetailByIDQuery request = new GetTransactionDetailByIDQuery();
-                request.transactionNumber = validation.RemitttanceID;
-                return await mediator.Send(request);
+                var response = await _nibssEbills.Validation(request);
             }
-            catch (AppException ex)
+            catch (Exception)
             {
-                _logger.LogError(ex, "An Application exception occurred on the Get Specific action of the Igr");
-                // return await BadRequest(new { message = ex.Message });
+
                 throw;
             }
-            catch (Exception ex)
-            {
-                _logger.LogError(ex, "An unknown error occurred on the Get Specific action of the Igr");
-                throw;
-            }
+
+            return null;
         }
 
         [HttpGet]
