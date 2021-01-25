@@ -30,16 +30,18 @@ namespace ErcasCollect.Queries.BillerQuery
             public async Task<IEnumerable<ReadLevelThreeDto>> Handle(GetAllLevelThreeByBillerQuery query, CancellationToken cancellationToken)
             {
 
-                var result = await levelthreeRepository.FindAllInclude(x => x.LevelTwoId == query.id, x => x.Biller);
-                if (result != null)
-                {
-                    var levelone = mapper.Map<IEnumerable<ReadLevelThreeDto>>(result);
-                    return levelone;
-                }
-                else
-                {
-                    return null;
-                }
+                //var result = await levelthreeRepository.FindAllInclude(x => x.LevelTwoId == query.id, x => x.Biller);
+                //if (result != null)
+                //{
+                //    var levelone = mapper.Map<IEnumerable<ReadLevelThreeDto>>(result);
+                //    return levelone;
+                //}
+                //else
+                //{
+                //    return null;
+                //}
+
+                return null;
 
             }
 
