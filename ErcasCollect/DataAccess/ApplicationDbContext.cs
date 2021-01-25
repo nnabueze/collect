@@ -24,7 +24,6 @@ namespace ErcasCollect.DataAccess
         public DbSet<PaymentChannel> PaymentChannels { get; set; }
         public DbSet<Pos> Poses { get; set; }
         public DbSet<Role> Roles { get; set; }
-        public DbSet<LevelThree> LevelThree { get; set; }
         public DbSet<State> State { get; set; }
         public DbSet<Batch> Batchs { get; set; }
         public DbSet<MetaData> MetaData { get; set; }

@@ -23,7 +23,13 @@ namespace ErcasCollect.Domain.Models
         [Column(TypeName = "decimal(18,6)")]
         public decimal Latitude { get; set; }
 
-        public int StatusCode { get; set; }
-       
+        public int? UserId { get; set; }
+
+        public User User { get; set; }
+
+        public int? PosId { get; set; }
+
+        public Pos Pos { get; set; }
+
     }
 }

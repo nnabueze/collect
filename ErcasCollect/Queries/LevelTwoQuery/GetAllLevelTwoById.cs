@@ -30,7 +30,7 @@ namespace ErcasCollect.Queries.BillerQuery
             public async Task<IEnumerable<ReadLevelTwoDto>> Handle(GetAllLevelTwoByBillerQuery query, CancellationToken cancellationToken)
             {
 
-                var result = await leveltwoRepository.FindAllInclude(x => x.LevelOneId == query.id, x => x.Biller, x => x.StatusCode);
+                var result = await leveltwoRepository.FindAllInclude(x => x.LevelOneId == query.id, x => x.Biller);
                 if (result != null)
                 {
                     var leveltwo = mapper.Map<IEnumerable<ReadLevelTwoDto>>(result);

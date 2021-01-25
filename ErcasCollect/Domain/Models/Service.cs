@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ErcasCollect.Domain.Models
 {
-    public class Services
+    public class Service
     {
         [Column(TypeName = "nvarchar(32)")]
         public string Name { get; set; }

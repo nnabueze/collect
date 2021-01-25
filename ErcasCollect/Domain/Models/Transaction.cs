@@ -31,15 +31,7 @@ namespace ErcasCollect.Domain.Models
         public TypesOfTransaction TransactionType { get; set; }
         public string TransactionNumber { get; set; }
         public PaymentChannels PaymentChannel{ get; set; }
-        public int? LevelOneId { get; set; }
-        public LevelOne LevelOne { get; set; }
-        public int? LevelTwoId { get; set; }
-        public LevelTwo LevelTwo { get; set; }
-        public int? LevelThreeId { get; set; }
-        public LevelThree LevelThree { get; set; }
-
-
-
-
+        public int? ServiceId { get; set; }
+        public Service Service { get; set; }
     }
 }

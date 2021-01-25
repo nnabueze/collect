@@ -82,10 +82,6 @@ namespace ErcasCollect.Commands.CollectionCommand
 
                     transaction.BillerId = getuser.BillerId;
 
-                    transaction.LevelOneId = getuser.LevelOneId;
-
-                    transaction.LevelTwoId = getuser.LevelTwoId;
-
                     transaction.PayerName = request.transactionDto.Name;
 
                     transaction.PayerPhone= request.transactionDto.PhoneNumber;

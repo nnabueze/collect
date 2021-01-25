@@ -134,11 +134,7 @@ namespace ErcasCollect.Commands.SettlementCommand
 
                         BillerId = addSettlement.BillerId,
 
-                        LevelOneId = item.LevelOneId,
-
-                        LevelTwoId = item.LevelTwoId,
-
-                        LevelThreeId = item.LevelThreeId,
+                        ServiceId = item.LevelThreeId,
 
                         PayerName = addSettlement.PaidBy,
 

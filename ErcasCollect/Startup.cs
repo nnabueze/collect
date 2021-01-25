@@ -66,7 +66,6 @@ namespace ErcasCollect
             services.AddScoped<IPosRepository, PosRepository>();
             services.AddScoped<ITaxPayerRepository, TaxPayerRepository>();
             services.AddScoped<IBillerTinRepository, BillerTinRepository>();
-            services.AddScoped<ILevelThreeRepository, LevelThreeRepository>();
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
             services.AddScoped<IBillerBankRepository, BillerBankRepository>();
             services.AddScoped<IBillerRepository, BillerRepository>();
