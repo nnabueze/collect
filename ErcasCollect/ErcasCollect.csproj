@@ -15,6 +15,12 @@
     <Compile Remove="Migrations\20210124100054_billerGatewayBillerId.Designer.cs" />
     <Compile Remove="Migrations\20210125041711_EbillsValidation.cs" />
     <Compile Remove="Migrations\20210125041711_EbillsValidation.Designer.cs" />
+    <Compile Remove="Migrations\20210125213329_BillerLevelRelationship.cs" />
+    <Compile Remove="Migrations\20210125213329_BillerLevelRelationship.Designer.cs" />
+    <Compile Remove="Migrations\20210125213838_BillerLevelRelationship.cs" />
+    <Compile Remove="Migrations\20210125213838_BillerLevelRelationship.Designer.cs" />
+    <Compile Remove="Migrations\20210125220311_BillerLevelRelationship.cs" />
+    <Compile Remove="Migrations\20210125220311_BillerLevelRelationship.Designer.cs" />
   </ItemGroup>
 
 

@@ -27,7 +27,9 @@ namespace ErcasCollect.DataAccess
         public DbSet<State> State { get; set; }
         public DbSet<Batch> Batchs { get; set; }
         public DbSet<MetaData> MetaData { get; set; }
+        public DbSet<Service> Services { get; set; }
 
+        public DbSet<LevelDisplayName> LevelDisplayNames{ get; set; }
         public DbSet<Transaction> Transactions{ get; set; }
         public DbSet<TransactionType> TransactionTypes { get; set; }
         public DbSet<User> Users { get; set; }
@@ -57,9 +59,23 @@ namespace ErcasCollect.DataAccess
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
+
             builder.Entity<Biller>()
               .HasIndex(x => x.ReferenceKey)
                 .IsUnique();
+
+            builder.Entity<LevelOne>()
+                .HasIndex(x => x.ReferenceKey)
+                .IsUnique();
+
+            builder.Entity<LevelTwo>()
+                .HasIndex(x => x.ReferenceKey)
+                .IsUnique();
+
+            builder.Entity<LevelOne>()
+                .HasMany(x => x.LevelTwo)
+                .WithOne(x => x.LevelOne)
+                .OnDelete(DeleteBehavior.NoAction);
         }
     }
 }
