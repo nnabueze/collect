@@ -11,11 +11,13 @@ namespace ErcasCollect.Commands.Dto.BillerDto
 
         public string BillerProductId { get; set; }
 
-        public List<Param> NotificationFields { get; set; }
+        public List<ParamField> NotificationFields { get; set; }
 
-        public class Param
-        {
-            public string NotificationField { get; set; }
-        }
+        
+    }
+
+    public class ParamField
+    {
+        public string NotificationField { get; set; }
     }
 }

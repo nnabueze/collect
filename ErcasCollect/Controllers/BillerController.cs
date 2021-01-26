@@ -157,6 +157,38 @@ namespace ErcasCollect.Controllers
         }
 
 
+
+        /// <summary>
+        /// Add ebills product for a specific biller
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
+        [HttpPost]
+        public async Task<ActionResult> AddEbillsBillerProduct([FromBody] EbillsBillerProductCommand request)
+        {
+            try
+            {
+                var result = await mediator.Send(request);
+
+                var response = new JsonResult(result);
+
+                response.StatusCode = result.StatusCode;
+
+                return response;
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message.ToString(), "An Application exception occurred on the make transaction action of the NonIgr");
+
+                var response = new JsonResult(new { Message = ex.Message.ToString() });
+
+                response.StatusCode = _responseCode.InternalServerError;
+
+                return response;
+            }
+        }
+
+
         //[HttpPost]
 
         //public async Task<IActionResult> AddBank([FromBody] CreateBillerBankCommand request)
@@ -301,6 +333,43 @@ namespace ErcasCollect.Controllers
                 _logger.LogError(ex.Message.ToString(), "An Application exception occurred on the Get Specific action of the Igr");
 
                 var response = new JsonResult(new { Message = ex.Message.ToString()});
+
+                response.StatusCode = _responseCode.InternalServerError;
+
+                return response;
+            }
+        }
+
+        /// <summary>
+        /// List billers ebills product by billerId
+        /// </summary>
+        /// <param name="query"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
+
+        [HttpGet("{id}")]
+
+        public async Task<ActionResult> GetAllBillersByCategory(int id)
+        {
+            try
+            {
+                GetAllBillerByCategoryQuery request = new GetAllBillerByCategoryQuery();
+
+                request.id = id;
+
+                var result = await mediator.Send(request);
+
+                var response = new JsonResult(result);
+
+                response.StatusCode = result.StatusCode;
+
+                return response;
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message.ToString(), "An Application exception occurred on the Get Specific action of the Igr");
+
+                var response = new JsonResult(new { Message = ex.Message.ToString() });
 
                 response.StatusCode = _responseCode.InternalServerError;
 

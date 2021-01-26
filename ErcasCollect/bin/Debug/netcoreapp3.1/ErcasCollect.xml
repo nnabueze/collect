@@ -32,6 +32,13 @@
             <param name="request"></param>
             <returns></returns>
         </member>
+        <member name="M:ErcasCollect.Controllers.BillerController.AddEbillsBillerProduct(ErcasCollect.Commands.BillerCommand.EbillsBillerProductCommand)">
+            <summary>
+            Add ebills product for a specific biller
+            </summary>
+            <param name="request"></param>
+            <returns></returns>
+        </member>
         <member name="M:ErcasCollect.Controllers.BillerController.GetBillerByID(System.String)">
             <summary>
             Get a single biler bybille Id.
