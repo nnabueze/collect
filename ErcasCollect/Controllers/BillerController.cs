@@ -41,29 +41,29 @@ namespace ErcasCollect.Controllers
         [HttpPost]
         public async Task<ActionResult> CreateBiller([FromBody] CreateBillerCommand request)
         {
-            //try
-            //{
+            try
+            {
+                var result = await mediator.Send(request);
 
-            //}
-            //catch (Exception ex)
-            //{
-            //    _logger.LogError(ex.Message.ToString(), "An Application exception occurred on the make transaction action of the NonIgr");
+                var response = new JsonResult(result);
 
-            //    var response = new JsonResult(new { Message = ex.Message.ToString() });
+                response.StatusCode = result.StatusCode;
 
-            //    response.StatusCode = _responseCode.InternalServerError;
+                return response;
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message.ToString(), "An Application exception occurred on the make transaction action of the NonIgr");
 
-            //    return response;
+                var response = new JsonResult(new { Message = ex.Message.ToString() });
 
-            //}
+                response.StatusCode = _responseCode.InternalServerError;
 
-            var result = await mediator.Send(request);
+                return response;
 
-            var response = new JsonResult(result);
+            }
 
-            response.StatusCode = result.StatusCode;
 
-            return response;
         }
         /// <summary>
         /// Update  Biller Detail
