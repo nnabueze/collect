@@ -65,5 +65,26 @@
             </summary>
             <returns></returns>
         </member>
+        <member name="M:ErcasCollect.Controllers.CollectionController.Activation(ErcasCollect.Commands.PosCommand.ActivatePosCommand)">
+            <summary>
+            Pos Activation
+            </summary>
+            <param name="request"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ErcasCollect.Controllers.CollectionController.CreateCollection(ErcasCollect.Commands.CollectionCommand.CreateCollectionCommand)">
+            <summary>
+            Cash collection from pos 
+            </summary>
+            <param name="request"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ErcasCollect.Controllers.CollectionController.GenerateRemittance(ErcasCollect.Commands.CollectionCommand.GenerateRemittanceCommand)">
+            <summary>
+            Generate the total money collected for the period
+            </summary>
+            <param name="request"></param>
+            <returns></returns>
+        </member>
     </members>
 </doc>

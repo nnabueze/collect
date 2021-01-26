@@ -95,29 +95,6 @@ namespace ErcasCollect.Controllers
                 throw;
             }
         }
-
-        [HttpPost]
-       
-        public async Task<ActionResult> ActivatePOS([FromBody] ActivatePosCommand request)
-        {
-            try
-            {
-                var result = await mediator.Send(request);
-                return new JsonResult(result);
-            }
-            catch (AppException ex)
-            {
-                _logger.LogError(ex, "An Application exception occurred on the make transaction action of the NonIgr");
-                // return await BadRequest(new { message = ex.Message });
-                throw;
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError(ex, "An unknown error occurred on the make transaction action of the NonIgr");
-                throw;
-            }
-        }
-
- 
+         
     }
 }

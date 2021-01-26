@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using ErcasCollect.Commands.CollectionCommand;
+using ErcasCollect.Commands.PosCommand;
 using ErcasCollect.Domain.Models;
 using ErcasCollect.Exceptions;
 using ErcasCollect.Helpers;
@@ -34,8 +35,44 @@ namespace ErcasCollect.Controllers
 
             _responseCode = responseCode.Value;
         }
-        [HttpPost]
 
+        /// <summary>
+        /// Pos Activation
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
+        [HttpPost]
+        public async Task<IActionResult> Activation([FromBody] ActivatePosCommand request)
+        {
+            try
+            {
+                var result = await mediator.Send(request);
+
+                var response = new JsonResult(result);
+
+                response.StatusCode = result.StatusCode;
+
+                return response;
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message.ToString(), "An Application exception occurred on the make transaction action of the NonIgr");
+
+                var response = new JsonResult(new { Message = ex.Message.ToString() });
+
+                response.StatusCode = _responseCode.InternalServerError;
+
+                return response;
+
+            }
+        }
+
+        /// <summary>
+        /// Cash collection from pos 
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
+        [HttpPost]
         public async Task<IActionResult> CreateCollection([FromBody] CreateCollectionCommand request)
         {
             try
@@ -63,8 +100,12 @@ namespace ErcasCollect.Controllers
             }
         }
 
-        [HttpPost]
-    
+        /// <summary>
+        /// Generate the total money collected for the period
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
+        [HttpPost]    
         public async Task<IActionResult> GenerateRemittance([FromBody] GenerateRemittanceCommand request)
         {
             try
@@ -83,8 +124,7 @@ namespace ErcasCollect.Controllers
                 _logger.LogError(ex, "An unknown error occurred on the make transaction action of the NonIgr");
                 throw;
             }
-        }
-        // GET: api/values
+        }        
 
     }
     
