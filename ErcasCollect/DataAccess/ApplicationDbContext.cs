@@ -27,7 +27,6 @@ namespace ErcasCollect.DataAccess
         public DbSet<State> State { get; set; }
         public DbSet<Batch> Batchs { get; set; }
         public DbSet<MetaData> MetaData { get; set; }
-        public DbSet<Service> Services { get; set; }
 
         public DbSet<LevelDisplayName> LevelDisplayNames{ get; set; }
         public DbSet<Transaction> Transactions{ get; set; }
@@ -39,6 +38,10 @@ namespace ErcasCollect.DataAccess
         public DbSet<TransactionSummaryView> TransactionSummaryViews { get; set; }
 
         public DbSet<BillerValidation> BillerValidations { get; set; }
+
+        public DbSet<CategoryOneService> CategoryOneServices { get; set; }
+
+        public DbSet<CategoryTwoService> CategoryTwoServices { get; set; }
 
 
 

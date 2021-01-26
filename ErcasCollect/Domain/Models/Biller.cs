@@ -79,5 +79,9 @@ namespace ErcasCollect.Domain.Models
 
         public ICollection<Pos> Poses { get; set; }
 
+        public ICollection<CategoryOneService> CategoryOneService { get; set; }
+
+        public ICollection<CategoryTwoService> CategoryTwoService { get; set; }
+
     }
 }
