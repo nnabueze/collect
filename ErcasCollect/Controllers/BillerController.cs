@@ -189,6 +189,7 @@ namespace ErcasCollect.Controllers
         }
 
 
+
         //[HttpPost]
 
         //public async Task<IActionResult> AddBank([FromBody] CreateBillerBankCommand request)
@@ -303,11 +304,12 @@ namespace ErcasCollect.Controllers
                 return response;
             }
         }
+
+
         /// <summary>
         /// List billers by category eg Igr, School, etc
         /// </summary>
         /// <param name="query"></param>
-        /// <param name="cancellationToken"></param>
         /// <returns></returns>
 
         [HttpGet("{id}")]
@@ -343,19 +345,17 @@ namespace ErcasCollect.Controllers
         /// <summary>
         /// List billers ebills product by billerId
         /// </summary>
-        /// <param name="query"></param>
-        /// <param name="cancellationToken"></param>
         /// <returns></returns>
 
         [HttpGet("{id}")]
 
-        public async Task<ActionResult> GetAllBillersByCategory(int id)
+        public async Task<ActionResult> GetAllBillersEbillsProduct(string id)
         {
             try
             {
-                GetAllBillerByCategoryQuery request = new GetAllBillerByCategoryQuery();
+                GetAllBillerEbillsProduct request = new GetAllBillerEbillsProduct();
 
-                request.id = id;
+                request.Id = id;
 
                 var result = await mediator.Send(request);
 

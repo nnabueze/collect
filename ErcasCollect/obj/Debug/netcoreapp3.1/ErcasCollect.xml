@@ -57,7 +57,12 @@
             List billers by category eg Igr, School, etc
             </summary>
             <param name="query"></param>
-            <param name="cancellationToken"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ErcasCollect.Controllers.BillerController.GetAllBillersEbillsProduct(System.String)">
+            <summary>
+            List billers ebills product by billerId
+            </summary>
             <returns></returns>
         </member>
     </members>
