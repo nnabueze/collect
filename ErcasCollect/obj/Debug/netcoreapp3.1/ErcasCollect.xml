@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>ErcasCollect</name>
+    </assembly>
+    <members>
+        <member name="M:ErcasCollect.Controllers.BillerController.CreateBiller(ErcasCollect.Commands.BillerCommand.CreateBillerCommand)">
+            <summary>
+            Adding biller on the platform
+            </summary>
+            <param name="request"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ErcasCollect.Controllers.BillerController.UpdateBiller(Ercas.Pay.Service.Commands.UpdateBillerDetailCommand)">
+            <summary>
+            Update  Biller Detail
+            </summary>
+            <param name="request"></param>
+            <returns>uthj</returns>
+        </member>
+    </members>
+</doc>

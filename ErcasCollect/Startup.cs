@@ -21,6 +21,7 @@ using ErcasCollect.Validators;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Http;
 using ErcasCollect.Helpers;
+using System.IO;
 
 namespace ErcasCollect
 {
@@ -101,7 +102,11 @@ namespace ErcasCollect
                     Version = "v1",
                     Title = "ERCAS Collect",
                 });
-                   
+
+                var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
+                var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
+                c.IncludeXmlComments(xmlPath);
+
             });
            
         }

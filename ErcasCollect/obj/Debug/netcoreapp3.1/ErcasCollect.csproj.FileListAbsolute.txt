@@ -157,3 +157,5 @@ C:\Users\Eze\Documents\Visual Studio 2019\source\repos\ErcasNewCollectService\Er
 C:\Users\Eze\Documents\Visual Studio 2019\source\repos\ErcasNewCollectService\ErcasCollect\obj\Debug\netcoreapp3.1\ErcasCollect.csproj.CoreCompileInputs.cache
 C:\Users\Eze\Documents\Visual Studio 2019\source\repos\ErcasNewCollectService\ErcasCollect\obj\Debug\netcoreapp3.1\ErcasCollect.MvcApplicationPartsAssemblyInfo.cs
 C:\Users\Eze\Documents\Visual Studio 2019\source\repos\ErcasNewCollectService\ErcasCollect\obj\Debug\netcoreapp3.1\ErcasCollect.MvcApplicationPartsAssemblyInfo.cache
+C:\Users\Eze\Documents\Visual Studio 2019\source\repos\ErcasNewCollectService\ErcasCollect\bin\Debug\netcoreapp3.1\ErcasCollect.xml
+C:\Users\Eze\Documents\Visual Studio 2019\source\repos\ErcasNewCollectService\ErcasCollect\obj\Debug\netcoreapp3.1\ErcasCollect.xml

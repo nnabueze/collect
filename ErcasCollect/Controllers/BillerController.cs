@@ -33,8 +33,12 @@ namespace ErcasCollect.Controllers
             _responseCode = responseCode.Value;
         }
 
+        /// <summary>
+        /// Adding biller on the platform
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
         [HttpPost]
-
         public async Task<ActionResult> CreateBiller([FromBody] CreateBillerCommand request)
         {
             try
