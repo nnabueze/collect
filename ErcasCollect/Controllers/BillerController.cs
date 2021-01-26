@@ -34,34 +34,36 @@ namespace ErcasCollect.Controllers
         }
 
         /// <summary>
-        /// Adding biller on the platform
+        /// Adding biller on the platform setting isGatwayOnboard to true onboard the biller on api gateway. Point gateway to live server
         /// </summary>
         /// <param name="request"></param>
         /// <returns></returns>
         [HttpPost]
         public async Task<ActionResult> CreateBiller([FromBody] CreateBillerCommand request)
         {
-            try
-            {
-                var result = await mediator.Send(request);
+            //try
+            //{
 
-                var response = new JsonResult(result);
+            //}
+            //catch (Exception ex)
+            //{
+            //    _logger.LogError(ex.Message.ToString(), "An Application exception occurred on the make transaction action of the NonIgr");
 
-                response.StatusCode = result.StatusCode;
+            //    var response = new JsonResult(new { Message = ex.Message.ToString() });
 
-                return response;
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError(ex.Message.ToString(), "An Application exception occurred on the make transaction action of the NonIgr");
+            //    response.StatusCode = _responseCode.InternalServerError;
 
-                var response = new JsonResult(new { Message = ex.Message.ToString() });
+            //    return response;
 
-                response.StatusCode = _responseCode.InternalServerError;
+            //}
 
-                return response;
-                
-            }
+            var result = await mediator.Send(request);
+
+            var response = new JsonResult(result);
+
+            response.StatusCode = result.StatusCode;
+
+            return response;
         }
         /// <summary>
         /// Update  Biller Detail

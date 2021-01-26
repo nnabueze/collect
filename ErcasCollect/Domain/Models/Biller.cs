@@ -51,7 +51,7 @@ namespace ErcasCollect.Domain.Models
 
         public decimal  Longitude { get; set; }
 
-        [Column(TypeName = "nvarchar(16)")]
+        [Column(TypeName = "nvarchar(32)")]
         public string Abbreviation { get; set; }
 
         public int Commission { get; set; }
@@ -71,17 +71,6 @@ namespace ErcasCollect.Domain.Models
         public string GatewayKeyVector { get; set; }
 
 
-        public ICollection<LevelOne> LevelOne { get; set; }
-
-        public ICollection<LevelTwo> LevelTwo { get; set; }
-
-        public ICollection<User> Users { get; set; }
-
-        public ICollection<Pos> Poses { get; set; }
-
-        public ICollection<CategoryOneService> CategoryOneService { get; set; }
-
-        public ICollection<CategoryTwoService> CategoryTwoService { get; set; }
 
     }
 }

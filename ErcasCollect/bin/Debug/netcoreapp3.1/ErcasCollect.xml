@@ -6,7 +6,7 @@
     <members>
         <member name="M:ErcasCollect.Controllers.BillerController.CreateBiller(ErcasCollect.Commands.BillerCommand.CreateBillerCommand)">
             <summary>
-            Adding biller on the platform
+            Adding biller on the platform setting isGatwayOnboard to true onboard the biller on api gateway. Point gateway to live server
             </summary>
             <param name="request"></param>
             <returns></returns>
