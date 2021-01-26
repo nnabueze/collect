@@ -5,19 +5,17 @@ using System.Threading.Tasks;
 
 namespace ErcasCollect.Commands.Dto.BillerDto
 {
-    public class EbillsValidationDto
+    public class EbillsNotificationDto
     {
         public string BillerId { get; set; }
 
         public string BillerProductId { get; set; }
 
-        public List<Param> ValidationFields { get; set; }
+        public List<Param> NotificationFields { get; set; }
 
         public class Param
         {
-            public string ValidationField { get; set; }
-
-            public int ValidationStep { get; set; }
+            public string NotificationField { get; set; }
         }
     }
 }

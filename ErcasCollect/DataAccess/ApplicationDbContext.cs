@@ -28,6 +28,11 @@ namespace ErcasCollect.DataAccess
         public DbSet<Batch> Batchs { get; set; }
         public DbSet<MetaData> MetaData { get; set; }
 
+        public DbSet<BillerNotification> BillerNotifications { get; set; }
+
+        public DbSet<BillerEbillsProduct> BillerEbillsProducts { get; set; }
+
+        public DbSet<BillerValidation> BillerValidations { get; set; }
         public DbSet<LevelDisplayName> LevelDisplayNames{ get; set; }
         public DbSet<Transaction> Transactions{ get; set; }
         public DbSet<TransactionType> TransactionTypes { get; set; }
@@ -36,8 +41,6 @@ namespace ErcasCollect.DataAccess
         public DbSet<NumberSeries> NumberSeries { get; set; }
         public DbSet<FundSweep> FundSweep{ get; set; }
         public DbSet<TransactionSummaryView> TransactionSummaryViews { get; set; }
-
-        public DbSet<BillerValidation> BillerValidations { get; set; }
 
         public DbSet<CategoryOneService> CategoryOneServices { get; set; }
 

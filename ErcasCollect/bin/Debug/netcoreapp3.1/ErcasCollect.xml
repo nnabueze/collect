@@ -18,5 +18,40 @@
             <param name="request"></param>
             <returns>uthj</returns>
         </member>
+        <member name="M:ErcasCollect.Controllers.BillerController.AddEbillsValidationParameter(ErcasCollect.Commands.BillerCommand.EbillsValidationCommand)">
+            <summary>
+            Add ebills validation parameter for a specifie biller onboarded on api gateway
+            </summary>
+            <param name="request"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ErcasCollect.Controllers.BillerController.AddEbillsNotificationParameter(ErcasCollect.Commands.BillerCommand.EbillsNotificationCommand)">
+            <summary>
+            Add ebills notification parameter for a specifie biller onboarded on api gateway
+            </summary>
+            <param name="request"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ErcasCollect.Controllers.BillerController.GetBillerByID(System.String)">
+            <summary>
+            Get a single biler bybille Id.
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ErcasCollect.Controllers.BillerController.GetAllBillers">
+            <summary>
+            List active biller on the paltform
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:ErcasCollect.Controllers.BillerController.GetAllBillersByCategory(System.Int32)">
+            <summary>
+            List billers by category eg Igr, School, etc
+            </summary>
+            <param name="query"></param>
+            <param name="cancellationToken"></param>
+            <returns></returns>
+        </member>
     </members>
 </doc>

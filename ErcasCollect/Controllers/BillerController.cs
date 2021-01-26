@@ -96,6 +96,11 @@ namespace ErcasCollect.Controllers
             }
         }
 
+        /// <summary>
+        /// Add ebills validation parameter for a specifie biller onboarded on api gateway
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
         [HttpPost]
         public async Task<ActionResult> AddEbillsValidationParameter([FromBody] EbillsValidationCommand request)
         {
@@ -121,6 +126,37 @@ namespace ErcasCollect.Controllers
             }
         }
 
+        /// <summary>
+        /// Add ebills notification parameter for a specifie biller onboarded on api gateway
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
+        [HttpPost]
+        public async Task<ActionResult> AddEbillsNotificationParameter([FromBody] EbillsNotificationCommand request)
+        {
+            try
+            {
+                var result = await mediator.Send(request);
+
+                var response = new JsonResult(result);
+
+                response.StatusCode = result.StatusCode;
+
+                return response;
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message.ToString(), "An Application exception occurred on the make transaction action of the NonIgr");
+
+                var response = new JsonResult(new { Message = ex.Message.ToString() });
+
+                response.StatusCode = _responseCode.InternalServerError;
+
+                return response;
+            }
+        }
+
+
         //[HttpPost]
 
         //public async Task<IActionResult> AddBank([FromBody] CreateBillerBankCommand request)
@@ -145,8 +181,8 @@ namespace ErcasCollect.Controllers
         //    }
         //}
 
-       // [HttpPost]
-       
+        // [HttpPost]
+
         //public async Task<ActionResult> CreateTIN([FromBody] CreateTinCommand request)
         //{
         //    try
@@ -169,7 +205,11 @@ namespace ErcasCollect.Controllers
 
 
 
-
+        /// <summary>
+        /// Get a single biler bybille Id.
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [HttpGet("{id}")]
         public async Task<ActionResult> GetBillerByID(string id)
         {

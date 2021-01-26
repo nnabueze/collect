@@ -44,24 +44,13 @@ namespace ErcasCollect.Commands.BillerCommand
             {
                 var biller = _billerRepository.FindFirst(x => x.ReferenceKey == request.ebillsValidationDto.BillerId);
 
-                var ebillProduct = new BillerEbillsProduct()
-                {
-                    BillerId = biller.Id,
-
-                    ProductName = request.ebillsValidationDto.ProductName,
-
-                    CreatedDate = DateTime.UtcNow
-                };
-
-                var savedEbillsProduct = await _billerEbillsProductRepository.Add(ebillProduct);
-
-                await _billerEbillsProductRepository.CommitAsync();
+                var ebillsProductId = _billerEbillsProductRepository.FindFirst(x => x.ReferenceKey == request.ebillsValidationDto.BillerProductId).Id;
 
                 foreach (var item in request.ebillsValidationDto.ValidationFields)
                 {
                     var ebillsValidation = new BillerValidation()
                     {
-                        BillerEbillsProductId = savedEbillsProduct.Id,
+                        BillerEbillsProductId = ebillsProductId,
 
                         BillerId = biller.Id,
 

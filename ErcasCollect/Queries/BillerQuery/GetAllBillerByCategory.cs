@@ -32,7 +32,7 @@ namespace ErcasCollect.Queries.BillerQuery
                 this.mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
 
                 _responseCode = responseCode.Value;
-            }
+            }            
 
             public async Task<SuccessfulResponse> Handle(GetAllBillerByCategoryQuery query, CancellationToken cancellationToken)
             {

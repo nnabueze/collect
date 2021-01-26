@@ -79,6 +79,12 @@ namespace ErcasCollect.Domain.Models
 
         public ICollection<Pos> Poses { get; set; }
 
+        public ICollection<BillerEbillsProduct> BillerEbillsProducts { get; set; }
+
+        public ICollection<BillerValidation> BillerValidations { get; set; }
+
+        public ICollection<BillerNotification> BillerNotifications { get; set; }
+
         public ICollection<CategoryOneService> CategoryOneService { get; set; }
 
         public ICollection<CategoryTwoService> CategoryTwoService { get; set; }

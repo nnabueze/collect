@@ -6,14 +6,17 @@ using System.Threading.Tasks;
 
 namespace ErcasCollect.Domain.Models
 {
-    public class BillerEbillsProduct : BaseEntity
+    public class BillerNotification : BaseEntity
     {
-        public string ReferenceKey { get; set; }
-
-        public string ProductName { get; set; }
 
         public int? BillerId { get; set; }
 
         public Biller Biller { get; set; }
+
+        public int? BillerEbillsProductId { get; set; }
+
+        public BillerEbillsProduct BillerEbillsProduct { get; set; }
+
+        public string NotificationName { get; set; }
     }
 }
