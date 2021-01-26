@@ -74,5 +74,10 @@ namespace ErcasCollect.Domain.Models
         public ICollection<LevelOne> LevelOne { get; set; }
 
         public ICollection<LevelTwo> LevelTwo { get; set; }
+
+        public ICollection<User> Users { get; set; }
+
+        public ICollection<Pos> Poses { get; set; }
+
     }
 }

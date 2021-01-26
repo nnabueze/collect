@@ -37,5 +37,9 @@ namespace ErcasCollect.Domain.Models
         public decimal FundsweepPercentage { get; set; }
 
         public ICollection<LevelTwo> LevelTwo { get; set; }
+
+        public ICollection<User> Users { get; set; }
+
+        public ICollection<Pos> Poses { get; set; }
     }
 }

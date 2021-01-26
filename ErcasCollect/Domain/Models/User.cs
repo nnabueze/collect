@@ -9,7 +9,7 @@ namespace ErcasCollect.Domain.Models
         public int SsoId { get; set; }
         public int? RoleId { get; set; }
         public Role Role { get; set; }
-        public int? BillerId { get; set; }
+        public int BillerId { get; set; }
         public Biller Biller { get; set; }
         public int? LevelTwoId { get; set; }
         public LevelTwo LevelTwo { get; set; }

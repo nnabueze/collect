@@ -76,6 +76,11 @@ namespace ErcasCollect.DataAccess
                 .HasMany(x => x.LevelTwo)
                 .WithOne(x => x.LevelOne)
                 .OnDelete(DeleteBehavior.NoAction);
+
+            builder.Entity<Biller>()
+                .HasMany(x => x.Users)
+                .WithOne(x => x.Biller)
+                .OnDelete(DeleteBehavior.NoAction);
         }
     }
 }

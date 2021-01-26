@@ -4,14 +4,16 @@ using ErcasCollect.DataAccess;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace ErcasCollect.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210126001735_general")]
+    partial class general
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -635,6 +637,9 @@ namespace ErcasCollect.Migrations
                     b.Property<int>("StatusCode")
                         .HasColumnType("int");
 
+                    b.Property<int?>("UserId")
+                        .HasColumnType("int");
+
                     b.Property<decimal>("Version")
                         .HasColumnType("decimal(18,2)");
 
@@ -647,6 +652,8 @@ namespace ErcasCollect.Migrations
                     b.HasIndex("LevelTwoId");
 
                     b.HasIndex("OSId");
+
+                    b.HasIndex("UserId");
 
                     b.ToTable("Poses");
                 });
@@ -1170,6 +1177,10 @@ namespace ErcasCollect.Migrations
                         .HasForeignKey("OSId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.HasOne("ErcasCollect.Domain.Models.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId");
                 });
 
             modelBuilder.Entity("ErcasCollect.Domain.Models.Service", b =>

@@ -36,7 +36,6 @@ namespace ErcasCollect.Commands.PosCommand
                     if (checkposcommand.Activationpin == request.createPosDto.PIN)
                     {
                         checkposcommand.StatusCode = _response.POSActivated;
-                        checkposcommand.UserId = request.createPosDto.UserId;
                         posRepository.Update(checkposcommand);
                         await posRepository.CommitAsync();
                         return new ActivateResponse { Message = "POS Activated", StatusCode = _response.POSActivated };

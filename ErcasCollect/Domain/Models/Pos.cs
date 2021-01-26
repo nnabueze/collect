@@ -17,12 +17,9 @@ namespace ErcasCollect.Domain.Models
         public Biller Biller { get; set; }
         public int? LevelOneId { get; set; }
         public LevelOne LevelOne{ get; set; }
-
         public string Activationpin { get; set; }
         public int? LevelTwoId{ get; set; }
         public LevelTwo LevelTwo { get; set; }
-        public int? UserId { get; set; }
-        public User User { get; set; }
 
 
 
