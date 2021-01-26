@@ -57,7 +57,7 @@ namespace ErcasCollect.Queries.BillerQuery
 
                 biller.State = stateRepository.FindFirst(x => x.Id == result.StateId).Name;
 
-                biller.BillerType = billerTypeRepository.FindFirst(x => x.Id == result.Id).Category;
+                biller.BillerType = billerTypeRepository.FindFirst(x => x.Id == result.BillerTypeId).Category;
 
                 return ResponseGenerator.Response("Successfull", _responseCode.OK, true, biller);
             }

@@ -199,6 +199,10 @@ namespace ErcasCollect.Controllers
             }
         }
 
+        /// <summary>
+        /// List active biller on the paltform
+        /// </summary>
+        /// <returns></returns>
 
         [HttpGet]
 
@@ -227,6 +231,12 @@ namespace ErcasCollect.Controllers
                 return response;
             }
         }
+        /// <summary>
+        /// List billers by category eg Igr, School, etc
+        /// </summary>
+        /// <param name="query"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
 
         [HttpGet("{id}")]
 
