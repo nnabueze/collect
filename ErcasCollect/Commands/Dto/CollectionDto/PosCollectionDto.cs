@@ -16,16 +16,14 @@ namespace ErcasCollect.Commands.Dto.CollectionDto
         public string OfflineBatchId { get; set; }
 
         public string TotalAmount { get; set; }
-
+        
         public string ItemCount { get; set; }
 
-        public List<TransactionItem> TransactionItems { get; set; }
+        public List<Item> TransactionItems { get; set; }
     }
 
-    public class TransactionItem
+    public class Item
     {
-        public string OfflineTransactionId { get; set; }
-
         public string Amount { get; set; }
 
         public string CategoryTwoId { get; set; }

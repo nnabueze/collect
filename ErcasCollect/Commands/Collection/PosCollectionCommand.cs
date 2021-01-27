@@ -35,11 +35,13 @@ namespace ErcasCollect.Commands.Collection
 
             private readonly IMapper _mapper;
 
-            public PosCollectionCommandHandler(IOptions<ResponseCode> responseCode, IGenericRepository<Transaction> transactionRepository, 
-                
-                IGenericRepository<Batch> batchRepository, IGenericRepository<Biller> billerRepository, IGenericRepository<Pos> posRespository, 
-                
-                IGenericRepository<User> userRepository, IMapper mapper)
+            private readonly IGenericRepository<CategoryTwoService> _categoryTwoServiceRepository;
+
+            public PosCollectionCommandHandler(IOptions<ResponseCode> responseCode, IGenericRepository<Transaction> transactionRepository,
+
+                IGenericRepository<Batch> batchRepository, IGenericRepository<Biller> billerRepository, IGenericRepository<Pos> posRespository,
+
+                IGenericRepository<User> userRepository, IMapper mapper, IGenericRepository<CategoryTwoService> categoryTwoServiceRepository)
             {
                 _responseCode = responseCode.Value;
 
@@ -54,6 +56,8 @@ namespace ErcasCollect.Commands.Collection
                 _userRepository = userRepository;
 
                 _mapper = mapper;
+
+                _categoryTwoServiceRepository = categoryTwoServiceRepository;
             }
 
             public async Task<SuccessfulResponse> Handle(PosCollectionCommand request, CancellationToken cancellationToken)
@@ -79,17 +83,52 @@ namespace ErcasCollect.Commands.Collection
                     return verifyCollectionLimit;
                 }
 
-                //save batch
-                var batchReferenceKay = await SaveBatchTransaction(request);
-                //save transaction
                 
-                return null;
+                var batchReferenceKay = await SaveBatchTransaction(request);
+                
+                await SaveTransactionItem(request, batchReferenceKay);
+
+                return ResponseGenerator.Response("Transaction successful", _responseCode.TransactionSuccessful, true);
 
             }
 
-            private void SaveTransactionItem(PosCollectionCommand request, string BatchReferenceKey)
+            private int CheckItemCount(PosCollectionCommand request)
             {
+                return request.posCollectionDto.TransactionItems.Count();
+            }
 
+            private async Task SaveTransactionItem(PosCollectionCommand request, string batchReferenceKey)
+            {
+                foreach (var item in request.posCollectionDto.TransactionItems)
+                {
+                    var categoryTwoId = GetCategoryTwo(item.CategoryTwoId);
+
+                    var transaction = new Transaction()
+                    {
+                        Amount = Convert.ToDecimal(item.Amount),
+
+                        BatchReferenceKey = batchReferenceKey,
+
+                        CategoryTwoServiceId = categoryTwoId,
+
+                        OfflineBatchId = request.posCollectionDto.OfflineBatchId,
+
+                        PayerName = item.PayerName,
+
+                        PayerPhone = item.PayerPhone,
+
+                        ReferenceKey = Helpers.IdGenerator.IdGenerator.RandomInt(15)
+                    };
+
+                    await _transactionRepository.Add(transaction);
+                }
+
+                await _transactionRepository.CommitAsync();
+            }
+
+            private int GetCategoryTwo(string categoryTwoId)
+            {
+                return _categoryTwoServiceRepository.FindFirst(x => x.ReferenceKey == categoryTwoId).Id;
             }
 
             private async Task<string> SaveBatchTransaction(PosCollectionCommand request)
@@ -106,7 +145,7 @@ namespace ErcasCollect.Commands.Collection
                 {
                     BillerId = biller.Id,
                     
-                    ItemCount = Convert.ToInt16(request.posCollectionDto.ItemCount),
+                    ItemCount = CheckItemCount(request),
 
                     OfflineBatchId = request.posCollectionDto.OfflineBatchId,
 
