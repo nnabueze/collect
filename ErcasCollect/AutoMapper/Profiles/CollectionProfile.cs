@@ -9,6 +9,8 @@ namespace ErcasCollect.AutoMapper.Profiles
         public CollectionProfile()
         {
             CreateMap<CategoryOneService, PosCategoryOneRespnse.CategoryOneParameter>();
+
+            CreateMap<CategoryTwoService, PosCategoryTwoRespnse.CategoryTwoParameter>();
         }
     }
 }

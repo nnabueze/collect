@@ -93,6 +93,13 @@
             <param name="request"></param>
             <returns></returns>
         </member>
+        <member name="M:ErcasCollect.Controllers.CollectionController.PosCategoryTwoService(ErcasCollect.Commands.Collection.PosCategoryTwoCommand)">
+            <summary>
+            Listing category two service via pos eg subheads heads
+            </summary>
+            <param name="request"></param>
+            <returns></returns>
+        </member>
         <member name="M:ErcasCollect.Controllers.CollectionController.CreateCollection(ErcasCollect.Commands.CollectionCommand.CreateCollectionCommand)">
             <summary>
             Cash collection from pos 
