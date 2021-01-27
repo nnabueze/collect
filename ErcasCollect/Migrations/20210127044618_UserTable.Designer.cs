@@ -4,14 +4,16 @@ using ErcasCollect.DataAccess;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace ErcasCollect.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210127044618_UserTable")]
+    partial class UserTable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -768,9 +770,6 @@ namespace ErcasCollect.Migrations
 
                     b.Property<bool>("IsLogin")
                         .HasColumnType("bit");
-
-                    b.Property<int?>("LastUserId")
-                        .HasColumnType("int");
 
                     b.Property<int?>("LevelOneId")
                         .HasColumnType("int");

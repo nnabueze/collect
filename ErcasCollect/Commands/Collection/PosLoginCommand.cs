@@ -107,12 +107,12 @@ namespace ErcasCollect.Commands.Collection
 
                 await UpdatePos(posDetail, userDetail);
 
-                var loginResponse = GetLoginResponse(request);
+                var loginResponse = GetLoginResponse(request, userDetail);
 
                 return ResponseGenerator.Response("Successful", _responseCode.OK, true, loginResponse);
             }
 
-            private PosLoginResponseDto GetLoginResponse(PosLoginCommand request)
+            private PosLoginResponseDto GetLoginResponse(PosLoginCommand request, User user)
             {
                 var biller = _billerRepository.FindFirst(x => x.ReferenceKey == request.posLoginDto.BillerId);
 
@@ -125,6 +125,8 @@ namespace ErcasCollect.Commands.Collection
                     BillerId = request.posLoginDto.BillerId,
 
                     PosId = request.posLoginDto.PosId,
+
+                    UserId = user.ReferenceKey,
 
                     LevelOneDisplayName = levelOneDisplayName,
 

@@ -6,6 +6,8 @@ namespace ErcasCollect.Domain.Models
 {
     public class User:BaseEntity
     {
+        public string ReferenceKey { get; set; }
+
         public int SsoId { get; set; }
         public int? RoleId { get; set; }
         public Role Role { get; set; }
