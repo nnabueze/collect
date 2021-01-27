@@ -3,10 +3,11 @@ namespace ErcasCollect.Commands.Dto.CollectionDto
 {
     public class GenerateRemittanceDto
     {
-        public int AgentId { get; set; }
-        public bool ForceGenerate { get; set; }
-        public string Name { get; set; }
-        public string PhoneNumber { get; set; }
+        public string BillerId { get; set; }
+
+        public string PosId { get; set; }
+
+        public string UserId { get; set; }
 
     }
 }

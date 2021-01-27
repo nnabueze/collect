@@ -46,6 +46,8 @@ namespace ErcasCollect.DataAccess
 
         public DbSet<CategoryTwoService> CategoryTwoServices { get; set; }
 
+        public DbSet<CloseBatchTransaction> CloseBatchTransactions { get; set; }
+
 
 
 
@@ -67,6 +69,10 @@ namespace ErcasCollect.DataAccess
         {
 
             builder.Entity<Biller>()
+              .HasIndex(x => x.ReferenceKey)
+                .IsUnique();
+
+            builder.Entity<CloseBatchTransaction>()
               .HasIndex(x => x.ReferenceKey)
                 .IsUnique();
 

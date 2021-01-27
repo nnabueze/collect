@@ -37,11 +37,21 @@ namespace ErcasCollect.Commands.Collection
 
             private readonly IGenericRepository<CategoryTwoService> _categoryTwoServiceRepository;
 
+            private readonly IGenericRepository<LevelOne> _levelOneRepository;
+
+            private readonly IGenericRepository<LevelTwo> _levelTwoRepository;
+
+            private readonly IGenericRepository<CloseBatchTransaction> _closeBatchTransactionRepository;
+
             public PosCollectionCommandHandler(IOptions<ResponseCode> responseCode, IGenericRepository<Transaction> transactionRepository,
 
                 IGenericRepository<Batch> batchRepository, IGenericRepository<Biller> billerRepository, IGenericRepository<Pos> posRespository,
 
-                IGenericRepository<User> userRepository, IMapper mapper, IGenericRepository<CategoryTwoService> categoryTwoServiceRepository)
+                IGenericRepository<User> userRepository, IMapper mapper, IGenericRepository<CategoryTwoService> categoryTwoServiceRepository,
+
+                IGenericRepository<LevelOne> levelOneRepository, IGenericRepository<LevelTwo> levelTwoRepository, 
+                
+                IGenericRepository<CloseBatchTransaction> closeBatchTransactionRepository)
             {
                 _responseCode = responseCode.Value;
 
@@ -58,6 +68,12 @@ namespace ErcasCollect.Commands.Collection
                 _mapper = mapper;
 
                 _categoryTwoServiceRepository = categoryTwoServiceRepository;
+
+                _levelOneRepository = levelOneRepository;
+
+                _levelTwoRepository = levelTwoRepository;
+
+                _closeBatchTransactionRepository = closeBatchTransactionRepository;
             }
 
             public async Task<SuccessfulResponse> Handle(PosCollectionCommand request, CancellationToken cancellationToken)
@@ -67,6 +83,19 @@ namespace ErcasCollect.Commands.Collection
                 if (posRequestValidation != null)
                 {
                     return posRequestValidation;
+                }
+                var checkLevels = CheckLevelOneAndTwo(request);
+
+                if (checkLevels != null)
+                {
+                    return checkLevels;
+                }
+
+                var checkCloseBatch = CheckCloseBatchTransaction(request);
+
+                if (checkCloseBatch != null)
+                {
+                    return checkCloseBatch;
                 }
 
                 var checkTransactionTotal = CheckTransactionTotal(request);
@@ -90,6 +119,51 @@ namespace ErcasCollect.Commands.Collection
 
                 return ResponseGenerator.Response("Transaction successful", _responseCode.TransactionSuccessful, true);
 
+            }
+
+            private SuccessfulResponse CheckLevelOneAndTwo(PosCollectionCommand request)
+            {
+                LevelOne levelOne = GetLevelOne(request);
+
+                LevelTwo levelTwo = GetLevelTwo(request);
+
+                var user = GetUserId(request.posCollectionDto.UserId);
+
+                if (levelOne != null && user.LevelOneId != levelOne.Id)
+                {
+                    return ResponseGenerator.Response("User does not belong  to level one", _responseCode.NotAccepted, false);
+                }
+
+                if (levelTwo != null && user.LevelTwoId != levelTwo.Id)
+                {
+                    return ResponseGenerator.Response("User does not belong  to level two", _responseCode.NotAccepted, false);
+                }
+
+                return null;
+            }
+
+            private SuccessfulResponse CheckCloseBatchTransaction(PosCollectionCommand request)
+            {
+                var user = GetUserId(request.posCollectionDto.UserId);
+
+                var closeBatchTransaction = _closeBatchTransactionRepository.FindFirst(x => x.UserId == user.Id && x.IsPaid == false);
+
+                if(closeBatchTransaction != null)
+                {
+                    return ResponseGenerator.Response("Pending Close Batch Transaction", _responseCode.NotAccepted, false);
+                }
+
+                return null;
+            }
+
+            private LevelTwo GetLevelTwo(PosCollectionCommand request)
+            {
+                return _levelTwoRepository.FindFirst(x => x.ReferenceKey == request.posCollectionDto.LevelTwoId);
+            }
+
+            private LevelOne GetLevelOne(PosCollectionCommand request)
+            {
+                return _levelOneRepository.FindFirst(x => x.ReferenceKey == request.posCollectionDto.LevelOneId);
             }
 
             private int CheckItemCount(PosCollectionCommand request)
@@ -141,6 +215,10 @@ namespace ErcasCollect.Commands.Collection
 
                 var user = GetUserId(request.posCollectionDto.UserId);
 
+                var levelOne = GetLevelOne(request);
+
+                var levelTwo = GetLevelTwo(request);
+
                 var batch = new Batch()
                 {
                     BillerId = biller.Id,
@@ -154,6 +232,10 @@ namespace ErcasCollect.Commands.Collection
                     UserId = user.Id,
 
                     TotalAmount = totalAmount,
+
+                    LevelOneId = levelOne.Id,
+
+                    LevelTwoId = levelTwo.Id,
 
                     ReferenceKey = Helpers.IdGenerator.IdGenerator.RandomInt(15),
 

@@ -100,16 +100,16 @@
             <param name="request"></param>
             <returns></returns>
         </member>
-        <member name="M:ErcasCollect.Controllers.CollectionController.PosCollection(ErcasCollect.Commands.Collection.PosCollectionCommand)">
+        <member name="M:ErcasCollect.Controllers.CollectionController.PosBatchTransaction(ErcasCollect.Commands.Collection.PosCollectionCommand)">
             <summary>
-            Cash collection from pos 
+            Cash batch transaction from pos eg pos collection
             </summary>
             <param name="request"></param>
             <returns></returns>
         </member>
-        <member name="M:ErcasCollect.Controllers.CollectionController.GenerateRemittance(ErcasCollect.Commands.CollectionCommand.GenerateRemittanceCommand)">
+        <member name="M:ErcasCollect.Controllers.CollectionController.PosCloseBatchTransaction(ErcasCollect.Commands.CollectionCommand.GenerateRemittanceCommand)">
             <summary>
-            Generate the total money collected for the period
+            Calculate total batch transaction amount for a period eg generate remittance
             </summary>
             <param name="request"></param>
             <returns></returns>

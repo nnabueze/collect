@@ -30,6 +30,14 @@ namespace ErcasCollect.Domain.Models
 
         public Pos Pos { get; set; }
 
+        public int? LevelOneId { get; set; }
+
+        public LevelOne LevelOne { get; set; }
+
+        public int? LevelTwoId { get; set; }
+
+        public LevelTwo LevelTwo { get; set; }
+
         public bool IsSuccess { get; set; }
 
         public TypesOfTransaction TransactionType { get; set; }
@@ -38,7 +46,9 @@ namespace ErcasCollect.Domain.Models
 
         public bool IsBatchClosed { get; set; }
 
-        public string ClosedRemiteId { get; set; }
+        public int? CloseBatchTransactionId { get; set; }
+
+        public CloseBatchTransaction CloseBatchTransaction { get; set; }
 
 
     }

@@ -13,6 +13,10 @@ namespace ErcasCollect.Commands.Dto.CollectionDto
 
         public string UserId { get; set; }
 
+        public string LevelOneId { get; set; }
+
+        public string LevelTwoId { get; set; }
+
         public string OfflineBatchId { get; set; }
 
         public string TotalAmount { get; set; }

@@ -20,7 +20,7 @@ namespace ErcasCollect.Commands.CollectionCommand
 {
     public partial class GenerateRemittanceCommand : IRequest<RemiitanceResponse>
     {
-        //public GenerateRemittanceDto transactionDto { get; set; }
+        public GenerateRemittanceDto transactionDto { get; set; }
 
         //public class GenerateRemittanceCommandHandler : IRequestHandler<GenerateRemittanceCommand, RemiitanceResponse>
         //{
@@ -58,16 +58,19 @@ namespace ErcasCollect.Commands.CollectionCommand
         //        var getuser = await _userRepository.GetSingle(x => x.Id == request.transactionDto.AgentId);
 
 
-        //        if (request.transactionDto.ForceGenerate == false) { 
+        //        if (request.transactionDto.ForceGenerate == false)
+        //        {
 
-        //            return new RemiitanceResponse { Message = "Remittance Checking",StatusCode = _responseCode.RemittanceChecking,Amount = getuser.CollectionLimit-getuser.CashAtHand};
-        //         } else{
+        //            return new RemiitanceResponse { Message = "Remittance Checking", StatusCode = _responseCode.RemittanceChecking, Amount = getuser.CollectionLimit - getuser.CashAtHand };
+        //        }
+        //        else
+        //        {
         //            Batch batch = new Batch();
 
         //            batch.UserId = request.transactionDto.AgentId;
-               
+
         //            batch.ItemCount = 1;
-                  
+
         //            batch.TotalAmount = getuser.CashAtHand;
 
         //            await _batchRepository.Add(batch);
@@ -84,13 +87,13 @@ namespace ErcasCollect.Commands.CollectionCommand
 
         //            transaction.PayerName = request.transactionDto.Name;
 
-        //            transaction.PayerPhone= request.transactionDto.PhoneNumber;
+        //            transaction.PayerPhone = request.transactionDto.PhoneNumber;
 
         //            transaction.BatchId = batch.Id;
 
         //            transaction.TransactionType = TypesOfTransaction.Remittance;
 
-        //            transaction.RemittanceNumber= Helpers.IdGenerator.IdGenerator.GetUniqueKey(10, 2);
+        //            transaction.RemittanceNumber = Helpers.IdGenerator.IdGenerator.GetUniqueKey(10, 2);
 
         //            transaction.PaymentChannel = PaymentChannels.POS;
 
@@ -105,11 +108,11 @@ namespace ErcasCollect.Commands.CollectionCommand
         //            await _userRepository.CommitAsync();
 
 
-        //            return new RemiitanceResponse { Message="Remittance Generated",StatusCode =_responseCode.RemmitanceGenerated,Amount=getuser.CashAtHand,RemittanceID =transaction.RemittanceNumber};
+        //            return new RemiitanceResponse { Message = "Remittance Generated", StatusCode = _responseCode.RemmitanceGenerated, Amount = getuser.CashAtHand, RemittanceID = transaction.RemittanceNumber };
         //        }
 
-                
-            
+
+
         //    }
         //}
     }
