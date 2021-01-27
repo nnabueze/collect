@@ -90,7 +90,9 @@ namespace ErcasCollect.Commands.Collection
             {
                 var categoryOneId = _categoryOneRepository.FindFirst(x => x.ReferenceKey == request.posCategoryTwoDto.CategoryOneId).Id;
 
-                var listCategoryTwo = _categoryTwoServiceRepository.Find(x => x.CategoryOneServiceId == categoryOneId).ToList().Select(_mapper.Map<CategoryTwoService, PosCategoryTwoRespnse.CategoryTwoParameter>);
+                var listCategoryTwo = _categoryTwoServiceRepository.Find(x => x.CategoryOneServiceId == categoryOneId).ToList()
+                    
+                    .Select(_mapper.Map<CategoryTwoService, PosCategoryTwoRespnse.CategoryTwoParameter>);
 
                 var categorytTwoDisplayName = _levelDisplayNameRepository.FindFirst(x => x.BillerId == biller.Id).CategoryTwoDisplayName;
 

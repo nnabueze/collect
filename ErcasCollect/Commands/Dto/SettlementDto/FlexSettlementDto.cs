@@ -17,22 +17,16 @@ namespace ErcasCollect.Commands.Dto.SettlementDto
 
         public string TransactionNumber { get; set; }
 
-        public decimal TotalAmount { get; set; }
+        public string TotalAmount { get; set; }
 
-        public string TransactionStatus { get; set; }
-
-        public int StatusCode { get; set; }
+        public bool IsSuccess { get; set; }
 
         public List<TransactionItem> transactionItems { get; set; }
     }
 
     public class TransactionItem
     {
-        public int LevelThreeId { get; set; }
-
-        public int LevelOneId { get; set; }
-
-        public int LevelTwoId { get; set; }
+        public string CategoryTwoId { get; set; }
 
         public string ItemName { get; set; }
 

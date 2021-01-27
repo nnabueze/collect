@@ -37,14 +37,14 @@ namespace ErcasCollect.Controllers
 
         // GET: api/values
         [HttpGet("{id}")]
-        public async Task<IActionResult> GetBillerCount( int id) 
-        {
-             
+        public ActionResult GetBillerCount( int id) 
+        {             
         
-            var transactioncount = _context.Transactions.Where(x=>x.BillerId==id).Count();
-            var usercount = _context.Users.Where(x => x.BillerId == id).Count();
-            var taxpayercount = _context.TaxPayers.Where(x => x.BillerId == id).Count();
-            return Ok(new BillerDashboardCount {  TransactionVolume = transactioncount, NumberofUsers = usercount,NumberofTaxPayer=taxpayercount });
+            //var transactioncount = _context.Transactions.Where(x=>x.BillerId==id).Count();
+            //var usercount = _context.Users.Where(x => x.BillerId == id).Count();
+            //var taxpayercount = _context.TaxPayers.Where(x => x.BillerId == id).Count();
+            //return Ok(new BillerDashboardCount {  TransactionVolume = transactioncount, NumberofUsers = usercount,NumberofTaxPayer=taxpayercount });
+            return Ok();
         }
 
       
@@ -65,9 +65,11 @@ namespace ErcasCollect.Controllers
         {
 
 
-            var amount = _context.Transactions.Where(x => x.BillerId == id).Sum(x => x.Amount);
+            //var amount = _context.Transactions.Where(x => x.BillerId == id).Sum(x => x.Amount);
 
-            return Ok(new AllTransactionSum { Amount = amount });
+            //return Ok(new AllTransactionSum { Amount = amount });
+
+            return null;
         }
       
 

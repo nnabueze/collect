@@ -100,7 +100,7 @@
             <param name="request"></param>
             <returns></returns>
         </member>
-        <member name="M:ErcasCollect.Controllers.CollectionController.CreateCollection(ErcasCollect.Commands.CollectionCommand.CreateCollectionCommand)">
+        <member name="M:ErcasCollect.Controllers.CollectionController.PosCollection(ErcasCollect.Commands.CollectionCommand.CreateCollectionCommand)">
             <summary>
             Cash collection from pos 
             </summary>

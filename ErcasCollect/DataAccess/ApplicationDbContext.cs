@@ -70,6 +70,22 @@ namespace ErcasCollect.DataAccess
               .HasIndex(x => x.ReferenceKey)
                 .IsUnique();
 
+            builder.Entity<Batch>()
+              .HasIndex(x => x.OfflineBatchId)
+                .IsUnique();
+
+            builder.Entity<Batch>()
+              .HasIndex(x => x.ReferenceKey)
+                .IsUnique();
+
+            builder.Entity<Transaction>()
+              .HasIndex(x => x.OfflineBatchId)
+                .IsUnique();
+
+            builder.Entity<Transaction>()
+              .HasIndex(x => x.ReferenceKey)
+                .IsUnique();
+
             builder.Entity<LevelOne>()
                 .HasIndex(x => x.ReferenceKey)
                 .IsUnique();

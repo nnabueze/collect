@@ -198,7 +198,7 @@ namespace ErcasCollect.Controllers
         /// <param name="request"></param>
         /// <returns></returns>
         [HttpPost]
-        public async Task<IActionResult> CreateCollection([FromBody] CreateCollectionCommand request)
+        public async Task<IActionResult> PosCollection([FromBody] CreateCollectionCommand request)
         {
             try
             {

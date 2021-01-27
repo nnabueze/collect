@@ -32,5 +32,7 @@ namespace ErcasCollect.Domain.Models
 
         public int? LastUserId { get; set; }
 
+        public string PosImei { get; set; }
+
     }
 }

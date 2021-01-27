@@ -33,11 +33,8 @@ namespace ErcasCollect.Domain.Models
 
         public string TransactionNumber { get; set; }
 
-        public string TransactionStatus { get; set; }
 
-        public int StatusCode { get; set; }
-
-
+        public bool IsSuccess { get; set; }
 
     }
 }

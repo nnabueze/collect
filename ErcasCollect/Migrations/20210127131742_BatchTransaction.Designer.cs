@@ -4,14 +4,16 @@ using ErcasCollect.DataAccess;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace ErcasCollect.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210127131742_BatchTransaction")]
+    partial class BatchTransaction
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -94,9 +96,6 @@ namespace ErcasCollect.Migrations
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
 
-                    b.Property<bool>("IsSuccess")
-                        .HasColumnType("bit");
-
                     b.Property<int>("ItemCount")
                         .HasColumnType("int");
 
@@ -107,22 +106,16 @@ namespace ErcasCollect.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("OfflineBatchId")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<int>("PaymentChannel")
-                        .HasColumnType("int");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int?>("PosId")
                         .HasColumnType("int");
 
                     b.Property<string>("ReferenceKey")
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<decimal>("TotalAmount")
                         .HasColumnType("decimal(18,2)");
-
-                    b.Property<int>("TransactionType")
-                        .HasColumnType("int");
 
                     b.Property<int>("UserId")
                         .HasColumnType("int");
@@ -131,15 +124,7 @@ namespace ErcasCollect.Migrations
 
                     b.HasIndex("BillerId");
 
-                    b.HasIndex("OfflineBatchId")
-                        .IsUnique()
-                        .HasFilter("[OfflineBatchId] IS NOT NULL");
-
                     b.HasIndex("PosId");
-
-                    b.HasIndex("ReferenceKey")
-                        .IsUnique()
-                        .HasFilter("[ReferenceKey] IS NOT NULL");
 
                     b.HasIndex("UserId");
 
@@ -887,9 +872,6 @@ namespace ErcasCollect.Migrations
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<bool>("IsSuccess")
-                        .HasColumnType("bit");
-
                     b.Property<int>("ModifiedBy")
                         .HasColumnType("int");
 
@@ -908,8 +890,14 @@ namespace ErcasCollect.Migrations
                     b.Property<string>("ReferenceID")
                         .HasColumnType("nvarchar(32)");
 
+                    b.Property<int>("StatusCode")
+                        .HasColumnType("int");
+
                     b.Property<string>("TransactionNumber")
                         .HasColumnType("nvarchar(32)");
+
+                    b.Property<string>("TransactionStatus")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("TransactionType")
                         .HasColumnType("int");
@@ -1015,7 +1003,7 @@ namespace ErcasCollect.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("OfflineBatchId")
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("PayerName")
                         .HasColumnType("nvarchar(max)");
@@ -1023,20 +1011,21 @@ namespace ErcasCollect.Migrations
                     b.Property<string>("PayerPhone")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("ReferenceKey")
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<int>("PaymentChannel")
+                        .HasColumnType("int");
+
+                    b.Property<int>("StatusCode")
+                        .HasColumnType("int");
+
+                    b.Property<string>("TransactionNumber")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("TransactionType")
+                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
                     b.HasIndex("CategoryTwoServiceId");
-
-                    b.HasIndex("OfflineBatchId")
-                        .IsUnique()
-                        .HasFilter("[OfflineBatchId] IS NOT NULL");
-
-                    b.HasIndex("ReferenceKey")
-                        .IsUnique()
-                        .HasFilter("[ReferenceKey] IS NOT NULL");
 
                     b.ToTable("Transactions");
                 });

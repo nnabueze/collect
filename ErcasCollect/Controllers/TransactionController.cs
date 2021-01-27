@@ -43,7 +43,7 @@ namespace ErcasCollect.Controllers
             try
             {
                 GetTransactionByBillerIDQuery request = new GetTransactionByBillerIDQuery();
-                request.id = id;
+                //request.id = id;
                 return await mediator.Send(request);
             }
             catch (AppException ex)
@@ -66,7 +66,7 @@ namespace ErcasCollect.Controllers
             try
             {
                 GetTransactionByBatchIDQuery request = new GetTransactionByBatchIDQuery();
-                request.id = id;
+                //request.id = id;
                 return await mediator.Send(request);
             }
             catch (AppException ex)
@@ -88,7 +88,7 @@ namespace ErcasCollect.Controllers
             try
             {
                 GetTransactionDetailByIDQuery request = new GetTransactionDetailByIDQuery();
-                request.transactionNumber = transactionNumber;
+                //request.transactionNumber = transactionNumber;
                 return await mediator.Send(request);
             }
             catch (AppException ex)

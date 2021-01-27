@@ -33,11 +33,13 @@ namespace ErcasCollect.Commands.SettlementCommand
 
             private readonly ResponseCode _response;
 
+            private readonly IGenericRepository<CategoryTwoService> _categoryTwoServiceRepository;
+
             public FlexSettlementCommandHandler(ISettlementRepository settlementRepository, IMapper mapper,
 
-                ITransactionRepository transactionRepository, IOptions<ResponseCode> response, 
-                
-                IGenericRepository<Biller> billerRepository, IGenericRepository<Batch> batchResponsitory)
+                ITransactionRepository transactionRepository, IOptions<ResponseCode> response,
+
+                IGenericRepository<Biller> billerRepository, IGenericRepository<Batch> batchResponsitory, IGenericRepository<CategoryTwoService> categoryTwoServiceRepository)
             {
                 _settlementRepository = settlementRepository;
 
@@ -50,14 +52,13 @@ namespace ErcasCollect.Commands.SettlementCommand
                 _billerRepository = billerRepository;
 
                 _batchResponsitory = batchResponsitory;
+
+                _categoryTwoServiceRepository = categoryTwoServiceRepository;
             }
             public async Task<SuccessfulResponse> Handle(FlexSettlementCommand request, CancellationToken cancellationToken)
             {
                 //automapper
-
-                //checking for biller reference key
-
-                var biller = _billerRepository.FindFirst(x => x.ReferenceKey == request.FlexSettlementDto.BillerId);
+                Biller biller = GetBiller(request);
 
                 if (biller == null)
                 {
@@ -74,15 +75,28 @@ namespace ErcasCollect.Commands.SettlementCommand
 
             }
 
+            private Biller GetBiller(FlexSettlementCommand request)
+            {
+                return _billerRepository.FindFirst(x => x.ReferenceKey == request.FlexSettlementDto.BillerId);
+            }
+
             public async Task<Batch> SaveBatch(FlexSettlementCommand request, Biller biller)
             {
                 var batch = new Batch()
                 {
-                    TotalAmount = request.FlexSettlementDto.TotalAmount,
+                    TotalAmount = Convert.ToDecimal(request.FlexSettlementDto.TotalAmount),
 
                     BillerId = biller.Id,
 
-                    ItemCount = 1
+                    ItemCount = 1,
+
+                    PaymentChannel = PaymentChannels.Card,
+
+                    ReferenceKey = request.FlexSettlementDto.ReferenceNumber,
+
+                    IsSuccess = request.FlexSettlementDto.IsSuccess,
+
+                    TransactionType = TypesOfTransaction.SelfService
                     
                 };
 
@@ -93,9 +107,11 @@ namespace ErcasCollect.Commands.SettlementCommand
 
             private async Task<Settlement> SaveSettlement(FlexSettlementCommand request, Biller biller)
             {
+
                 var settlement = new Settlement()
                 {
-                    Amount = request.FlexSettlementDto.TotalAmount,
+
+                    Amount = Convert.ToDecimal(request.FlexSettlementDto.TotalAmount),
 
                     BillerId = biller.Id,
 
@@ -109,11 +125,7 @@ namespace ErcasCollect.Commands.SettlementCommand
 
                     TransactionNumber = request.FlexSettlementDto.TransactionNumber,
 
-                    TransactionStatus = request.FlexSettlementDto.TransactionStatus,
-
-                    TransactionType = TypesOfTransaction.SelfService,
-
-                    StatusCode = request.FlexSettlementDto.StatusCode
+                    TransactionType = TypesOfTransaction.SelfService
 
                 };
 
@@ -128,27 +140,21 @@ namespace ErcasCollect.Commands.SettlementCommand
             {
                 foreach (var item in request.FlexSettlementDto.transactionItems)
                 {
+                    var categoryTwoId = _categoryTwoServiceRepository.FindFirst(x => x.ReferenceKey == item.CategoryTwoId).Id;
+
                     var transaction = new Transaction()
                     {
                         Amount = item.Amount,
 
-                        BillerId = addSettlement.BillerId,
-
-                        CategoryTwoServiceId = item.LevelThreeId,
+                        CategoryTwoServiceId = categoryTwoId,
 
                         PayerName = addSettlement.PaidBy,
 
                         PayerPhone = addSettlement.PayerPhone,
 
-                        TransactionNumber = addSettlement.TransactionNumber,
+                        ReferenceKey = addSettlement.TransactionNumber,
 
-                        PaymentChannel = addSettlement.PaymentChannel,
-
-                        TransactionType = addSettlement.TransactionType,
-
-                        StatusCode = addSettlement.StatusCode,
-
-                        BatchId = batch.Id
+                        BatchReferenceKey = batch.ReferenceKey
 
                     };
 
