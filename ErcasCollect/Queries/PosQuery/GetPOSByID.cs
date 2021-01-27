@@ -30,16 +30,18 @@ namespace ErcasCollect.Queries.BillerQuery
             public async Task<ReadPosDto> Handle(GetPOSByIDQuery query, CancellationToken cancellationToken)
             {
 
-                var result = await posRepository.FindSingleInclude(x => x.Id == query.id, x => x.Biller, x => x.StatusCode, x => x.OS);
-                if (result != null)
-                {
-                    var pos = mapper.Map<ReadPosDto>(result);
-                    return pos;
-                }
-                else
-                {
-                    return null;
-                }
+                //var result = await posRepository.FindSingleInclude(x => x.Id == query.id, x => x.Biller, x => x.OS);
+                //if (result != null)
+                //{
+                //    var pos = mapper.Map<ReadPosDto>(result);
+                //    return pos;
+                //}
+                //else
+                //{
+                //    return null;
+                //}
+
+                return null;
 
             }
 
