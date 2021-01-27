@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using ErcasCollect.Commands.Collection;
 using ErcasCollect.Commands.CollectionCommand;
 using ErcasCollect.Commands.PosCommand;
 using ErcasCollect.Domain.Models;
@@ -43,6 +44,37 @@ namespace ErcasCollect.Controllers
         /// <returns></returns>
         [HttpPost]
         public async Task<IActionResult> Activation([FromBody] ActivatePosCommand request)
+        {
+            try
+            {
+                var result = await mediator.Send(request);
+
+                var response = new JsonResult(result);
+
+                response.StatusCode = result.StatusCode;
+
+                return response;
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message.ToString(), "An Application exception occurred on the make transaction action of the NonIgr");
+
+                var response = new JsonResult(new { Message = ex.Message.ToString() });
+
+                response.StatusCode = _responseCode.InternalServerError;
+
+                return response;
+
+            }
+        }
+
+        /// <summary>
+        /// Pos user Login
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
+        [HttpPost]
+        public async Task<IActionResult> PosLogin([FromBody] PosLoginCommand request)
         {
             try
             {

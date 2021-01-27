@@ -88,8 +88,6 @@
     <Folder Include="Queries\LevelOneQuery\" />
     <Folder Include="Queries\LevelTwoQuery\" />
     <Folder Include="Queries\LevelThreeQuery\" />
-    <Folder Include="Commands\Collection\" />
-    <Folder Include="Commands\Dto\CollectionDto\" />
     <Folder Include="Queries\Transaction\" />
     <Folder Include="Queries\Dto\ReadTransactionDto\" />
     <Folder Include="Queries\ApplicationData\" />

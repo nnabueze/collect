@@ -12,10 +12,12 @@ namespace ErcasCollect.Domain.Models
 
         public Biller Biller { get; set; }
 
-        public int? LevelId { get; set; }
+        public string LevelOneDisplayName { get; set; }
 
-        public int? categoryId { get; set; }
+        public string LevelTwoDisplayName { get; set; }
 
-        public string DisplayName { get; set; }
+        public string CategoryOneDisplayName { get; set; }
+
+        public string CategoryTwoDisplayName { get; set; }
     }
 }

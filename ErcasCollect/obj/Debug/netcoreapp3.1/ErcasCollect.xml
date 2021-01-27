@@ -72,6 +72,13 @@
             <param name="request"></param>
             <returns></returns>
         </member>
+        <member name="M:ErcasCollect.Controllers.CollectionController.PosLogin(ErcasCollect.Commands.Collection.PosLoginCommand)">
+            <summary>
+            Pos user Login
+            </summary>
+            <param name="request"></param>
+            <returns></returns>
+        </member>
         <member name="M:ErcasCollect.Controllers.CollectionController.CreateCollection(ErcasCollect.Commands.CollectionCommand.CreateCollectionCommand)">
             <summary>
             Cash collection from pos 
