@@ -19,7 +19,7 @@ namespace ErcasCollect.AutoMapper.Profiles
             CreateMap<CreateLevelOneDto, LevelOne>().ReverseMap();
             CreateMap<ReadLevelOneDto, LevelOne>().ReverseMap();
 
-            CreateMap<LevelOne, PosLoginResponseDto.LevelOneParameter>();
+            CreateMap<LevelOne, PosLoginResponseDto.LevelOneParameter>();          
 
         }
     }

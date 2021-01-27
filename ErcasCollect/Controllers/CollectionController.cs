@@ -69,7 +69,7 @@ namespace ErcasCollect.Controllers
         }
 
         /// <summary>
-        /// Pos user Login
+        /// Pos user Login that return biller list of level one eg List of Mda's
         /// </summary>
         /// <param name="request"></param>
         /// <returns></returns>
@@ -106,6 +106,37 @@ namespace ErcasCollect.Controllers
         /// <returns></returns>
         [HttpPost]
         public async Task<IActionResult> PosLogout([FromBody] PosLogoutCommand request)
+        {
+            try
+            {
+                var result = await mediator.Send(request);
+
+                var response = new JsonResult(result);
+
+                response.StatusCode = result.StatusCode;
+
+                return response;
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message.ToString(), "An Application exception occurred on the make transaction action of the NonIgr");
+
+                var response = new JsonResult(new { Message = ex.Message.ToString() });
+
+                response.StatusCode = _responseCode.InternalServerError;
+
+                return response;
+
+            }
+        }
+
+        /// <summary>
+        /// Listing category one service via pos eg revenue heads
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
+        [HttpPost]
+        public async Task<IActionResult> PosCategoryOneService([FromBody] PosCategoryOneCommand request)
         {
             try
             {

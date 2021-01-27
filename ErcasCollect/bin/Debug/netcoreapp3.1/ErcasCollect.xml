@@ -74,7 +74,7 @@
         </member>
         <member name="M:ErcasCollect.Controllers.CollectionController.PosLogin(ErcasCollect.Commands.Collection.PosLoginCommand)">
             <summary>
-            Pos user Login
+            Pos user Login that return biller list of level one eg List of Mda's
             </summary>
             <param name="request"></param>
             <returns></returns>
@@ -82,6 +82,13 @@
         <member name="M:ErcasCollect.Controllers.CollectionController.PosLogout(ErcasCollect.Commands.Collection.PosLogoutCommand)">
             <summary>
             Pos user Log out
+            </summary>
+            <param name="request"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ErcasCollect.Controllers.CollectionController.PosCategoryOneService(ErcasCollect.Commands.Collection.PosCategoryOneCommand)">
+            <summary>
+            Listing category one service via pos eg revenue heads
             </summary>
             <param name="request"></param>
             <returns></returns>
