@@ -139,5 +139,29 @@
             <param name="id"></param>
             <returns></returns>
         </member>
+        <member name="M:ErcasCollect.Controllers.LevelOneController.CreateLevelOne(ErcasCollect.Commands.BranchCommand.CreateLevelOneCommand)">
+            <summary>
+            Add level one into the system that is create mda's
+            </summary>
+            <param name="request"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ErcasCollect.Controllers.LevelOneController.UpdateLevelOne(ErcasCollect.Commands.LevelOneCommand.UpdateLevelOneCommand)">
+            <summary>
+            Updating level one records
+            </summary>
+        </member>
+        <member name="M:ErcasCollect.Controllers.LevelOneController.GetLevelOne(System.String)">
+            <summary>
+            Listing all level one by biller
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ErcasCollect.Controllers.LevelTwoController.CreateLevelTwo(ErcasCollect.Commands.LevelTwoCommand.CreateLevelTwoCommand)">
+            <summary>
+            Add level two into the system that is create station's
+            </summary>
+        </member>
     </members>
 </doc>

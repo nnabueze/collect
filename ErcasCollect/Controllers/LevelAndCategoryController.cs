@@ -133,6 +133,39 @@ namespace ErcasCollect.Controllers
             }
         }
 
+
+        ///// <summary>
+        ///// Add level two into the system that is create station's
+        ///// </summary>
+        //[HttpPost]
+        //public async Task<ActionResult> CreateLevelTwo([FromBody] CreateLevelTwoCommand request)
+        //{
+        //    //try
+        //    //{
+        //    //    var result = await mediator.Send(request);
+
+        //    //    var response = new JsonResult(result);
+
+        //    //    response.StatusCode = result.StatusCode;
+
+        //    //    return response;
+        //    //}
+        //    //catch (Exception ex)
+        //    //{
+        //    //    _logger.LogError(ex.Message.ToString(), "An Application exception occurred on the make transaction action of the NonIgr");
+
+        //    //    var response = new JsonResult(new { Message = ex.Message.ToString() });
+
+        //    //    response.StatusCode = _responseCode.InternalServerError;
+
+        //    //    return response;
+
+        //    //}
+
+
+        //    return null;
+        //}
+
         //[HttpGet]
 
         //public async Task<ReadLevelOneDto> GetAllLevelOneByID(int id)

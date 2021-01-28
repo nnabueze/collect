@@ -27,14 +27,6 @@ namespace ErcasCollect.Domain.Models
 
         public LevelOne LevelOne{ get; set; }
 
-        [Column(TypeName = "decimal(18,6)")]
-
-        public decimal Longitude { get; set; }
-
-        [Column(TypeName = "decimal(18,6)")]
-
-        public decimal Latitude { get; set; }
-
         public ICollection<User> Users { get; set; }
 
         public ICollection<Pos> Poses { get; set; }
