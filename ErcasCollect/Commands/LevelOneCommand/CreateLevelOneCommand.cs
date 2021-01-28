@@ -6,29 +6,95 @@ using AutoMapper;
 using ErcasCollect.Commands.Dto.LevelOneDto;
 using ErcasCollect.Domain.Interfaces;
 using ErcasCollect.Domain.Models;
+using ErcasCollect.Helpers;
+using ErcasCollect.Responses;
 using MediatR;
+using Microsoft.Extensions.Options;
+
 namespace ErcasCollect.Commands.BranchCommand
 {
-    public class CreateLevelOneCommand : IRequest<int>
+    public class CreateLevelOneCommand : IRequest<SuccessfulResponse>
     {
         public CreateLevelOneDto createLevelOneDto { get; set; }
-        public class CreateLevelOneCommandHandler : IRequestHandler<CreateLevelOneCommand, int>
+        public class CreateLevelOneCommandHandler : IRequestHandler<CreateLevelOneCommand, SuccessfulResponse>
         {
-            private readonly ILevelOneRepository leveloneRepository;
-            private readonly IMapper mapper;
-            public CreateLevelOneCommandHandler(ILevelOneRepository leveloneRepository, IMapper mapper)
+            private readonly IGenericRepository<LevelOne> _levelOneRepository;
+
+            private readonly IGenericRepository<Biller> _billerRepository;
+
+            private readonly IMapper _mapper;
+
+            private readonly ResponseCode _responseCode;
+
+            public CreateLevelOneCommandHandler(IGenericRepository<LevelOne> levelOneRepository, IGenericRepository<Biller> billerRepository, 
+                
+                IMapper mapper, IOptions<ResponseCode> responseCode)
             {
-                this.leveloneRepository = leveloneRepository ?? throw new ArgumentNullException(nameof(leveloneRepository));
-                this.mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
+                _levelOneRepository = levelOneRepository;
+
+                _billerRepository = billerRepository;
+
+                _mapper = mapper;
+
+                _responseCode = responseCode.Value;
             }
 
-            public async Task<int> Handle(CreateLevelOneCommand request, CancellationToken cancellationToken)
+            public async Task<SuccessfulResponse> Handle(CreateLevelOneCommand request, CancellationToken cancellationToken)
             {
+                //auto mapper
 
-                LevelOne levelone = mapper.Map<LevelOne>(request.createLevelOneDto);
-                await leveloneRepository.Add(levelone);
-                await leveloneRepository.CommitAsync();
-                return levelone.Id;
+                var checkBiller = VerifyBiller(request);
+
+                if (checkBiller != null)
+                {
+                    return checkBiller;
+                }
+
+                
+                var savedLevelOne = await SaveLevelOne(request);
+
+                return ResponseGenerator.Response("Created", _responseCode.Created, true, new { LevelOneId = savedLevelOne });
+            }
+
+            private SuccessfulResponse VerifyBiller(CreateLevelOneCommand request)
+            {
+                Biller biller = GetBiller(request);
+
+                if (biller == null)
+                {
+                    return ResponseGenerator.Response("Invalid biller id", _responseCode.NotFound, false);
+                }
+
+                return null;
+            }
+
+            private Biller GetBiller(CreateLevelOneCommand request)
+            {
+                return _billerRepository.FindFirst(x => x.ReferenceKey == request.createLevelOneDto.BillerId);
+            }
+
+            private async Task<string> SaveLevelOne(CreateLevelOneCommand request)
+            {
+                var biller = GetBiller(request);
+
+                var levelOne = new LevelOne()
+                {
+                    BillerId = biller.Id,
+
+                    Description = request.createLevelOneDto.Description,
+
+                    FundsweepPercentage = Convert.ToDecimal(request.createLevelOneDto.FundsweepPercentage),
+
+                    ReferenceKey = Helpers.IdGenerator.IdGenerator.RandomInt(15),
+
+                    Name = request.createLevelOneDto.Name
+                };
+
+                var savedLevelOne = await _levelOneRepository.Add(levelOne);
+
+                await _levelOneRepository.CommitAsync();
+
+                return savedLevelOne.ReferenceKey;
             }
         }
     }

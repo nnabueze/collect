@@ -120,5 +120,12 @@
             </summary>
             <returns></returns>
         </member>
+        <member name="M:ErcasCollect.Controllers.LevelAndCategoryController.CreateLevelOne(ErcasCollect.Commands.BranchCommand.CreateLevelOneCommand)">
+            <summary>
+            Add level one into the system that is create mda's
+            </summary>
+            <param name="request"></param>
+            <returns></returns>
+        </member>
     </members>
 </doc>

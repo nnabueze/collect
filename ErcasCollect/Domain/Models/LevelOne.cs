@@ -24,13 +24,6 @@ namespace ErcasCollect.Domain.Models
 
         public Biller Biller { get; set; }
 
-        [Column(TypeName = "decimal(18,6)")]
-
-        public decimal Latitude { get; set; }
-
-        [Column(TypeName = "decimal(18,6)")]
-
-        public decimal Longitude { get; set; }
 
         [Column(TypeName = "decimal(18,6)")]
 
