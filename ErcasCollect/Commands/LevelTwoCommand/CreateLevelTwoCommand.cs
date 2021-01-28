@@ -56,7 +56,7 @@ namespace ErcasCollect.Commands.LevelTwoCommand
 
                 var savedLevelTwo = await SaveLevelTwo(request);
 
-                return ResponseGenerator.Response("Created", _responseCode.Created, true, new { LevelOneId = savedLevelTwo });
+                return ResponseGenerator.Response("Created", _responseCode.Created, true, new { LevelTwoId = savedLevelTwo });
             }
 
             private SuccessfulResponse VerifyBiller(CreateLevelTwoCommand request)

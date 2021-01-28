@@ -64,6 +64,35 @@ namespace ErcasCollect.Controllers
             }
         }
 
+        /// <summary>
+        /// Updating level Two records
+        /// </summary>
+        [HttpPut]
+        public async Task<ActionResult> UpdateLevelTwo([FromBody] UpdateLevelTwoCommand request)
+        {
+            try
+            {
+                var result = await mediator.Send(request);
+
+                var response = new JsonResult(result);
+
+                response.StatusCode = result.StatusCode;
+
+                return response;
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message.ToString(), "An Application exception occurred on the make transaction action of the NonIgr");
+
+                var response = new JsonResult(new { Message = ex.Message.ToString() });
+
+                response.StatusCode = _responseCode.InternalServerError;
+
+                return response;
+
+            }
+        }
+
 
         //// GET api/values/5
         //[HttpGet("{id}")]
