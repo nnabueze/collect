@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using ErcasCollect.Commands.BranchCommand;
+using ErcasCollect.Commands.LevelOneCommand;
 using ErcasCollect.Commands.LevelTwoCommand;
 using ErcasCollect.Domain.Models;
 using ErcasCollect.Exceptions;
@@ -66,6 +67,37 @@ namespace ErcasCollect.Controllers
 
             }
         }
+
+        /// <summary>
+        /// Updating level one records
+        /// </summary>
+        [HttpPut]
+        public async Task<ActionResult> UpdateLevelOne([FromBody] UpdateLevelOneCommand request)
+        {
+            try
+            {
+                var result = await mediator.Send(request);
+
+                var response = new JsonResult(result);
+
+                response.StatusCode = result.StatusCode;
+
+                return response;
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message.ToString(), "An Application exception occurred on the make transaction action of the NonIgr");
+
+                var response = new JsonResult(new { Message = ex.Message.ToString() });
+
+                response.StatusCode = _responseCode.InternalServerError;
+
+                return response;
+
+            }
+        }
+
+
         // GET: api/values
         [HttpGet]
 

@@ -70,7 +70,7 @@ namespace ErcasCollect.Commands.BranchCommand
 
             private Biller GetBiller(CreateLevelOneCommand request)
             {
-                return _billerRepository.FindFirst(x => x.ReferenceKey == request.createLevelOneDto.BillerId);
+                return _billerRepository.FindFirst(x => x.ReferenceKey == request.createLevelOneDto.BillerId && x.IsDeleted == false);
             }
 
             private async Task<string> SaveLevelOne(CreateLevelOneCommand request)

@@ -69,7 +69,6 @@
     <Folder Include="Commands\UserCommand\" />
     <Folder Include="Commands\StatusCommand\" />
     <Folder Include="Commands\PosCommand\" />
-    <Folder Include="Commands\LevelOneCommand\" />
     <Folder Include="Commands\LevelTwoCommand\" />
     <Folder Include="Commands\LevelThreeCommand\" />
     <Folder Include="Commands\TaxPayerCommand\" />

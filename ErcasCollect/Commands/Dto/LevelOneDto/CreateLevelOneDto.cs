@@ -16,4 +16,17 @@ namespace ErcasCollect.Commands.Dto.LevelOneDto
         public string FundsweepPercentage { get; set; }
     }
 
+    public class UpdateLevelOneDto
+    {
+        public string Name { get; set; }
+
+        public string Description { get; set; }
+
+        public string LevelOneId { get; set; }
+
+        public string BillerId { get; set; }
+
+        public string FundsweepPercentage { get; set; }
+    }
+
 }

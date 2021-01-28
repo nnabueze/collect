@@ -127,5 +127,10 @@
             <param name="request"></param>
             <returns></returns>
         </member>
+        <member name="M:ErcasCollect.Controllers.LevelAndCategoryController.UpdateLevelOne(ErcasCollect.Commands.LevelOneCommand.UpdateLevelOneCommand)">
+            <summary>
+            Updating level one records
+            </summary>
+        </member>
     </members>
 </doc>
