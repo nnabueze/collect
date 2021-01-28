@@ -37,6 +37,8 @@ namespace ErcasCollect.DataAccess
         public DbSet<Transaction> Transactions{ get; set; }
         public DbSet<TransactionType> TransactionTypes { get; set; }
         public DbSet<User> Users { get; set; }
+
+        public DbSet<PosLocation> PosLocation { get; set; }
         public DbSet<TaxPayer> TaxPayers { get; set; }
         public DbSet<NumberSeries> NumberSeries { get; set; }
         public DbSet<FundSweep> FundSweep{ get; set; }

@@ -84,6 +84,7 @@ namespace ErcasCollect.Commands.Collection
                 {
                     return posRequestValidation;
                 }
+
                 var checkLevels = CheckLevelOneAndTwo(request);
 
                 if (checkLevels != null)

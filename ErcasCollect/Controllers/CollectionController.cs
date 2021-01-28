@@ -252,7 +252,18 @@ namespace ErcasCollect.Controllers
                 return response;
 
             }
-        }        
+        }
+        
+
+        /// <summary>
+        /// Pos periodical latitude and logitude //Yet to implement
+        /// </summary>
+        /// <returns></returns>
+        [HttpPost]
+        public async Task<IActionResult> PosLocation()
+        {
+            return Ok();
+        }
 
     }
     

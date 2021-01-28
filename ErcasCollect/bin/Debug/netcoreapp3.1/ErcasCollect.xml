@@ -114,5 +114,11 @@
             <param name="request"></param>
             <returns></returns>
         </member>
+        <member name="M:ErcasCollect.Controllers.CollectionController.PosLocation">
+            <summary>
+            Pos periodical latitude and logitude //Yet to implement
+            </summary>
+            <returns></returns>
+        </member>
     </members>
 </doc>

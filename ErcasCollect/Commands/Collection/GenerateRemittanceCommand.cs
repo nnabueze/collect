@@ -13,107 +13,216 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
 namespace ErcasCollect.Commands.CollectionCommand
 {
-    public partial class GenerateRemittanceCommand : IRequest<RemiitanceResponse>
+    public partial class GenerateRemittanceCommand : IRequest<SuccessfulResponse>
     {
         public GenerateRemittanceDto transactionDto { get; set; }
 
-        //public class GenerateRemittanceCommandHandler : IRequestHandler<GenerateRemittanceCommand, RemiitanceResponse>
-        //{
-        //    private readonly ITransactionRepository _transactionRepository;
+        public class GenerateRemittanceCommandHandler : IRequestHandler<GenerateRemittanceCommand, SuccessfulResponse>
+        {
 
-        //    private readonly IBatchRepository _batchRepository;
+            private readonly IMapper _mapper;
 
-        //    private readonly IUserRepository _userRepository;
+            private readonly ResponseCode _responseCode;
 
-        //    private readonly IMapper _mapper;
+            private readonly IGenericRepository<CloseBatchTransaction> _closeBatchTransactionRepository;
 
-        //    private readonly ResponseCode _responseCode;
+            private readonly IGenericRepository<Biller> _billerRepository;
 
+            private readonly IGenericRepository<Pos> _posRespository;
 
-        //    public GenerateRemittanceCommandHandler(ITransactionRepository transactionRepository,
+            private readonly IGenericRepository<Transaction> _transactionRespository;
 
-        //        IBatchRepository batchRepository,
+            private readonly IGenericRepository<User> _userRepository;
 
-        //        IUserRepository userRepository, IMapper mapper, IOptions<ResponseCode> responseCode)
-        //    {
-        //        _transactionRepository = transactionRepository ?? throw new ArgumentNullException(nameof(transactionRepository));
+            private readonly IGenericRepository<Batch> _BatchRepository;
 
-        //        _userRepository = userRepository ?? throw new ArgumentNullException(nameof(userRepository));
+            private readonly IGenericRepository<LevelOne> _levelOneRepository;
 
-        //        _batchRepository = batchRepository ?? throw new ArgumentNullException(nameof(batchRepository));
+            private readonly IGenericRepository<LevelTwo> _levelTwoRepository;
 
+            public GenerateRemittanceCommandHandler(IMapper mapper, IOptions<ResponseCode> responseCode, IGenericRepository<CloseBatchTransaction> closeBatchTransaction,
 
-        //        _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
+                IGenericRepository<Biller> billerRepository, IGenericRepository<Pos> posRespository, IGenericRepository<Transaction> transactionRespository,
 
-        //        _responseCode = responseCode.Value;
-        //    }
-        //    public async Task<RemiitanceResponse> Handle(GenerateRemittanceCommand request, CancellationToken cancellationToken)
-        //    {
+                IGenericRepository<User> userRepository, IGenericRepository<Batch> batchRepository, IGenericRepository<LevelOne> levelOneRepository, 
+                
+                IGenericRepository<LevelTwo> levelTwoRepository)
+            {
+                _mapper = mapper;
 
-        //        var getuser = await _userRepository.GetSingle(x => x.Id == request.transactionDto.AgentId);
+                _responseCode = responseCode.Value;
 
+                _closeBatchTransactionRepository = closeBatchTransaction;
 
-        //        if (request.transactionDto.ForceGenerate == false)
-        //        {
+                _billerRepository = billerRepository;
 
-        //            return new RemiitanceResponse { Message = "Remittance Checking", StatusCode = _responseCode.RemittanceChecking, Amount = getuser.CollectionLimit - getuser.CashAtHand };
-        //        }
-        //        else
-        //        {
-        //            Batch batch = new Batch();
+                _posRespository = posRespository;
 
-        //            batch.UserId = request.transactionDto.AgentId;
+                _transactionRespository = transactionRespository;
 
-        //            batch.ItemCount = 1;
+                _userRepository = userRepository;
 
-        //            batch.TotalAmount = getuser.CashAtHand;
+                _BatchRepository = batchRepository;
 
-        //            await _batchRepository.Add(batch);
+                _levelOneRepository = levelOneRepository;
 
-        //            await _batchRepository.CommitAsync();
+                _levelTwoRepository = levelTwoRepository;
+            }
 
-        //            Transaction transaction = new Transaction();
+            public async Task<SuccessfulResponse> Handle(GenerateRemittanceCommand request, CancellationToken cancellationToken)
+            {
 
-        //            transaction.UserId = request.transactionDto.AgentId;
+                //verify pos
+                var posRequestValidation = PosRequestValidation(request);
 
-        //            transaction.Amount = getuser.CashAtHand;
+                if (posRequestValidation != null)
+                {
+                    return posRequestValidation;
+                }
 
-        //            transaction.BillerId = getuser.BillerId;
+                //check for pending remittance
+                var checkCloseBatch = CheckCloseBatchTransaction(request);
 
-        //            transaction.PayerName = request.transactionDto.Name;
+                if (checkCloseBatch != null)
+                {
+                    return checkCloseBatch;
+                }
 
-        //            transaction.PayerPhone = request.transactionDto.PhoneNumber;
+                var closeBatchId = SaveCloseBachTransaction(request);
 
-        //            transaction.BatchId = batch.Id;
+                //send sms
 
-        //            transaction.TransactionType = TypesOfTransaction.Remittance;
+                return ResponseGenerator.Response("Remittance Generated", _responseCode.RemmitanceGenerated, true, new { ClosedBatchTransactionId = closeBatchId});
+            }
 
-        //            transaction.RemittanceNumber = Helpers.IdGenerator.IdGenerator.GetUniqueKey(10, 2);
+            private async Task<string> SaveCloseBachTransaction(GenerateRemittanceCommand request)
+            {
+                var totalAmount = await TotalBatchTransaction(request);
 
-        //            transaction.PaymentChannel = PaymentChannels.POS;
+                var biller = GetBiller(request);
 
-        //            await _transactionRepository.Add(transaction);
+                var user = GetUserId(request.transactionDto.UserId);
 
-        //            await _transactionRepository.CommitAsync();
+                var referenceKey = Helpers.IdGenerator.IdGenerator.RandomInt(15);
 
-        //            getuser.StatusCode = _responseCode.RemmitanceGenerated;
+                var closeBatch = new CloseBatchTransaction()
+                {
+                    BillerId = biller.Id,
 
-        //            _userRepository.Update(getuser);
+                    LevelOneId = user.LevelOneId,
 
-        //            await _userRepository.CommitAsync();
+                    LevelTwoId = user.LevelTwoId,
 
+                    UserId = user.Id,
 
-        //            return new RemiitanceResponse { Message = "Remittance Generated", StatusCode = _responseCode.RemmitanceGenerated, Amount = getuser.CashAtHand, RemittanceID = transaction.RemittanceNumber };
-        //        }
+                    TotalAmount = totalAmount,
+                    
+                    PaymentChannel = PaymentChannels.POS,
+                    
+                    ReferenceKey = referenceKey
+                };
 
+                var saveCloseBatch = await _closeBatchTransactionRepository.Add(closeBatch);
 
+                await _closeBatchTransactionRepository.CommitAsync();
 
-        //    }
-        //}
+                UpdateBatchTransaction(request, saveCloseBatch.Id);
+
+                return referenceKey;
+            }
+
+            private void UpdateBatchTransaction(GenerateRemittanceCommand request, int closeBatchId)
+            {
+                var user = GetUserId(request.transactionDto.UserId);
+
+                var batchs = _BatchRepository.Find(x => x.UserId == user.Id && x.IsBatchClosed == false);
+
+                foreach (var item in batchs)
+                {
+                    item.IsBatchClosed = true;
+
+                    item.CloseBatchTransactionId = closeBatchId;
+
+                    item.ModifiedDate = DateTime.UtcNow;
+
+                    item.ModifiedBy = user.Id;
+
+                     _BatchRepository.Update(item);
+
+                    _billerRepository.CommitAsync();
+                }
+            }
+
+            private async Task<decimal> TotalBatchTransaction(GenerateRemittanceCommand request)
+            {
+                var user = GetUserId(request.transactionDto.UserId);
+
+                return _BatchRepository.Find(x => x.UserId == user.Id && x.IsBatchClosed == false).Sum(x => x.TotalAmount);
+            }
+
+            private SuccessfulResponse CheckCloseBatchTransaction(GenerateRemittanceCommand request)
+            {
+                var user = GetUserId(request.transactionDto.UserId);
+
+                var closeBatchTransaction = _closeBatchTransactionRepository.FindFirst(x => x.UserId == user.Id && x.IsPaid == false);
+
+                if (closeBatchTransaction != null)
+                {
+                    return ResponseGenerator.Response("Pending Close Batch Transaction", _responseCode.NotAccepted, false);
+                }
+
+                return null;
+            }
+
+            private SuccessfulResponse PosRequestValidation(GenerateRemittanceCommand request )
+            {
+                Biller biller = GetBiller(request);
+
+                if (biller == null || biller.IsDeleted)
+                {
+                    return ResponseGenerator.Response("Invalid biller Id", _responseCode.NotFound, false);
+                }
+
+                Pos pos = GetPos(request);
+
+                if (pos == null || !pos.IsActive)
+                {
+                    return ResponseGenerator.Response("Invalid pos Id or pos not active", _responseCode.NotFound, false);
+                }
+
+                var user = GetUserId(request.transactionDto.UserId);
+
+                if (user == null || !user.IsActive)
+                {
+                    return ResponseGenerator.Response("Invalid user Id or use not active", _responseCode.NotFound, false);
+                }
+
+                return null;
+
+            }
+
+            private Pos GetPos(GenerateRemittanceCommand request)
+            {
+                return _posRespository.FindFirst(x => x.ReferenceKey == request.transactionDto.PosId);
+            }
+
+            private Biller GetBiller(GenerateRemittanceCommand request)
+            {
+                return _billerRepository.FindFirst(x => x.ReferenceKey == request.transactionDto.BillerId);
+            }
+
+            private User GetUserId(string UserId)
+            {
+                var user = _userRepository.FindFirst(x => x.ReferenceKey == UserId);
+
+                return user;
+            }
+        }
     }
 }
