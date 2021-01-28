@@ -98,27 +98,38 @@ namespace ErcasCollect.Controllers
         }
 
 
-        // GET: api/values
+        /// <summary>
+        /// Listing all level one by biller
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [HttpGet]
-
-        public async Task<IEnumerable<ReadLevelOneDto>> GetAllLevelOneByBiller(int id)
+        public async Task<IActionResult> GetLevelOne(string billerId)
         {
             try
-            {
+            {                
                 GetAllLevelOneByBillerQuery request = new GetAllLevelOneByBillerQuery();
-                request.id = id;
-                return await mediator.Send(request);
-            }
-            catch (AppException ex)
-            {
-                _logger.LogError(ex, "An Application exception occurred on the Get Specific action of the Igr");
-                // return await BadRequest(new { message = ex.Message });
-                throw;
+
+                request.billerId = billerId;
+
+                var result = await mediator.Send(request);
+
+                var response = new JsonResult(result);
+
+                response.StatusCode = result.StatusCode;
+
+                return response;
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "An unknown error occurred on the Get Specific action of the Igr");
-                throw;
+                _logger.LogError(ex.Message.ToString(), "An Application exception occurred on the make transaction action of the NonIgr");
+
+                var response = new JsonResult(new { Message = ex.Message.ToString() });
+
+                response.StatusCode = _responseCode.InternalServerError;
+
+                return response;
+
             }
         }
 

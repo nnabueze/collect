@@ -132,5 +132,12 @@
             Updating level one records
             </summary>
         </member>
+        <member name="M:ErcasCollect.Controllers.LevelAndCategoryController.GetLevelOne(System.String)">
+            <summary>
+            Listing all level one by biller
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
     </members>
 </doc>

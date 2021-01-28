@@ -29,4 +29,11 @@ namespace ErcasCollect.Commands.Dto.LevelOneDto
         public string FundsweepPercentage { get; set; }
     }
 
+    public class LevelOneResponseDto
+    {
+        public string Name { get; set; }
+
+        public string Description { get; set; }
+    }
+
 }

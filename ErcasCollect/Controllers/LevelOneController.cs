@@ -27,73 +27,73 @@ namespace ErcasCollect.Controllers
             this.mediator = mediator ?? throw new ArgumentNullException(nameof(mediator));
             this._logger = logger ?? throw new ArgumentNullException(nameof(logger));
         }
-        [HttpPost]
-    
-        public async Task<ActionResult> CreateLevelOne([FromBody] CreateLevelOneCommand request)
-        {
-            try
-            {
-                var result = await mediator.Send(request);
-                return new JsonResult(result);
-            }
-            catch (AppException ex)
-            {
-                _logger.LogError(ex, "An Application exception occurred on the make transaction action of the NonIgr");
-                // return await BadRequest(new { message = ex.Message });
-                throw;
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError(ex, "An unknown error occurred on the make transaction action of the NonIgr");
-                throw;
-            }
-        }
+        //[HttpPost]
+
+        //public async Task<ActionResult> CreateLevelOne([FromBody] CreateLevelOneCommand request)
+        //{
+        //    try
+        //    {
+        //        var result = await mediator.Send(request);
+        //        return new JsonResult(result);
+        //    }
+        //    catch (AppException ex)
+        //    {
+        //        _logger.LogError(ex, "An Application exception occurred on the make transaction action of the NonIgr");
+        //        // return await BadRequest(new { message = ex.Message });
+        //        throw;
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        _logger.LogError(ex, "An unknown error occurred on the make transaction action of the NonIgr");
+        //        throw;
+        //    }
+        //}
         // GET: api/values
-        [HttpGet("{id}")]
+        //[HttpGet("{id}")]
 
-        public async Task<IEnumerable<ReadLevelOneDto>> GetAllLevelOneByBiller(int id)
-        {
-            try
-            {
-                GetAllLevelOneByBillerQuery request = new GetAllLevelOneByBillerQuery();
-                request.id = id;
-                return await mediator.Send(request);
-            }
-            catch (AppException ex)
-            {
-                _logger.LogError(ex, "An Application exception occurred on the Get Specific action of the Igr");
-                // return await BadRequest(new { message = ex.Message });
-                throw;
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError(ex, "An unknown error occurred on the Get Specific action of the Igr");
-                throw;
-            }
-        }
+        //public async Task<IEnumerable<ReadLevelOneDto>> GetAllLevelOneByBiller(int id)
+        //{
+        //    try
+        //    {
+        //        GetAllLevelOneByBillerQuery request = new GetAllLevelOneByBillerQuery();
+        //        request.id = id;
+        //        return await mediator.Send(request);
+        //    }
+        //    catch (AppException ex)
+        //    {
+        //        _logger.LogError(ex, "An Application exception occurred on the Get Specific action of the Igr");
+        //        // return await BadRequest(new { message = ex.Message });
+        //        throw;
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        _logger.LogError(ex, "An unknown error occurred on the Get Specific action of the Igr");
+        //        throw;
+        //    }
+        //}
 
-        [HttpGet("{id}")]
+        //[HttpGet("{id}")]
 
-        public async Task<ReadLevelOneDto> GetAllLevelOneByID(int id)
-        {
-            try
-            {
-                GetAllLevelOneByIDQuery request = new GetAllLevelOneByIDQuery();
-                request.id = id;
-                return await mediator.Send(request);
-            }
-            catch (AppException ex)
-            {
-                _logger.LogError(ex, "An Application exception occurred on the Get Specific action of the Igr");
-                // return await BadRequest(new { message = ex.Message });
-                throw;
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError(ex, "An unknown error occurred on the Get Specific action of the Igr");
-                throw;
-            }
-        }
+        //public async Task<ReadLevelOneDto> GetAllLevelOneByID(int id)
+        //{
+        //    try
+        //    {
+        //        GetAllLevelOneByIDQuery request = new GetAllLevelOneByIDQuery();
+        //        request.id = id;
+        //        return await mediator.Send(request);
+        //    }
+        //    catch (AppException ex)
+        //    {
+        //        _logger.LogError(ex, "An Application exception occurred on the Get Specific action of the Igr");
+        //        // return await BadRequest(new { message = ex.Message });
+        //        throw;
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        _logger.LogError(ex, "An unknown error occurred on the Get Specific action of the Igr");
+        //        throw;
+        //    }
+        //}
 
     }
 }

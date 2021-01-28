@@ -55,7 +55,7 @@ namespace ErcasCollect.Commands.LevelOneCommand
                 
                 await UpdateLevelOne(request);
 
-                return ResponseGenerator.Response("Update", _responseCode.OK, true);
+                return ResponseGenerator.Response("Updated successfully", _responseCode.OK, true);
             }
 
             private SuccessfulResponse VerifyBiller(UpdateLevelOneCommand request)
