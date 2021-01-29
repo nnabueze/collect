@@ -67,14 +67,14 @@
         </member>
         <member name="M:ErcasCollect.Controllers.CategoryOneController.CreateCategoryOne(ErcasCollect.Commands.CategoryOnCommand.CreateCategoryOneCommand)">
             <summary>
-            Ading category one  eg adding revenue heads on the system.
+            Adding category one  eg adding revenue heads on the system.
             </summary>
             <param name="request"></param>
             <returns></returns>
         </member>
-        <member name="M:ErcasCollect.Controllers.CategoryOneController.UpdateCategoryOne(ErcasCollect.Commands.LevelOneCommand.UpdateLevelOneCommand)">
+        <member name="M:ErcasCollect.Controllers.CategoryOneController.UpdateCategoryOne(ErcasCollect.Commands.CategoryOnCommand.UpdateCategoryOneCommand)">
             <summary>
-            Updating level one records
+            Updating category one records
             </summary>
         </member>
         <member name="M:ErcasCollect.Controllers.CategoryOneController.GetCategoryOne(System.String)">

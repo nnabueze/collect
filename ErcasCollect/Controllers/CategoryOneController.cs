@@ -35,7 +35,7 @@ namespace ErcasCollect.Controllers
         }
 
         /// <summary>
-        /// Ading category one  eg adding revenue heads on the system.
+        /// Adding category one  eg adding revenue heads on the system.
         /// </summary>
         /// <param name="request"></param>
         /// <returns></returns>
@@ -66,10 +66,10 @@ namespace ErcasCollect.Controllers
         }
 
         /// <summary>
-        /// Updating level one records
+        /// Updating category one records
         /// </summary>
         [HttpPut]
-        public async Task<ActionResult> UpdateCategoryOne([FromBody] UpdateLevelOneCommand request)
+        public async Task<ActionResult> UpdateCategoryOne([FromBody] UpdateCategoryOneCommand request)
         {
             try
             {

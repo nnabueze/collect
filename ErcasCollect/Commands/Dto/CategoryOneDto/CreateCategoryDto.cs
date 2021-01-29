@@ -13,4 +13,16 @@ namespace ErcasCollect.Commands.Dto.CategoryOneDto
 
         public string LevelOneId { get; set; }
     }
+
+    public class UpdateCategoryOneDto
+    {
+        public string Name { get; set; }
+
+        public string BillerId { get; set; }
+
+        public string LevelOneId { get; set; }
+
+        public string CategoryOneId { get; set; }
+    }
+
 }
