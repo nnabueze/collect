@@ -7,6 +7,7 @@ using ErcasCollect.Commands.CategoryTwoCommand;
 using ErcasCollect.Domain.Models;
 using ErcasCollect.Helpers;
 using ErcasCollect.Queries.CategoryOneQuery;
+using ErcasCollect.Queries.CategoryTwoQuery;
 using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -101,11 +102,11 @@ namespace ErcasCollect.Controllers
         /// <param name="id"></param>
         /// <returns></returns>
         [HttpGet]
-        public async Task<IActionResult> GetCategoryOne(string billerId, string levelOneId)
+        public async Task<IActionResult> GetCategoryOne(string billerId, string categoryOneId)
         {
             try
             {
-                var result = await _mediator.Send(new GetAllCategoryOneByLevelQuery(billerId, levelOneId));
+                var result = await _mediator.Send(new GetAllCategoryTwoByCategoryQuery(billerId, categoryOneId));
 
                 var response = new JsonResult(result);
 

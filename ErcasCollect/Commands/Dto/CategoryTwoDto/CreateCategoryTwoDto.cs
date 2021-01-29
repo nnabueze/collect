@@ -36,4 +36,20 @@ namespace ErcasCollect.Commands.Dto.CategoryTwoDto
 
         public string CategoryTwoId { get; set; }
     }
+
+    public class CategoryTwoResponseDto
+    {
+        public string DisplayName { get; set; }
+
+        public IEnumerable<CategoryTwoItem> CategoryTwoItems { get; set; }
+
+        public class CategoryTwoItem
+        {
+            public string ReferenceKey { get; set; }
+
+            public decimal Amount { get; set; }
+
+            public bool IsAmountFixed { get; set; }
+        }
+    }
 }

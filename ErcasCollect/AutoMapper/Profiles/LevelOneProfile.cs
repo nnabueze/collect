@@ -9,6 +9,7 @@ using ErcasCollect.Commands.Dto.LevelOneDto;
 using ErcasCollect.Domain.Models;
 using ErcasCollect.Queries.Dto;
 using static ErcasCollect.Commands.Dto.CategoryOneDto.CategoryOneResponseDto;
+using static ErcasCollect.Commands.Dto.CategoryTwoDto.CategoryTwoResponseDto;
 using static ErcasCollect.Commands.Dto.LevelOneDto.LevelOneResponseDto;
 
 namespace ErcasCollect.AutoMapper.Profiles
@@ -27,6 +28,8 @@ namespace ErcasCollect.AutoMapper.Profiles
             CreateMap<LevelOne, LevelOneItem>();
 
             CreateMap<CategoryOneService, CategoryOneItem>();
+
+            CreateMap<CategoryTwoService, CategoryTwoItem>();
 
         }
     }
