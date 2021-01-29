@@ -2,53 +2,49 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using ErcasCollect.Commands.BranchCommand;
+using ErcasCollect.Commands.CategoryOnCommand;
 using ErcasCollect.Commands.LevelOneCommand;
 using ErcasCollect.Domain.Models;
-using ErcasCollect.Exceptions;
 using ErcasCollect.Helpers;
 using ErcasCollect.Queries.BillerQuery;
-using ErcasCollect.Queries.Dto;
 using MediatR;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 
-// For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-
 namespace ErcasCollect.Controllers
 {
     [Route("api/[controller]/[action]")]
-    public class LevelOneController : Controller
+    [ApiController]
+    public class CategoryOneController : ControllerBase
     {
-
-        private readonly IMediator mediator;
+        private readonly IMediator _mediator;
 
         private readonly ILogger<LevelOne> _logger;
 
         private readonly ResponseCode _responseCode;
 
-        public LevelOneController(ILogger<LevelOne> logger, IMediator mediator, IOptions<ResponseCode> responseCode)
+        public CategoryOneController(IMediator mediator, ILogger<LevelOne> logger, IOptions<ResponseCode> responseCode)
         {
-            this.mediator = mediator ?? throw new ArgumentNullException(nameof(mediator));
+            _mediator = mediator;
 
-            this._logger = logger ?? throw new ArgumentNullException(nameof(logger));
+            _logger = logger;
 
             _responseCode = responseCode.Value;
         }
 
-
         /// <summary>
-        /// Add level one into the system that is create mda's
+        /// Ading category one  eg adding revenue heads on the system.
         /// </summary>
         /// <param name="request"></param>
         /// <returns></returns>
         [HttpPost]
-        public async Task<ActionResult> CreateLevelOne([FromBody] CreateLevelOneCommand request)
+        public async Task<IActionResult> CreateCategoryOne([FromBody] CreateCategoryOneCommand request)
         {
             try
             {
-                var result = await mediator.Send(request);
+                var result = await _mediator.Send(request);
 
                 var response = new JsonResult(result);
 
@@ -73,11 +69,11 @@ namespace ErcasCollect.Controllers
         /// Updating level one records
         /// </summary>
         [HttpPut]
-        public async Task<ActionResult> UpdateLevelOne([FromBody] UpdateLevelOneCommand request)
+        public async Task<ActionResult> UpdateCategoryOne([FromBody] UpdateLevelOneCommand request)
         {
             try
             {
-                var result = await mediator.Send(request);
+                var result = await _mediator.Send(request);
 
                 var response = new JsonResult(result);
 
@@ -105,11 +101,11 @@ namespace ErcasCollect.Controllers
         /// <param name="id"></param>
         /// <returns></returns>
         [HttpGet]
-        public async Task<IActionResult> GetLevelOne(string billerId)
+        public async Task<IActionResult> GetCategoryOne(string billerId)
         {
             try
             {
-                var result = await mediator.Send(new GetAllLevelOneByBillerQuery(billerId));
+                var result = await _mediator.Send(new GetAllLevelOneByBillerQuery(billerId));
 
                 var response = new JsonResult(result);
 
@@ -129,6 +125,5 @@ namespace ErcasCollect.Controllers
 
             }
         }
-
     }
 }
