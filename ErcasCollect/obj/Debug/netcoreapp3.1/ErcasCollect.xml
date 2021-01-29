@@ -91,7 +91,7 @@
             <param name="request"></param>
             <returns></returns>
         </member>
-        <member name="M:ErcasCollect.Controllers.CategoryTwoController.UpdateCategoryOne(ErcasCollect.Commands.CategoryOnCommand.UpdateCategoryOneCommand)">
+        <member name="M:ErcasCollect.Controllers.CategoryTwoController.UpdateCategoryTwo(ErcasCollect.Commands.CategoryTwoCommand.UpdateCategoryTwoCommand)">
             <summary>
             Updating category two records
             </summary>

@@ -69,7 +69,7 @@ namespace ErcasCollect.Controllers
         /// Updating category two records
         /// </summary>
         [HttpPut]
-        public async Task<ActionResult> UpdateCategoryOne([FromBody] UpdateCategoryOneCommand request)
+        public async Task<ActionResult> UpdateCategoryTwo([FromBody] UpdateCategoryTwoCommand request)
         {
             try
             {
