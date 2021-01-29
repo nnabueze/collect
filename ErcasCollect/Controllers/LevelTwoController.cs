@@ -93,6 +93,37 @@ namespace ErcasCollect.Controllers
             }
         }
 
+        /// <summary>
+        /// Listing all level two by level One id  eg mda to station
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        [HttpGet]
+        public async Task<IActionResult> GetLevelOne(string levelOneId, string billerId)
+        {
+            try
+            {
+                var result = await mediator.Send(new GetAllLevelTwoByBillerQuery(levelOneId, billerId));
+
+                var response = new JsonResult(result);
+
+                response.StatusCode = result.StatusCode;
+
+                return response;
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message.ToString(), "An Application exception occurred on the make transaction action of the NonIgr");
+
+                var response = new JsonResult(new { Message = ex.Message.ToString() });
+
+                response.StatusCode = _responseCode.InternalServerError;
+
+                return response;
+
+            }
+        }
+
 
         //// GET api/values/5
         //[HttpGet("{id}")]

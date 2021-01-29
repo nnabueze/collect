@@ -149,5 +149,12 @@
             Updating level Two records
             </summary>
         </member>
+        <member name="M:ErcasCollect.Controllers.LevelTwoController.GetLevelOne(System.String,System.String)">
+            <summary>
+            Listing all level two by level One id  eg mda to station
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
     </members>
 </doc>
