@@ -109,11 +109,7 @@ namespace ErcasCollect.Controllers
         {
             try
             {
-                GetAllLevelOneByBillerQuery request = new GetAllLevelOneByBillerQuery();
-
-                request.billerId = billerId;
-
-                var result = await mediator.Send(request);
+                var result = await mediator.Send(new GetAllLevelOneByBillerQuery(billerId));
 
                 var response = new JsonResult(result);
 
