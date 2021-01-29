@@ -7,6 +7,7 @@ using ErcasCollect.Commands.LevelOneCommand;
 using ErcasCollect.Domain.Models;
 using ErcasCollect.Helpers;
 using ErcasCollect.Queries.BillerQuery;
+using ErcasCollect.Queries.CategoryOneQuery;
 using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -96,16 +97,16 @@ namespace ErcasCollect.Controllers
 
 
         /// <summary>
-        /// Listing all level one by biller
+        /// Listing all category one by level one eg mda to renvenue head
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
         [HttpGet]
-        public async Task<IActionResult> GetCategoryOne(string billerId)
+        public async Task<IActionResult> GetCategoryOne(string billerId, string levelOneId)
         {
             try
             {
-                var result = await _mediator.Send(new GetAllLevelOneByBillerQuery(billerId));
+                var result = await _mediator.Send(new GetAllCategoryOneByLevelQuery(billerId, levelOneId));
 
                 var response = new JsonResult(result);
 

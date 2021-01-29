@@ -25,4 +25,18 @@ namespace ErcasCollect.Commands.Dto.CategoryOneDto
         public string CategoryOneId { get; set; }
     }
 
+    public class CategoryOneResponseDto
+    {
+        public string DisplayName { get; set; }
+
+        public IEnumerable<CategoryOneItem> CategoryOneItems { get; set; }
+
+        public class CategoryOneItem
+        {
+            public string ReferenceKey { get; set; }
+
+            public string Name { get; set; }
+        }
+    }
+
 }
