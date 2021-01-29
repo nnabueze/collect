@@ -65,11 +65,6 @@
             </summary>
             <returns></returns>
         </member>
-        <member name="T:ErcasCollect.Controllers.CategoryOneController">
-            <summary>
-            System services
-            </summary>
-        </member>
         <member name="M:ErcasCollect.Controllers.CategoryOneController.CreateCategoryOne(ErcasCollect.Commands.CategoryOnCommand.CreateCategoryOneCommand)">
             <summary>
             Adding category one  eg adding revenue heads on the system.
@@ -85,6 +80,25 @@
         <member name="M:ErcasCollect.Controllers.CategoryOneController.GetCategoryOne(System.String,System.String)">
             <summary>
             Listing all category one by level one eg mda to renvenue head
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ErcasCollect.Controllers.CategoryTwoController.CreateCategoryTwo(ErcasCollect.Commands.CategoryTwoCommand.CreateCategoryTwoCommand)">
+            <summary>
+            Adding category two  eg adding subheads heads on the system.
+            </summary>
+            <param name="request"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ErcasCollect.Controllers.CategoryTwoController.UpdateCategoryOne(ErcasCollect.Commands.CategoryOnCommand.UpdateCategoryOneCommand)">
+            <summary>
+            Updating category two records
+            </summary>
+        </member>
+        <member name="M:ErcasCollect.Controllers.CategoryTwoController.GetCategoryOne(System.String,System.String)">
+            <summary>
+            Listing all category two by category one eg revenue to subhead head
             </summary>
             <param name="id"></param>
             <returns></returns>
