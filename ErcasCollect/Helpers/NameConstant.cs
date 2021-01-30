@@ -17,8 +17,8 @@ namespace ErcasCollect.Helpers
 
         public string EbillsPay { get; set; }
 
-        public string ercasBillerId { get; set; }
+        public string ercasGatewayId { get; set; }
 
-        public string ercasReferenceId { get; set; }
+        public string ercasCollectId { get; set; }
     }
 }
