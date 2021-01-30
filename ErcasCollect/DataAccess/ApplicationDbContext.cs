@@ -1,4 +1,5 @@
 ﻿using ErcasCollect.Domain.Models;
+using ErcasCollect.Helpers.Seeder;
 using Microsoft.EntityFrameworkCore;
 
 using System;
@@ -50,6 +51,8 @@ namespace ErcasCollect.DataAccess
 
         public DbSet<CloseBatchTransaction> CloseBatchTransactions { get; set; }
 
+        public DbSet<EbillsProduct> EbillsProducts { get; set; }
+
 
 
 
@@ -69,6 +72,7 @@ namespace ErcasCollect.DataAccess
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
+            builder.Seed();
 
             builder.Entity<Biller>()
               .HasIndex(x => x.ReferenceKey)

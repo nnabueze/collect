@@ -76,7 +76,7 @@ namespace ErcasCollect.DataAccess.Repository
 
             for (int i = 0; i < request.Param.Count; i++)
             {
-                if (request.Param[i].Key.Equals(_nameConstant.ercasReferenceId))
+                if (request.Param[i].Key.Equals(_nameConstant.ercasCollectId))
                 {
                     referenceId = request.Param[i].Value;
                 }
