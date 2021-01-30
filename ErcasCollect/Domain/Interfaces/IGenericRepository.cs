@@ -17,6 +17,7 @@ namespace ErcasCollect.Domain.Interfaces
         Task<T> GetSingle(Expression<Func<T, bool>> predicate);
         Task<T> GetLastAsync(Expression<Func<T, bool>> predicate);
         public IEnumerable<T> Find(Expression<Func<T, bool>> predicate);
+        public IEnumerable<T> FindAllEnumerable();
         T GetSingle(Expression<Func<T, bool>> predicate, params Expression<Func<T, object>>[] includeProperties);
         Task<IEnumerable<T>> FindAllInclude(Expression<Func<T, bool>> predicate, params Expression<Func<T, object>>[] includeProperties);
         Task<T> FindSingleInclude(Expression<Func<T, bool>> predicate, params Expression<Func<T, object>>[] includeProperties);

@@ -65,6 +65,12 @@
             </summary>
             <returns></returns>
         </member>
+        <member name="M:ErcasCollect.Controllers.BillerController.GetErcasEbillsProduct">
+            <summary>
+            Get list of all ercas ebills products
+            </summary>
+            <returns></returns>
+        </member>
         <member name="M:ErcasCollect.Controllers.CategoryOneController.CreateCategoryOne(ErcasCollect.Commands.CategoryOnCommand.CreateCategoryOneCommand)">
             <summary>
             Adding category one  eg adding revenue heads on the system.

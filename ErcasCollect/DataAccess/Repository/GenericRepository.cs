@@ -27,6 +27,11 @@ namespace ErcasCollect.DataAccess.Repository
             return entity;
         }
 
+        public IEnumerable<T> FindAllEnumerable()
+        {
+            return _context.Set<T>();
+        }
+
         public IEnumerable<T> Find(Expression<Func<T, bool>> predicate)
         {
             return _context.Set<T>().Where(predicate);

@@ -15,6 +15,8 @@ namespace ErcasCollect.AutoMapper.Profiles
             CreateMap<AddBankDto, BankDetail>().ReverseMap();
             CreateMap<AddTinDto, BillerTINDetail>().ReverseMap();
 
+            CreateMap<EbillsProduct, EbillsProductResponseDto>().ReverseMap();
+
 
 
 

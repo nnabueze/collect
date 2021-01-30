@@ -190,53 +190,6 @@ namespace ErcasCollect.Controllers
 
 
 
-        //[HttpPost]
-
-        //public async Task<IActionResult> AddBank([FromBody] CreateBillerBankCommand request)
-        //{
-        //    try
-        //    {
-        //        var result = await mediator.Send(request);
-
-
-        //        return new JsonResult(result);
-        //    }
-        //    catch (AppException ex)
-        //    {
-        //        _logger.LogError(ex, "An Application exception occurred on the make transaction action of the NonIgr");
-        //        // return await BadRequest(new { message = ex.Message });
-        //        throw;
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        _logger.LogError(ex, "An unknown error occurred on the make transaction action of the NonIgr");
-        //        throw;
-        //    }
-        //}
-
-        // [HttpPost]
-
-        //public async Task<ActionResult> CreateTIN([FromBody] CreateTinCommand request)
-        //{
-        //    try
-        //    {
-        //        var result = await mediator.Send(request);
-        //        return new JsonResult(result);
-        //    }
-        //    catch (AppException ex)
-        //    {
-        //        _logger.LogError(ex, "An Application exception occurred on the make transaction action of the NonIgr");
-        //        // return await BadRequest(new { message = ex.Message });
-        //        throw;
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        _logger.LogError(ex, "An unknown error occurred on the make transaction action of the NonIgr");
-        //        throw;
-        //    }
-        //}
-
-
 
         /// <summary>
         /// Get a single biler bybille Id.
@@ -358,6 +311,35 @@ namespace ErcasCollect.Controllers
                 request.Id = id;
 
                 var result = await mediator.Send(request);
+
+                var response = new JsonResult(result);
+
+                response.StatusCode = result.StatusCode;
+
+                return response;
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message.ToString(), "An Application exception occurred on the Get Specific action of the Igr");
+
+                var response = new JsonResult(new { Message = ex.Message.ToString() });
+
+                response.StatusCode = _responseCode.InternalServerError;
+
+                return response;
+            }
+        }
+
+        /// <summary>
+        /// Get list of all ercas ebills products
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet]
+        public async Task<ActionResult> GetErcasEbillsProduct()
+        {
+            try
+            {
+                var result = await mediator.Send(new GetAllErcasEbillsProductQuery());
 
                 var response = new JsonResult(result);
 
