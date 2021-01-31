@@ -14,13 +14,13 @@ namespace ErcasCollect.Domain.Models.Nibss
 
         public string ResponseCode { get; set; }
 
-        public List<Params> Param { get; set; }
+        public List<ParamData> Params { get; set; }
 
         public Field Field { get; set; }
 
         public PaymentDetail PaymentDetail { get; set; }
 
-        public class Params
+        public class ParamData
         {
             public string Key { get; set; }
 

@@ -200,5 +200,12 @@
             <param name="id"></param>
             <returns></returns>
         </member>
+        <member name="M:ErcasCollect.Controllers.TransactionController.EbillsValidation(ErcasCollect.Domain.Models.Nibss.ValidationRequest)">
+            <summary>
+            All ebills valldations is received here!!
+            </summary>
+            <param name="request"></param>
+            <returns></returns>
+        </member>
     </members>
 </doc>

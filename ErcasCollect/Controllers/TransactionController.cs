@@ -105,7 +105,11 @@ namespace ErcasCollect.Controllers
             }
         }
 
-
+        /// <summary>
+        /// All ebills valldations is received here!!
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
         [HttpPost]
         public async Task<ValidationResponse> EbillsValidation([FromBody]ValidationRequest request)
         {

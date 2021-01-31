@@ -48,6 +48,8 @@ namespace ErcasCollect.DataAccess.Repository
             return null;
         }
 
+
+
         public ValidationResponse Remittance(ValidationRequest request)
         {
             return  _ebillsRemittance.Detail(request);            

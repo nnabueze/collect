@@ -86,7 +86,7 @@ namespace ErcasCollect.DataAccess.Repository
 
         }
 
-        private ValidationResponse RemittanceSuccessResponse(ValidationRequest request, List<Params> parameterLists)
+        private ValidationResponse RemittanceSuccessResponse(ValidationRequest request, List<ParamData> parameterLists)
         {
             var validationResponse = new ValidationResponse()
             {
@@ -96,7 +96,7 @@ namespace ErcasCollect.DataAccess.Repository
 
                 ResponseCode = _responseCode.NibssSuccessCode,
 
-                Param = parameterLists,
+                Params = parameterLists,
 
                 PaymentDetail = PaymentDetail(_amount)
             };
@@ -129,7 +129,7 @@ namespace ErcasCollect.DataAccess.Repository
             return paymentDetails;
         }
 
-        private List<Params> RemittanceField(CloseBatchTransaction closeBatchTransaction)
+        private List<ParamData> RemittanceField(CloseBatchTransaction closeBatchTransaction)
         {
             Dictionary<string, string> remittanceField = new Dictionary<string, string>();
 
@@ -162,13 +162,13 @@ namespace ErcasCollect.DataAccess.Repository
             return ParameterList(remittanceField);
         }
 
-        private List<Params> ParameterList(Dictionary<string, string> keyValuePairs)
+        private List<ParamData> ParameterList(Dictionary<string, string> keyValuePairs)
         {
-            List<Params> remittanceList = new List<Params>();
+            List<ParamData> remittanceList = new List<ParamData>();
 
             foreach (var item in keyValuePairs)
             {
-                var parameter = new Params()
+                var parameter = new ParamData()
                 {
                     Key = item.Key,
 
