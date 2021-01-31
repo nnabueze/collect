@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ErcasCollect.Commands.Dto.BillerDto;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -43,15 +44,16 @@ namespace ErcasCollect.Domain.Models.Nibss
 
         public string Amount { get; set; }
 
-        public List<Paramxxx> Param { get; set; }
+        public List<Detail> Param { get; set; }
 
 
     }
 
-    public class Paramxxx
+    public class Detail
     {
         public string Key { get; set; }
 
         public string Value { get; set; }
     }
+
 }

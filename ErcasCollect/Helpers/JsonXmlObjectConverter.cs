@@ -75,6 +75,7 @@ namespace ErcasCollect.Helpers
             doc.LoadXml(xmlString);
 
             if (doc.FirstChild.NodeType == XmlNodeType.XmlDeclaration)
+
                 doc.RemoveChild(doc.FirstChild);
 
 

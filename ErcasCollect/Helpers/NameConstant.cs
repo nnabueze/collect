@@ -20,5 +20,11 @@ namespace ErcasCollect.Helpers
         public string ercasGatewayId { get; set; }
 
         public string ercasCollectId { get; set; }
+
+        public string Amount { get; set; }
+
+        public string PhoneNumber { get; set; }
+
+        public string LevelKeyIdentify { get; set; }
     }
 }

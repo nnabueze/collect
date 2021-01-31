@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using ErcasCollect.DataAccess.Repository;
 using ErcasCollect.Domain.Interfaces;
 using ErcasCollect.Domain.Models;
 using ErcasCollect.Domain.Models.Nibss;
@@ -103,46 +104,21 @@ namespace ErcasCollect.Controllers
                 throw;
             }
         }
-        [Consumes("application/xml")]
-        [Produces("application/xml")]
+
+
         [HttpPost]
-        public async Task<ValidationResponse> EbillsValidation()
+        public async Task<ValidationResponse> EbillsValidation([FromBody]ValidationRequest request)
         {
-            //try
-            //{
-            //    GetTransactionDetailByIDQuery request = new GetTransactionDetailByIDQuery();
-            //    request.transactionNumber = validation.RemitttanceID;
-            //    return await mediator.Send(request);
-            //}
-            //catch (AppException ex)
-            //{
-            //    _logger.LogError(ex, "An Application exception occurred on the Get Specific action of the Igr");
-            //    // return await BadRequest(new { message = ex.Message });
-            //    throw;
-            //}
-            //catch (Exception ex)
-            //{
-            //    _logger.LogError(ex, "An unknown error occurred on the Get Specific action of the Igr");
-            //    throw;
-            //}
             try
             {
-                var requestText = string.Empty;
 
-                using (StreamReader reader = new StreamReader(Request.Body, Encoding.UTF8))
-                {
-                    requestText = await reader.ReadToEndAsync();
-                }
-
-                var response = await _nibssEbills.Validation(requestText);
+                return await _nibssEbills.Validation(request);
             }
             catch (Exception)
             {
 
-                throw;
+                return EbillsRemittance.RemittanceFailedResponse(request);
             }
-
-            return null;
         }
 
         [HttpGet]

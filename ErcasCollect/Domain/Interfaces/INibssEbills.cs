@@ -8,7 +8,7 @@ namespace ErcasCollect.Domain.Interfaces
 {
     public interface INibssEbills
     {
-        public Task<ValidationResponse> Validation(string request);
+        public Task<ValidationResponse> Validation(ValidationRequest request);
 
         public Task<NotificationResponse> Notification(string request);
     }

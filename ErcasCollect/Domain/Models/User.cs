@@ -14,6 +14,8 @@ namespace ErcasCollect.Domain.Models
 
         public Role Role { get; set; }
 
+        public string PhoneNumber { get; set; }
+
         public int BillerId { get; set; }
 
         public Biller Biller { get; set; }

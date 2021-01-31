@@ -50,5 +50,9 @@ namespace ErcasCollect.Helpers
         public int NotAccepted { get; set; }
 
         public int InternalServerError { get; set; }
+
+        public string NibssSuccessCode { get; set; }
+
+        public string NibssFailedCode { get; set; }
     }
 }
