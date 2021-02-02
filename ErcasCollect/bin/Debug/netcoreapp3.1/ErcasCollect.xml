@@ -214,6 +214,13 @@
             <param name="request"></param>
             <returns></returns>
         </member>
+        <member name="M:ErcasCollect.Controllers.TransactionController.VerifyCloseBatchTransaction(System.String)">
+            <summary>
+            Verify close transaction detail  by passing close Transaction Id. eg Verify remittance Id
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
         <member name="M:ErcasCollect.Controllers.TransactionController.EbillsValidation(ErcasCollect.Domain.Models.Nibss.ValidationRequest)">
             <summary>
             All ebills valldations is received here!!

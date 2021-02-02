@@ -9,14 +9,14 @@ using ErcasCollect.Domain.Interfaces;
 using ErcasCollect.Domain.Models;
 using ErcasCollect.Domain.Models.Nibss;
 using ErcasCollect.Exceptions;
+using ErcasCollect.Helpers;
 using ErcasCollect.Queries.BillerQuery;
 using ErcasCollect.Queries.Dto.ReadTransactionDto;
 using ErcasCollect.Responses;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-
-
+using Microsoft.Extensions.Options;
 
 namespace ErcasCollect.Controllers
 {
@@ -31,7 +31,11 @@ namespace ErcasCollect.Controllers
 
         private readonly IEbillsRemittance _ebillsRemittance;
 
-        public TransactionController(ILogger<Transaction> logger, IMediator mediator, INibssEbills nibssEbills, IEbillsRemittance ebillsRemittance)
+        private readonly ResponseCode _responseCode;
+
+        public TransactionController(ILogger<Transaction> logger, IMediator mediator, INibssEbills nibssEbills, IEbillsRemittance ebillsRemittance, 
+            
+            IOptions<ResponseCode> responseCode)
         {
             this.mediator = mediator ?? throw new ArgumentNullException(nameof(mediator));
 
@@ -40,72 +44,37 @@ namespace ErcasCollect.Controllers
             _nibssEbills = nibssEbills;
 
             _ebillsRemittance = ebillsRemittance;
+
+            _responseCode = responseCode.Value;
         }
 
-        [HttpGet("{id}")]
-        public async Task<IEnumerable<ReadTransactionDto>> GetTransactionBiller(int id)
+        /// <summary>
+        /// Verify close transaction detail  by passing close Transaction Id. eg Verify remittance Id
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        [HttpGet]
+        public async Task<ActionResult> VerifyCloseBatchTransaction(string closeBatchTransactionId)
         {
             try
             {
-                GetTransactionByBillerIDQuery request = new GetTransactionByBillerIDQuery();
-                //request.id = id;
-                return await mediator.Send(request);
-            }
-            catch (AppException ex)
-            {
-                _logger.LogError(ex, "An Application exception occurred on the Get Specific action of the Igr");
-                // return await BadRequest(new { message = ex.Message });
-                throw;
+                var result = await mediator.Send(new GetTransactionByBatchIDQuery(closeBatchTransactionId));
+
+                var response = new JsonResult(result);
+
+                response.StatusCode = result.StatusCode;
+
+                return response;
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "An unknown error occurred on the Get Specific action of the Igr");
-                throw;
-            }
-        }
-
-
-        [HttpGet("{id}")]
-        public async Task<IEnumerable<ReadTransactionDto>> GetTransactionBatch(int id)
-        {
-            try
-            {
-                GetTransactionByBatchIDQuery request = new GetTransactionByBatchIDQuery();
-                //request.id = id;
-                return await mediator.Send(request);
-            }
-            catch (AppException ex)
-            {
                 _logger.LogError(ex, "An Application exception occurred on the Get Specific action of the Igr");
-                // return await BadRequest(new { message = ex.Message });
-                throw;
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError(ex, "An unknown error occurred on the Get Specific action of the Igr");
-                throw;
-            }
-        }
 
-        [HttpGet("{id}")]
-        public async Task<ReadTransactionDto> GetTransactionByID(string transactionNumber)
-        {
-            try
-            {
-                GetTransactionDetailByIDQuery request = new GetTransactionDetailByIDQuery();
-                //request.transactionNumber = transactionNumber;
-                return await mediator.Send(request);
-            }
-            catch (AppException ex)
-            {
-                _logger.LogError(ex, "An Application exception occurred on the Get Specific action of the Igr");
-                // return await BadRequest(new { message = ex.Message });
-                throw;
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError(ex, "An unknown error occurred on the Get Specific action of the Igr");
-                throw;
+                var response = new JsonResult(new { Message = ex.Message.ToString()});
+
+                response.StatusCode = _responseCode.InternalServerError;
+
+                return response;
             }
         }
 
@@ -126,28 +95,6 @@ namespace ErcasCollect.Controllers
             {
 
                 return _ebillsRemittance.RemittanceFailedResponse(request, ex.Message.ToString());
-            }
-        }
-
-        [HttpGet]
-        public async Task<IEnumerable<ReadTransactionDto>> GetAllTransaction()
-        {
-            try
-            {
-                GetTransactionForAdminQuery request = new GetTransactionForAdminQuery();
-            
-                return await mediator.Send(request);
-            }
-            catch (AppException ex)
-            {
-                _logger.LogError(ex, "An Application exception occurred on the Get Specific action of the Igr");
-                // return await BadRequest(new { message = ex.Message });
-                throw;
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError(ex, "An unknown error occurred on the Get Specific action of the Igr");
-                throw;
             }
         }
 

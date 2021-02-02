@@ -46,4 +46,39 @@ namespace ErcasCollect.Commands.Dto.LevelOneDto
         }
     }
 
+    public class CloseBatchTransactionDto
+    {
+        public string BillerName { get; set; }
+
+        public string TotalAmount { get; set; }
+
+        public string IsPaid { get; set; }
+
+        public string UserName { get; set; }
+
+        public string GeneratedDate { get; set; }
+
+        public string PaidDate { get; set; }
+
+        public LevelOneDetail LevelOne { get; set; }
+
+        public LevelTwoDetail LevelTwo { get; set; }
+
+
+        public class LevelOneDetail
+        {
+            public string DisplayName { get; set; }
+
+            public string Name { get; set; }
+        }
+
+        public class LevelTwoDetail
+        {
+            public string DisplayName { get; set; }
+
+            public string Name { get; set; }
+        }
+    }
+
+
 }
