@@ -26,7 +26,9 @@ namespace ErcasCollect.Controllers
 
         private readonly INibssEbills _nibssEbills;
 
-        public SettlementController(ILogger<Settlement> logger, IMediator mediator, IOptions<ResponseCode> responseCode, INibssEbills nibssEbills)
+        private readonly IEbillsNotification _ebillsNotification;
+
+        public SettlementController(ILogger<Settlement> logger, IMediator mediator, IOptions<ResponseCode> responseCode, INibssEbills nibssEbills, IEbillsNotification ebillsNotification)
         {
             _mediator = mediator ?? throw new ArgumentNullException(nameof(mediator));
 
@@ -35,6 +37,8 @@ namespace ErcasCollect.Controllers
             _responseCode = responseCode.Value;
 
             _nibssEbills = nibssEbills;
+
+            _ebillsNotification = ebillsNotification;
         }
         // GET: api/values
 
@@ -53,8 +57,8 @@ namespace ErcasCollect.Controllers
             catch (AppException ex)
             {
                 _logger.LogError(ex, "An Application exception occurred on the make transaction action of the NonIgr");
-               
-                throw;
+
+                return _ebillsNotification.NotificationFailedResponse(request, ex.Message.ToString());
             }
         }
 

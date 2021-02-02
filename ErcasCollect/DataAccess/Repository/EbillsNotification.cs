@@ -89,6 +89,20 @@ namespace ErcasCollect.DataAccess.Repository
             return notificationResponse;
         }
 
+        public NotificationResponse NotificationFailedResponse(NotificationRequest request, string message)
+        {
+            var notificationResponse = new NotificationResponse()
+            {
+                BillerID = request.BillerID,
+
+                ResponseCode = "401",
+
+                ResponseMessage = message
+            };
+
+            return notificationResponse;
+        }
+
         private async Task SaveClosedBatchTransaction(NotificationRequest request, string transactionId)
         {
             var closeBatchTransaction = _closeBatchTransactionRepository.FindFirst(x => x.ReferenceKey == transactionId && x.BillerId == _billerDetail.Id);
@@ -99,31 +113,37 @@ namespace ErcasCollect.DataAccess.Repository
 
                 closeBatchTransaction.ModifiedDate = DateTime.UtcNow;
 
+                closeBatchTransaction.PaymentChannel = PaymentChannels.Nibss;
+
                 _closeBatchTransactionRepository.Update(closeBatchTransaction);
 
                 await _closeBatchTransactionRepository.CommitAsync();
             }
-
-            var savedBatchTransaction = new CloseBatchTransaction()
+            else
             {
-                BillerId = _billerDetail.Id,
+                var savedBatchTransaction = new CloseBatchTransaction()
+                {
+                    BillerId = _billerDetail.Id,
 
-                IsPaid = true,
+                    IsPaid = true,
 
-                LevelOneId = GetLevelOneId(request),
+                    LevelOneId = GetLevelOneId(request),
 
-                LevelTwoId = GetLevelTwoId(request),
+                    LevelTwoId = GetLevelTwoId(request),
 
-                PaymentChannel = PaymentChannels.Nibss,
+                    PaymentChannel = PaymentChannels.Nibss,
 
-                TotalAmount = Convert.ToDecimal(GetAmount(request)),
+                    TotalAmount = Convert.ToDecimal(GetAmount(request)),
 
-                ReferenceKey = request.SessionID
-            };
+                    ReferenceKey = request.SessionID
+                };
 
-            await _closeBatchTransactionRepository.Add(savedBatchTransaction);
+                await _closeBatchTransactionRepository.Add(savedBatchTransaction);
 
-            await _closeBatchTransactionRepository.CommitAsync();
+                await _closeBatchTransactionRepository.CommitAsync();
+            }
+
+
         }
 
         private int GetLevelOneId(NotificationRequest request)
@@ -194,6 +214,12 @@ namespace ErcasCollect.DataAccess.Repository
                 Amount = Convert.ToDecimal(GetAmount(request)),
 
                 BillerId = _billerDetail.Id,
+
+                SourceBank = request.SourceBankCode,
+
+                DestinationBank = request.DestinationBankCode,
+
+                ApprovedDate = JsonXmlObjectConverter.ConvertTimestampToDateTime(request.TransactionApprovalDate),
 
                 IsSuccess = true,
 

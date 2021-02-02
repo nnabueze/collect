@@ -7,7 +7,11 @@ namespace ErcasCollect.Domain.Models
 {
     public class Settlement:TransactionBaseEntity
     {
-        public string Bank { get; set; }
+        public string SourceBank { get; set; }
+
+        public string DestinationBank { get; set; }
+
+        public DateTime? ApprovedDate { get; set; }
 
         public int? BillerId { get; set; }
 

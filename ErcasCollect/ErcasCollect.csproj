@@ -26,6 +26,8 @@
     <Compile Remove="Migrations\20210125213838_BillerLevelRelationship.Designer.cs" />
     <Compile Remove="Migrations\20210125220311_BillerLevelRelationship.cs" />
     <Compile Remove="Migrations\20210125220311_BillerLevelRelationship.Designer.cs" />
+    <Compile Remove="Migrations\20210202015655_generalTest.cs" />
+    <Compile Remove="Migrations\20210202015655_generalTest.Designer.cs" />
   </ItemGroup>
 
 

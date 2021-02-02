@@ -8,6 +8,8 @@ namespace ErcasCollect.Domain.Interfaces
 {
     public interface IEbillsNotification
     {
-        public Task<NotificationResponse> Push(NotificationRequest request); 
+        public Task<NotificationResponse> Push(NotificationRequest request);
+
+        public NotificationResponse NotificationFailedResponse(NotificationRequest request, string message);
     }
 }
