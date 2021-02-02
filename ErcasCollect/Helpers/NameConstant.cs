@@ -32,5 +32,9 @@ namespace ErcasCollect.Helpers
         public string Invoice { get; set; }
 
         public string DuplicateTransaction { get; set; }
+
+        public string TransactionSuccessful { get; set; }
+
+        public string UsedTransactionNumber { get; set; }
     }
 }

@@ -85,7 +85,7 @@ namespace ErcasCollect.DataAccess.Repository
 
                 ResponseCode = _responseCode.NibssSuccessCode,
 
-                ResponseMessage = "Transaction Successful",
+                ResponseMessage = _nameConstant.TransactionSuccessful,
 
                 SessionID = request.SessionID                
             };
@@ -146,8 +146,6 @@ namespace ErcasCollect.DataAccess.Repository
 
                 await _closeBatchTransactionRepository.CommitAsync();
             }
-
-
         }
 
         private int GetLevelOneId(NotificationRequest request)
@@ -243,6 +241,8 @@ namespace ErcasCollect.DataAccess.Repository
 
                 PaymentChannel = PaymentChannels.Nibss,
 
+                CreatedDate = DateTime.UtcNow,
+
                 TransactionType = GetTransactionType(request)
 
             };
@@ -252,22 +252,22 @@ namespace ErcasCollect.DataAccess.Repository
         {
            TypesOfTransaction transactionType = 0;
 
-            if (request.ProductName.Equals("Remittance"))
+            if (request.ProductName.Equals(_nameConstant.Remittance))
             
                 transactionType = TypesOfTransaction.Remittance;
             
 
-            if (request.ProductName.Equals("Invoice"))
+            if (request.ProductName.Equals(_nameConstant.Invoice))
             
                 transactionType = TypesOfTransaction.Remittance;
             
 
-            if (request.ProductName.Equals("Non-Tax"))
+            if (request.ProductName.Equals(_nameConstant.NonTax))
             
                 transactionType = TypesOfTransaction.Remittance;
             
 
-            if (request.ProductName.Equals("Tax"))
+            if (request.ProductName.Equals(_nameConstant.Tax))
             
                 transactionType = TypesOfTransaction.Remittance;
             
