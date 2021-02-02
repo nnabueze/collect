@@ -76,13 +76,17 @@ namespace ErcasCollect.DataAccess.Repository
         {
             var remittanceDetails = GetRemittanceDetails(request);
 
+            if(remittanceDetails == null)
+
+                return RemittanceFailedResponse(request, _nameConstant.UsedTransactionNumber);
+
             var remittanceField = RemittanceField(remittanceDetails);
 
             if(_isRemittance)
 
                 return RemittanceSuccessResponse(request, remittanceField);
 
-            return RemittanceFailedResponse(request);
+            return RemittanceFailedResponse(request, _nameConstant.UsedTransactionNumber);
 
         }
 
@@ -105,7 +109,7 @@ namespace ErcasCollect.DataAccess.Repository
         }
 
 
-        public static ValidationResponse RemittanceFailedResponse(ValidationRequest request)
+        public ValidationResponse RemittanceFailedResponse(ValidationRequest request, string message)
         {
             var validationResponse = new ValidationResponse()
             {
@@ -113,7 +117,9 @@ namespace ErcasCollect.DataAccess.Repository
 
                 NextStep = "0",
 
-                ResponseCode = "401"
+                ResponseCode = _responseCode.NibssFailedCode,
+
+                ResponseMessage = message
             };
 
             return validationResponse;

@@ -10,5 +10,7 @@ namespace ErcasCollect.Domain.Interfaces
     public interface IEbillsRemittance
     {
         public ValidationResponse Detail(ValidationRequest request);
+
+        public ValidationResponse RemittanceFailedResponse(ValidationRequest request, string message);
     }
 }

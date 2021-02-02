@@ -14,6 +14,8 @@ namespace ErcasCollect.Domain.Models.Nibss
 
         public string ResponseCode { get; set; }
 
+        public string ResponseMessage { get; set; }
+
         public List<ParamData> Params { get; set; }
 
         public Field Field { get; set; }

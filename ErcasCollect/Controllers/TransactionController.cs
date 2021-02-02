@@ -29,13 +29,17 @@ namespace ErcasCollect.Controllers
 
         private readonly INibssEbills _nibssEbills;
 
-        public TransactionController(ILogger<Transaction> logger, IMediator mediator, INibssEbills nibssEbills)
+        private readonly IEbillsRemittance _ebillsRemittance;
+
+        public TransactionController(ILogger<Transaction> logger, IMediator mediator, INibssEbills nibssEbills, IEbillsRemittance ebillsRemittance)
         {
             this.mediator = mediator ?? throw new ArgumentNullException(nameof(mediator));
 
             this._logger = logger ?? throw new ArgumentNullException(nameof(logger));
 
             _nibssEbills = nibssEbills;
+
+            _ebillsRemittance = ebillsRemittance;
         }
 
         [HttpGet("{id}")]
@@ -118,10 +122,10 @@ namespace ErcasCollect.Controllers
 
                 return await _nibssEbills.Validation(request);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
 
-                return EbillsRemittance.RemittanceFailedResponse(request);
+                return _ebillsRemittance.RemittanceFailedResponse(request, ex.Message.ToString());
             }
         }
 
