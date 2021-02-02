@@ -10,7 +10,7 @@ namespace ErcasCollect.Domain.Interfaces
     {
         public Task<ValidationResponse> Validation(ValidationRequest request);
 
-        public Task<NotificationResponse> Notification(string request);
+        public Task<NotificationResponse> Notification(NotificationRequest request);
 
     }
 }

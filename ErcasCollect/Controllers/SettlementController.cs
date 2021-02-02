@@ -3,7 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using ErcasCollect.Commands.SettlementCommand;
+using ErcasCollect.Domain.Interfaces;
 using ErcasCollect.Domain.Models;
+using ErcasCollect.Domain.Models.Nibss;
 using ErcasCollect.Exceptions;
 using ErcasCollect.Helpers;
 using MediatR;
@@ -22,26 +24,31 @@ namespace ErcasCollect.Controllers
 
         private readonly ResponseCode _responseCode;
 
-        public SettlementController(ILogger<Settlement> logger, IMediator mediator, IOptions<ResponseCode> responseCode)
+        private readonly INibssEbills _nibssEbills;
+
+        public SettlementController(ILogger<Settlement> logger, IMediator mediator, IOptions<ResponseCode> responseCode, INibssEbills nibssEbills)
         {
             _mediator = mediator ?? throw new ArgumentNullException(nameof(mediator));
 
             _logger = logger ?? throw new ArgumentNullException(nameof(logger));
 
             _responseCode = responseCode.Value;
+
+            _nibssEbills = nibssEbills;
         }
         // GET: api/values
 
-
+        /// <summary>
+        /// Ebills notification endpoint for all biller
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
         [HttpPost]
-
-        public async Task<ActionResult> CreateSettlement([FromBody] CreateSettlementCommand request)
+        public async Task<NotificationResponse> EbillsNotification([FromBody] NotificationRequest request)
         {
             try
             {
-                var result = await _mediator.Send(request);
-
-                return new JsonResult(result);
+                return await _nibssEbills.Notification(request);
             }
             catch (AppException ex)
             {
@@ -51,6 +58,11 @@ namespace ErcasCollect.Controllers
             }
         }
 
+        /// <summary>
+        /// Self service notification endpoint
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
         [HttpPost]
         public async Task<ActionResult> FlexSettlement([FromBody] FlexSettlementCommand request)
         {

@@ -200,6 +200,20 @@
             <param name="id"></param>
             <returns></returns>
         </member>
+        <member name="M:ErcasCollect.Controllers.SettlementController.EbillsNotification(ErcasCollect.Domain.Models.Nibss.NotificationRequest)">
+            <summary>
+            Ebills notification endpoint for all biller
+            </summary>
+            <param name="request"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ErcasCollect.Controllers.SettlementController.FlexSettlement(ErcasCollect.Commands.SettlementCommand.FlexSettlementCommand)">
+            <summary>
+            Self service notification endpoint
+            </summary>
+            <param name="request"></param>
+            <returns></returns>
+        </member>
         <member name="M:ErcasCollect.Controllers.TransactionController.EbillsValidation(ErcasCollect.Domain.Models.Nibss.ValidationRequest)">
             <summary>
             All ebills valldations is received here!!

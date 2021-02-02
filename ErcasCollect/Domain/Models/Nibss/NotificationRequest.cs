@@ -45,9 +45,9 @@ namespace ErcasCollect.Domain.Models.Nibss
 
         public string TransactionApprovalDate { get; set; }
 
-        public List<Params> Param { get; set; }
+        public List<ParamDetail> Param { get; set; }
 
-        public class Params
+        public class ParamDetail
         {
             public string Key { get; set; }
             public string Value { get; set; }

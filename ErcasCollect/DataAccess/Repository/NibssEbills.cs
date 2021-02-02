@@ -17,22 +17,23 @@ namespace ErcasCollect.DataAccess.Repository
     {
         private readonly IEbillsRemittance _ebillsRemittance;
 
-        public NibssEbills(IEbillsRemittance ebillsRemittance)
+        private readonly IEbillsNotification _ebillsNotification;
+
+        public NibssEbills(IEbillsRemittance ebillsRemittance, IEbillsNotification ebillsNotification)
         {
             _ebillsRemittance = ebillsRemittance;
+
+            _ebillsNotification = ebillsNotification;
         }
 
-        public async Task<NotificationResponse> Notification(string request)
+        public async Task<NotificationResponse> Notification(NotificationRequest request)
         {
-            throw new NotImplementedException();
+
+            return await _ebillsNotification.Push(request);
         }
 
         public async Task<ValidationResponse> Validation(ValidationRequest request)
         {            
-
-
-            //var request = JsonXmlObjectConverter.XmlToObject<ValidationRequest>(stringRequest);
-
 
             switch (request.ProductName)
             {
@@ -47,8 +48,6 @@ namespace ErcasCollect.DataAccess.Repository
 
             return null;
         }
-
-
 
         public ValidationResponse Remittance(ValidationRequest request)
         {

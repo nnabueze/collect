@@ -26,5 +26,9 @@ namespace ErcasCollect.Helpers
         public string PhoneNumber { get; set; }
 
         public string LevelKeyIdentify { get; set; }
+
+        public string PayerName { get; set; }
+
+        public string Invoice { get; set; }
     }
 }

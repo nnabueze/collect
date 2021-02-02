@@ -77,6 +77,7 @@ namespace ErcasCollect
             services.AddScoped<ITransactionRepository, TransactionRepository>();
             services.AddScoped<INibssEbills, NibssEbills>();
             services.AddScoped<IEbillsRemittance, EbillsRemittance>();
+            services.AddScoped<IEbillsNotification, EbillsNotification>();
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
             services.Configure<ApiBehaviorOptions>(options =>
             {
