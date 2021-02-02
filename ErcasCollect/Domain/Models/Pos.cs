@@ -22,7 +22,7 @@ namespace ErcasCollect.Domain.Models
 
         public LevelOne LevelOne{ get; set; }
 
-        public string Activationpin { get; set; }
+        public string ActivationPin { get; set; }
 
         public int? LevelTwoId{ get; set; }
 

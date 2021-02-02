@@ -82,6 +82,14 @@ namespace ErcasCollect.DataAccess
               .HasIndex(x => x.ReferenceKey)
                 .IsUnique();
 
+            builder.Entity<Pos>()
+                .HasIndex(x => x.ActivationPin)
+                .IsUnique();
+
+            builder.Entity<Pos>()
+                .HasIndex(x => x.PosImei)
+                .IsUnique();
+
             builder.Entity<Batch>()
               .HasIndex(x => x.OfflineBatchId)
                 .IsUnique();

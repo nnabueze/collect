@@ -70,7 +70,6 @@
     <Folder Include="Commands\TransactionCommand\" />
     <Folder Include="Commands\UserCommand\" />
     <Folder Include="Commands\StatusCommand\" />
-    <Folder Include="Commands\PosCommand\" />
     <Folder Include="Commands\LevelThreeCommand\" />
     <Folder Include="Commands\TaxPayerCommand\" />
     <Folder Include="Commands\Dto\LevelOneDto\" />
@@ -78,7 +77,6 @@
     <Folder Include="Commands\Dto\LevelThreeDto\" />
     <Folder Include="Helpers\Pagination\" />
     <Folder Include="Queries\Dto\" />
-    <Folder Include="Commands\Dto\PosDto\" />
     <Folder Include="Commands\Dto\UserDto\" />
     <Folder Include="Commands\Dto\TaxpayerDto\" />
     <Folder Include="Commands\BatchCommand\" />

@@ -10,8 +10,6 @@ namespace ErcasCollect.AutoMapper.Profiles
     {
         public PosProfile()
         {
-
-            CreateMap<CreatePosDto, Pos>().ReverseMap();
             CreateMap<ReadPosDto, Pos>().ReverseMap();
         }
     }

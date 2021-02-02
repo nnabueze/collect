@@ -6,11 +6,13 @@ using ErcasCollect.Commands.PosCommand;
 
 using ErcasCollect.Domain.Models;
 using ErcasCollect.Exceptions;
+using ErcasCollect.Helpers;
 using ErcasCollect.Queries.BillerQuery;
 using ErcasCollect.Queries.Dto;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -21,15 +23,21 @@ namespace ErcasCollect.Controllers
     public class PosController : Controller
     {
         private readonly IMediator mediator;
+
         private readonly ILogger<Pos> _logger;
 
-        public PosController(ILogger<Pos> logger, IMediator mediator)
+        private readonly ResponseCode _responseCode;
+
+        public PosController(ILogger<Pos> logger, IMediator mediator, IOptions<ResponseCode> responseCode)
         {
             this.mediator = mediator ?? throw new ArgumentNullException(nameof(mediator));
+
             this._logger = logger ?? throw new ArgumentNullException(nameof(logger));
+
+            _responseCode = responseCode.Value;
         }
         // GET: api/values
-      [HttpGet]
+        [HttpGet]
         public async Task<IEnumerable<ReadPosDto>> AllPOS()
         {
             try
@@ -73,26 +81,34 @@ namespace ErcasCollect.Controllers
             }
         }
 
-        // POST api/values
-        [HttpPost]
-      
-        public async Task<ActionResult> CreatePos([FromBody] CreatePosCommand request)
+        /// <summary>
+        /// Adding pos into the platform
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
+        [HttpPost]      
+        public async Task<ActionResult> AddPos([FromBody] AddPosCommand request)
         {
             try
             {
                 var result = await mediator.Send(request);
-                return new JsonResult(result);
-            }
-            catch (AppException ex)
-            {
-                _logger.LogError(ex, "An Application exception occurred on the make transaction action of the NonIgr");
-                // return await BadRequest(new { message = ex.Message });
-                throw;
+
+                var response = new JsonResult(result);
+
+                response.StatusCode = result.StatusCode;
+
+                return response;
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "An unknown error occurred on the make transaction action of the NonIgr");
-                throw;
+                _logger.LogError(ex.Message.ToString(), "An Application exception occurred on the make transaction action of the NonIgr");
+
+                var response = new JsonResult(new { Message = ex.Message.ToString() });
+
+                response.StatusCode = _responseCode.InternalServerError;
+
+                return response;
+
             }
         }
          

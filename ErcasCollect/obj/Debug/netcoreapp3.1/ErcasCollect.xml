@@ -200,6 +200,13 @@
             <param name="id"></param>
             <returns></returns>
         </member>
+        <member name="M:ErcasCollect.Controllers.PosController.AddPos(ErcasCollect.Commands.PosCommand.AddPosCommand)">
+            <summary>
+            Adding pos into the platform
+            </summary>
+            <param name="request"></param>
+            <returns></returns>
+        </member>
         <member name="M:ErcasCollect.Controllers.SettlementController.EbillsNotification(ErcasCollect.Domain.Models.Nibss.NotificationRequest)">
             <summary>
             Ebills notification endpoint for all biller

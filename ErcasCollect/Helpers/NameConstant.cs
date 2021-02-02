@@ -40,5 +40,7 @@ namespace ErcasCollect.Helpers
         public string InvalidTransactionId { get; set; }
 
         public string Successful { get; set; }
+
+        public string Created { get; set; }
     }
 }

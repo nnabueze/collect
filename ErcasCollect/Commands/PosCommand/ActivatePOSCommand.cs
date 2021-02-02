@@ -50,7 +50,7 @@ namespace ErcasCollect.Commands.PosCommand
             {
                 //auto mapped
 
-                var checkPosPin = await _posRepository.GetSingle(x => x.Activationpin == request.createPosDto.ActivationPin);
+                var checkPosPin = await _posRepository.GetSingle(x => x.ActivationPin == request.createPosDto.ActivationPin);
 
                 if (checkPosPin == null)
                 {
