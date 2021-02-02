@@ -68,6 +68,10 @@ namespace ErcasCollect.DataAccess.Repository
         {
             var saveSettlement = await SaveSettlement(request);
 
+            if (saveSettlement == null)
+
+                return NotificationFailedResponse(request, _nameConstant.DuplicateTransaction);
+
             await SaveClosedBatchTransaction(request, saveSettlement.TransactionNumber);
 
             return NotificationSuccessResponse(request);
@@ -192,6 +196,12 @@ namespace ErcasCollect.DataAccess.Repository
             string ercasCollectId = GetErcasCollectId(request);
 
             _billerDetail = _billerRepository.FindFirst(x => x.ReferenceKey == ercasCollectId);
+
+            var checkSettlement = _settlementRepository.FindFirst(x => x.ReferenceID == request.SessionID && x.BillerId == _billerDetail.Id);
+
+            if (checkSettlement != null)
+
+                return null;
 
             Settlement settlement = GetSettlement(request);
 

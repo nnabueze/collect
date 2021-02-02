@@ -30,5 +30,7 @@ namespace ErcasCollect.Helpers
         public string PayerName { get; set; }
 
         public string Invoice { get; set; }
+
+        public string DuplicateTransaction { get; set; }
     }
 }
