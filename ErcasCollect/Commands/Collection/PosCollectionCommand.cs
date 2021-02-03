@@ -242,7 +242,7 @@ namespace ErcasCollect.Commands.Collection
 
                     TransactionType = TypesOfTransaction.Collection,
 
-                    PaymentChannel = PaymentChannels.Cash,
+                    PaymentChannelId = 1,
 
                     IsSuccess = true
                     

@@ -46,13 +46,15 @@ namespace ErcasCollect.Commands.CollectionCommand
 
             private readonly IGenericRepository<LevelTwo> _levelTwoRepository;
 
+            private readonly NameConstant _nameConstant;
+
             public GenerateRemittanceCommandHandler(IMapper mapper, IOptions<ResponseCode> responseCode, IGenericRepository<CloseBatchTransaction> closeBatchTransaction,
 
                 IGenericRepository<Biller> billerRepository, IGenericRepository<Pos> posRespository, IGenericRepository<Transaction> transactionRespository,
 
-                IGenericRepository<User> userRepository, IGenericRepository<Batch> batchRepository, IGenericRepository<LevelOne> levelOneRepository, 
-                
-                IGenericRepository<LevelTwo> levelTwoRepository)
+                IGenericRepository<User> userRepository, IGenericRepository<Batch> batchRepository, IGenericRepository<LevelOne> levelOneRepository,
+
+                IGenericRepository<LevelTwo> levelTwoRepository, IOptions<NameConstant> nameConstant)
             {
                 _mapper = mapper;
 
@@ -73,6 +75,8 @@ namespace ErcasCollect.Commands.CollectionCommand
                 _levelOneRepository = levelOneRepository;
 
                 _levelTwoRepository = levelTwoRepository;
+
+                _nameConstant = nameConstant.Value;
             }
 
             public async Task<SuccessfulResponse> Handle(GenerateRemittanceCommand request, CancellationToken cancellationToken)
@@ -123,7 +127,7 @@ namespace ErcasCollect.Commands.CollectionCommand
 
                     TotalAmount = totalAmount,
                     
-                    PaymentChannel = PaymentChannels.POS,
+                    PaymentChannelId = 1,
                     
                     ReferenceKey = referenceKey
                 };

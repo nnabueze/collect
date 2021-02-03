@@ -31,6 +31,8 @@ namespace ErcasCollect.Domain.Models
 
         public Biller Biller { get; set; }
 
-        public PaymentChannels PaymentChannel { get; set; }
+        public int? PaymentChannelId { get; set; }
+
+        public PaymentChannel PaymentChannel { get; set; }
     }
 }

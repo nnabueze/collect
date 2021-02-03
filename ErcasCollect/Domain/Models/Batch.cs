@@ -42,7 +42,9 @@ namespace ErcasCollect.Domain.Models
 
         public TypesOfTransaction TransactionType { get; set; }
 
-        public PaymentChannels PaymentChannel { get; set; }
+        public int? PaymentChannelId { get; set; }
+
+        public PaymentChannel PaymentChannel { get; set; }
 
         public bool IsBatchClosed { get; set; }
 

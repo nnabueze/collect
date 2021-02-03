@@ -75,7 +75,7 @@ namespace ErcasCollect.Commands.SettlementCommand
 
                      IsPaid = true,
 
-                     PaymentChannel = PaymentChannels.Card,
+                     PaymentChannelId = 3,
 
                      ReferenceKey = request.FlexSettlementDto.TransactionNumber,
 
@@ -106,7 +106,7 @@ namespace ErcasCollect.Commands.SettlementCommand
 
                     PayerPhone = request.FlexSettlementDto.PayerPhone,
 
-                    PaymentChannel = PaymentChannels.Card,
+                    PaymentChannelId = 3,
 
                     ReferenceID = request.FlexSettlementDto.ReferenceNumber,
 

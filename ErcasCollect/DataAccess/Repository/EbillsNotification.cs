@@ -117,7 +117,7 @@ namespace ErcasCollect.DataAccess.Repository
 
                 closeBatchTransaction.ModifiedDate = DateTime.UtcNow;
 
-                closeBatchTransaction.PaymentChannel = PaymentChannels.Nibss;
+                closeBatchTransaction.PaymentChannelId = 2;
 
                 _closeBatchTransactionRepository.Update(closeBatchTransaction);
 
@@ -135,7 +135,7 @@ namespace ErcasCollect.DataAccess.Repository
 
                     LevelTwoId = GetLevelTwoId(request),
 
-                    PaymentChannel = PaymentChannels.Nibss,
+                    PaymentChannelId = 2,
 
                     TotalAmount = Convert.ToDecimal(GetAmount(request)),
 
@@ -239,7 +239,7 @@ namespace ErcasCollect.DataAccess.Repository
 
                 TransactionNumber = GetTransactionKey(request),
 
-                PaymentChannel = PaymentChannels.Nibss,
+                PaymentChannelId = 2,
 
                 CreatedDate = DateTime.UtcNow,
 
