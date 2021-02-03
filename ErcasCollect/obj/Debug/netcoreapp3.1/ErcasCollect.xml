@@ -200,6 +200,19 @@
             <param name="id"></param>
             <returns></returns>
         </member>
+        <member name="M:ErcasCollect.Controllers.PosController.AllPos">
+            <summary>
+            List all  Pos on the platform
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:ErcasCollect.Controllers.PosController.GetPosByID(System.Int32)">
+            <summary>
+            List all pos on 
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
         <member name="M:ErcasCollect.Controllers.PosController.AddPos(ErcasCollect.Commands.PosCommand.AddPosCommand)">
             <summary>
             Adding pos into the platform
