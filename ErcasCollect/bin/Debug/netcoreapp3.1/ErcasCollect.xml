@@ -206,7 +206,7 @@
             </summary>
             <returns></returns>
         </member>
-        <member name="M:ErcasCollect.Controllers.PosController.GetPosByID(System.String)">
+        <member name="M:ErcasCollect.Controllers.PosController.GetPosByBillerID(System.String)">
             <summary>
             Get biller list of posed
             </summary>

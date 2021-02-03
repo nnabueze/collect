@@ -74,6 +74,8 @@ namespace ErcasCollect.DataAccess
         {
             builder.Seed();
 
+            builder.RoleSeed();
+
             builder.Entity<Biller>()
               .HasIndex(x => x.ReferenceKey)
                 .IsUnique();

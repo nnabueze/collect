@@ -73,7 +73,7 @@ namespace ErcasCollect.Controllers
         /// <param name="id"></param>
         /// <returns></returns>
         [HttpGet]
-        public async Task<ActionResult> GetPosByID(string billerId)
+        public async Task<ActionResult> GetPosByBillerID(string billerId)
         {
             try
             {
