@@ -28,4 +28,13 @@ namespace ErcasCollect.Commands.Dto.PosDto
 
         public string LastLoginUserName { get; set; }
     }
+
+    public class BillerPosDto
+    {
+        public string BillerLevelOneDisplayName { get; set; }
+
+        public string BillerLevelTwoDisplayName { get; set; }
+
+        public List<AllPosDto> Poses { get; set; }
+    }
 }

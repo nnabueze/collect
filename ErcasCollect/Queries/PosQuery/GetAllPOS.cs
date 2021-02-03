@@ -52,6 +52,10 @@ namespace ErcasCollect.Queries.BillerQuery
 
                 var result = await posRepository.FindAllInclude(x => x.IsDeleted == false, x => x.Biller, x => x.LevelOne, x => x.LevelTwo);
 
+                if (result == null)
+
+                    return ResponseGenerator.Response("No result found", _responseCode.NotFound, false);
+
                 foreach (var item in result)
                 {
                     var pos = new AllPosDto()
