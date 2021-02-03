@@ -596,7 +596,7 @@ namespace ErcasCollect.Migrations
                         new
                         {
                             Id = 1,
-                            CreatedDate = new DateTime(2021, 2, 3, 17, 50, 51, 783, DateTimeKind.Utc).AddTicks(715),
+                            CreatedDate = new DateTime(2021, 2, 3, 18, 39, 7, 128, DateTimeKind.Utc).AddTicks(4403),
                             Createdby = 0,
                             IsDeleted = false,
                             ModifiedBy = 0,
@@ -606,7 +606,7 @@ namespace ErcasCollect.Migrations
                         new
                         {
                             Id = 2,
-                            CreatedDate = new DateTime(2021, 2, 3, 17, 50, 51, 783, DateTimeKind.Utc).AddTicks(2447),
+                            CreatedDate = new DateTime(2021, 2, 3, 18, 39, 7, 128, DateTimeKind.Utc).AddTicks(5953),
                             Createdby = 0,
                             IsDeleted = false,
                             ModifiedBy = 0,
@@ -616,7 +616,7 @@ namespace ErcasCollect.Migrations
                         new
                         {
                             Id = 3,
-                            CreatedDate = new DateTime(2021, 2, 3, 17, 50, 51, 783, DateTimeKind.Utc).AddTicks(2494),
+                            CreatedDate = new DateTime(2021, 2, 3, 18, 39, 7, 128, DateTimeKind.Utc).AddTicks(5988),
                             Createdby = 0,
                             IsDeleted = false,
                             ModifiedBy = 0,
@@ -626,7 +626,7 @@ namespace ErcasCollect.Migrations
                         new
                         {
                             Id = 4,
-                            CreatedDate = new DateTime(2021, 2, 3, 17, 50, 51, 783, DateTimeKind.Utc).AddTicks(2498),
+                            CreatedDate = new DateTime(2021, 2, 3, 18, 39, 7, 128, DateTimeKind.Utc).AddTicks(5991),
                             Createdby = 0,
                             IsDeleted = false,
                             ModifiedBy = 0,
@@ -920,6 +920,23 @@ namespace ErcasCollect.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("PaymentChannels");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Name = "Pos"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Name = "Nibss"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Name = "Flex"
+                        });
                 });
 
             modelBuilder.Entity("ErcasCollect.Domain.Models.Pos", b =>

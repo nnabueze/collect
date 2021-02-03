@@ -4,6 +4,12 @@
         <name>ErcasCollect</name>
     </assembly>
     <members>
+        <member name="M:ErcasCollect.Controllers.ApplicationDataController.GetAllRole">
+            <summary>
+            List all the roles on the system...added as a seeder
+            </summary>
+            <returns></returns>
+        </member>
         <member name="M:ErcasCollect.Controllers.BillerController.CreateBiller(ErcasCollect.Commands.BillerCommand.CreateBillerCommand)">
             <summary>
             Adding biller on the platform setting isGatwayOnboard to true onboard the biller on api gateway. Point gateway to live server

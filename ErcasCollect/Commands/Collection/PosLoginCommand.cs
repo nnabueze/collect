@@ -72,38 +72,38 @@ namespace ErcasCollect.Commands.Collection
                 var posDetail = _posRespository.FindFirst(x => x.ReferenceKey == request.posLoginDto.PosId);
 
                 if (posDetail == null)
-                {
+                
                     return ResponseGenerator.Response("Invalid pos Id", _responseCode.NotFound, false);
-                }
+                
 
                 if (!posDetail.IsActive)
-                {
+                
                     return ResponseGenerator.Response("Pos is not activated", _responseCode.NotAccepted, false);
-                }
+                
 
                 if (posDetail.IsLogin)
-                {
+                
                     return ResponseGenerator.Response("User already login on this pos", _responseCode.NotAccepted, false);
-                }
+                
 
                 User userDetail = await SsoUserLogin(request);
 
                 if (userDetail == null)
-                {
+                
                     return ResponseGenerator.Response("User not found", _responseCode.NotFound, false);
-                }
+                
 
                 if (! userDetail.IsActive)
-                {
+                
                     return ResponseGenerator.Response("User not active", _responseCode.NotAccepted, false);
-                }
+                
 
                 var userLoginCheck = _posRespository.FindFirst(x => x.UserId == userDetail.Id);
 
                 if (userLoginCheck != null)
-                {
+                
                     return ResponseGenerator.Response("User already login in another pos", _responseCode.NotAccepted, false);
-                }
+                
 
                 await UpdatePos(posDetail, userDetail);
 
@@ -128,10 +128,13 @@ namespace ErcasCollect.Commands.Collection
 
                     UserId = user.ReferenceKey,
 
+                    IsPosRemitter = user.RoleId == 6,
+
                     LevelOneDisplayName = levelOneDisplayName,
 
                     LevelOne = billerListOfLevelOne
                 };
+
                 return loginResponse;
             }
 
@@ -161,7 +164,7 @@ namespace ErcasCollect.Commands.Collection
 
                 var ssoUserDetails = JsonXmlObjectConverter.Deserialize<SsoLoginDto>(ssoResponseString);
 
-                var userDetail = _userRepository.FindFirst(x => x.SsoId == ssoUserDetails.id);
+                var userDetail = await _userRepository.FindSingleInclude(x => x.SsoId == ssoUserDetails.id, x=> x.Role);
 
                 return userDetail;
             }

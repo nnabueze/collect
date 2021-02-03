@@ -43,6 +43,8 @@ namespace ErcasCollect.Commands.Dto.CollectionDto
 
         public string UserId { get; set; }
 
+        public bool IsPosRemitter { get; set; }
+
         public string LevelOneDisplayName { get; set; }
 
         public IEnumerable<LevelOneParameter> LevelOne { get; set; }

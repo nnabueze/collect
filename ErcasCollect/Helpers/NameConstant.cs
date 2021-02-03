@@ -42,5 +42,17 @@ namespace ErcasCollect.Helpers
         public string Successful { get; set; }
 
         public string Created { get; set; }
+
+        public string SuperAdmin { get; set; }
+
+        public string Admin { get; set; }
+
+        public string LevelOne { get; set; }
+
+        public string LevelTwo { get; set; }
+
+        public string PosCollector { get; set; }
+
+        public string PosRemitter { get; set; }
     }
 }
