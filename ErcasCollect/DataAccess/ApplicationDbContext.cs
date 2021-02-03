@@ -78,6 +78,8 @@ namespace ErcasCollect.DataAccess
 
             builder.PaymentChannelSeed();
 
+            builder.TransactionTypeSeed();
+
             builder.Entity<Biller>()
               .HasIndex(x => x.ReferenceKey)
                 .IsUnique();

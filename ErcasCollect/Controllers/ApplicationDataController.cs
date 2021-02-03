@@ -32,8 +32,12 @@ namespace ErcasCollect.Controllers
             _responseCode = responseCode.Value;
         }
 
-        [HttpGet]
 
+        /// <summary>
+        /// Listing all system status response
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet]
         public async Task<ActionResult> GetAllStatus()
         {
             try
@@ -131,14 +135,17 @@ namespace ErcasCollect.Controllers
         //    }
         //}
 
+        /// <summary>
+        /// Listing payment channels 
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]       
         public async Task<IEnumerable<ReadPaymentChannelDto>> PaymentChannels()
         {
             try
-            {
-                GetAllPaymentChannelQuery request = new GetAllPaymentChannelQuery();
+            { 
 
-                return await mediator.Send(request);
+                return await mediator.Send(new GetAllPaymentChannelQuery());
             }
             catch (AppException ex)
             {

@@ -54,5 +54,23 @@ namespace ErcasCollect.Helpers
         public string PosCollector { get; set; }
 
         public string PosRemitter { get; set; }
+
+        public string Pos { get; set; }
+
+        public string Nibss { get; set; }
+
+        public string Flex { get; set; }
+
+        public string Collection { get; set; }
+
+        public string Card { get; set; }
+
+        public string Igr { get; set; }
+
+        public string School { get; set; }
+
+        public string Hospital { get; set; }
+
+        public string Store { get; set; }
     }
 }

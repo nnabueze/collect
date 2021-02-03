@@ -4,9 +4,21 @@
         <name>ErcasCollect</name>
     </assembly>
     <members>
+        <member name="M:ErcasCollect.Controllers.ApplicationDataController.GetAllStatus">
+            <summary>
+            Listing all system status response
+            </summary>
+            <returns></returns>
+        </member>
         <member name="M:ErcasCollect.Controllers.ApplicationDataController.GetAllRole">
             <summary>
             List all the roles on the system...added as a seeder
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:ErcasCollect.Controllers.ApplicationDataController.PaymentChannels">
+            <summary>
+            Listing payment channels 
             </summary>
             <returns></returns>
         </member>

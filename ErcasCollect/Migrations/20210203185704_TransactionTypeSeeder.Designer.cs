@@ -4,14 +4,16 @@ using ErcasCollect.DataAccess;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace ErcasCollect.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210203185704_TransactionTypeSeeder")]
+    partial class TransactionTypeSeeder
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -596,7 +598,7 @@ namespace ErcasCollect.Migrations
                         new
                         {
                             Id = 1,
-                            CreatedDate = new DateTime(2021, 2, 3, 19, 3, 44, 773, DateTimeKind.Utc).AddTicks(365),
+                            CreatedDate = new DateTime(2021, 2, 3, 18, 57, 2, 715, DateTimeKind.Utc).AddTicks(2995),
                             Createdby = 0,
                             IsDeleted = false,
                             ModifiedBy = 0,
@@ -606,7 +608,7 @@ namespace ErcasCollect.Migrations
                         new
                         {
                             Id = 2,
-                            CreatedDate = new DateTime(2021, 2, 3, 19, 3, 44, 773, DateTimeKind.Utc).AddTicks(1907),
+                            CreatedDate = new DateTime(2021, 2, 3, 18, 57, 2, 715, DateTimeKind.Utc).AddTicks(4545),
                             Createdby = 0,
                             IsDeleted = false,
                             ModifiedBy = 0,
@@ -616,7 +618,7 @@ namespace ErcasCollect.Migrations
                         new
                         {
                             Id = 3,
-                            CreatedDate = new DateTime(2021, 2, 3, 19, 3, 44, 773, DateTimeKind.Utc).AddTicks(1940),
+                            CreatedDate = new DateTime(2021, 2, 3, 18, 57, 2, 715, DateTimeKind.Utc).AddTicks(4583),
                             Createdby = 0,
                             IsDeleted = false,
                             ModifiedBy = 0,
@@ -626,7 +628,7 @@ namespace ErcasCollect.Migrations
                         new
                         {
                             Id = 4,
-                            CreatedDate = new DateTime(2021, 2, 3, 19, 3, 44, 773, DateTimeKind.Utc).AddTicks(1942),
+                            CreatedDate = new DateTime(2021, 2, 3, 18, 57, 2, 715, DateTimeKind.Utc).AddTicks(4585),
                             Createdby = 0,
                             IsDeleted = false,
                             ModifiedBy = 0,
