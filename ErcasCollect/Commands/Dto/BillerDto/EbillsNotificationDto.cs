@@ -20,4 +20,9 @@ namespace ErcasCollect.Commands.Dto.BillerDto
     {
         public string NotificationField { get; set; }
     }
+
+    public class BillerNotificationDto
+    {
+        public string NotificationName { get; set; }
+    }
 }

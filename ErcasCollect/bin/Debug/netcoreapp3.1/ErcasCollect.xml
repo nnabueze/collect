@@ -107,6 +107,12 @@
             </summary>
             <returns></returns>
         </member>
+        <member name="M:ErcasCollect.Controllers.BillerController.GetBillerNotificationParameter(System.String)">
+            <summary>
+            Get list biller notification parameter
+            </summary>
+            <returns></returns>
+        </member>
         <member name="M:ErcasCollect.Controllers.CategoryOneController.CreateCategoryOne(ErcasCollect.Commands.CategoryOnCommand.CreateCategoryOneCommand)">
             <summary>
             Adding category one  eg adding revenue heads on the system.

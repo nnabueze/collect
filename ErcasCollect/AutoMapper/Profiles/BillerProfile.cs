@@ -19,6 +19,8 @@ namespace ErcasCollect.AutoMapper.Profiles
 
             CreateMap<BillerValidation, EbillsBillerValidationDto>();
 
+            CreateMap<BillerNotification, BillerNotificationDto>();
+
 
 
 
