@@ -24,10 +24,49 @@ namespace ErcasCollect.Commands.UserCommand
 
         public class CreateUserCommandHandler : IRequestHandler<CreateUserCommand, SuccessfulResponse>
         {
+            private readonly IGenericRepository<User> _userRepository;
+
+            private readonly NameConstant _nameConstant;
+
+            private readonly ResponseCode _responseCode;
+
+            private readonly IWebCallService _webCallService;
+
+            public CreateUserCommandHandler(IGenericRepository<User> userRepository, IOptions<NameConstant> nameConstant, IOptions<ResponseCode> responseCode, IWebCallService webCallService)
+            {
+                _userRepository = userRepository;
+
+                _nameConstant = nameConstant.Value;
+
+                _responseCode = responseCode.Value;
+
+                _webCallService = webCallService;
+            }
+
             public Task<SuccessfulResponse> Handle(CreateUserCommand request, CancellationToken cancellationToken)
             {
-                throw new NotImplementedException();
+                return null;
             }
+
+            //private async Task<User> SsoUserLogin(PosLoginCommand request)
+            //{
+            //    var userRequest = new
+            //    {
+            //        username = request.posLoginDto.Email,
+
+            //        password = request.posLoginDto.Password
+            //    };
+
+            //    var userRequestJson = JsonConvert.SerializeObject(userRequest);
+
+            //    var ssoResponseString = await _webCallService.PostDataCall(_webEndpoint.SsoUserLogin, userRequestJson);
+
+            //    var ssoUserDetails = JsonXmlObjectConverter.Deserialize<SsoLoginDto>(ssoResponseString);
+
+            //    var userDetail = await _userRepository.FindSingleInclude(x => x.SsoId == ssoUserDetails.id, x => x.Role);
+
+            //    return userDetail;
+            //}
         }
     }
 }

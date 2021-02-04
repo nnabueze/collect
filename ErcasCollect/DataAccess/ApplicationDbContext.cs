@@ -76,6 +76,8 @@ namespace ErcasCollect.DataAccess
 
             builder.RoleSeed();
 
+            builder.BillerTypeSeed();
+
             builder.PaymentChannelSeed();
 
             builder.TransactionTypeSeed();

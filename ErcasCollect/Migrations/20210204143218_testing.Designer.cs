@@ -4,14 +4,16 @@ using ErcasCollect.DataAccess;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace ErcasCollect.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210204143218_testing")]
+    partial class testing
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -362,28 +364,6 @@ namespace ErcasCollect.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("BillerTypes");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            Category = "Igr"
-                        },
-                        new
-                        {
-                            Id = 2,
-                            Category = "School"
-                        },
-                        new
-                        {
-                            Id = 3,
-                            Category = "Hospital"
-                        },
-                        new
-                        {
-                            Id = 4,
-                            Category = "Store"
-                        });
                 });
 
             modelBuilder.Entity("ErcasCollect.Domain.Models.BillerValidation", b =>
@@ -624,7 +604,7 @@ namespace ErcasCollect.Migrations
                         new
                         {
                             Id = 1,
-                            CreatedDate = new DateTime(2021, 2, 4, 14, 41, 59, 939, DateTimeKind.Utc).AddTicks(7810),
+                            CreatedDate = new DateTime(2021, 2, 4, 14, 32, 17, 334, DateTimeKind.Utc).AddTicks(1352),
                             Createdby = 0,
                             IsDeleted = false,
                             ModifiedBy = 0,
@@ -634,7 +614,7 @@ namespace ErcasCollect.Migrations
                         new
                         {
                             Id = 2,
-                            CreatedDate = new DateTime(2021, 2, 4, 14, 41, 59, 939, DateTimeKind.Utc).AddTicks(9585),
+                            CreatedDate = new DateTime(2021, 2, 4, 14, 32, 17, 334, DateTimeKind.Utc).AddTicks(2361),
                             Createdby = 0,
                             IsDeleted = false,
                             ModifiedBy = 0,
@@ -644,7 +624,7 @@ namespace ErcasCollect.Migrations
                         new
                         {
                             Id = 3,
-                            CreatedDate = new DateTime(2021, 2, 4, 14, 41, 59, 939, DateTimeKind.Utc).AddTicks(9617),
+                            CreatedDate = new DateTime(2021, 2, 4, 14, 32, 17, 334, DateTimeKind.Utc).AddTicks(2380),
                             Createdby = 0,
                             IsDeleted = false,
                             ModifiedBy = 0,
@@ -654,7 +634,7 @@ namespace ErcasCollect.Migrations
                         new
                         {
                             Id = 4,
-                            CreatedDate = new DateTime(2021, 2, 4, 14, 41, 59, 939, DateTimeKind.Utc).AddTicks(9624),
+                            CreatedDate = new DateTime(2021, 2, 4, 14, 32, 17, 334, DateTimeKind.Utc).AddTicks(2381),
                             Createdby = 0,
                             IsDeleted = false,
                             ModifiedBy = 0,
