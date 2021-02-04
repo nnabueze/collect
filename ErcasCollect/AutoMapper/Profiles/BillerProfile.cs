@@ -17,6 +17,8 @@ namespace ErcasCollect.AutoMapper.Profiles
 
             CreateMap<EbillsProduct, EbillsProductResponseDto>().ReverseMap();
 
+            CreateMap<BillerValidation, EbillsBillerValidationDto>();
+
 
 
 

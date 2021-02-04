@@ -25,4 +25,13 @@ namespace ErcasCollect.Commands.Dto.BillerDto
     {
         public string Amount { get; set; }
     }
+
+    public class EbillsBillerValidationDto
+    {
+        public string ValidationName { get; set; }
+
+        public int VaidationStep { get; set; }
+    }
+
+
 }

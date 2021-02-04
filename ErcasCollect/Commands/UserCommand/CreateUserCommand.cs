@@ -32,7 +32,11 @@ namespace ErcasCollect.Commands.UserCommand
 
             private readonly IWebCallService _webCallService;
 
-            public CreateUserCommandHandler(IGenericRepository<User> userRepository, IOptions<NameConstant> nameConstant, IOptions<ResponseCode> responseCode, IWebCallService webCallService)
+            private readonly WebEndpoint _webEndpoint;
+
+            public CreateUserCommandHandler(IGenericRepository<User> userRepository, IOptions<NameConstant> nameConstant, IOptions<ResponseCode> responseCode, 
+                
+                IWebCallService webCallService,IOptions< WebEndpoint> webEndpoint)
             {
                 _userRepository = userRepository;
 
@@ -41,6 +45,8 @@ namespace ErcasCollect.Commands.UserCommand
                 _responseCode = responseCode.Value;
 
                 _webCallService = webCallService;
+
+                _webEndpoint = webEndpoint.Value;
             }
 
             public Task<SuccessfulResponse> Handle(CreateUserCommand request, CancellationToken cancellationToken)
@@ -48,13 +54,22 @@ namespace ErcasCollect.Commands.UserCommand
                 return null;
             }
 
-            //private async Task<User> SsoUserLogin(PosLoginCommand request)
+            //private async Task<User> SsoUserCreate(CreateUserCommand request)
             //{
             //    var userRequest = new
             //    {
-            //        username = request.posLoginDto.Email,
+            //        firstName = request.createUserDto.firstname,
 
-            //        password = request.posLoginDto.Password
+            //        lastName = request.createUserDto.lastname,
+
+            //        phone = request.createUserDto.phone,
+
+            //        email ="",
+
+            //        password ="",
+
+            //        passwordConfirmation = ""
+
             //    };
 
             //    var userRequestJson = JsonConvert.SerializeObject(userRequest);
