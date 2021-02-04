@@ -11,6 +11,7 @@ using ErcasCollect.Queries.Dto;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -25,13 +26,13 @@ namespace ErcasCollect.Controllers
 
         private readonly ResponseCode _responseCode;
 
-        public UserController(ILogger<User> logger, IMediator mediator, ResponseCode responseCode)
+        public UserController(ILogger<User> logger, IMediator mediator, IOptions<ResponseCode> responseCode)
         {
             this.mediator = mediator ?? throw new ArgumentNullException(nameof(mediator));
 
             this._logger = logger ?? throw new ArgumentNullException(nameof(logger));
 
-            _responseCode = responseCode;
+            _responseCode = responseCode.Value;
         }
 
         /// <summary>
@@ -48,7 +49,7 @@ namespace ErcasCollect.Controllers
 
                 var response = new JsonResult(result);
 
-                //response.StatusCode = result.StatusCode;
+                response.StatusCode = result.StatusCode;
 
                 return response;
             }

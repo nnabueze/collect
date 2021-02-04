@@ -26,6 +26,12 @@ namespace ErcasCollect.Commands.UserCommand
         {
             private readonly IGenericRepository<User> _userRepository;
 
+            private readonly IGenericRepository<Biller> _billerRepository;
+
+            private readonly IGenericRepository<LevelOne> _levelOneRepository;
+
+            private readonly IGenericRepository<LevelTwo> _levelTwoRepository;
+
             private readonly NameConstant _nameConstant;
 
             private readonly ResponseCode _responseCode;
@@ -34,9 +40,11 @@ namespace ErcasCollect.Commands.UserCommand
 
             private readonly WebEndpoint _webEndpoint;
 
-            public CreateUserCommandHandler(IGenericRepository<User> userRepository, IOptions<NameConstant> nameConstant, IOptions<ResponseCode> responseCode, 
+            public CreateUserCommandHandler(IGenericRepository<User> userRepository, IOptions<NameConstant> nameConstant, IOptions<ResponseCode> responseCode,
+
+                IWebCallService webCallService, IOptions<WebEndpoint> webEndpoint, IGenericRepository<Biller> billerRepository, IGenericRepository<LevelOne> levelOneRepository, 
                 
-                IWebCallService webCallService,IOptions< WebEndpoint> webEndpoint)
+                IGenericRepository<LevelTwo> levelTwoRepository)
             {
                 _userRepository = userRepository;
 
@@ -47,41 +55,103 @@ namespace ErcasCollect.Commands.UserCommand
                 _webCallService = webCallService;
 
                 _webEndpoint = webEndpoint.Value;
+
+                _billerRepository = billerRepository;
+
+                _levelOneRepository = levelOneRepository;
+
+                _levelTwoRepository = levelTwoRepository;
             }
 
-            public Task<SuccessfulResponse> Handle(CreateUserCommand request, CancellationToken cancellationToken)
+            public async Task<SuccessfulResponse> Handle(CreateUserCommand request, CancellationToken cancellationToken)
             {
-                return null;
+                var ssoUser = SsoUserCreate(request);
+
+                if (ssoUser == null)
+
+                    return ResponseGenerator.Response("Failed to create user on SSO", _responseCode.NotAccepted, false);
+
+                var user = new User()
+                {
+                    BillerId = GetBillerId(request.createUserDto.BillerId),
+
+                    CollectionLimit = request.createUserDto.CollectionLimit,
+
+                    CreatedDate = DateTime.UtcNow,
+
+                    IsActive = true,
+
+                    LevelOneId = GetLevelOne(request.createUserDto.LevelOneId),
+
+                    LevelTwoId = GetLevelTwo(request.createUserDto.LevelTwoId),
+
+                    Name = GetName(request.createUserDto.firstname, request.createUserDto.lastname),
+
+                    PhoneNumber = request.createUserDto.phone,
+
+                    ReferenceKey = Helpers.IdGenerator.IdGenerator.RandomInt(15),
+
+                    RoleId = request.createUserDto.RoleId,
+
+                    SsoId = ssoUser.Id
+                };
+
+                var saveUser = await _userRepository.Add(user);
+
+                await _userRepository.CommitAsync();
+
+                return ResponseGenerator.Response("Created", _responseCode.Created, true, new { UserId = saveUser.ReferenceKey });
             }
 
-            //private async Task<User> SsoUserCreate(CreateUserCommand request)
-            //{
-            //    var userRequest = new
-            //    {
-            //        firstName = request.createUserDto.firstname,
+            private string GetName(string firstName, string  lastName)
+            {
+                return firstName + " " + lastName;
+            }
 
-            //        lastName = request.createUserDto.lastname,
+            private int GetLevelOne(string levelOneId)
+            {
+                return _levelOneRepository.FindFirst(x => x.ReferenceKey == levelOneId).Id;
+            }
 
-            //        phone = request.createUserDto.phone,
+            private int GetLevelTwo(string levelTwoId)
+            {
+                return _levelTwoRepository.FindFirst(x => x.ReferenceKey == levelTwoId).Id;
+            }
 
-            //        email ="",
 
-            //        password ="",
+            private int GetBillerId(string billerId)
+            {
+                return _billerRepository.FindFirst(x => x.ReferenceKey == billerId).Id;
+            }
 
-            //        passwordConfirmation = ""
 
-            //    };
 
-            //    var userRequestJson = JsonConvert.SerializeObject(userRequest);
+            private async Task<SsoCreateUserResponseDto> SsoUserCreate(CreateUserCommand request)
+            {
+                var userRequest = new
+                {
+                    firstName = request.createUserDto.firstname,
 
-            //    var ssoResponseString = await _webCallService.PostDataCall(_webEndpoint.SsoUserLogin, userRequestJson);
+                    lastName = request.createUserDto.lastname,
 
-            //    var ssoUserDetails = JsonXmlObjectConverter.Deserialize<SsoLoginDto>(ssoResponseString);
+                    phone = request.createUserDto.phone,
 
-            //    var userDetail = await _userRepository.FindSingleInclude(x => x.SsoId == ssoUserDetails.id, x => x.Role);
+                    email = request.createUserDto.email,
 
-            //    return userDetail;
-            //}
+                    password = request.createUserDto.password,
+
+                    passwordConfirmation = request.createUserDto.password
+
+                };
+
+                var userRequestJson = JsonConvert.SerializeObject(userRequest);
+
+                var ssoResponseString = await _webCallService.PostDataCall(_webEndpoint.SsoUserCreate, userRequestJson);
+
+                var ssoUserDetails = JsonXmlObjectConverter.Deserialize<SsoCreateUserResponseDto>(ssoResponseString);
+
+                return ssoUserDetails;
+            }
         }
     }
 }

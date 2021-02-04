@@ -20,5 +20,7 @@ namespace ErcasCollect.Helpers
         public string EbillsPay { get; set; }
 
         public string SsoUserLogin { get; set; }
+
+        public string SsoUserCreate { get; set; }
     }
 }
