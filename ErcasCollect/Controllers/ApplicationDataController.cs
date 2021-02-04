@@ -160,8 +160,12 @@ namespace ErcasCollect.Controllers
             }
         }
 
-        [HttpGet]
-       
+
+        /// <summary>
+        /// Get system transaction type
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet]       
         public async Task<IEnumerable<ReadAllTransactionTypes>> TransactionType()
         {
             try
@@ -183,8 +187,11 @@ namespace ErcasCollect.Controllers
             }
         }
 
-        [HttpGet]
-       
+        /// <summary>
+        /// Get system billers
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet]       
         public async Task<IEnumerable<ReadAllBillerTypesDto>> BillerTypes()
         {
             try

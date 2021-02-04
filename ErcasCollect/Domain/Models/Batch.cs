@@ -40,7 +40,9 @@ namespace ErcasCollect.Domain.Models
 
         public bool IsSuccess { get; set; }
 
-        public TypesOfTransaction TransactionType { get; set; }
+        public int? TransactionTypeId { get; set; }
+
+        public TransactionType TransactionType { get; set; }
 
         public int? PaymentChannelId { get; set; }
 

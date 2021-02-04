@@ -16,7 +16,7 @@ namespace ErcasCollect.Domain.Models
 
         public string Name { get; set; }
 
-        [Column(TypeName = "nvarchar(32)")]
+        [Column(TypeName = "nvarchar(256)")]
 
         public string Address { get; set; }
 

@@ -112,7 +112,7 @@ namespace ErcasCollect.Commands.SettlementCommand
 
                     TransactionNumber = request.FlexSettlementDto.TransactionNumber,
 
-                    TransactionType = TypesOfTransaction.SelfService,
+                    TransactionTypeId = 6,
 
                     IsSuccess = request.FlexSettlementDto.IsSuccess
 

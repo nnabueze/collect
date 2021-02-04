@@ -21,7 +21,9 @@ namespace ErcasCollect.Domain.Models
 
         public PaymentChannel PaymentChannel { get; set; }
 
-        public TypesOfTransaction TransactionType { get; set; }
+        public int? TransactionTypeId { get; set; }
+
+        public TransactionType TransactionType { get; set; }
 
         [Column(TypeName = "nvarchar(32)")]
 

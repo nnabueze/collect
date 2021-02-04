@@ -22,6 +22,18 @@
             </summary>
             <returns></returns>
         </member>
+        <member name="M:ErcasCollect.Controllers.ApplicationDataController.TransactionType">
+            <summary>
+            Get system transaction type
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:ErcasCollect.Controllers.ApplicationDataController.BillerTypes">
+            <summary>
+            Get system billers
+            </summary>
+            <returns></returns>
+        </member>
         <member name="M:ErcasCollect.Controllers.BillerController.CreateBiller(ErcasCollect.Commands.BillerCommand.CreateBillerCommand)">
             <summary>
             Adding biller on the platform setting isGatwayOnboard to true onboard the biller on api gateway. Point gateway to live server
@@ -262,6 +274,13 @@
         <member name="M:ErcasCollect.Controllers.TransactionController.EbillsValidation(ErcasCollect.Domain.Models.Nibss.ValidationRequest)">
             <summary>
             All ebills valldations is received here!!
+            </summary>
+            <param name="request"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ErcasCollect.Controllers.UserController.CreateUser(ErcasCollect.Commands.UserCommand.CreateUserCommand)">
+            <summary>
+            Create user on the platform
             </summary>
             <param name="request"></param>
             <returns></returns>

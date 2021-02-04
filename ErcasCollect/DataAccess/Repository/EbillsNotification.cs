@@ -243,36 +243,35 @@ namespace ErcasCollect.DataAccess.Repository
 
                 CreatedDate = DateTime.UtcNow,
 
-                TransactionType = GetTransactionType(request)
+                TransactionTypeId = GetTransactionType(request)
 
             };
         }
 
-        private TypesOfTransaction GetTransactionType(NotificationRequest request)
+        private int GetTransactionType(NotificationRequest request)
         {
-           TypesOfTransaction transactionType = 0;
 
             if (request.ProductName.Equals(_nameConstant.Remittance))
             
-                transactionType = TypesOfTransaction.Remittance;
+                return  2;
             
 
             if (request.ProductName.Equals(_nameConstant.Invoice))
             
-                transactionType = TypesOfTransaction.Remittance;
+                return 4;
             
 
             if (request.ProductName.Equals(_nameConstant.NonTax))
             
-                transactionType = TypesOfTransaction.Remittance;
+                return 5;
             
 
             if (request.ProductName.Equals(_nameConstant.Tax))
             
-                transactionType = TypesOfTransaction.Remittance;
-            
+                return 3;
 
-            return transactionType;
+            return 0;
+            
         }
 
         private string GetTransactionKey(NotificationRequest request)

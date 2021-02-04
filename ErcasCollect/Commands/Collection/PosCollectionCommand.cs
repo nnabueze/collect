@@ -240,7 +240,7 @@ namespace ErcasCollect.Commands.Collection
 
                     ReferenceKey = Helpers.IdGenerator.IdGenerator.RandomInt(15),
 
-                    TransactionType = TypesOfTransaction.Collection,
+                    TransactionTypeId = 1,
 
                     PaymentChannelId = 1,
 
