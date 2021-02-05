@@ -317,5 +317,12 @@
             <param name="ssoId"></param>
             <returns></returns>
         </member>
+        <member name="M:ErcasCollect.Controllers.UserController.GetUserByBiller(System.String)">
+            <summary>
+            Get list of users by biller Id
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
     </members>
 </doc>

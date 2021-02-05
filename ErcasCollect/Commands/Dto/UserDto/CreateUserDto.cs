@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Text.Json.Serialization;
 using ErcasCollect.Domain.Models;
 
@@ -53,5 +54,14 @@ namespace ErcasCollect.Commands.Dto.UserDto
         public string CollectionLimit { get; set; }
 
         public string Name { get; set; }
+    }
+
+    public class BillerUserResposeDto
+    {
+        public string LevelOneDisplayName { get; set; }
+
+        public string LevelTwoDisplayName { get; set; }
+
+        public List<UserResponseDto> Users { get; set; }
     }
 }
