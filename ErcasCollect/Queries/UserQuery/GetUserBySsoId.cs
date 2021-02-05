@@ -3,42 +3,74 @@ using System.Threading;
 using System.Threading.Tasks;
 using AutoMapper;
 using ErcasCollect.Commands.Dto.BillerDto;
+using ErcasCollect.Commands.Dto.UserDto;
 using ErcasCollect.Domain.Interfaces;
 using ErcasCollect.Domain.Models;
+using ErcasCollect.Helpers;
 using ErcasCollect.Queries.Dto;
+using ErcasCollect.Responses;
 using MediatR;
+using Microsoft.Extensions.Options;
 
 namespace ErcasCollect.Queries.BillerQuery
 {
-    public class GetUserBySsoIDQuery : IRequest<ReadUserDto>
+    public class GetUserBySsoIDQuery : IRequest<SuccessfulResponse>
     {
-        public int id { get; set; }
+        public int _userId { get; set; }
 
-        public class GetUserBySsoIDHandler : IRequestHandler<GetUserBySsoIDQuery, ReadUserDto>
+        public GetUserBySsoIDQuery(int userId)
         {
-            private readonly IGenericRepository<User> taxpayerRepository;
+            _userId = userId;
+        }
+
+        public class GetUserBySsoIDHandler : IRequestHandler<GetUserBySsoIDQuery, SuccessfulResponse>
+        {
+            private readonly IGenericRepository<User> _userRepository;
+
             private readonly IMapper mapper;
 
-            public GetUserBySsoIDHandler(IGenericRepository<User> taxpayerRepository, IMapper mapper)
+            private readonly ResponseCode responsesCode;
+
+            public GetUserBySsoIDHandler(IGenericRepository<User> userRepository, IMapper mapper, IOptions<ResponseCode> responsesCode)
             {
-                this.taxpayerRepository = taxpayerRepository ?? throw new ArgumentNullException(nameof(taxpayerRepository));
+                _userRepository = userRepository;
+
                 this.mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
 
+                this.responsesCode = responsesCode.Value;
             }
 
-            public async Task<ReadUserDto> Handle(GetUserBySsoIDQuery query, CancellationToken cancellationToken)
+            public async Task<SuccessfulResponse> Handle(GetUserBySsoIDQuery query, CancellationToken cancellationToken)
             {
 
-                var result = await taxpayerRepository.FindSingleInclude(x => x.SsoId == query.id, x => x.Biller, x => x.StatusCode, x => x.Role);
-                if (result != null)
+                var user = await _userRepository.FindSingleInclude(x => x.SsoId == query._userId, x => x.Biller, x => x.LevelOne, x => x.LevelTwo, x => x.Role);
+
+                if (user == null)
+
+                    ResponseGenerator.Response("No User found", responsesCode.NotFound, false);
+
+                var userDetails = new UserResponseDto()
                 {
-                    var biller = mapper.Map<ReadUserDto>(result);
-                    return biller;
-                }
-                else
-                {
-                    return null;
-                }
+                    BillerName = user.Biller.Name,
+
+                    LevelOneName = user.LevelOne.Name,
+
+                    LevelTwoName = user.LevelTwo.Name,
+
+                    CollectionLimit = user.CollectionLimit.ToString(),
+
+                    Name = user.Name,
+
+                    IsActive = user.IsActive,
+
+                    PhoneNumber = user.PhoneNumber,
+
+                    ReferenceKey = user.ReferenceKey,
+
+                    Role = user.Role.Name
+                };
+
+                return ResponseGenerator.Response("Successful", responsesCode.OK, true, userDetails);
 
             }
 

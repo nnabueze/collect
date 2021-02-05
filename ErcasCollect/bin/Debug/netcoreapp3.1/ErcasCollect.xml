@@ -310,5 +310,12 @@
             <param name="id"></param>
             <returns></returns>
         </member>
+        <member name="M:ErcasCollect.Controllers.UserController.GetUserBySsoID(System.Int32)">
+            <summary>
+            Get user details by paasing SSO user Id
+            </summary>
+            <param name="ssoId"></param>
+            <returns></returns>
+        </member>
     </members>
 </doc>
