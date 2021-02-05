@@ -297,5 +297,11 @@
             <param name="request"></param>
             <returns></returns>
         </member>
+        <member name="M:ErcasCollect.Controllers.UserController.GetAllUsers">
+            <summary>
+            Get List of all the users on the platform
+            </summary>
+            <returns></returns>
+        </member>
     </members>
 </doc>

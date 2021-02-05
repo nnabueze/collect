@@ -66,27 +66,33 @@ namespace ErcasCollect.Controllers
             }
         }
 
-
-        [HttpGet]
-      
-        public async Task<IEnumerable<ReadUserDto>> GetAllUsers()
+        /// <summary>
+        /// Get List of all the users on the platform
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet]      
+        public async Task<ActionResult> GetAllUsers()
         {
             try
             {
-                GetAllUsersQuery request = new GetAllUsersQuery();
+                var result = await mediator.Send(new GetAllUsersQuery());
 
-                return await mediator.Send(request);
-            }
-            catch (AppException ex)
-            {
-                _logger.LogError(ex, "An Application exception occurred on the Get Specific action of the Igr");
-                // return await BadRequest(new { message = ex.Message });
-                throw;
+                var response = new JsonResult(result);
+
+                //response.StatusCode = result.StatusCode;
+
+                return response;
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "An unknown error occurred on the Get Specific action of the Igr");
-                throw;
+                _logger.LogError(ex.Message.ToString(), "An Application exception occurred on the make transaction action of the NonIgr");
+
+                var response = new JsonResult(new { Message = ex.Message.ToString() });
+
+                response.StatusCode = _responseCode.InternalServerError;
+
+                return response;
+
             }
         }
 

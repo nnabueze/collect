@@ -33,4 +33,25 @@ namespace ErcasCollect.Commands.Dto.UserDto
 
         public string OtherNames { get; set; }
     }
+
+    public class UserResponseDto
+    {
+        public string ReferenceKey { get; set; }
+
+        public string Role { get; set; }
+
+        public string PhoneNumber { get; set; }
+
+        public string BillerName { get; set; }
+
+        public string LevelTwoName { get; set; }
+
+        public string LevelOneName { get; set; }
+
+        public bool IsActive { get; set; }
+
+        public string CollectionLimit { get; set; }
+
+        public string Name { get; set; }
+    }
 }
