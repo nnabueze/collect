@@ -21,7 +21,6 @@ namespace ErcasCollect.Queries.BillerQuery
 
         public class GetAllUsersHandler : IRequestHandler<GetAllUsersQuery, SuccessfulResponse>
         {
-            private readonly IGenericRepository<User> taxpayerRepository;
 
             private readonly IMapper mapper;
 
@@ -29,9 +28,8 @@ namespace ErcasCollect.Queries.BillerQuery
 
             private readonly ResponseCode _responseCode;
 
-            public GetAllUsersHandler(IGenericRepository<User> taxpayerRepository, IMapper mapper, IGenericRepository<User> userRepository, IOptions<ResponseCode> responseCode)
+            public GetAllUsersHandler( IMapper mapper, IGenericRepository<User> userRepository, IOptions<ResponseCode> responseCode)
             {
-                this.taxpayerRepository = taxpayerRepository ?? throw new ArgumentNullException(nameof(taxpayerRepository));
 
                 this.mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
 
