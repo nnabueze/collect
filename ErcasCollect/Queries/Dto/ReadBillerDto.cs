@@ -15,6 +15,7 @@ namespace ErcasCollect.Commands.Dto.BillerDto
         public string PhoneNumber { get; set; }
         public string Email { get; set; }
         public string Description { get; set; }
+        public bool IsGatewayOnbaord { get; set; }
 
         [JsonIgnore]
         public int StateId { get; set; }
