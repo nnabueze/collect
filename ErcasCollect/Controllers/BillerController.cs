@@ -157,6 +157,36 @@ namespace ErcasCollect.Controllers
         }
 
         /// <summary>
+        /// Get displayname by biller Id
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
+        [HttpGet]
+        public async Task<ActionResult> GetBillerDsplayName(string billerId)
+        {
+            try
+            {
+                var result = await mediator.Send(new GetBillerDisplayNameQuery(billerId));
+
+                var response = new JsonResult(result);
+
+                response.StatusCode = result.StatusCode;
+
+                return response;
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message.ToString(), "An Application exception occurred on the make transaction action of the NonIgr");
+
+                var response = new JsonResult(new { Message = ex.Message.ToString() });
+
+                response.StatusCode = _responseCode.InternalServerError;
+
+                return response;
+            }
+        }
+
+        /// <summary>
         /// Add ebills notification parameter for a specifie biller onboarded on api gateway
         /// </summary>
         /// <param name="request"></param>

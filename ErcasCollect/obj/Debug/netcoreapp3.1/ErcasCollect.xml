@@ -62,6 +62,13 @@
             <param name="request"></param>
             <returns></returns>
         </member>
+        <member name="M:ErcasCollect.Controllers.BillerController.GetBillerDsplayName(System.String)">
+            <summary>
+            Get displayname by biller Id
+            </summary>
+            <param name="request"></param>
+            <returns></returns>
+        </member>
         <member name="M:ErcasCollect.Controllers.BillerController.AddEbillsNotificationParameter(ErcasCollect.Commands.BillerCommand.EbillsNotificationCommand)">
             <summary>
             Add ebills notification parameter for a specifie biller onboarded on api gateway
