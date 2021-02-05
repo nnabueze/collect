@@ -100,7 +100,30 @@ namespace ErcasCollect.Commands.UserCommand
 
                 await _userRepository.CommitAsync();
 
+                //send email
+
                 return ResponseGenerator.Response("Created", _responseCode.Created, true, new { UserId = saveUser.ReferenceKey });
+            }
+
+            private async Task SendMail(User user, CreateUserCommand request)
+            {
+                var msg = "Hi "+user.Name+". \r\n You have been created as a user in Ercas collect. Kindly find below your login credentials \r\n Username: " + request.createUserDto.email + "\r\n password: "
+
+                    + request.createUserDto.password + "\r\n Login Url: https://collect.ercas.com.ng \r\n You are requested to change your password \n\n Thanks \n Ercas Team";
+
+                var mailToSend = new
+                {
+                    to = request.createUserDto.email,
+
+                    subject = "Login credentials",
+
+                    message = msg
+                };
+
+                var mailToSendJson = JsonConvert.SerializeObject(mailToSend);
+
+                await _webCallService.PostDataCall(_webEndpoint.Mail, mailToSendJson);
+
             }
 
             private string GetName(string firstName, string  lastName)
