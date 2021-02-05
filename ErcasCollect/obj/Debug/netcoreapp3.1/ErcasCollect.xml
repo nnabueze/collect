@@ -55,6 +55,13 @@
             <param name="request"></param>
             <returns></returns>
         </member>
+        <member name="M:ErcasCollect.Controllers.BillerController.AddBillerDsplayName(ErcasCollect.Commands.BillerCommand.AddBillerDisplayNameCommand)">
+            <summary>
+            Add biller display names
+            </summary>
+            <param name="request"></param>
+            <returns></returns>
+        </member>
         <member name="M:ErcasCollect.Controllers.BillerController.AddEbillsNotificationParameter(ErcasCollect.Commands.BillerCommand.EbillsNotificationCommand)">
             <summary>
             Add ebills notification parameter for a specifie biller onboarded on api gateway
@@ -189,6 +196,13 @@
         <member name="M:ErcasCollect.Controllers.CollectionController.PosBatchTransaction(ErcasCollect.Commands.Collection.PosCollectionCommand)">
             <summary>
             Cash batch transaction from pos eg pos collection
+            </summary>
+            <param name="request"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ErcasCollect.Controllers.CollectionController.MultiplePosBatchTransaction(ErcasCollect.Commands.Collection.PosCollectionCommand)">
+            <summary>
+            List of batch transaction from pos eg lis of pos collection
             </summary>
             <param name="request"></param>
             <returns></returns>

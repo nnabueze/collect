@@ -36,4 +36,9 @@ namespace ErcasCollect.Commands.Dto.CollectionDto
 
         public string PayerPhone { get; set; }
     }
+
+    public class BatchPosCollectionDto
+    {
+        public List<PosCollectionDto> BatchCollection { get; set; }
+    }
 }

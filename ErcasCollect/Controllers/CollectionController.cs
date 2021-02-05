@@ -224,6 +224,37 @@ namespace ErcasCollect.Controllers
         }
 
         /// <summary>
+        /// List of batch transaction from pos eg lis of pos collection
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
+        [HttpPost]
+        public async Task<IActionResult> MultiplePosBatchTransaction([FromBody] PosCollectionCommand request)
+        {
+            try
+            {
+                var result = await mediator.Send(request);
+
+                var response = new JsonResult(result);
+
+                response.StatusCode = result.StatusCode;
+
+                return response;
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message.ToString(), "An Application exception occurred on the make transaction action of the NonIgr");
+
+                var response = new JsonResult(new { Message = ex.Message.ToString() });
+
+                response.StatusCode = _responseCode.InternalServerError;
+
+                return response;
+
+            }
+        }
+
+        /// <summary>
         /// Calculate total batch transaction amount for a period eg generate remittance
         /// </summary>
         /// <param name="request"></param>
