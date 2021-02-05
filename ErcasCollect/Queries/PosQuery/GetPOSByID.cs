@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using AutoMapper;
@@ -41,10 +42,14 @@ namespace ErcasCollect.Queries.BillerQuery
 
             private readonly NameConstant _nameConstant;
 
+            private readonly IGenericRepository<PosLocation> _posLocationRepository;
+
 
             public GetPOSByIDHandler(IGenericRepository<Pos> posRepository, IMapper mapper, IGenericRepository<Biller> billerRepository,
 
-                IGenericRepository<User> userRepository, IOptions<ResponseCode> responseCode, IOptions<NameConstant> nameConstant, IGenericRepository<LevelDisplayName> levelDisplayName)
+                IGenericRepository<User> userRepository, IOptions<ResponseCode> responseCode, IOptions<NameConstant> nameConstant, IGenericRepository<LevelDisplayName> levelDisplayName, 
+                
+                IGenericRepository<PosLocation> posLocationRepository)
             {
                 this.posRepository = posRepository ?? throw new ArgumentNullException(nameof(posRepository));
 
@@ -59,6 +64,8 @@ namespace ErcasCollect.Queries.BillerQuery
                 _nameConstant = nameConstant.Value;
 
                 _levelDisplayName = levelDisplayName;
+
+                _posLocationRepository = posLocationRepository;
             }
 
             public async Task<SuccessfulResponse> Handle(GetPOSByIDQuery query, CancellationToken cancellationToken)
@@ -73,6 +80,7 @@ namespace ErcasCollect.Queries.BillerQuery
 
                 foreach (var item in biller.Poses)
                 {
+                    var location = GetPosCoordinates((int)item.BillerId, item.Id);
 
                     var pos = new AllPosDto()
                     {
@@ -90,7 +98,11 @@ namespace ErcasCollect.Queries.BillerQuery
 
                         PosId = item.ReferenceKey,
 
-                        PosImei = item.PosImei
+                        PosImei = item.PosImei,
+
+                        Latitude = location != null ? location.Latitude : 0,
+
+                        Longitude = location != null ? location.Longitude : 0
 
                     };
 
@@ -116,6 +128,11 @@ namespace ErcasCollect.Queries.BillerQuery
 
                 return ResponseGenerator.Response(_nameConstant.Successful, _responseCode.OK, true, billerPos);
 
+            }
+
+            private PosLocation GetPosCoordinates(int billerId, int posId)
+            {
+                return _posLocationRepository.Find(x => x.PosId == posId && x.BillerId == billerId).OrderByDescending(x => x.CreatedDate).FirstOrDefault();
             }
 
             private LevelDisplayName GetBillerDisplayName(int billerId)

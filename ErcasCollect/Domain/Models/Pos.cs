@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using ErcasCollect.Domain.BaseEntities;
@@ -33,6 +34,8 @@ namespace ErcasCollect.Domain.Models
         public int? LastUserId { get; set; }
 
         public string PosImei { get; set; }
+
+        public ICollection<PosLocation> PosLocations { get; set; }
 
     }
 }

@@ -27,6 +27,10 @@ namespace ErcasCollect.Commands.Dto.PosDto
         public string LoginUserName { get; set; }
 
         public string LastLoginUserName { get; set; }
+
+        public double Latitude { get; set; }
+
+        public double Longitude { get; set; }
     }
 
     public class BillerPosDto

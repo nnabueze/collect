@@ -50,7 +50,7 @@ namespace ErcasCollect.Controllers
 
                 var response = new JsonResult(result);
 
-                //response.StatusCode = result.StatusCode;
+                response.StatusCode = result.StatusCode;
 
                 return response;
             }
