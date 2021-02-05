@@ -59,7 +59,7 @@ namespace ErcasCollect.Queries.BillerQuery
             {
                 List<UserResponseDto> userList = new List<UserResponseDto>();
 
-                var biller = await _billerRepository.FindSingleInclude(x => x.ReferenceKey == query._billerId, x => x.Users, x => x.LevelOne, x => x.LevelTwo);
+                var biller = await _billerRepository.FindSingleInclude(x => x.ReferenceKey == query._billerId && x.IsDeleted == false, x => x.Users, x => x.LevelOne, x => x.LevelTwo);
 
                 if (biller == null)
 
@@ -67,7 +67,7 @@ namespace ErcasCollect.Queries.BillerQuery
 
                 foreach (var item in biller.Users)
                 {
-                    if (item.IsActive)
+                    if (item.IsActive && ! item.IsDeleted)
                     {
                         var userDetails = new UserResponseDto()
                         {

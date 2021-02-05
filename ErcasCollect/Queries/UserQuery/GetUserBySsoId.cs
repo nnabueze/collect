@@ -49,6 +49,10 @@ namespace ErcasCollect.Queries.BillerQuery
 
                     ResponseGenerator.Response("No User found", responsesCode.NotFound, false);
 
+                if(! user.IsActive && user.IsDeleted)
+
+                    ResponseGenerator.Response("User not active", responsesCode.NotFound, false);
+
                 var userDetails = new UserResponseDto()
                 {
                     BillerName = user.Biller.Name,

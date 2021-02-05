@@ -50,30 +50,33 @@ namespace ErcasCollect.Queries.BillerQuery
 
                 foreach (var item in users)
                 {
-                    var user = await GetUserDetails(item.Id);
-
-                    var userDetails = new UserResponseDto()
+                    if (item.IsActive && ! item.IsDeleted)
                     {
-                        BillerName = user.Biller.Name,
+                        var user = await GetUserDetails(item.Id);
 
-                        LevelOneName = user.LevelOne.Name,
+                        var userDetails = new UserResponseDto()
+                        {
+                            BillerName = user.Biller.Name,
 
-                        LevelTwoName = user.LevelTwo.Name,
+                            LevelOneName = user.LevelOne.Name,
 
-                        CollectionLimit = item.CollectionLimit.ToString(),
+                            LevelTwoName = user.LevelTwo.Name,
 
-                        Name = item.Name,
+                            CollectionLimit = item.CollectionLimit.ToString(),
 
-                        IsActive = item.IsActive,
+                            Name = item.Name,
 
-                        PhoneNumber = item.PhoneNumber,
+                            IsActive = item.IsActive,
 
-                        ReferenceKey = item.ReferenceKey,
+                            PhoneNumber = item.PhoneNumber,
 
-                        Role = user.Role.Name
-                    };
+                            ReferenceKey = item.ReferenceKey,
 
-                    userList.Add(userDetails);
+                            Role = user.Role.Name
+                        };
+
+                        userList.Add(userDetails);
+                    }
                 }
 
                 return ResponseGenerator.Response("Successful", _responseCode.OK, true, userList);
