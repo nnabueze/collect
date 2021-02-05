@@ -36,11 +36,17 @@ namespace ErcasCollect.Commands.BillerCommand
 
             public async Task<SuccessfulResponse> Handle(AddBillerDisplayNameCommand request, CancellationToken cancellationToken)
             {
-                var biller = _billerRepository.FindFirst(x => x.ReferenceKey == request.billerDisplayNameDto.BillerId);
+                var biller = _billerRepository.FindFirst(x => x.ReferenceKey == request.billerDisplayNameDto.BillerId);                
 
                 if (biller == null)
 
                     return ResponseGenerator.Response("Invalid biller Id", _responseCode.NotFound, false);
+
+                var checkDisplayName = _levelDisplayNameRepository.FindFirst(x => x.BillerId == biller.Id);
+
+                if(checkDisplayName != null)
+
+                    return ResponseGenerator.Response("Display Name already added for biller", _responseCode.NotAccepted, false);
 
                 var billerDisplayName = new LevelDisplayName()
                 {
@@ -62,7 +68,7 @@ namespace ErcasCollect.Commands.BillerCommand
 
                 await _levelDisplayNameRepository.CommitAsync();
 
-                return ResponseGenerator.Response("Created", _responseCode.Created, true, saveBillerDisplayName);
+                return ResponseGenerator.Response("Created", _responseCode.Created, true);
             }
         }
     }
