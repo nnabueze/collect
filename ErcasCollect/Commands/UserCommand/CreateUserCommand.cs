@@ -65,7 +65,7 @@ namespace ErcasCollect.Commands.UserCommand
 
             public async Task<SuccessfulResponse> Handle(CreateUserCommand request, CancellationToken cancellationToken)
             {
-                var ssoUser = SsoUserCreate(request);
+                var ssoUser = await SsoUserCreate(request);
 
                 if (ssoUser == null)
 

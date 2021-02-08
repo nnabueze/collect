@@ -94,6 +94,10 @@ namespace ErcasCollect.DataAccess
                 .HasIndex(x => x.ActivationPin)
                 .IsUnique();
 
+            builder.Entity<User>()
+                .HasIndex(x => x.PhoneNumber)
+                .IsUnique();
+
             builder.Entity<Pos>()
                 .HasIndex(x => x.PosImei)
                 .IsUnique();
