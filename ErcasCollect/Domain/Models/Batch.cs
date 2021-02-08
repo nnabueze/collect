@@ -50,6 +50,8 @@ namespace ErcasCollect.Domain.Models
 
         public bool IsBatchClosed { get; set; }
 
+        public DateTime? OfflineCreatedDate { get; set; }
+
         public int? CloseBatchTransactionId { get; set; }
 
         public CloseBatchTransaction CloseBatchTransaction { get; set; }

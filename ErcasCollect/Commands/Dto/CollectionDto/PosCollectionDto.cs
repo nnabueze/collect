@@ -23,6 +23,8 @@ namespace ErcasCollect.Commands.Dto.CollectionDto
         
         public string ItemCount { get; set; }
 
+        public string OfflineCreatedDate { get; set; }
+
         public List<Item> TransactionItems { get; set; }
     }
 

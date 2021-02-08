@@ -9,6 +9,8 @@ namespace ErcasCollect.Commands.Dto.CollectionDto
     {
         public string PosId { get; set; }
 
+        public string OfflineBatchTransactionId { get; set; }
+
         public string UserId { get; set; }
 
         public string BillerId { get; set; }
@@ -18,6 +20,10 @@ namespace ErcasCollect.Commands.Dto.CollectionDto
         public string LevelTwoId { get; set; }
 
         public string TotalAmount { get; set; }
+
+        public string OfflineCreatedDate { get; set; }
+
+        public string ItemCount { get; set; }
 
         public List<InvoiceDetail> Invoices { get; set; }
     }

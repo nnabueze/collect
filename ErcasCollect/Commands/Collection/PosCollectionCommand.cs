@@ -244,6 +244,8 @@ namespace ErcasCollect.Commands.Collection
 
                     PaymentChannelId = 1,
 
+                    OfflineCreatedDate = Convert.ToDateTime(request.posCollectionDto.OfflineCreatedDate),
+
                     IsSuccess = true
                     
                 };

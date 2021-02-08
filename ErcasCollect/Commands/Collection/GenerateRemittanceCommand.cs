@@ -128,6 +128,8 @@ namespace ErcasCollect.Commands.CollectionCommand
                     TotalAmount = totalAmount,
                     
                     PaymentChannelId = 1,
+
+                    TransactionTypeId = 2,
                     
                     ReferenceKey = referenceKey
                 };
@@ -159,7 +161,7 @@ namespace ErcasCollect.Commands.CollectionCommand
 
                      _BatchRepository.Update(item);
 
-                    _billerRepository.CommitAsync();
+                    _BatchRepository.CommitAsync();
                 }
             }
 
