@@ -61,7 +61,7 @@ namespace ErcasCollect.Commands.PosCommand
 
                     LevelTwoId = GetLevelTwoId(request.AddPosDto.LevelTwoId),
 
-                    LevelOneId = GetLevelOneId(request.AddPosDto.LevelTwoId),
+                    LevelOneId = GetLevelOneId(request.AddPosDto.LevelOneId),
 
                     ActivationPin = Helpers.IdGenerator.IdGenerator.RandomInt(5),
 
