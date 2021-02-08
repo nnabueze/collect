@@ -78,14 +78,14 @@ namespace ErcasCollect.Commands.Collection
 
             public async Task<SuccessfulResponse> Handle(PosCollectionCommand request, CancellationToken cancellationToken)
             {
-                var posRequestValidation = PosRequestValidation(request);
+                var posRequestValidation = await PosRequestValidation(request);
 
                 if (posRequestValidation != null)
                 {
                     return posRequestValidation;
                 }
 
-                var checkLevels = CheckLevelOneAndTwo(request);
+                var checkLevels = await CheckLevelOneAndTwo(request);
 
                 if (checkLevels != null)
                 {
@@ -106,7 +106,7 @@ namespace ErcasCollect.Commands.Collection
                     return checkTransactionTotal;
                 }
 
-                var verifyCollectionLimit = VerifyCollectionLimit(request);
+                var verifyCollectionLimit = await VerifyCollectionLimit(request);
 
                 if (verifyCollectionLimit != null)
                 {
@@ -122,13 +122,13 @@ namespace ErcasCollect.Commands.Collection
 
             }
 
-            private SuccessfulResponse CheckLevelOneAndTwo(PosCollectionCommand request)
+            private async Task<SuccessfulResponse> CheckLevelOneAndTwo(PosCollectionCommand request)
             {
                 LevelOne levelOne = GetLevelOne(request);
 
                 LevelTwo levelTwo = GetLevelTwo(request);
 
-                var user = GetUserId(request.posCollectionDto.UserId);
+                var user = await GetUserId(request.posCollectionDto.UserId);
 
                 if (levelOne != null && user.LevelOneId != levelOne.Id)
                 {
@@ -274,9 +274,9 @@ namespace ErcasCollect.Commands.Collection
                 return request.posCollectionDto.TransactionItems.Sum(x => Convert.ToDecimal(x.Amount));
             }
 
-            private SuccessfulResponse VerifyCollectionLimit(PosCollectionCommand request)
+            private async Task<SuccessfulResponse> VerifyCollectionLimit(PosCollectionCommand request)
             {
-                var user = GetUserId(request.posCollectionDto.UserId);
+                var user = await GetUserId(request.posCollectionDto.UserId);
 
                 var totalCollection = _BatchRepository.Find(x => x.UserId == user.Id && x.IsBatchClosed == false).Sum(x => x.TotalAmount);
 
@@ -287,10 +287,14 @@ namespace ErcasCollect.Commands.Collection
                     return ResponseGenerator.Response("User Llimit reached", _responseCode.NotFound, false);
                 }
 
+                if(user.RoleId != 4 && user.RoleId != 5)
+
+                    return ResponseGenerator.Response("User is not an agent", _responseCode.NotAccepted, false);
+
                 return null;
             }
 
-            private SuccessfulResponse PosRequestValidation(PosCollectionCommand request)
+            private async Task<SuccessfulResponse> PosRequestValidation(PosCollectionCommand request)
             {
                 Biller biller = GetBiller(request);
 
@@ -306,7 +310,7 @@ namespace ErcasCollect.Commands.Collection
                     return ResponseGenerator.Response("Invalid pos Id or pos not active", _responseCode.NotFound, false);
                 }
 
-                var user = GetUserId(request.posCollectionDto.UserId);
+                var user = await GetUserId(request.posCollectionDto.UserId);
 
                 if (user == null || !user.IsActive)
                 {
@@ -327,9 +331,9 @@ namespace ErcasCollect.Commands.Collection
                 return _billerRepository.FindFirst(x => x.ReferenceKey == request.posCollectionDto.BillerId);
             }
 
-            private User GetUserId(string UserId)
+            private async Task<User> GetUserId(string UserId)
             {
-                var user = _userRepository.FindFirst(x => x.ReferenceKey == UserId);
+                var user = await _userRepository.FindSingleInclude(x => x.ReferenceKey == UserId, x => x.Role);
 
                 return user;
             }

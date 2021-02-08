@@ -224,9 +224,9 @@ namespace ErcasCollect.Commands.Collection
             private async Task<SuccessfulResponse> UserCheck(PosInvoiceCommand request, User user)
             {
                
-                if(user.RoleId != 5 || user.RoleId != 6)
+                if(user.RoleId != 4 || user.RoleId != 5)
 
-                    return ResponseGenerator.Response("User not an agent", _responseCode.NotAccepted, false);
+                    return ResponseGenerator.Response("User is not an agent", _responseCode.NotAccepted, false);
 
                 var totalCollection = _BatchRepository.Find(x => x.UserId == user.Id && x.IsBatchClosed == false).Sum(x => x.TotalAmount);
 
