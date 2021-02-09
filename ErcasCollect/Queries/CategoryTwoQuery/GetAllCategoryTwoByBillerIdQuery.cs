@@ -59,7 +59,6 @@ namespace ErcasCollect.Queries.CategoryTwoQuery
 
             public async Task<SuccessfulResponse> Handle(GetAllCategoryTwoByBillerIdQuery request, CancellationToken cancellationToken)
             {
-                List<ReadAllCategoryTwoDto> categoryList = new List<ReadAllCategoryTwoDto>();
 
                 var biller = await _billerRepository.FindSingleInclude(x => x.ReferenceKey == request._billerId, x => x.CategoryTwoService);
 

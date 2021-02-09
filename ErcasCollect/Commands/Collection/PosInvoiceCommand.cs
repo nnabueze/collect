@@ -5,6 +5,7 @@ using ErcasCollect.Domain.Models;
 using ErcasCollect.Helpers;
 using ErcasCollect.Responses;
 using MediatR;
+using Microsoft.Extensions.Options;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -36,6 +37,31 @@ namespace ErcasCollect.Commands.Collection
             private readonly IGenericRepository<LevelTwo> _levelTwoRepository;
 
             private readonly IGenericRepository<CloseBatchTransaction> _closeBatchTransactionRepository;
+
+            public PosInvoiceCommandHandler(IOptions<ResponseCode> responseCode, IGenericRepository<Transaction> transactionRepository, IGenericRepository<Batch> batchRepository, 
+                
+                IGenericRepository<Pos> posRespository, IGenericRepository<User> userRepository, IMapper mapper, IGenericRepository<CategoryTwoService> categoryTwoServiceRepository,
+                
+                IGenericRepository<LevelTwo> levelTwoRepository, IGenericRepository<CloseBatchTransaction> closeBatchTransactionRepository)
+            {
+                _responseCode = responseCode.Value;
+
+                _transactionRepository = transactionRepository;
+
+                _BatchRepository = batchRepository;
+
+                _posRespository = posRespository;
+
+                _userRepository = userRepository;
+
+                _mapper = mapper;
+
+                _categoryTwoServiceRepository = categoryTwoServiceRepository;
+
+                _levelTwoRepository = levelTwoRepository;
+
+                _closeBatchTransactionRepository = closeBatchTransactionRepository;
+            }
 
             public async Task<SuccessfulResponse> Handle(PosInvoiceCommand request, CancellationToken cancellationToken)
             {
@@ -83,7 +109,7 @@ namespace ErcasCollect.Commands.Collection
                 //add close batch
                 var savedClocsBatchTransaction = await SaveCloseBatchTransaction(request, levelTwo, user.Id);
 
-                UpdateBatchTransaction(savedBatch.Id, savedClocsBatchTransaction.Id, user);
+                await UpdateBatchTransaction(savedBatch.Id, savedClocsBatchTransaction.Id, user);
 
                 //send email
 
@@ -91,7 +117,7 @@ namespace ErcasCollect.Commands.Collection
                 return ResponseGenerator.Response("Sucessful", _responseCode.OK, true, new { InvoiceId = savedClocsBatchTransaction.ReferenceKey});
             }
 
-            private void UpdateBatchTransaction(int batchId, int closeBatchId, User user)
+            private async Task UpdateBatchTransaction(int batchId, int closeBatchId, User user)
             {
 
                 var item = _BatchRepository.FindFirst(x => x.Id == batchId && x.IsBatchClosed == false);
@@ -104,9 +130,9 @@ namespace ErcasCollect.Commands.Collection
 
                 item.ModifiedBy = user.Id;
 
-                _BatchRepository.Update(item);
+                 _BatchRepository.Update(item);
 
-                _BatchRepository.CommitAsync();
+               await _BatchRepository.CommitAsync();
             }
 
             private async Task<CloseBatchTransaction> SaveCloseBatchTransaction(PosInvoiceCommand request, LevelTwo levelTwo, int userId)
@@ -145,6 +171,8 @@ namespace ErcasCollect.Commands.Collection
             {
                 foreach (var item in request.posInvoiceDto.Invoices)
                 {
+                    var catagory = await GetCategoryTwo(item.CategoryTwoId);
+
                     var trasaction = new Transaction()
                     {
                         Amount = Convert.ToDecimal(item.Amount),
@@ -153,7 +181,7 @@ namespace ErcasCollect.Commands.Collection
 
                         OfflineBatchId = request.posInvoiceDto.OfflineBatchTransactionId,
 
-                        CategoryTwoServiceId = GetCategoryTwo(item.CategoryTwoId).Id,
+                        CategoryTwoServiceId = catagory.Id,
 
                         CreatedDate = DateTime.UtcNow,
 
@@ -165,9 +193,11 @@ namespace ErcasCollect.Commands.Collection
                     };
 
                     await _transactionRepository.Add(trasaction);
+
+                    await _transactionRepository.CommitAsync();
                 }
 
-                await _transactionRepository.CommitAsync();
+                
             }
 
             private async Task<CategoryTwoService> GetCategoryTwo(string categoryTwoId)
@@ -224,7 +254,7 @@ namespace ErcasCollect.Commands.Collection
             private async Task<SuccessfulResponse> UserCheck(PosInvoiceCommand request, User user)
             {
                
-                if(user.RoleId != 4 || user.RoleId != 5)
+                if(user.RoleId != 4 && user.RoleId != 5)
 
                     return ResponseGenerator.Response("User is not an agent", _responseCode.NotAccepted, false);
 

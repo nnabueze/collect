@@ -107,27 +107,29 @@ namespace ErcasCollect.Controllers
         [HttpPost]
         public async Task<IActionResult> PosInvoice([FromBody] PosInvoiceCommand request)
         {
-            try
-            {
-                var result = await mediator.Send(request);
+            //try
+            //{
 
-                var response = new JsonResult(result);
+            //}
+            //catch (Exception ex)
+            //{
+            //    _logger.LogError(ex.Message.ToString(), "An Application exception occurred on the make transaction action of the NonIgr");
 
-                response.StatusCode = result.StatusCode;
+            //    var response = new JsonResult(new { Message = ex.Message.ToString() });
 
-                return response;
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError(ex.Message.ToString(), "An Application exception occurred on the make transaction action of the NonIgr");
+            //    response.StatusCode = _responseCode.InternalServerError;
 
-                var response = new JsonResult(new { Message = ex.Message.ToString() });
+            //    return response;
 
-                response.StatusCode = _responseCode.InternalServerError;
+            //}
 
-                return response;
+            var result = await mediator.Send(request);
 
-            }
+            var response = new JsonResult(result);
+
+            response.StatusCode = result.StatusCode;
+
+            return response;
         }
 
         /// <summary>
