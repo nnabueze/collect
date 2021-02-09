@@ -126,5 +126,36 @@ namespace ErcasCollect.Controllers
 
             }
         }
+
+        /// <summary>
+        /// Listing all category two by biller Id
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        [HttpGet]
+        public async Task<IActionResult> GetAllCategoryTwoByBiller(string billerId)
+        {
+            try
+            {
+                var result = await _mediator.Send(new GetAllCategoryTwoByBillerIdQuery(billerId));
+
+                var response = new JsonResult(result);
+
+                response.StatusCode = result.StatusCode;
+
+                return response;
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message.ToString(), "An Application exception occurred on the make transaction action of the NonIgr");
+
+                var response = new JsonResult(new { Message = ex.Message.ToString() });
+
+                response.StatusCode = _responseCode.InternalServerError;
+
+                return response;
+
+            }
+        }
     }
 }

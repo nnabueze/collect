@@ -16,6 +16,8 @@ namespace ErcasCollect.AutoMapper.Profiles
             CreateMap<ReadLevelTwoDto, LevelTwo>().ReverseMap();
 
             CreateMap<LevelTwo, LevelTwoItem>();
+
+            CreateMap<CategoryTwoService, ReadAllCategoryTwoDto>();
         }
     }
 }

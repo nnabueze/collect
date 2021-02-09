@@ -76,7 +76,6 @@
     <Folder Include="Commands\Dto\LevelTwoDto\" />
     <Folder Include="Commands\Dto\LevelThreeDto\" />
     <Folder Include="Helpers\Pagination\" />
-    <Folder Include="Queries\Dto\" />
     <Folder Include="Commands\Dto\UserDto\" />
     <Folder Include="Commands\Dto\TaxpayerDto\" />
     <Folder Include="Commands\BatchCommand\" />
