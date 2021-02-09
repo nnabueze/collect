@@ -194,13 +194,18 @@ namespace ErcasCollect.DataAccess.Repository
 
             _billerDetail = _billerRepository.FindFirst(x => x.ReferenceKey == ercasCollectId);
 
-            var productId = _billerEbillsProductRepository.FindFirst(x => x.BillerId == _billerDetail.Id && x.ProductName == _nameConstant.Remittance).Id;
+            //var productId = _billerEbillsProductRepository.FindFirst(x => x.BillerId == _billerDetail.Id && x.ProductName == _nameConstant.Remittance).Id;
 
-            var validationParameter = _billerValidationRepository.FindFirst(x => x.BillerId == _billerDetail.Id && x.BillerEbillsProductId == productId).ValidationName;
+            //var validationParameter = _billerValidationRepository.FindFirst(x => x.BillerId == _billerDetail.Id && x.BillerEbillsProductId == productId).ValidationName;
 
             for (int i = 0; i < request.Param.Count; i++)
             {
-                if (request.Param[i].Key.Equals(validationParameter))
+                if (request.Param[i].Key.Equals(_nameConstant.Remittance))
+                {
+                    _remittanceStringId = request.Param[i].Value;
+                }
+
+                if (request.Param[i].Key.Equals(_nameConstant.Invoice))
                 {
                     _remittanceStringId = request.Param[i].Value;
                 }

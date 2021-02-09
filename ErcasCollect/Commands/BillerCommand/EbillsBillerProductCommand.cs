@@ -52,7 +52,7 @@ namespace ErcasCollect.Commands.BillerCommand
 
                     ReferenceKey = Helpers.IdGenerator.IdGenerator.RandomInt(15),
 
-                    ProductName = request.ebillsBillerProductDto.ProductName,
+                    EbillsProductId = request.ebillsBillerProductDto.EbillsProductId,
 
                     CreatedDate = DateTime.UtcNow
                 };

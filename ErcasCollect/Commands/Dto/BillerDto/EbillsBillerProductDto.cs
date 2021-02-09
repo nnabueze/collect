@@ -7,7 +7,7 @@ namespace ErcasCollect.Commands.Dto.BillerDto
 {
     public class EbillsBillerProductDto
     {
-        public string ProductName { get; set; }
+        public int EbillsProductId { get; set; }
 
         public string BillerId { get; set; }
     }

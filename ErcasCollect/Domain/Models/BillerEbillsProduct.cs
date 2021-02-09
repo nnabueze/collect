@@ -10,7 +10,9 @@ namespace ErcasCollect.Domain.Models
     {
         public string ReferenceKey { get; set; }
 
-        public string ProductName { get; set; }
+        public int? EbillsProductId { get; set; }
+
+        public EbillsProduct EbillsProduct { get; set; }
 
         public int? BillerId { get; set; }
 
