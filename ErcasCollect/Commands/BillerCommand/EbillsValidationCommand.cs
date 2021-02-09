@@ -46,23 +46,20 @@ namespace ErcasCollect.Commands.BillerCommand
 
                 var ebillsProductId = _billerEbillsProductRepository.FindFirst(x => x.ReferenceKey == request.ebillsValidationDto.BillerProductId).Id;
 
-                foreach (var item in request.ebillsValidationDto.ValidationFields)
+                var ebillsValidation = new BillerValidation()
                 {
-                    var ebillsValidation = new BillerValidation()
-                    {
-                        BillerEbillsProductId = ebillsProductId,
+                    BillerEbillsProductId = ebillsProductId,
 
-                        BillerId = biller.Id,
+                    BillerId = biller.Id,
 
-                        ValidationName = item.ValidationField,
+                    ValidationName = request.ebillsValidationDto.ValidationField,
 
-                        VaidationStep = item.ValidationStep,
+                    VaidationStep = request.ebillsValidationDto.ValidationStep,
 
-                        CreatedDate = DateTime.UtcNow
-                    };
+                    CreatedDate = DateTime.UtcNow
+                };
 
-                    var savedEbillsValidation = await _billerValidationRepository.Add(ebillsValidation);
-                }
+                var savedEbillsValidation = await _billerValidationRepository.Add(ebillsValidation);
 
                 await _billerValidationRepository.CommitAsync();
 

@@ -11,14 +11,9 @@ namespace ErcasCollect.Commands.Dto.BillerDto
 
         public string BillerProductId { get; set; }
 
-        public List<Param> ValidationFields { get; set; }
+        public string ValidationField { get; set; }
 
-        public class Param
-        {
-            public string ValidationField { get; set; }
-
-            public int ValidationStep { get; set; }
-        }
+        public int ValidationStep { get; set; }
     }
 
     public class PaymentDetail

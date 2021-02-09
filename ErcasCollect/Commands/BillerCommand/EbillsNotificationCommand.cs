@@ -46,21 +46,18 @@ namespace ErcasCollect.Commands.BillerCommand
 
                 var ebillsProductId = _billerEbillsProductRepository.FindFirst(x => x.ReferenceKey == request.ebillsNotificationDto.BillerProductId).Id;
 
-                foreach (var item in request.ebillsNotificationDto.NotificationFields)
+                var ebillsNotification = new BillerNotification()
                 {
-                    var ebillsNotification = new BillerNotification()
-                    {
-                        BillerEbillsProductId = ebillsProductId,
+                    BillerEbillsProductId = ebillsProductId,
 
-                        BillerId = biller.Id,
+                    BillerId = biller.Id,
 
-                        NotificationName = item.NotificationField,
+                    NotificationName = request.ebillsNotificationDto.NotificationField,
 
-                        CreatedDate = DateTime.UtcNow
-                    };
+                    CreatedDate = DateTime.UtcNow
+                };
 
-                    var savedEbillsNotification = await _billerNotificationRepository.Add(ebillsNotification);
-                }
+                var savedEbillsNotification = await _billerNotificationRepository.Add(ebillsNotification);
 
                 await _billerNotificationRepository.CommitAsync();
 
