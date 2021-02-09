@@ -93,7 +93,7 @@ namespace ErcasCollect.Commands.UserCommand
 
                     RoleId = request.createUserDto.RoleId,
 
-                    SsoId = ssoUser.Id
+                    SsoId = ssoUser.id
                 };
 
                 var saveUser = await _userRepository.Add(user);
