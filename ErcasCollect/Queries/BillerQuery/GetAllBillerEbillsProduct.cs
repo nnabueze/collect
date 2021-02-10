@@ -1,4 +1,5 @@
-﻿using ErcasCollect.Domain.Interfaces;
+﻿using ErcasCollect.Commands.Dto.BillerDto;
+using ErcasCollect.Domain.Interfaces;
 using ErcasCollect.Domain.Models;
 using ErcasCollect.Helpers;
 using ErcasCollect.Responses;
@@ -24,19 +25,25 @@ namespace ErcasCollect.Queries.BillerQuery
 
             private readonly IGenericRepository<Biller> _billerRepository;
 
-            public GetAllBillerEbillsProductQueryHandler(IOptions<ResponseCode> responseCode, IGenericRepository<BillerEbillsProduct> billerEbillsProductRepository, 
-                
-                IGenericRepository<Biller> billerRepository)
+            private readonly IGenericRepository<EbillsProduct> _ebillsProductRepository;
+
+            public GetAllBillerEbillsProductQueryHandler(IOptions<ResponseCode> responseCode, IGenericRepository<BillerEbillsProduct> billerEbillsProductRepository,
+
+                IGenericRepository<Biller> billerRepository, IGenericRepository<EbillsProduct> ebillsProductRepository)
             {
                 _responseCode = responseCode.Value;
 
                 _billerEbillsProductRepository = billerEbillsProductRepository;
 
                 _billerRepository = billerRepository;
+
+                _ebillsProductRepository = ebillsProductRepository;
             }
 
             public async Task<SuccessfulResponse> Handle(GetAllBillerEbillsProduct request, CancellationToken cancellationToken)
             {
+                List<BillerEbillsProductDto> billerList = new List<BillerEbillsProductDto>();
+
                 var biller = _billerRepository.FindFirst(x => x.ReferenceKey == request.Id);
 
                 if (biller == null)
@@ -44,10 +51,33 @@ namespace ErcasCollect.Queries.BillerQuery
                     return ResponseGenerator.Response("Invalid billerId", _responseCode.NotFound, false);
                 }
 
-                var ebillsProduct = await _billerEbillsProductRepository.FindAllInclude(x => x.BillerId == biller.Id);
+                var ebillsProduct = _billerEbillsProductRepository.Find(x => x.BillerId == biller.Id).ToList();
 
-                return ResponseGenerator.Response("Successful", _responseCode.OK, true, ebillsProduct);
+                foreach (var item in ebillsProduct)
+                {
+                    var listofProduct = new BillerEbillsProductDto()
+                    {
+                        ReferenceKey = item.ReferenceKey,
 
+                        EbillsProductName = GetEbillsProduct((int)item.EbillsProductId)
+                    };
+
+                    billerList.Add(listofProduct);
+                }
+
+                return ResponseGenerator.Response("Successful", _responseCode.OK, true, billerList);
+
+            }
+
+            private string GetEbillsProduct(int id)
+            {
+                var ebillsProduct = _ebillsProductRepository.FindFirst(x => x.Id == id);
+
+                if (ebillsProduct == null)
+
+                    return null;
+
+                return ebillsProduct.ProductName;
             }
         }
     }
