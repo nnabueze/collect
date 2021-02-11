@@ -71,7 +71,13 @@ namespace ErcasCollect.Queries.BillerQuery
 
                     ReferenceKey = user.ReferenceKey,
 
-                    Role = user.Role.Name
+                    Role = user.Role.Name, 
+
+                    LevelOneId = user.LevelOne.ReferenceKey,
+
+                    LevelTwoId = user.LevelTwo.ReferenceKey,
+
+                    BillerId = user.Biller.ReferenceKey
                 };
 
                 return ResponseGenerator.Response("Successful", responsesCode.OK, true, userDetails);

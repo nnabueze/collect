@@ -54,6 +54,12 @@ namespace ErcasCollect.Commands.Dto.UserDto
         public string CollectionLimit { get; set; }
 
         public string Name { get; set; }
+
+        public string BillerId { get; set; }
+
+        public string LevelOneId { get; set; }
+
+        public string LevelTwoId { get; set; }
     }
 
     public class BillerUserResposeDto
