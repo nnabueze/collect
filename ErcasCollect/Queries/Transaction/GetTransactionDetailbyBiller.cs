@@ -6,46 +6,100 @@ using AutoMapper;
 
 using ErcasCollect.Domain.Interfaces;
 using ErcasCollect.Domain.Models;
+using ErcasCollect.Helpers;
 using ErcasCollect.Queries.Dto;
 using ErcasCollect.Queries.Dto.ReadTransactionDto;
+using ErcasCollect.Responses;
 using MediatR;
+using Microsoft.Extensions.Options;
 
 namespace ErcasCollect.Queries.BillerQuery
 {
-    public class GetTransactionByBillerIDQuery : IRequest<IEnumerable<ReadTransactionDto>>
+    public class GetTransactionByBillerIDQuery : IRequest<SuccessfulResponse>
     {
+        private string _billerId;
 
-        //public int id { get; set; }
-        //public class GetTransactionByBillerIDHandler : IRequestHandler<GetTransactionByBillerIDQuery, IEnumerable<ReadTransactionDto>>
-        //{
-        //    private readonly IGenericRepository<Transaction> transactionbybatchidRepository;
-        //    private readonly IMapper mapper;
+        public GetTransactionByBillerIDQuery(string billerId)
+        {
+            _billerId = billerId;
+        }
 
-        //    public GetTransactionByBillerIDHandler(IGenericRepository<Transaction> transactionbybatchidRepository, IMapper mapper)
-        //    {
-        //        this.transactionbybatchidRepository = transactionbybatchidRepository ?? throw new ArgumentNullException(nameof(transactionbybatchidRepository));
-        //        this.mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
+        public class GetTransactionByBillerIDHandler : IRequestHandler<GetTransactionByBillerIDQuery, SuccessfulResponse>
+        {
+            private readonly IGenericRepository<Batch> _batchRepository;
 
-        //    }
+            private readonly IGenericRepository<Biller> _billerRepository;
 
-        //    public async Task<IEnumerable<ReadTransactionDto>> Handle(GetTransactionByBillerIDQuery query, CancellationToken cancellationToken)
-        //    {
+            private readonly ResponseCode _responseCode;
 
-        //        var result = await transactionbybatchidRepository.FindAllInclude(x => x.BillerId == query.id, x => x.StatusCode, x => x.User, x => x.Biller, x => x.PaymentChannel, x => x.TransactionType);
-        //        if (result != null)
-        //        {
-        //            var transactionbybatchid = mapper.Map<IEnumerable<ReadTransactionDto>>(result);
-        //            return transactionbybatchid;
-        //        }
-        //        else
-        //        {
-        //            return null;
-        //        }
+            public GetTransactionByBillerIDHandler(IGenericRepository<Batch> batchRepository, IOptions<ResponseCode> responseCode, IGenericRepository<Biller> billerRepository)
+            {
+                _batchRepository = batchRepository;
 
-        //    }
+                _responseCode = responseCode.Value;
 
+                _billerRepository = billerRepository;
+            }
 
-        //}
+            public async Task<SuccessfulResponse> Handle(GetTransactionByBillerIDQuery request, CancellationToken cancellationToken)
+            {
+                List<ReadAllBatchTransactionDto> listOfBatch = new List<ReadAllBatchTransactionDto>();
+
+                var biller = GetBiller(request._billerId);
+
+                if (biller == null)
+
+                    return ResponseGenerator.Response("Invalid billerId", _responseCode.NotFound, false);
+
+                var batchList = await _batchRepository.FindAllInclude(x => x.IsDeleted == false && x.BillerId == biller.Id, x => x.LevelOne, x => x.LevelTwo, x => x.Biller, x => x.User);
+
+                if (batchList == null)
+
+                    return ResponseGenerator.Response("Succesful", _responseCode.OK, true);
+
+                foreach (var item in batchList)
+                {
+                    var addBatch = new ReadAllBatchTransactionDto()
+                    {
+                        BillerName = item.Biller.Name,
+
+                        IsBatchClosed = item.IsBatchClosed,
+
+                        IsSuccess = item.IsSuccess,
+
+                        ItemCount = item.ItemCount,
+
+                        LevelOneName = item.LevelOne.Name,
+
+                        LevelTwoName = item.LevelTwo.Name,
+
+                        OfflineBatchId = item.OfflineBatchId,
+
+                        OfflineCreatedDate = item.OfflineCreatedDate.ToString(),
+
+                        PaymentChannel = TypeAndChannelHelper.PaymentChannel((int)item.PaymentChannelId),
+
+                        ReferenceKey = item.ReferenceKey,
+
+                        TotalAmount = item.TotalAmount.ToString(),
+
+                        TransactionType = TypeAndChannelHelper.TransactionType((int)item.TransactionTypeId),
+
+                        UserName = item.User.Name
+
+                    };
+
+                    listOfBatch.Add(addBatch);
+                }
+
+                return ResponseGenerator.Response("Successful", _responseCode.OK, true, listOfBatch);
+            }
+
+            private Biller GetBiller(string billerId)
+            {
+                return _billerRepository.FindFirst(x => x.ReferenceKey == billerId);
+            }
+        }
     }
 }
 
