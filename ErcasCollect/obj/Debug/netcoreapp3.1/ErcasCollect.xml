@@ -325,6 +325,13 @@
             <param name="request"></param>
             <returns></returns>
         </member>
+        <member name="M:ErcasCollect.Controllers.TransactionController.GetAllBatchTransaction">
+            <summary>
+            Get list of batch transactions
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
         <member name="M:ErcasCollect.Controllers.UserController.CreateUser(ErcasCollect.Commands.UserCommand.CreateUserCommand)">
             <summary>
             Create user on the platform

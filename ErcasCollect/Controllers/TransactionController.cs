@@ -12,6 +12,7 @@ using ErcasCollect.Exceptions;
 using ErcasCollect.Helpers;
 using ErcasCollect.Queries.BillerQuery;
 using ErcasCollect.Queries.Dto.ReadTransactionDto;
+using ErcasCollect.Queries.Transaction;
 using ErcasCollect.Responses;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
@@ -98,6 +99,36 @@ namespace ErcasCollect.Controllers
             }
         }
 
+
+        /// <summary>
+        /// Get list of batch transactions
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        [HttpGet]
+        public async Task<ActionResult> GetAllBatchTransaction()
+        {
+            try
+            {
+                var result = await mediator.Send(new GetAllBatchTransactionQuery());
+
+                var response = new JsonResult(result);
+
+                response.StatusCode = result.StatusCode;
+
+                return response;
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "An Application exception occurred on the Get Specific action of the Igr");
+
+                var response = new JsonResult(new { Message = ex.Message.ToString() });
+
+                response.StatusCode = _responseCode.InternalServerError;
+
+                return response;
+            }
+        }
 
     }
 }
