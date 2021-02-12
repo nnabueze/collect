@@ -104,7 +104,7 @@ namespace ErcasCollect.Commands.Collection
 
                 //add trabsaction
 
-                await SaveTransaction(request, savedBatch.ReferenceKey);
+                await SaveTransaction(request, savedBatch.Id);
 
                 //add close batch
                 var savedClocsBatchTransaction = await SaveCloseBatchTransaction(request, levelTwo, user.Id);
@@ -167,7 +167,7 @@ namespace ErcasCollect.Commands.Collection
                 return savedBatch;
             }
 
-            private async Task SaveTransaction(PosInvoiceCommand request, string batchId)
+            private async Task SaveTransaction(PosInvoiceCommand request, int batchId)
             {
                 foreach (var item in request.posInvoiceDto.Invoices)
                 {
@@ -177,7 +177,7 @@ namespace ErcasCollect.Commands.Collection
                     {
                         Amount = Convert.ToDecimal(item.Amount),
 
-                        BatchReferenceKey = batchId,
+                        BatchId = batchId,
 
                         OfflineBatchId = request.posInvoiceDto.OfflineBatchTransactionId,
 

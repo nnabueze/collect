@@ -172,7 +172,7 @@ namespace ErcasCollect.Commands.Collection
                 return request.posCollectionDto.TransactionItems.Count();
             }
 
-            private async Task SaveTransactionItem(PosCollectionCommand request, string batchReferenceKey)
+            private async Task SaveTransactionItem(PosCollectionCommand request, int batchReferenceKey)
             {
                 foreach (var item in request.posCollectionDto.TransactionItems)
                 {
@@ -182,7 +182,7 @@ namespace ErcasCollect.Commands.Collection
                     {
                         Amount = Convert.ToDecimal(item.Amount),
 
-                        BatchReferenceKey = batchReferenceKey,
+                        BatchId = batchReferenceKey,
 
                         CategoryTwoServiceId = categoryTwoId,
 
@@ -206,7 +206,7 @@ namespace ErcasCollect.Commands.Collection
                 return _categoryTwoServiceRepository.FindFirst(x => x.ReferenceKey == categoryTwoId).Id;
             }
 
-            private async Task<string> SaveBatchTransaction(PosCollectionCommand request)
+            private async Task<int> SaveBatchTransaction(PosCollectionCommand request)
             {
                 var totalAmount = GetTransactionTotal(request);
 
@@ -254,7 +254,7 @@ namespace ErcasCollect.Commands.Collection
 
                 await _BatchRepository.CommitAsync();
 
-                return savedBatch.ReferenceKey;
+                return savedBatch.Id;
             }
 
             private SuccessfulResponse CheckTransactionTotal(PosCollectionCommand request)

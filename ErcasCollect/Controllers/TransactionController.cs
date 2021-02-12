@@ -130,5 +130,35 @@ namespace ErcasCollect.Controllers
             }
         }
 
+        /// <summary>
+        /// Get list of transactions by Batch Id
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        [HttpGet]
+        public async Task<ActionResult> GetAllTransactionByBatchId(string batchId)
+        {
+            try
+            {
+                var result = await mediator.Send(new GetTransactionDetailByIDQuery(batchId));
+
+                var response = new JsonResult(result);
+
+                response.StatusCode = result.StatusCode;
+
+                return response;
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "An Application exception occurred on the Get Specific action of the Igr");
+
+                var response = new JsonResult(new { Message = ex.Message.ToString() });
+
+                response.StatusCode = _responseCode.InternalServerError;
+
+                return response;
+            }
+        }
+
     }
 }

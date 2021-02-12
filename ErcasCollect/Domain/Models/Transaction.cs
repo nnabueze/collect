@@ -18,7 +18,9 @@ namespace ErcasCollect.Domain.Models
 
         public string OfflineBatchId { get; set; }
 
-        public string BatchReferenceKey { get; set; }
+        public int? BatchId { get; set; }
+
+        public Batch Batch { get; set; }
 
         public string ReferenceKey { get; set; }        
 

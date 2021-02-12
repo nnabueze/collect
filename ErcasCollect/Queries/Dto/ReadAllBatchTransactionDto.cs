@@ -33,4 +33,19 @@ namespace ErcasCollect.Queries.Dto
 
         public string OfflineCreatedDate { get; set; }
     }
+
+    public class ReadListTransactionDto
+    {
+        public string Amount { get; set; }
+
+        public string PayerName { get; set; }
+
+        public string PayerPhone { get; set; }
+
+        public string BatchReferenceKey { get; set; }
+
+        public string ReferenceKey { get; set; }
+
+        public string CategoryTwoServiceName { get; set; }
+    }
 }
