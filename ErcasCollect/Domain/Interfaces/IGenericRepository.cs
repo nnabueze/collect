@@ -24,6 +24,9 @@ namespace ErcasCollect.Domain.Interfaces
         Task<IEnumerable<T>> FindBy(Expression<Func<T, bool>> predicate);
         Task<T> Add(T entity);
         Task<List<T>> Add(List<T> entity);
+
+        public T FirstOrDefault();
+
         void Update(T entity);
         T FindFirst(Expression<Func<T, bool>> predicate);
         void UndoAdd(T entity);

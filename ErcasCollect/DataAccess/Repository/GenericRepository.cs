@@ -32,6 +32,11 @@ namespace ErcasCollect.DataAccess.Repository
             return _context.Set<T>();
         }
 
+        public T FirstOrDefault()
+        {
+            return _context.Set<T>().FirstOrDefault();
+        }
+
         public IEnumerable<T> Find(Expression<Func<T, bool>> predicate)
         {
             return _context.Set<T>().Where(predicate);

@@ -3,9 +3,15 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using ErcasCollect.DataAccess;
+using ErcasCollect.Domain.Models;
+using ErcasCollect.Helpers;
+using ErcasCollect.Queries.Report;
 using ErcasCollect.ViewModels;
+using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -14,83 +20,49 @@ namespace ErcasCollect.Controllers
     [Route("api/[controller]/[action]")]
     public class ReportController : Controller
     {
-        private readonly ApplicationDbContext _context;
-        public ReportController(ApplicationDbContext context)
-        {
+        private readonly IMediator _mediator;
 
-            _context = context;
+        private readonly ILogger<Biller> _logger;
+
+        private readonly ResponseCode _responseCode;
+
+        public ReportController(IMediator mediator, ILogger<Biller> logger, IOptions<ResponseCode> responseCode)
+        {
+            _mediator = mediator;
+
+            _logger = logger;
+
+            _responseCode = responseCode.Value;
         }
 
-      
-        // GET: api/values
+        /// <summary>
+        /// Return HQ Total amount procced
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
-        public async Task<IActionResult> GetAdminCount()
+        public async Task<IActionResult> GetHqTotalCount()
         {
+            try
+            {
+                var result = await _mediator.Send(new GetHqTotalCountQuery());
 
-            var billercount = _context.Billers.Count();
-            var transactioncount = _context.Transactions.Count();
-            var usercount = _context.Users.Count();
-            return Ok(new AdminDashboardCount { NumberofBiller = billercount, TransactionVolume = transactioncount, NumberofUsers = usercount });
+                var response = new JsonResult(result);
+
+                response.StatusCode = result.StatusCode;
+
+                return response;
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message.ToString(), "An Application exception occurred on the Get Specific action of the Igr");
+
+                var response = new JsonResult(new { Message = ex.Message.ToString() });
+
+                response.StatusCode = _responseCode.InternalServerError;
+
+                return response;
+            }
         }
-
-
-
-        // GET: api/values
-        [HttpGet("{id}")]
-        public ActionResult GetBillerCount( int id) 
-        {             
-        
-            //var transactioncount = _context.Transactions.Where(x=>x.BillerId==id).Count();
-            //var usercount = _context.Users.Where(x => x.BillerId == id).Count();
-            //var taxpayercount = _context.TaxPayers.Where(x => x.BillerId == id).Count();
-            //return Ok(new BillerDashboardCount {  TransactionVolume = transactioncount, NumberofUsers = usercount,NumberofTaxPayer=taxpayercount });
-            return Ok();
-        }
-
-      
-        // GET: api/values
-        [HttpGet]
-        public async Task<IActionResult> GetAmountAdminCount()
-        {
-
-
-            var amount = _context.Transactions.Sum(x=>x.Amount);
-           
-            return Ok(new AllTransactionSum { Amount= amount});
-        }
-
-
-        [HttpGet("{id}")]
-        public async Task<IActionResult> GetAmountBillerCount(int id)
-        {
-
-
-            //var amount = _context.Transactions.Where(x => x.BillerId == id).Sum(x => x.Amount);
-
-            //return Ok(new AllTransactionSum { Amount = amount });
-
-            return null;
-        }
-      
-
-        //[Route("dashboard/topfivebillers")]
-        //// GET: api/values
-        //[HttpGet]
-        //public async Task<IActionResult> GetTopFive([FromQuery] string id)
-        //{
-
-        //    var query = (from t in _context.Billers
-        //                 join s in _context.Transactions on t.Id equals s.BillerId into g
-        //                 from s in g.DefaultIfEmpty()
-        //                 select new { Title = t.Name, Total = g.Sum(x => x.Amount) } into ts
-        //                 orderby ts.Total descending
-        //                 select ts.Title).Take(5);
-
-        //    return Ok(query);
-        //}
-
-     
-
 
     }
 }

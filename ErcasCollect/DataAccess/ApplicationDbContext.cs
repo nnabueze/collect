@@ -1,4 +1,5 @@
 ﻿using ErcasCollect.Domain.Models;
+using ErcasCollect.Domain.Models.SqlViewModels;
 using ErcasCollect.Helpers.Seeder;
 using Microsoft.EntityFrameworkCore;
 
@@ -53,6 +54,8 @@ namespace ErcasCollect.DataAccess
 
         public DbSet<EbillsProduct> EbillsProducts { get; set; }
 
+        public DbSet<HqAllBillersYearlyTotalAmount> HqAllBillersYearlyTotalAmount { get; set; }
+
 
 
 
@@ -81,6 +84,15 @@ namespace ErcasCollect.DataAccess
             builder.PaymentChannelSeed();
 
             builder.TransactionTypeSeed();
+
+            builder
+                .Entity<HqAllBillersYearlyTotalAmount>(
+                    eb =>
+                        {
+                            eb.HasNoKey();
+                            eb.ToView("HqAllBillersYearlyTotalAmount");
+                            eb.Property(v => v.TotalAmountProcessed).HasColumnName("TotalAmountProcessed");
+                    });
 
             builder.Entity<Biller>()
               .HasIndex(x => x.ReferenceKey)
