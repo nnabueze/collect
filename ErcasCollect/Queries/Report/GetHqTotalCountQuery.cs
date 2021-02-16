@@ -27,15 +27,19 @@ namespace ErcasCollect.Queries.Report
 
             private readonly IGenericRepository<HqTotalPos> _hqTotalPosRepository;
 
+            private readonly IGenericRepository<HqAllBillersMonthlyTotalAmount> _hqAllBillersMonthlyTotalAmountRepository;
+
+            private readonly IGenericRepository<HqMonthlyTransactionTotal> _hqMonthlyTransactionTotalRepository;
+
             private readonly IMapper _mapper;
 
             private readonly ResponseCode _responseCode;
 
             public GetHqTotalCountQueryHandler(IGenericRepository<HqAllBillersYearlyTotalAmount> hqAllBillerYearlyTotalRepository, IMapper mapper, IOptions<ResponseCode> responseCode,
 
-                IGenericRepository<HqBillerTotal> hqBillerTotalRepository, IGenericRepository<HqYearlyTransactionTotal> hqTransactionTotalRepository, IGenericRepository<HqTotalUser> hqTotalUserRepository, 
-                
-                IGenericRepository<HqTotalPos> hqTotalPosRepository)
+                IGenericRepository<HqBillerTotal> hqBillerTotalRepository, IGenericRepository<HqYearlyTransactionTotal> hqTransactionTotalRepository, IGenericRepository<HqTotalUser> hqTotalUserRepository,
+
+                IGenericRepository<HqTotalPos> hqTotalPosRepository, IGenericRepository<HqAllBillersMonthlyTotalAmount> hqAllBillersMonthlyTotalAmountRepository, IGenericRepository<HqMonthlyTransactionTotal> hqMonthlyTransactionTotalRepository)
             {
                 _hqAllBillerYearlyTotalRepository = hqAllBillerYearlyTotalRepository;
 
@@ -50,17 +54,21 @@ namespace ErcasCollect.Queries.Report
                 _hqTotalUserRepository = hqTotalUserRepository;
 
                 _hqTotalPosRepository = hqTotalPosRepository;
+
+                _hqAllBillersMonthlyTotalAmountRepository = hqAllBillersMonthlyTotalAmountRepository;
+
+                _hqMonthlyTransactionTotalRepository = hqMonthlyTransactionTotalRepository;
             }
 
             public async Task<SuccessfulResponse> Handle(GetHqTotalCountQuery request, CancellationToken cancellationToken)
             {
                 var hqReportCount = new
                 {
-                    YearlyTotalAmount = GetYearlyAmount(),
+                    MonthlyTotalAmount = GetHqBillerMonthlyTotalAmouth(),
 
                     TotalBiller = GetBillerTotal(),
 
-                    YearlyTotalTransaction = GetTotalTransactions(),
+                    MonthlyTotalTransaction = GetHqMonthlyTransactionTotal(),
 
                     TotalUser = GetTotalUser(),
 
@@ -68,6 +76,16 @@ namespace ErcasCollect.Queries.Report
                 };
 
                 return ResponseGenerator.Response("Successful", _responseCode.OK, true, hqReportCount);
+            }
+
+            private string GetHqMonthlyTransactionTotal()
+            {
+                return _hqMonthlyTransactionTotalRepository.FirstOrDefault().TotalTransaction.ToString();
+            }
+
+            private string GetHqBillerMonthlyTotalAmouth()
+            {
+                return _hqAllBillersMonthlyTotalAmountRepository.FirstOrDefault().TotalAmountProcessed.ToString();
             }
 
             private string GetYearlyAmount()

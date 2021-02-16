@@ -73,6 +73,9 @@ namespace ErcasCollect.DataAccess
 
         public DbSet<MonthlyTopPerformingBillers> MonthlyTopPerformingBillers { get; set; }
 
+        public DbSet<HqAllBillersMonthlyTotalAmount> HqAllBillersMonthlyTotalAmount { get; set; }
+
+        public DbSet<HqMonthlyTransactionTotal> HqMonthlyTransactionTotal { get; set; }
 
 
 
