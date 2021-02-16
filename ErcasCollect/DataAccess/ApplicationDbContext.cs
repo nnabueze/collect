@@ -56,6 +56,14 @@ namespace ErcasCollect.DataAccess
 
         public DbSet<HqAllBillersYearlyTotalAmount> HqAllBillersYearlyTotalAmount { get; set; }
 
+        public DbSet<HqBillerTotal> HqBillerTotal { get; set; }
+
+        public DbSet<HqYearlyTransactionTotal> HqYearlyTransactionTotal { get; set; }
+
+        public DbSet<HqTotalUser> HqTotalUser { get; set; }
+
+        public DbSet<HqTotalPos> HqTotalPos { get; set; }
+
 
 
 
@@ -93,6 +101,45 @@ namespace ErcasCollect.DataAccess
                             eb.ToView("HqAllBillersYearlyTotalAmount");
                             eb.Property(v => v.TotalAmountProcessed).HasColumnName("TotalAmountProcessed");
                     });
+
+            builder
+                .Entity<HqBillerTotal>(
+                    eb =>
+                    {
+                        eb.HasNoKey();
+                        eb.ToView("HqBillerTotal");
+                        eb.Property(v => v.TotalBiller).HasColumnName("TotalBiller");
+                    });
+
+            builder
+                .Entity<HqTotalUser>(
+                    eb =>
+                    {
+                        eb.HasNoKey();
+                        eb.ToView("HqTotalUser");
+                        eb.Property(v => v.TotalUser).HasColumnName("TotalUser");
+                    });
+
+
+            builder
+                .Entity<HqYearlyTransactionTotal>(
+                    eb =>
+                    {
+                        eb.HasNoKey();
+                        eb.ToView("HqYearlyTransactionTotal");
+                        eb.Property(v => v.TotalTransaction).HasColumnName("TotalTransaction");
+                    });
+
+
+            builder
+                .Entity<HqTotalPos>(
+                    eb =>
+                    {
+                        eb.HasNoKey();
+                        eb.ToView("HqTotalPos");
+                        eb.Property(v => v.TotalPos).HasColumnName("TotalPos");
+                    });
+
 
             builder.Entity<Biller>()
               .HasIndex(x => x.ReferenceKey)

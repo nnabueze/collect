@@ -30,6 +30,10 @@
     <Compile Remove="Migrations\20210202015655_generalTest.Designer.cs" />
     <Compile Remove="Migrations\20210215090746_CreatingView.cs" />
     <Compile Remove="Migrations\20210215090746_CreatingView.Designer.cs" />
+    <Compile Remove="Migrations\20210215224111_HQreport.cs" />
+    <Compile Remove="Migrations\20210215224111_HQreport.Designer.cs" />
+    <Compile Remove="Migrations\20210215225054_HQreport.cs" />
+    <Compile Remove="Migrations\20210215225054_HQreport.Designer.cs" />
   </ItemGroup>
 
 
