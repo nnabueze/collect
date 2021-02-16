@@ -36,7 +36,7 @@ namespace ErcasCollect.Controllers
         }
 
         /// <summary>
-        /// Return HQ Total amount procced
+        /// Return HQ Total yearly amount procceed, total biller, total users, total yearly transaction and total pos
         /// </summary>
         /// <returns></returns>
         [HttpGet]
