@@ -13,6 +13,16 @@ namespace ErcasCollect.Helpers
         {
 
             builder
+                .Entity<MonthlyTopPerformingBillers>(
+                    eb =>
+                    {
+                        eb.HasNoKey();
+                        eb.ToView("MonthlyTopPerformingBillers");
+                        eb.Property(v => v.BillerId).HasColumnName("BillerId");
+                    });
+
+
+            builder
                 .Entity<HqAllBillersYearlyTotalAmount>(
                     eb =>
                     {

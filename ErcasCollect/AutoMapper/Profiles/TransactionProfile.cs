@@ -5,6 +5,8 @@ using AutoMapper;
 using ErcasCollect.Commands.Dto.CollectionDto;
 using ErcasCollect.Commands.Dto.SettlementDto;
 using ErcasCollect.Domain.Models;
+using ErcasCollect.Domain.Models.SqlViewModels;
+using ErcasCollect.Queries.Dto;
 using ErcasCollect.Queries.Dto.ReadTransactionDto;
 
 namespace ErcasCollect.AutoMapper.Profiles
@@ -19,6 +21,8 @@ namespace ErcasCollect.AutoMapper.Profiles
 
             CreateMap<TransactionDetail, Transaction>().ReverseMap();
             CreateMap<ReadTransactionDto, Transaction>().ReverseMap();
+
+            CreateMap<MonthlyTopPerformingBillers, MonthlyTopPerformingBillerDto>();
 
 
         }

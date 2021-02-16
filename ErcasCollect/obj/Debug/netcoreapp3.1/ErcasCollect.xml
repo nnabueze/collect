@@ -309,6 +309,12 @@
             </summary>
             <returns></returns>
         </member>
+        <member name="M:ErcasCollect.Controllers.ReportController.GetHqMonthlyTopPerformingBillers">
+            <summary>
+            Return HQ monthly top performing billers
+            </summary>
+            <returns></returns>
+        </member>
         <member name="M:ErcasCollect.Controllers.SettlementController.EbillsNotification(ErcasCollect.Domain.Models.Nibss.NotificationRequest)">
             <summary>
             Ebills notification endpoint for all biller
