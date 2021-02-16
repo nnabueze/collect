@@ -1,5 +1,6 @@
 ﻿using ErcasCollect.Domain.Models;
 using ErcasCollect.Domain.Models.SqlViewModels;
+using ErcasCollect.Helpers;
 using ErcasCollect.Helpers.Seeder;
 using Microsoft.EntityFrameworkCore;
 
@@ -64,6 +65,12 @@ namespace ErcasCollect.DataAccess
 
         public DbSet<HqTotalPos> HqTotalPos { get; set; }
 
+        public DbSet<HqDaylyTotalAmount> HqDaylyTotalAmount { get; set; }
+
+        public DbSet<HqYestardayTotalAmount> HqYestardayTotalAmount { get; set; }
+
+        public DbSet<HqWeeklyTotalAmount> HqWeeklyTotalAmount { get; set; }
+
 
 
 
@@ -93,53 +100,7 @@ namespace ErcasCollect.DataAccess
 
             builder.TransactionTypeSeed();
 
-            builder
-                .Entity<HqAllBillersYearlyTotalAmount>(
-                    eb =>
-                        {
-                            eb.HasNoKey();
-                            eb.ToView("HqAllBillersYearlyTotalAmount");
-                            eb.Property(v => v.TotalAmountProcessed).HasColumnName("TotalAmountProcessed");
-                    });
-
-            builder
-                .Entity<HqBillerTotal>(
-                    eb =>
-                    {
-                        eb.HasNoKey();
-                        eb.ToView("HqBillerTotal");
-                        eb.Property(v => v.TotalBiller).HasColumnName("TotalBiller");
-                    });
-
-            builder
-                .Entity<HqTotalUser>(
-                    eb =>
-                    {
-                        eb.HasNoKey();
-                        eb.ToView("HqTotalUser");
-                        eb.Property(v => v.TotalUser).HasColumnName("TotalUser");
-                    });
-
-
-            builder
-                .Entity<HqYearlyTransactionTotal>(
-                    eb =>
-                    {
-                        eb.HasNoKey();
-                        eb.ToView("HqYearlyTransactionTotal");
-                        eb.Property(v => v.TotalTransaction).HasColumnName("TotalTransaction");
-                    });
-
-
-            builder
-                .Entity<HqTotalPos>(
-                    eb =>
-                    {
-                        eb.HasNoKey();
-                        eb.ToView("HqTotalPos");
-                        eb.Property(v => v.TotalPos).HasColumnName("TotalPos");
-                    });
-
+            builder.LinkView();
 
             builder.Entity<Biller>()
               .HasIndex(x => x.ReferenceKey)

@@ -64,5 +64,35 @@ namespace ErcasCollect.Controllers
             }
         }
 
+
+        /// <summary>
+        /// Return HQ Total weekly, dayly and yestarday proceeds amount
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet]
+        public async Task<IActionResult> GetHqPeriodicCount()
+        {
+            try
+            {
+                var result = await _mediator.Send(new GetHqPeriodicCountQuery());
+
+                var response = new JsonResult(result);
+
+                response.StatusCode = result.StatusCode;
+
+                return response;
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message.ToString(), "An Application exception occurred on the Get Specific action of the Igr");
+
+                var response = new JsonResult(new { Message = ex.Message.ToString() });
+
+                response.StatusCode = _responseCode.InternalServerError;
+
+                return response;
+            }
+        }
+
     }
 }

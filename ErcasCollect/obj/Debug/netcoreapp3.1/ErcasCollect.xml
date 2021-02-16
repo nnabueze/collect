@@ -303,6 +303,12 @@
             </summary>
             <returns></returns>
         </member>
+        <member name="M:ErcasCollect.Controllers.ReportController.GetHqPeriodicCount">
+            <summary>
+            Return HQ Total weekly, dayly and yestarday proceeds amount
+            </summary>
+            <returns></returns>
+        </member>
         <member name="M:ErcasCollect.Controllers.SettlementController.EbillsNotification(ErcasCollect.Domain.Models.Nibss.NotificationRequest)">
             <summary>
             Ebills notification endpoint for all biller
