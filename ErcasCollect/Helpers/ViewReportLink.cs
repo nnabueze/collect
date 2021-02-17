@@ -12,6 +12,79 @@ namespace ErcasCollect.Helpers
         public static void LinkView(this ModelBuilder builder)
         {
 
+
+            builder
+                .Entity<BillerAgentCashAtHand>(
+                    eb =>
+                    {
+                        eb.HasNoKey();
+                        eb.ToView("BillerAgentCashAtHand");
+                        eb.Property(v => v.BillerId).HasColumnName("BillerId");
+                    });
+
+            builder
+                .Entity<BillerTopPerformingLevelOne>(
+                    eb =>
+                    {
+                        eb.HasNoKey();
+                        eb.ToView("BillerTopPerformingLevelOne");
+                        eb.Property(v => v.BillerId).HasColumnName("BillerId");
+                    });
+
+            builder
+                .Entity<BillerWeeklyTotalAmountProcessed>(
+                    eb =>
+                    {
+                        eb.HasNoKey();
+                        eb.ToView("BillerWeeklyTotalAmountProcessed");
+                        eb.Property(v => v.BillerId).HasColumnName("BillerId");
+                    });
+
+            builder
+                .Entity<BillerYesterdayTotalAmountProcessed>(
+                    eb =>
+                    {
+                        eb.HasNoKey();
+                        eb.ToView("BillerYesterdayTotalAmountProcessed");
+                        eb.Property(v => v.BillerId).HasColumnName("BillerId");
+                    });
+
+            builder
+                .Entity<BillerTodayTotalAmountProcessed>(
+                    eb =>
+                    {
+                        eb.HasNoKey();
+                        eb.ToView("BillerTodayTotalAmountProcessed");
+                        eb.Property(v => v.BillerId).HasColumnName("BillerId");
+                    });
+
+            builder
+                .Entity<BillerTotalCashAtHand>(
+                    eb =>
+                    {
+                        eb.HasNoKey();
+                        eb.ToView("BillerTotalCashAtHand");
+                        eb.Property(v => v.BillerId).HasColumnName("BillerId");
+                    });
+
+            builder
+                .Entity<BillerTotalUser>(
+                    eb =>
+                    {
+                        eb.HasNoKey();
+                        eb.ToView("BillerTotalUser");
+                        eb.Property(v => v.BillerId).HasColumnName("BillerId");
+                    });
+
+            builder
+                .Entity<BillerMonthlyTotalTransactions>(
+                    eb =>
+                    {
+                        eb.HasNoKey();
+                        eb.ToView("BillerMonthlyTotalTransactions");
+                        eb.Property(v => v.BillerId).HasColumnName("BillerId");
+                    });
+
             builder
                 .Entity<HqAllBillersMonthlyCashAtHand>(
                     eb =>

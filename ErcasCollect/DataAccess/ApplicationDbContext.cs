@@ -79,6 +79,21 @@ namespace ErcasCollect.DataAccess
 
         public DbSet<HqAllBillersMonthlyCashAtHand> HqAllBillersMonthlyCashAtHand { get; set; }
 
+        public DbSet<BillerMonthlyTotalTransactions> BillerMonthlyTotalTransactions { get; set; }
+
+        public DbSet<BillerTotalUser> BillerTotalUser { get; set; }
+
+        public DbSet<BillerTotalCashAtHand> BillerTotalCashAtHand { get; set; }
+
+        public DbSet<BillerTodayTotalAmountProcessed> BillerTodayTotalAmountProcessed { get; set; }
+
+        public DbSet<BillerYesterdayTotalAmountProcessed> BillerYesterdayTotalAmountProcessed { get; set; }
+
+        public DbSet<BillerWeeklyTotalAmountProcessed> BillerWeeklyTotalAmountProcessed { get; set; }
+
+        public DbSet<BillerTopPerformingLevelOne> BillerTopPerformingLevelOne { get; set; }
+
+        public DbSet<BillerAgentCashAtHand> BillerAgentCashAtHand { get; set; }
 
 
 
