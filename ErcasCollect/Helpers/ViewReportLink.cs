@@ -13,6 +13,16 @@ namespace ErcasCollect.Helpers
         {
 
             builder
+                .Entity<HqAllBillersMonthlyCashAtHand>(
+                    eb =>
+                    {
+                        eb.HasNoKey();
+                        eb.ToView("HqAllBillersMonthlyCashAtHand");
+                        eb.Property(v => v.TotalAmount).HasColumnName("TotalAmount");
+                    });
+
+
+            builder
                 .Entity<HqMonthlyTransactionTotal>(
                     eb =>
                     {
@@ -20,7 +30,6 @@ namespace ErcasCollect.Helpers
                         eb.ToView("HqMonthlyTransactionTotal");
                         eb.Property(v => v.TotalTransaction).HasColumnName("TotalTransaction");
                     });
-
 
             builder
                 .Entity<HqAllBillersMonthlyTotalAmount>(

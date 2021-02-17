@@ -31,6 +31,8 @@ namespace ErcasCollect.Queries.Report
 
             private readonly IGenericRepository<HqMonthlyTransactionTotal> _hqMonthlyTransactionTotalRepository;
 
+            private readonly IGenericRepository<HqAllBillersMonthlyCashAtHand> _hqAllBillersMonthlyCashAtHandRepository;
+
             private readonly IMapper _mapper;
 
             private readonly ResponseCode _responseCode;
@@ -39,7 +41,9 @@ namespace ErcasCollect.Queries.Report
 
                 IGenericRepository<HqBillerTotal> hqBillerTotalRepository, IGenericRepository<HqYearlyTransactionTotal> hqTransactionTotalRepository, IGenericRepository<HqTotalUser> hqTotalUserRepository,
 
-                IGenericRepository<HqTotalPos> hqTotalPosRepository, IGenericRepository<HqAllBillersMonthlyTotalAmount> hqAllBillersMonthlyTotalAmountRepository, IGenericRepository<HqMonthlyTransactionTotal> hqMonthlyTransactionTotalRepository)
+                IGenericRepository<HqTotalPos> hqTotalPosRepository, IGenericRepository<HqAllBillersMonthlyTotalAmount> hqAllBillersMonthlyTotalAmountRepository, 
+                
+                IGenericRepository<HqMonthlyTransactionTotal> hqMonthlyTransactionTotalRepository, IGenericRepository<HqAllBillersMonthlyCashAtHand> hqAllBillersMonthlyCashAtHandRepository)
             {
                 _hqAllBillerYearlyTotalRepository = hqAllBillerYearlyTotalRepository;
 
@@ -58,6 +62,8 @@ namespace ErcasCollect.Queries.Report
                 _hqAllBillersMonthlyTotalAmountRepository = hqAllBillersMonthlyTotalAmountRepository;
 
                 _hqMonthlyTransactionTotalRepository = hqMonthlyTransactionTotalRepository;
+
+                _hqAllBillersMonthlyCashAtHandRepository = hqAllBillersMonthlyCashAtHandRepository;
             }
 
             public async Task<SuccessfulResponse> Handle(GetHqTotalCountQuery request, CancellationToken cancellationToken)
@@ -65,6 +71,8 @@ namespace ErcasCollect.Queries.Report
                 var hqReportCount = new
                 {
                     MonthlyTotalAmount = GetHqBillerMonthlyTotalAmouth(),
+
+                    MonthlyCashAtHand = GetHqMonthlyCashAtHand(),
 
                     TotalBiller = GetBillerTotal(),
 
@@ -76,6 +84,11 @@ namespace ErcasCollect.Queries.Report
                 };
 
                 return ResponseGenerator.Response("Successful", _responseCode.OK, true, hqReportCount);
+            }
+
+            private string GetHqMonthlyCashAtHand()
+            {
+                return _hqAllBillersMonthlyCashAtHandRepository.FirstOrDefault().TotalAmount.ToString();
             }
 
             private string GetHqMonthlyTransactionTotal()
