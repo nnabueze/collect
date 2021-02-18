@@ -321,6 +321,12 @@
             </summary>
             <returns></returns>
         </member>
+        <member name="M:ErcasCollect.Controllers.ReportController.GetBillerTopPerformingLevelOne(System.String)">
+            <summary>
+            Return Biller top performing level one eg Top performing Mda
+            </summary>
+            <returns></returns>
+        </member>
         <member name="M:ErcasCollect.Controllers.SettlementController.EbillsNotification(ErcasCollect.Domain.Models.Nibss.NotificationRequest)">
             <summary>
             Ebills notification endpoint for all biller

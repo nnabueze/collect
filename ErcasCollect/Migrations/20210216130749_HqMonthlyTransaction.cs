@@ -8,7 +8,7 @@ namespace ErcasCollect.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.Sql(@"exec('CREATE VIEW dbo.HqAllBillersMonthlyTotalAmount AS
-                            SELECT sum(ISNULL(TotalAmount, 0.00)) as TotalAmountProcessed
+                            SELECT ISNULL(sum(TotalAmount), 0.00) as TotalAmountProcessed
                             FROM dbo.CloseBatchTransactions
                             WHERE IsPaid = 1 AND MONTH(CreatedDate) = MONTH(getdate());');");
 

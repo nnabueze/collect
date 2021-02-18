@@ -8,7 +8,7 @@ namespace ErcasCollect.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.Sql(@"exec('CREATE VIEW dbo.MonthlyTopPerformingBillers AS
-                            Select b.Name as BillerName, b.Id as BillerId, SUM(ISNULL(c.TotalAmount,0.00)) as TotalAmount
+                            Select b.Name as BillerName, b.Id as BillerId, ISNULL(SUM(c.TotalAmount),0.00) as TotalAmount
                             From dbo.Billers b
                             LEFT JOIN dbo.CloseBatchTransactions c ON
                             b.Id = c.BillerId AND c.IsPaid = 1 AND Month(c.CreatedDate) = Month(getdate())

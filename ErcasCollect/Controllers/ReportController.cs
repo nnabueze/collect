@@ -154,5 +154,35 @@ namespace ErcasCollect.Controllers
             }
         }
 
+
+        /// <summary>
+        /// Return Biller top performing level one eg Top performing Mda
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet]
+        public async Task<IActionResult> GetBillerTopPerformingLevelOne(string billerId)
+        {
+            try
+            {
+                var result = await _mediator.Send(new GetBillerTopPerformingLevelOneQuery(billerId));
+
+                var response = new JsonResult(result);
+
+                response.StatusCode = result.StatusCode;
+
+                return response;
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message.ToString(), "An Application exception occurred on the Get Specific action of the Igr");
+
+                var response = new JsonResult(new { Message = ex.Message.ToString() });
+
+                response.StatusCode = _responseCode.InternalServerError;
+
+                return response;
+            }
+        }
+
     }
 }

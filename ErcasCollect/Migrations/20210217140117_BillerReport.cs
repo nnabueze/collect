@@ -8,7 +8,7 @@ namespace ErcasCollect.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.Sql(@"exec('CREATE VIEW dbo.BillerMonthlyTotalTransactions AS
-                            Select b.Name as BillerName, b.Id as BillerId, SUM(ISNULL(c.ItemCount, 0)) as TotalTransaction
+                            Select b.Name as BillerName, b.Id as BillerId, ISNULL(SUM(c.ItemCount), 0) as TotalTransaction
                             From dbo.Billers b
                             LEFT JOIN dbo.Batchs c ON
                             b.Id = c.BillerId AND Month(c.CreatedDate) = Month(getdate())
@@ -22,35 +22,35 @@ namespace ErcasCollect.Migrations
                             GROUP BY b.Id, b.Name;');");
 
             migrationBuilder.Sql(@"exec('CREATE VIEW dbo.BillerTotalCashAtHand AS
-                            Select b.Name as BillerName, b.Id as BillerId, SUM(ISNULL(c.TotalAmount,0.00)) as TotalAmount
+                            Select b.Name as BillerName, b.Id as BillerId, ISNULL(SUM(c.TotalAmount),0.00) as TotalAmount
                             From dbo.Billers b
                             LEFT JOIN dbo.Batchs c ON
                             b.Id = c.BillerId AND c.IsBatchClosed = 0 AND Month(c.CreatedDate) = Month(getdate())
                             GROUP BY b.Id, b.Name;');");
 
             migrationBuilder.Sql(@"exec('CREATE VIEW dbo.BillerTodayTotalAmountProcessed AS
-                            Select b.Name as BillerName, b.Id as BillerId, SUM(ISNULL(c.TotalAmount,0.00)) as TotalAmount
+                            Select b.Name as BillerName, b.Id as BillerId, ISNULL(SUM(c.TotalAmount),0.00) as TotalAmount
                             From dbo.Billers b
                             LEFT JOIN dbo.CloseBatchTransactions c ON
                             b.Id = c.BillerId AND c.IsPaid = 1 AND cast(c.CreatedDate as Date) = cast(getdate() as Date)
                             GROUP BY b.Id, b.Name;');");
 
             migrationBuilder.Sql(@"exec('CREATE VIEW dbo.BillerYesterdayTotalAmountProcessed AS
-                            Select b.Name as BillerName, b.Id as BillerId, SUM(ISNULL(c.TotalAmount,0.00)) as TotalAmount
+                            Select b.Name as BillerName, b.Id as BillerId, ISNULL(SUM(c.TotalAmount),0.00) as TotalAmount
                             From dbo.Billers b
                             LEFT JOIN dbo.CloseBatchTransactions c ON
                             b.Id = c.BillerId AND c.IsPaid = 1 AND cast(c.CreatedDate as Date) = cast(getdate()-1 as Date)
                             GROUP BY b.Id, b.Name;');");
 
             migrationBuilder.Sql(@"exec('CREATE VIEW dbo.BillerWeeklyTotalAmountProcessed AS
-                            Select b.Name as BillerName, b.Id as BillerId, SUM(ISNULL(c.TotalAmount,0.00)) as TotalAmount
+                            Select b.Name as BillerName, b.Id as BillerId, ISNULL(SUM(c.TotalAmount),0.00) as TotalAmount
                             From dbo.Billers b
                             LEFT JOIN dbo.CloseBatchTransactions c ON
                             b.Id = c.BillerId AND c.IsPaid = 1 AND cast(c.CreatedDate as Date) >= cast(dateadd(day,1-datepart(dw, getdate()), getdate()) as Date)
                             GROUP BY b.Id, b.Name;');");
 
             migrationBuilder.Sql(@"exec('CREATE VIEW dbo.BillerTopPerformingLevelOne AS
-                            Select b.Id as BillerId, ISNULL(x.Id,0) as LevelOneId,  SUM(ISNULL(c.TotalAmount,0.00)) as TotalAmount
+                            Select b.Id as BillerId, ISNULL(x.Id,0) as LevelOneId,  ISNULL(SUM(c.TotalAmount),0.00) as TotalAmount
                             From dbo.Billers b
 							LEFT JOIN dbo.LevelOne x
 							ON b.Id = x.BillerId
@@ -59,7 +59,7 @@ namespace ErcasCollect.Migrations
                             GROUP BY b.Id, b.Name, x.Id;');");
 
             migrationBuilder.Sql(@"exec('CREATE VIEW dbo.BillerAgentCashAtHand AS
-                            Select b.Id as BillerId, ISNULL(u.Id,0) as UserId, SUM(ISNULL(c.TotalAmount,0.00)) as TotalCashAtHand
+                            Select b.Id as BillerId, ISNULL(u.Id,0) as UserId, ISNULL(SUM(c.TotalAmount),0.00) as TotalCashAtHand
                             From dbo.Billers b
 							LEFT JOIN dbo.Users u
 							ON b.Id = u.BillerId
