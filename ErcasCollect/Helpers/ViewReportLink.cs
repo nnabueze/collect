@@ -1,4 +1,5 @@
-﻿using ErcasCollect.Domain.Models.SqlViewModels;
+﻿using ErcasCollect.Domain.Models;
+using ErcasCollect.Domain.Models.SqlViewModels;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;

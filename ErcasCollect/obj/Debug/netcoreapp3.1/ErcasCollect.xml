@@ -315,6 +315,12 @@
             </summary>
             <returns></returns>
         </member>
+        <member name="M:ErcasCollect.Controllers.ReportController.GetBillerTotalCount(System.String)">
+            <summary>
+            Return Biller monthly amount processed , monthly transaction, total user, monthly total cash at hand, today, yestarday and weekly total amount
+            </summary>
+            <returns></returns>
+        </member>
         <member name="M:ErcasCollect.Controllers.SettlementController.EbillsNotification(ErcasCollect.Domain.Models.Nibss.NotificationRequest)">
             <summary>
             Ebills notification endpoint for all biller

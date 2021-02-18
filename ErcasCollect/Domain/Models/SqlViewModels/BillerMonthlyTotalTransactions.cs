@@ -13,6 +13,6 @@ namespace ErcasCollect.Domain.Models.SqlViewModels
 
         public Biller Biller { get; set; }
 
-        public decimal TotalTransaction { get; set; }
+        public int TotalTransaction { get; set; }
     }
 }

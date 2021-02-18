@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using ErcasCollect.Domain.BaseEntities;
+using ErcasCollect.Domain.Models.SqlViewModels;
 
 namespace ErcasCollect.Domain.Models
 {

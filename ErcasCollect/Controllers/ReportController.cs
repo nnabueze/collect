@@ -124,5 +124,35 @@ namespace ErcasCollect.Controllers
             }
         }
 
+
+        /// <summary>
+        /// Return Biller monthly amount processed , monthly transaction, total user, monthly total cash at hand, today, yestarday and weekly total amount
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet]
+        public async Task<IActionResult> GetBillerTotalCount(string billerId)
+        {
+            try
+            {
+                var result = await _mediator.Send(new GetBillerTotalCountQuery(billerId));
+
+                var response = new JsonResult(result);
+
+                response.StatusCode = result.StatusCode;
+
+                return response;
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message.ToString(), "An Application exception occurred on the Get Specific action of the Igr");
+
+                var response = new JsonResult(new { Message = ex.Message.ToString() });
+
+                response.StatusCode = _responseCode.InternalServerError;
+
+                return response;
+            }
+        }
+
     }
 }
