@@ -63,6 +63,10 @@ namespace ErcasCollect.Queries.Report
 
                 var topLevelOnes = GetTopPerformingLevelOne(biller.Id);
 
+                if (topLevelOnes == null)
+
+                    return ResponseGenerator.Response("Not level One in the system", _responseCode.NotAccepted, false);
+
                 foreach (var item in topLevelOnes)
                 {
                     var levelOne = _levelOneRepository.FindFirst(x => x.Id == item.LevelOneId);
