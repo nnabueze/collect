@@ -161,9 +161,9 @@ namespace ErcasCollect.DataAccess.Repository
 
             remittanceField.Add(_nameConstant.PhoneNumber, user.PhoneNumber);
 
-            remittanceField.Add(_nameConstant.ercasCollectId, _billerDetail.ReferenceKey);
+            //remittanceField.Add(_nameConstant.ercasCollectId, _billerDetail.ReferenceKey);
 
-            remittanceField.Add(_nameConstant.ercasGatewayId, _billerDetail.GatewayUsername);
+            //remittanceField.Add(_nameConstant.ercasGatewayId, _billerDetail.GatewayUsername);
 
             return ParameterList(remittanceField);
         }
@@ -190,28 +190,28 @@ namespace ErcasCollect.DataAccess.Repository
         private CloseBatchTransaction GetRemittanceDetails(ValidationRequest request)
         {
 
-            string ercasCollectId = GetErcasCollectId(request);
+            string remittnaceId = GetRemittanceId(request);
 
-            _billerDetail = _billerRepository.FindFirst(x => x.ReferenceKey == ercasCollectId);
+            if (remittnaceId == null)
 
-            //var productId = _billerEbillsProductRepository.FindFirst(x => x.BillerId == _billerDetail.Id && x.ProductName == _nameConstant.Remittance).Id;
+                return null;
 
-            //var validationParameter = _billerValidationRepository.FindFirst(x => x.BillerId == _billerDetail.Id && x.BillerEbillsProductId == productId).ValidationName;
+            var billerAbbreviation = GetBillerAbbreviation(remittnaceId);
 
-            for (int i = 0; i < request.Param.Count; i++)
-            {
-                if (request.Param[i].Key.Equals(_nameConstant.Remittance))
-                {
-                    _remittanceStringId = request.Param[i].Value;
-                }
+            _billerDetail = _billerRepository.FindFirst(x => x.Abbreviation == billerAbbreviation);
 
-                if (request.Param[i].Key.Equals(_nameConstant.Invoice))
-                {
-                    _remittanceStringId = request.Param[i].Value;
-                }
-            }
+            if (_billerDetail == null)
+
+                return null;
 
             return GetCloseBatchTrasnaction();
+        }
+
+        private string GetBillerAbbreviation(string remittanceId)
+        {
+            var splitedRemittance = remittanceId.Split("-");
+
+            return splitedRemittance[0];
         }
 
         private LevelTwo LevelTwoDetail(int levelTwoId)
@@ -253,19 +253,18 @@ namespace ErcasCollect.DataAccess.Repository
             return closeBatch;
         }
 
-        private string GetErcasCollectId(ValidationRequest request)
+        private string GetRemittanceId(ValidationRequest request)
         {
-            var ercasCollectId = string.Empty;
 
             for (int i = 0; i < request.Param.Count; i++)
             {
-                if (request.Param[i].Key.Equals(_nameConstant.ercasCollectId))
+                if (request.Param[i].Key.Equals(_nameConstant.Remittance))
                 {
-                    ercasCollectId = request.Param[i].Value;
+                    _remittanceStringId = request.Param[i].Value;
                 }
             }
 
-            return ercasCollectId;
+            return _remittanceStringId;
         }
     }
 }
