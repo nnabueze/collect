@@ -11,6 +11,7 @@ using ErcasCollect.Responses;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -48,13 +49,17 @@ namespace ErcasCollect.Commands.CollectionCommand
 
             private readonly NameConstant _nameConstant;
 
+            private readonly IWebCallService _webCallService;
+
+            private readonly WebEndpoint _webEndpoint;
+
             public GenerateRemittanceCommandHandler(IMapper mapper, IOptions<ResponseCode> responseCode, IGenericRepository<CloseBatchTransaction> closeBatchTransaction,
 
                 IGenericRepository<Biller> billerRepository, IGenericRepository<Pos> posRespository, IGenericRepository<Transaction> transactionRespository,
 
                 IGenericRepository<User> userRepository, IGenericRepository<Batch> batchRepository, IGenericRepository<LevelOne> levelOneRepository,
 
-                IGenericRepository<LevelTwo> levelTwoRepository, IOptions<NameConstant> nameConstant)
+                IGenericRepository<LevelTwo> levelTwoRepository, IOptions<NameConstant> nameConstant, IWebCallService webCallService, IOptions<WebEndpoint> webEndpoint)
             {
                 _mapper = mapper;
 
@@ -77,6 +82,10 @@ namespace ErcasCollect.Commands.CollectionCommand
                 _levelTwoRepository = levelTwoRepository;
 
                 _nameConstant = nameConstant.Value;
+
+                _webCallService = webCallService;
+
+                _webEndpoint = webEndpoint.Value;
             }
 
             public async Task<SuccessfulResponse> Handle(GenerateRemittanceCommand request, CancellationToken cancellationToken)
@@ -100,6 +109,10 @@ namespace ErcasCollect.Commands.CollectionCommand
 
                 var closeBatchId = SaveCloseBachTransaction(request);
 
+                if(closeBatchId == null)
+
+                    return ResponseGenerator.Response("Error generating ERN", _responseCode.NotAccepted, false);
+
                 //send sms
 
                 return ResponseGenerator.Response("Remittance Generated", _responseCode.RemmitanceGenerated, true, new { ClosedBatchTransactionId = closeBatchId});
@@ -115,6 +128,12 @@ namespace ErcasCollect.Commands.CollectionCommand
 
                 var referenceKey = Helpers.IdGenerator.IdGenerator.RandomInt(15);
 
+                var ern = await GetErn(biller, referenceKey);
+
+                if (ern == null)
+
+                    return null;
+
                 var closeBatch = new CloseBatchTransaction()
                 {
                     BillerId = biller.Id,
@@ -126,12 +145,12 @@ namespace ErcasCollect.Commands.CollectionCommand
                     UserId = user.Id,
 
                     TotalAmount = totalAmount,
-                    
+
                     PaymentChannelId = 1,
 
                     TransactionTypeId = 2,
-                    
-                    ReferenceKey = referenceKey
+
+                    ReferenceKey = ern
                 };
 
                 var saveCloseBatch = await _closeBatchTransactionRepository.Add(closeBatch);
@@ -141,6 +160,28 @@ namespace ErcasCollect.Commands.CollectionCommand
                 UpdateBatchTransaction(request, saveCloseBatch.Id);
 
                 return referenceKey;
+            }
+
+            private async Task<string> GetErn(Biller biller, string referenceKey)
+            {
+                var json = JsonConvert.SerializeObject(new
+                {
+
+                    userName = biller.GatewayUsername,
+
+                    keyVector = biller.GatewayKeyVector,
+
+                    secretKey = biller.GatewaySecretKey,
+
+                    transactionIdentify = referenceKey
+
+                });
+                ///Generate ERN
+                var ernResponse = await _webCallService.PostDataCall(_webEndpoint.GenerateERNUrl, json);
+
+                var ernObjectserilized = JsonXmlObjectConverter.Deserialize<GenerateErnDto>(ernResponse);
+
+                return ernObjectserilized.data.generateERN;
             }
 
             private void UpdateBatchTransaction(GenerateRemittanceCommand request, int closeBatchId)

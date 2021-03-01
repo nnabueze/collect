@@ -22,5 +22,7 @@ namespace ErcasCollect.Helpers
         public string SsoUserLogin { get; set; }
 
         public string SsoUserCreate { get; set; }
+
+        public string GenerateERNUrl { get; set; }
     }
 }
