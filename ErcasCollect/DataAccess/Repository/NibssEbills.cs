@@ -33,29 +33,10 @@ namespace ErcasCollect.DataAccess.Repository
         }
 
         public async Task<ValidationResponse> Validation(ValidationRequest request)
-        {            
-
-            switch (request.ProductName)
-            {
-                case "Remittance":
-
-                    return Remittance(request);
-
-                default:
-
-                    return null;
-            }
-
-            return null;
-        }
-
-        public ValidationResponse Remittance(ValidationRequest request)
         {
-            return  _ebillsRemittance.Detail(request);            
+
+            return _ebillsRemittance.Detail(request);
         }
-
-
-
 
     }
 }

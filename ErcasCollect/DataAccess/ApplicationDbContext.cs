@@ -128,6 +128,10 @@ namespace ErcasCollect.DataAccess
               .HasIndex(x => x.ReferenceKey)
                 .IsUnique();
 
+            builder.Entity<Biller>()
+              .HasIndex(x => x.Abbreviation)
+                .IsUnique();
+
             builder.Entity<CloseBatchTransaction>()
               .HasIndex(x => x.ReferenceKey)
                 .IsUnique();
