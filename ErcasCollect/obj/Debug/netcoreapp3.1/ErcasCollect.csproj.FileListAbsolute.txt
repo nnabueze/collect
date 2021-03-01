@@ -169,3 +169,7 @@ C:\Users\Eze\Documents\Visual Studio 2019\source\repos\ErcasNewCollectService\Er
 C:\Users\Eze\Documents\Visual Studio 2019\source\repos\ErcasNewCollectService\ErcasCollect\bin\Debug\netcoreapp3.1\Serilog.Sinks.File.dll
 C:\Users\Eze\Documents\Visual Studio 2019\source\repos\ErcasNewCollectService\ErcasCollect\bin\Debug\netcoreapp3.1\Serilog.Enrichers.Environment.dll
 C:\Users\Eze\Documents\Visual Studio 2019\source\repos\ErcasNewCollectService\ErcasCollect\bin\Debug\netcoreapp3.1\Serilog.Enrichers.Thread.dll
+C:\Users\Eze\Documents\Visual Studio 2019\source\repos\ErcasNewCollectService\ErcasCollect\bin\Debug\netcoreapp3.1\Serilog.Enrichers.Process.dll
+C:\Users\Eze\Documents\Visual Studio 2019\source\repos\ErcasNewCollectService\ErcasCollect\obj\Debug\netcoreapp3.1\ErcasCollect.csproj.CoreCompileInputs.cache
+C:\Users\Eze\Documents\Visual Studio 2019\source\repos\ErcasNewCollectService\ErcasCollect\obj\Debug\netcoreapp3.1\ErcasCollect.MvcApplicationPartsAssemblyInfo.cs
+C:\Users\Eze\Documents\Visual Studio 2019\source\repos\ErcasNewCollectService\ErcasCollect\obj\Debug\netcoreapp3.1\ErcasCollect.MvcApplicationPartsAssemblyInfo.cache

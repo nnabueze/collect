@@ -23,13 +23,17 @@ namespace ErcasCollect.Controllers
     {
         // GET: api/values
         private readonly IMediator mediator;
+
         private readonly ILogger<Biller> _logger;
+
         private readonly ResponseCode _responseCode;
 
         public BillerController(ILogger<Biller> logger, IMediator mediator, IOptions<ResponseCode> responseCode)
         {
             this.mediator = mediator ?? throw new ArgumentNullException(nameof(mediator));
+
             this._logger = logger ?? throw new ArgumentNullException(nameof(logger));
+
             _responseCode = responseCode.Value;
         }
 

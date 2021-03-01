@@ -88,7 +88,9 @@ namespace ErcasCollect.Commands.BillerCommand
 
                     biller.GatewaySecretKey = gatewayResponse.data.secretKey;
 
-                    biller.GatewayKeyVector = gatewayResponse.data.keyVector;                    
+                    biller.GatewayKeyVector = gatewayResponse.data.keyVector;
+
+                    biller.Abbreviation = GetBillerAbbreviation(gatewayResponse.data.username);
 
                     //await SendMail(biller, gatewayResponse);
                 }
@@ -98,6 +100,14 @@ namespace ErcasCollect.Commands.BillerCommand
                 await _billerRepository.CommitAsync();                
 
                 return ResponseGenerator.Response("Biller Created", _responseCode.Created, true, new { BillerId = addedBiller.ReferenceKey });
+            }
+
+
+            private string GetBillerAbbreviation(string remittanceId)
+            {
+                var splitedRemittance = remittanceId.Split("-");
+
+                return splitedRemittance[0];
             }
 
             public async Task<Data> GatewayService()

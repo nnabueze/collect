@@ -154,15 +154,29 @@ namespace ErcasCollect.DataAccess.Repository
 
             var displayName = GetBillerDisplayname();
 
-            for (int i = 0; i < request.Param.Count; i++)
+            if (displayName != null)
             {
-                if (request.Param[i].Key.Equals(displayName.LevelOneDisplayName + _nameConstant.LevelKeyIdentify))
+                for (int i = 0; i < request.Param.Count; i++)
                 {
-                    levelOneStingId = request.Param[i].Value;
+                    if (request.Param[i].Key.Equals(displayName.LevelOneDisplayName + _nameConstant.LevelKeyIdentify))
+                    {
+                        levelOneStingId = request.Param[i].Value;
+                    }
                 }
             }
 
-            return _levelOneRepository.FindFirst(x => x.ReferenceKey == levelOneStingId).Id;
+            int levelOneId;
+
+            if (! string.IsNullOrEmpty(levelOneStingId))
+            {
+                levelOneId = _levelOneRepository.FindFirst(x => x.ReferenceKey == levelOneStingId).Id;
+            }
+            else
+            {
+                levelOneId = _levelOneRepository.FindFirst(x => x.BillerId == _billerDetail.Id).Id;
+            }
+
+            return levelOneId;
         }
 
         private int GetLevelTwoId(NotificationRequest request)
@@ -171,29 +185,56 @@ namespace ErcasCollect.DataAccess.Repository
 
             var displayName = GetBillerDisplayname();
 
-            for (int i = 0; i < request.Param.Count; i++)
+            if (displayName != null)
             {
-                if (request.Param[i].Key.Equals(displayName.LevelTwoDisplayName + _nameConstant.LevelKeyIdentify))
+                for (int i = 0; i < request.Param.Count; i++)
                 {
-                    levelTwoStingId = request.Param[i].Value;
+                    if (request.Param[i].Key.Equals(displayName.LevelTwoDisplayName + _nameConstant.LevelKeyIdentify))
+                    {
+                        levelTwoStingId = request.Param[i].Value;
+                    }
                 }
             }
 
-            return _levelTwoRepository.FindFirst(x => x.ReferenceKey == levelTwoStingId).Id;
+            int levelTwoId;
+
+            if (! string.IsNullOrEmpty(levelTwoStingId))
+            {
+                levelTwoId = _levelTwoRepository.FindFirst(x => x.ReferenceKey == levelTwoStingId).Id;
+            }
+            else
+            {
+                levelTwoId = _levelTwoRepository.FindFirst(x => x.BillerId == _billerDetail.Id).Id;
+            }
+
+            return levelTwoId;
         }
 
         private LevelDisplayName GetBillerDisplayname()
         {
-            return _levelDisplayNameRepository.FindFirst(x => x.BillerId == _billerDetail.Id);
+            var displyName = _levelDisplayNameRepository.FindFirst(x => x.BillerId == _billerDetail.Id);
+
+            if (displyName == null)
+            {
+                return null;
+            }
+
+            return displyName;
         }
 
 
         private async Task<Settlement> SaveSettlement(NotificationRequest request)
         {
 
-            string ercasCollectId = GetErcasCollectId(request);
+            string remittance = GetTransactionKey(request);
 
-            _billerDetail = _billerRepository.FindFirst(x => x.ReferenceKey == ercasCollectId);
+            string billerAbraviation = GetBillerAbbreviation(remittance);
+
+            _billerDetail = _billerRepository.FindFirst(x => x.Abbreviation == billerAbraviation);
+
+            if (_billerDetail == null)
+
+                return null;
 
             var checkSettlement = _settlementRepository.FindFirst(x => x.ReferenceID == request.SessionID && x.BillerId == _billerDetail.Id);
 
@@ -213,6 +254,14 @@ namespace ErcasCollect.DataAccess.Repository
 
             return savedSettlement;
 
+        }
+
+
+        private string GetBillerAbbreviation(string remittanceId)
+        {
+            var splitedRemittance = remittanceId.Split("-");
+
+            return splitedRemittance[0];
         }
 
         private Settlement GetSettlement(NotificationRequest request)
