@@ -22,14 +22,18 @@ namespace ErcasCollect.Controllers
     {
         // GET: /<controller>/
         private readonly IMediator mediator;
-        private readonly ILogger<Status> _logger;
+
+        private readonly ILogger<ApplicationDataController> _logger;
+
         private readonly ResponseCode _responseCode;
 
-        public ApplicationDataController(ILogger<Status> logger, IMediator mediator, IOptions<ResponseCode> responseCode)
+        public ApplicationDataController(IMediator mediator, IOptions<ResponseCode> responseCode, ILogger<ApplicationDataController> logger)
         {
             this.mediator = mediator ?? throw new ArgumentNullException(nameof(mediator));
-            this._logger = logger ?? throw new ArgumentNullException(nameof(logger));
+
             _responseCode = responseCode.Value;
+
+            _logger = logger;
         }
 
 
@@ -54,7 +58,7 @@ namespace ErcasCollect.Controllers
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex.Message.ToString(), "An Application exception occurred on the Get Specific action of the Igr");
+                _logger.LogError(ex, "Get all status");
 
                 var response = new JsonResult(new { Message = ex.Message.ToString() });
 
@@ -64,31 +68,8 @@ namespace ErcasCollect.Controllers
             }
         }
 
-
-        //[HttpGet("{id}")]
-        //public async Task<ReadAllMetaDataDto> GetMetaData(int id)
-        //{
-        //    try
-        //    {
-        //        GetAllMetaDataQuery request = new GetAllMetaDataQuery();
-        //        request.id = id;
-        //        return await mediator.Send(request);
-        //    }
-        //    catch (AppException ex)
-        //    {
-        //        _logger.LogError(ex, "An Application exception occurred on the Get Specific action of the Igr");
-        //        // return await BadRequest(new { message = ex.Message });
-        //        throw;
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        _logger.LogError(ex, "An unknown error occurred on the Get Specific action of the Igr");
-        //        throw;
-        //    }
-        //}
-
         /// <summary>
-        /// List all the roles on the system...added as a seeder
+        /// Get list of roles
         /// </summary>
         /// <returns></returns>
         [HttpGet]        
@@ -100,43 +81,16 @@ namespace ErcasCollect.Controllers
 
                 return await mediator.Send(request);
             }
-            catch (AppException ex)
-            {
-                _logger.LogError(ex, "An Application exception occurred on the Get Specific action of the Igr");
-                // return await BadRequest(new { message = ex.Message });
-                throw;
-            }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "An unknown error occurred on the Get Specific action of the Igr");
+                _logger.LogError(ex, "Get all roles");
+                
                 throw;
             }
         }
 
-        //[HttpGet]    
-        //public async Task<IEnumerable<ReadAllOs>> GetAllOs()
-        //{
-        //    try
-        //    {
-        //        GetOsQuery request = new GetOsQuery();
-
-        //        return await mediator.Send(request);
-        //    }
-        //    catch (AppException ex)
-        //    {
-        //        _logger.LogError(ex, "An Application exception occurred on the Get Specific action of the Igr");
-        //        // return await BadRequest(new { message = ex.Message });
-        //        throw;
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        _logger.LogError(ex, "An unknown error occurred on the Get Specific action of the Igr");
-        //        throw;
-        //    }
-        //}
-
         /// <summary>
-        /// Listing payment channels 
+        /// List of payment channels
         /// </summary>
         /// <returns></returns>
         [HttpGet]       
@@ -149,13 +103,8 @@ namespace ErcasCollect.Controllers
             }
             catch (AppException ex)
             {
-                _logger.LogError(ex, "An Application exception occurred on the Get Specific action of the Igr");
-                // return await BadRequest(new { message = ex.Message });
-                throw;
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError(ex, "An unknown error occurred on the Get Specific action of the Igr");
+                _logger.LogError(ex, "Payment channels");
+               
                 throw;
             }
         }
@@ -174,15 +123,10 @@ namespace ErcasCollect.Controllers
 
                 return await mediator.Send(request);
             }
-            catch (AppException ex)
-            {
-                _logger.LogError(ex, "An Application exception occurred on the Get Specific action of the Igr");
-                // return await BadRequest(new { message = ex.Message });
-                throw;
-            }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "An unknown error occurred on the Get Specific action of the Igr");
+                _logger.LogError(ex, "List of transaction type");
+                
                 throw;
             }
         }
@@ -200,44 +144,19 @@ namespace ErcasCollect.Controllers
 
                 return await mediator.Send(request);
             }
-            catch (AppException ex)
-            {
-                _logger.LogError(ex, "An Application exception occurred on the Get Specific action of the Igr");
-                // return await BadRequest(new { message = ex.Message });
-                throw;
-            }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "An unknown error occurred on the Get Specific action of the Igr");
+                _logger.LogError(ex, "Biller types");
+               
                 throw;
             }
         }
 
-        //[HttpGet]
-
-        //public async Task<IEnumerable<ReadAllBanksDto>> GetAllBanks()
-        //{
-        //    try
-        //    {
-        //        GetAllBanksQuery request = new GetAllBanksQuery();
-
-        //        return await mediator.Send(request);
-        //    }
-        //    catch (AppException ex)
-        //    {
-        //        _logger.LogError(ex, "An Application exception occurred on the Get Specific action of the Igr");
-        //        // return await BadRequest(new { message = ex.Message });
-        //        throw;
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        _logger.LogError(ex, "An unknown error occurred on the Get Specific action of the Igr");
-        //        throw;
-        //    }
-        //}
-
+        /// <summary>
+        /// List al states
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
-
         public async Task<IEnumerable<ReadAllStatesDto>> AllStates()
         {
             try
@@ -246,15 +165,10 @@ namespace ErcasCollect.Controllers
 
                 return await mediator.Send(request);
             }
-            catch (AppException ex)
-            {
-                _logger.LogError(ex, "An Application exception occurred on the Get Specific action of the Igr");
-                // return await BadRequest(new { message = ex.Message });
-                throw;
-            }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "An unknown error occurred on the Get Specific action of the Igr");
+                _logger.LogError(ex, "All states");
+               
                 throw;
             }
         }

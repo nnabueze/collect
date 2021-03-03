@@ -24,28 +24,29 @@ namespace ErcasCollect.Controllers {
             this.mediator = mediator ?? throw new ArgumentNullException(nameof(mediator));
            
         }
-        [HttpDelete("{id}")]
+
+        //[HttpDelete("{id}")]
       
-        public async Task<SuccessfulResponse> DeleteBiller( string id)
-        {
-            try
-            {
-                DeleteBillerCommand request = new DeleteBillerCommand();
-                request.id = id;
-                return await mediator.Send(request);
-            }
-            catch (AppException ex)
-            {
-              //  _logger.LogError(ex, "An Application exception occurred on the make transaction action of the NonIgr");
-                // return await BadRequest(new { message = ex.Message });
-                throw;
-            }
-            catch (Exception ex)
-            {
-              //  _logger.LogError(ex, "An unknown error occurred on the make transaction action of the NonIgr");
-                throw;
-            }
-        }
+        //public async Task<SuccessfulResponse> DeleteBiller( string id)
+        //{
+        //    try
+        //    {
+        //        DeleteBillerCommand request = new DeleteBillerCommand();
+        //        request.id = id;
+        //        return await mediator.Send(request);
+        //    }
+        //    catch (AppException ex)
+        //    {
+        //      //  _logger.LogError(ex, "An Application exception occurred on the make transaction action of the NonIgr");
+        //        // return await BadRequest(new { message = ex.Message });
+        //        throw;
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //      //  _logger.LogError(ex, "An unknown error occurred on the make transaction action of the NonIgr");
+        //        throw;
+        //    }
+        //}
 
     }
 }

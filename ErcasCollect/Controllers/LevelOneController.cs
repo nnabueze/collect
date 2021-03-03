@@ -58,7 +58,7 @@ namespace ErcasCollect.Controllers
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex.Message.ToString(), "An Application exception occurred on the make transaction action of the NonIgr");
+                _logger.LogError(ex, "An Application exception occurred on the make transaction action of the NonIgr");
 
                 var response = new JsonResult(new { Message = ex.Message.ToString() });
 
@@ -87,7 +87,7 @@ namespace ErcasCollect.Controllers
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex.Message.ToString(), "An Application exception occurred on the make transaction action of the NonIgr");
+                _logger.LogError(ex, "An Application exception occurred on the make transaction action of the NonIgr");
 
                 var response = new JsonResult(new { Message = ex.Message.ToString() });
 
@@ -119,7 +119,7 @@ namespace ErcasCollect.Controllers
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex.Message.ToString(), "An Application exception occurred on the make transaction action of the NonIgr");
+                _logger.LogError(ex, "An Application exception occurred on the make transaction action of the NonIgr");
 
                 var response = new JsonResult(new { Message = ex.Message.ToString() });
 

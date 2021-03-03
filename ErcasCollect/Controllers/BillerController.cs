@@ -24,17 +24,17 @@ namespace ErcasCollect.Controllers
         // GET: api/values
         private readonly IMediator mediator;
 
-        private readonly ILogger<Biller> _logger;
+        private readonly ILogger<BillerController> _logger;
 
         private readonly ResponseCode _responseCode;
 
-        public BillerController(ILogger<Biller> logger, IMediator mediator, IOptions<ResponseCode> responseCode)
+        public BillerController(IMediator mediator, IOptions<ResponseCode> responseCode, ILogger<BillerController> logger)
         {
             this.mediator = mediator ?? throw new ArgumentNullException(nameof(mediator));
 
-            this._logger = logger ?? throw new ArgumentNullException(nameof(logger));
-
             _responseCode = responseCode.Value;
+
+            _logger = logger;
         }
 
         /// <summary>
@@ -57,7 +57,7 @@ namespace ErcasCollect.Controllers
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex.Message.ToString(), "An Application exception occurred on the make transaction action of the NonIgr");
+                _logger.LogError(ex, "Creating biller");
 
                 var response = new JsonResult(new { Message = ex.Message.ToString() });
 
@@ -90,7 +90,7 @@ namespace ErcasCollect.Controllers
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex.Message.ToString(), "An Application exception occurred on the make transaction action of the NonIgr");
+                _logger.LogError(ex, "Update biller");
 
                 var response = new JsonResult(new { Message = ex.Message.ToString()});
 
@@ -120,7 +120,7 @@ namespace ErcasCollect.Controllers
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex.Message.ToString(), "An Application exception occurred on the make transaction action of the NonIgr");
+                _logger.LogError(ex, "Adding ebills parameter");
 
                 var response = new JsonResult(new { Message = ex.Message.ToString() });
 
@@ -150,7 +150,7 @@ namespace ErcasCollect.Controllers
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex.Message.ToString(), "An Application exception occurred on the make transaction action of the NonIgr");
+                _logger.LogError(ex, "add Biller display name");
 
                 var response = new JsonResult(new { Message = ex.Message.ToString() });
 
@@ -180,7 +180,7 @@ namespace ErcasCollect.Controllers
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex.Message.ToString(), "An Application exception occurred on the make transaction action of the NonIgr");
+                _logger.LogError(ex, "Get display name");
 
                 var response = new JsonResult(new { Message = ex.Message.ToString() });
 
@@ -210,7 +210,7 @@ namespace ErcasCollect.Controllers
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex.Message.ToString(), "An Application exception occurred on the make transaction action of the NonIgr");
+                _logger.LogError(ex, "Add ebills notification parataer");
 
                 var response = new JsonResult(new { Message = ex.Message.ToString() });
 
@@ -227,30 +227,30 @@ namespace ErcasCollect.Controllers
         /// </summary>
         /// <param name="request"></param>
         /// <returns></returns>
-        [HttpPost]
-        public async Task<ActionResult> AddEbillsBillerProduct([FromBody] EbillsBillerProductCommand request)
-        {
-            try
-            {
-                var result = await mediator.Send(request);
+        //[HttpPost]
+        //public async Task<ActionResult> AddEbillsBillerProduct([FromBody] EbillsBillerProductCommand request)
+        //{
+        //    try
+        //    {
+        //        var result = await mediator.Send(request);
 
-                var response = new JsonResult(result);
+        //        var response = new JsonResult(result);
 
-                response.StatusCode = result.StatusCode;
+        //        response.StatusCode = result.StatusCode;
 
-                return response;
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError(ex.Message.ToString(), "An Application exception occurred on the make transaction action of the NonIgr");
+        //        return response;
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        _logger.LogError(ex, "add ebills product");
 
-                var response = new JsonResult(new { Message = ex.Message.ToString() });
+        //        var response = new JsonResult(new { Message = ex.Message.ToString() });
 
-                response.StatusCode = _responseCode.InternalServerError;
+        //        response.StatusCode = _responseCode.InternalServerError;
 
-                return response;
-            }
-        }
+        //        return response;
+        //    }
+        //}
 
 
 
@@ -279,7 +279,7 @@ namespace ErcasCollect.Controllers
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex.Message.ToString(), "An Application exception occurred on the Get Specific action of the Igr");
+                _logger.LogError(ex, "Get biller byId");
 
                 var response = new JsonResult(new { Message = ex.Message.ToString()});
 
@@ -312,7 +312,7 @@ namespace ErcasCollect.Controllers
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex.Message.ToString(), "An Application exception occurred on the Get Specific action of the Igr");
+                _logger.LogError(ex, "GetAllBillers");
 
                 var response = new JsonResult(new { Message = ex.Message.ToString() });
 
@@ -349,7 +349,7 @@ namespace ErcasCollect.Controllers
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex.Message.ToString(), "An Application exception occurred on the Get Specific action of the Igr");
+                _logger.LogError(ex, "GetAllBillersCategory");
 
                 var response = new JsonResult(new { Message = ex.Message.ToString()});
 
@@ -384,7 +384,7 @@ namespace ErcasCollect.Controllers
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex.Message.ToString(), "An Application exception occurred on the Get Specific action of the Igr");
+                _logger.LogError(ex, "Get all Bille product");
 
                 var response = new JsonResult(new { Message = ex.Message.ToString() });
 
@@ -413,7 +413,7 @@ namespace ErcasCollect.Controllers
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex.Message.ToString(), "An Application exception occurred on the Get Specific action of the Igr");
+                _logger.LogError(ex, "Get Ercas eBills product");
 
                 var response = new JsonResult(new { Message = ex.Message.ToString() });
 
@@ -442,7 +442,7 @@ namespace ErcasCollect.Controllers
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex.Message.ToString(), "An Application exception occurred on the Get Specific action of the Igr");
+                _logger.LogError(ex, "An Application exception occurred on the Get Specific action of the Igr");
 
                 var response = new JsonResult(new { Message = ex.Message.ToString() });
 
@@ -472,7 +472,7 @@ namespace ErcasCollect.Controllers
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex.Message.ToString(), "An Application exception occurred on the Get Specific action of the Igr");
+                _logger.LogError(ex, "An Application exception occurred on the Get Specific action of the Igr");
 
                 var response = new JsonResult(new { Message = ex.Message.ToString() });
 

@@ -57,7 +57,7 @@ namespace ErcasCollect.Controllers
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex.Message.ToString(), "An Application exception occurred on the make transaction action of the NonIgr");
+                _logger.LogError(ex, "An Application exception occurred on the make transaction action of the NonIgr");
 
                 var response = new JsonResult(new { Message = ex.Message.ToString() });
 
@@ -88,7 +88,7 @@ namespace ErcasCollect.Controllers
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex.Message.ToString(), "An Application exception occurred on the make transaction action of the NonIgr");
+                _logger.LogError(ex, "An Application exception occurred on the make transaction action of the NonIgr");
 
                 var response = new JsonResult(new { Message = ex.Message.ToString() });
 
@@ -107,29 +107,28 @@ namespace ErcasCollect.Controllers
         [HttpPost]
         public async Task<IActionResult> PosInvoice([FromBody] PosInvoiceCommand request)
         {
-            //try
-            //{
+            try
+            {
+                var result = await mediator.Send(request);
 
-            //}
-            //catch (Exception ex)
-            //{
-            //    _logger.LogError(ex.Message.ToString(), "An Application exception occurred on the make transaction action of the NonIgr");
+                var response = new JsonResult(result);
 
-            //    var response = new JsonResult(new { Message = ex.Message.ToString() });
+                response.StatusCode = result.StatusCode;
 
-            //    response.StatusCode = _responseCode.InternalServerError;
+                return response;
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "An Application exception occurred on the make transaction action of the NonIgr");
 
-            //    return response;
+                var response = new JsonResult(new { Message = ex.Message.ToString() });
 
-            //}
+                response.StatusCode = _responseCode.InternalServerError;
 
-            var result = await mediator.Send(request);
+                return response;
 
-            var response = new JsonResult(result);
+            }
 
-            response.StatusCode = result.StatusCode;
-
-            return response;
         }
 
         /// <summary>
@@ -152,7 +151,7 @@ namespace ErcasCollect.Controllers
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex.Message.ToString(), "An Application exception occurred on the make transaction action of the NonIgr");
+                _logger.LogError(ex, "An Application exception occurred on the make transaction action of the NonIgr");
 
                 var response = new JsonResult(new { Message = ex.Message.ToString() });
 
@@ -183,7 +182,7 @@ namespace ErcasCollect.Controllers
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex.Message.ToString(), "An Application exception occurred on the make transaction action of the NonIgr");
+                _logger.LogError(ex, "An Application exception occurred on the make transaction action of the NonIgr");
 
                 var response = new JsonResult(new { Message = ex.Message.ToString() });
 
@@ -214,7 +213,7 @@ namespace ErcasCollect.Controllers
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex.Message.ToString(), "An Application exception occurred on the make transaction action of the NonIgr");
+                _logger.LogError(ex, "An Application exception occurred on the make transaction action of the NonIgr");
 
                 var response = new JsonResult(new { Message = ex.Message.ToString() });
 
@@ -245,7 +244,7 @@ namespace ErcasCollect.Controllers
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex.Message.ToString(), "An Application exception occurred on the make transaction action of the NonIgr");
+                _logger.LogError(ex, "An Application exception occurred on the make transaction action of the NonIgr");
 
                 var response = new JsonResult(new { Message = ex.Message.ToString() });
 
@@ -276,7 +275,7 @@ namespace ErcasCollect.Controllers
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex.Message.ToString(), "An Application exception occurred on the make transaction action of the NonIgr");
+                _logger.LogError(ex, "An Application exception occurred on the make transaction action of the NonIgr");
 
                 var response = new JsonResult(new { Message = ex.Message.ToString() });
 
@@ -307,7 +306,7 @@ namespace ErcasCollect.Controllers
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex.Message.ToString(), "An Application exception occurred on the make transaction action of the NonIgr");
+                _logger.LogError(ex, "An Application exception occurred on the make transaction action of the NonIgr");
 
                 var response = new JsonResult(new { Message = ex.Message.ToString() });
 
