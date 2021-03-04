@@ -102,5 +102,10 @@ namespace ErcasCollect.Helpers
             dtDateTime = dtDateTime.AddSeconds(unixTimeStamp).ToLocalTime();
             return dtDateTime;
         }
+
+        public static string GetBillerRandomString(string billerAbbrivation, int stringLength)
+        {
+            return billerAbbrivation +"-"+IdGenerator.IdGenerator.RandomInt(stringLength);
+        }
     }       
 }

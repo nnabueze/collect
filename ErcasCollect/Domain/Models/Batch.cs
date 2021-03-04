@@ -19,7 +19,7 @@ namespace ErcasCollect.Domain.Models
 
         public decimal TotalAmount { get; set; }
 
-        public int UserId { get; set; }
+        public int? UserId { get; set; }
 
         public User User { get; set; }
 

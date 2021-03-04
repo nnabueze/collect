@@ -12,13 +12,13 @@
         </member>
         <member name="M:ErcasCollect.Controllers.ApplicationDataController.GetAllRole">
             <summary>
-            List all the roles on the system...added as a seeder
+            Get list of roles
             </summary>
             <returns></returns>
         </member>
         <member name="M:ErcasCollect.Controllers.ApplicationDataController.PaymentChannels">
             <summary>
-            Listing payment channels 
+            List of payment channels
             </summary>
             <returns></returns>
         </member>
@@ -31,6 +31,12 @@
         <member name="M:ErcasCollect.Controllers.ApplicationDataController.BillerTypes">
             <summary>
             Get system billers
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:ErcasCollect.Controllers.ApplicationDataController.AllStates">
+            <summary>
+            List al states
             </summary>
             <returns></returns>
         </member>
@@ -72,13 +78,6 @@
         <member name="M:ErcasCollect.Controllers.BillerController.AddEbillsNotificationParameter(ErcasCollect.Commands.BillerCommand.EbillsNotificationCommand)">
             <summary>
             Add ebills notification parameter for a specifie biller onboarded on api gateway
-            </summary>
-            <param name="request"></param>
-            <returns></returns>
-        </member>
-        <member name="M:ErcasCollect.Controllers.BillerController.AddEbillsBillerProduct(ErcasCollect.Commands.BillerCommand.EbillsBillerProductCommand)">
-            <summary>
-            Add ebills product for a specific biller
             </summary>
             <param name="request"></param>
             <returns></returns>

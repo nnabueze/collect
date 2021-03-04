@@ -27,13 +27,19 @@ namespace ErcasCollect.Commands.SettlementCommand
 
             private readonly IGenericRepository<CloseBatchTransaction> _closeBatchTransactionResponsitory;
 
+            private readonly IGenericRepository<Batch> _batchResponsitory;
+
+            private readonly IGenericRepository<Transaction> _transactionResponsitory;
+
             private readonly IMapper _mapper;
 
             private readonly ResponseCode _response;
 
-            public FlexSettlementCommandHandler(ISettlementRepository settlementRepository, IGenericRepository<Biller> billerRepository, 
+            public FlexSettlementCommandHandler(ISettlementRepository settlementRepository, IGenericRepository<Biller> billerRepository,
+
+                IGenericRepository<CloseBatchTransaction> closeBatchTransactionResponsitory, IMapper mapper, IOptions<ResponseCode> response, 
                 
-                IGenericRepository<CloseBatchTransaction> closeBatchTransactionResponsitory, IMapper mapper, IOptions<ResponseCode> response)
+                IGenericRepository<Batch> batchResponsitory, IGenericRepository<Transaction> transactionResponsitory)
             {
                 _settlementRepository = settlementRepository;
 
@@ -44,30 +50,41 @@ namespace ErcasCollect.Commands.SettlementCommand
                 _mapper = mapper;
 
                 _response = response.Value;
+
+                _batchResponsitory = batchResponsitory;
+
+                _transactionResponsitory = transactionResponsitory;
             }
 
             public async Task<SuccessfulResponse> Handle(FlexSettlementCommand request, CancellationToken cancellationToken)
             {
                 //automapper
-                Biller biller = GetBiller(request);
-
-                if (biller == null)
-                {
-                    return ResponseGenerator.Response("Wrong Biller Id", _response.NotFound, false, request.FlexSettlementDto);
-                }
-
-                await SaveSettlement(request, biller);
 
                 if (request.FlexSettlementDto.IsSuccess)
                 {
-                    await SaveCloseBatchTransaction(request, biller);
+                    Biller biller = await GetBiller(request);
+
+                    if (biller == null)
+                    {
+                        return ResponseGenerator.Response("Wrong Biller Id", _response.NotFound, false, request.FlexSettlementDto);
+                    }
+
+                    await SaveSettlement(request, biller);
+
+                    var savedClosed = await SaveCloseBatchTransaction(request, biller);
+
+                    var savedBatch = await SaveBatch(request, biller, savedClosed.Id);
+
+                    await SaveTransaction(request, savedBatch.Id, biller);
+
+                    return ResponseGenerator.Response("Transaction Accepted", _response.OK, true, new { ClosedBatchTransactionId = savedClosed.ReferenceKey});
                 }
 
-                return ResponseGenerator.Response("Transaction Accepted", _response.OK, true);
+                return ResponseGenerator.Response("Transaction is not successful", _response.NotAccepted, false);
 
             }
 
-            private async Task SaveCloseBatchTransaction(FlexSettlementCommand request, Biller biller)
+            private async Task<CloseBatchTransaction> SaveCloseBatchTransaction(FlexSettlementCommand request, Biller biller)
             {
                 var saveCloseTransaction = new CloseBatchTransaction()
                 {
@@ -77,19 +94,21 @@ namespace ErcasCollect.Commands.SettlementCommand
 
                      PaymentChannelId = 3,
 
-                     ReferenceKey = request.FlexSettlementDto.TransactionNumber,
+                     ReferenceKey = JsonXmlObjectConverter.GetBillerRandomString(biller.Abbreviation, 15),
 
                      TotalAmount = Convert.ToDecimal(request.FlexSettlementDto.TotalAmount)                     
                 };
 
-                await _closeBatchTransactionResponsitory.Add(saveCloseTransaction);
+                var saveClosedBatch = await _closeBatchTransactionResponsitory.Add(saveCloseTransaction);
 
                 await _closeBatchTransactionResponsitory.CommitAsync();
+
+                return saveClosedBatch;
             }
 
-            private Biller GetBiller(FlexSettlementCommand request)
+            private async Task<Biller> GetBiller(FlexSettlementCommand request)
             {
-                return _billerRepository.FindFirst(x => x.ReferenceKey == request.FlexSettlementDto.BillerId);
+                return await _billerRepository.FindSingleInclude(x => x.ReferenceKey == request.FlexSettlementDto.BillerId, x => x.CategoryTwoService);
             }
 
             private async Task<Settlement> SaveSettlement(FlexSettlementCommand request, Biller biller)
@@ -123,6 +142,94 @@ namespace ErcasCollect.Commands.SettlementCommand
                 await _settlementRepository.CommitAsync();
 
                 return addSettlement;
+            }
+
+            private CategoryTwoService GetCategoryTwoDetail(ICollection<CategoryTwoService> categoryTwo, string categoryTwoId)
+            {
+                return categoryTwo.ToList().Find(x => x.ReferenceKey == categoryTwoId);
+            }
+
+            private async Task<Batch> SaveBatch(FlexSettlementCommand request, Biller biller, int CloseBatchTransactionId)
+            {
+                CategoryTwoService categoryTwoDetail = GetSpecificCategoryTwo(request, biller);
+
+                var batch = new Batch()
+                {
+                    BillerId = biller.Id,
+
+                    CloseBatchTransactionId = CloseBatchTransactionId,
+
+                    CreatedDate = DateTime.UtcNow,
+
+                    IsBatchClosed = true,
+
+                    IsSuccess = true,
+
+                    ItemCount = request.FlexSettlementDto.transactionItems.Count(),
+
+                    LevelOneId = categoryTwoDetail.LevelOneId,
+
+                    PaymentChannelId = 3,
+
+                    TotalAmount = request.FlexSettlementDto.transactionItems.Sum(x => x.Amount),
+
+                    TransactionTypeId = 6,
+
+                    ReferenceKey = JsonXmlObjectConverter.GetBillerRandomString(biller.Abbreviation, 15)
+
+                };
+
+                var savedBatch = await _batchResponsitory.Add(batch);
+
+                await _batchResponsitory.CommitAsync();
+
+                return savedBatch;
+            }
+
+            private CategoryTwoService GetSpecificCategoryTwo(FlexSettlementCommand request, Biller biller)
+            {
+                CategoryTwoService categoryTwoDetail = null;
+
+                foreach (var item in request.FlexSettlementDto.transactionItems)
+                {
+                    categoryTwoDetail = GetCategoryTwoDetail(biller.CategoryTwoService, item.CategoryTwoId);
+
+                    if (categoryTwoDetail != null && categoryTwoDetail.LevelOneId != null)
+                    {
+                        break;
+                    }
+                }
+
+                return categoryTwoDetail;
+            }
+
+            private async Task SaveTransaction(FlexSettlementCommand request, int batchId, Biller biller)
+            {
+                foreach (var item in request.FlexSettlementDto.transactionItems)
+                {
+                    var categoryTwo = GetCategoryTwoDetail(biller.CategoryTwoService, item.CategoryTwoId);
+
+                    var transaction = new Transaction()
+                    {
+                        Amount = item.Amount,
+
+                        BatchId = batchId,
+
+                        CategoryTwoServiceId = categoryTwo.Id,
+
+                        CreatedDate = DateTime.UtcNow,
+
+                        PayerName = request.FlexSettlementDto.PayerName,
+
+                        PayerPhone = request.FlexSettlementDto.PayerPhone,
+
+                        ReferenceKey = JsonXmlObjectConverter.GetBillerRandomString(biller.Abbreviation, 15)
+                    };
+
+                    await _transactionResponsitory.Add(transaction);
+                }
+
+                await _transactionResponsitory.CommitAsync();
             }
         }
     }
