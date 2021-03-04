@@ -42,8 +42,9 @@ namespace ErcasCollect.Commands.BranchCommand
             public async Task<SuccessfulResponse> Handle(CreateLevelOneCommand request, CancellationToken cancellationToken)
             {
                 //auto mapper
+                Biller biller = GetBiller(request);
 
-                var checkBiller = VerifyBiller(request);
+                var checkBiller = VerifyBiller(biller);
 
                 if (checkBiller != null)
                 {
@@ -51,14 +52,13 @@ namespace ErcasCollect.Commands.BranchCommand
                 }
 
                 
-                var savedLevelOne = await SaveLevelOne(request);
+                var savedLevelOne = await SaveLevelOne(request, biller);
 
                 return ResponseGenerator.Response("Created", _responseCode.Created, true, new { LevelOneId = savedLevelOne });
             }
 
-            private SuccessfulResponse VerifyBiller(CreateLevelOneCommand request)
-            {
-                Biller biller = GetBiller(request);
+            private SuccessfulResponse VerifyBiller(Biller biller)
+            {               
 
                 if (biller == null)
                 {
@@ -73,9 +73,8 @@ namespace ErcasCollect.Commands.BranchCommand
                 return _billerRepository.FindFirst(x => x.ReferenceKey == request.createLevelOneDto.BillerId && x.IsDeleted == false);
             }
 
-            private async Task<string> SaveLevelOne(CreateLevelOneCommand request)
+            private async Task<string> SaveLevelOne(CreateLevelOneCommand request, Biller biller)
             {
-                var biller = GetBiller(request);
 
                 var levelOne = new LevelOne()
                 {
@@ -85,7 +84,7 @@ namespace ErcasCollect.Commands.BranchCommand
 
                     FundsweepPercentage = Convert.ToDecimal(request.createLevelOneDto.FundsweepPercentage),
 
-                    ReferenceKey = Helpers.IdGenerator.IdGenerator.RandomInt(15),
+                    ReferenceKey = JsonXmlObjectConverter.GetBillerRandomString(biller.Abbreviation, 15),
 
                     Name = request.createLevelOneDto.Name
                 };

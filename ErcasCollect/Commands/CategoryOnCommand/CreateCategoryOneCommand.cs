@@ -61,20 +61,20 @@ namespace ErcasCollect.Commands.CategoryOnCommand
 
                 var levelOne = GetLevelOne(request);
 
-                var response = await SaveCategoryOne(request, biller.Id, levelOne.Id);
+                var response = await SaveCategoryOne(request, biller, levelOne.Id);
 
                 return ResponseGenerator.Response("Created", _responseCode.Created, true, new { categoryOneId = response });
             }
 
-            private async Task<string> SaveCategoryOne(CreateCategoryOneCommand request, int billerId, int leveloneId)
+            private async Task<string> SaveCategoryOne(CreateCategoryOneCommand request, Biller biller, int leveloneId)
             {
                 var categoryOne = new CategoryOneService()
                 {
-                    BillerId = billerId,
+                    BillerId = biller.Id,
 
                     LevelOneId = leveloneId,
 
-                    ReferenceKey = Helpers.IdGenerator.IdGenerator.RandomInt(15),
+                    ReferenceKey = JsonXmlObjectConverter.GetBillerRandomString(biller.Abbreviation, 15),
 
                     Name = request.CreateCategoryDto.Name
                 };

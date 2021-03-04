@@ -67,12 +67,12 @@ namespace ErcasCollect.Commands.CategoryTwoCommand
                     return verify;
                 }
 
-                var savedCategoryTwo = await SaveCategoryTwo(request, biller.Id, levelOne.Id, categoryOne.Id);
+                var savedCategoryTwo = await SaveCategoryTwo(request, biller, levelOne.Id, categoryOne.Id);
 
                 return ResponseGenerator.Response("Created", _responseCode.Created, true, new { categoryTwoId = savedCategoryTwo });
             }
 
-            private async Task<string>  SaveCategoryTwo(CreateCategoryTwoCommand request, int billerId, int levelOneId, int categoryOneId)
+            private async Task<string>  SaveCategoryTwo(CreateCategoryTwoCommand request, Biller biller, int levelOneId, int categoryOneId)
             {
                 var categoryTwo = new CategoryTwoService()
                 {
@@ -84,11 +84,11 @@ namespace ErcasCollect.Commands.CategoryTwoCommand
 
                     LevelOneId = levelOneId,
 
-                    BillerId = billerId,
+                    BillerId = biller.Id,
 
                     Name = request.createCategoryTwoDto.Name,
 
-                    ReferenceKey = Helpers.IdGenerator.IdGenerator.RandomInt(15)
+                    ReferenceKey = JsonXmlObjectConverter.GetBillerRandomString(biller.Abbreviation, 15)
                 };
 
                 var savedCategoryTwo = await _categoryTwoServiceRepository.Add(categoryTwo);

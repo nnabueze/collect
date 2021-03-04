@@ -71,9 +71,11 @@ namespace ErcasCollect.Commands.UserCommand
 
                     return ResponseGenerator.Response("Failed to create user on SSO", _responseCode.NotAccepted, false);
 
+                var biller = GetBillerId(request.createUserDto.BillerId);
+
                 var user = new User()
                 {
-                    BillerId = GetBillerId(request.createUserDto.BillerId),
+                    BillerId = biller.Id,
 
                     CollectionLimit = request.createUserDto.CollectionLimit,
 
@@ -89,7 +91,7 @@ namespace ErcasCollect.Commands.UserCommand
 
                     PhoneNumber = request.createUserDto.phone,
 
-                    ReferenceKey = Helpers.IdGenerator.IdGenerator.RandomInt(15),
+                    ReferenceKey = JsonXmlObjectConverter.GetBillerRandomString(biller.Abbreviation, 15),
 
                     RoleId = request.createUserDto.RoleId,
 
@@ -150,9 +152,9 @@ namespace ErcasCollect.Commands.UserCommand
             }
 
 
-            private int GetBillerId(string billerId)
+            private Biller GetBillerId(string billerId)
             {
-                return _billerRepository.FindFirst(x => x.ReferenceKey == billerId).Id;
+                return _billerRepository.FindFirst(x => x.ReferenceKey == billerId);
             }
 
 

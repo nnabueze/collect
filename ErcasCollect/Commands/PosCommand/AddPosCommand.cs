@@ -55,6 +55,8 @@ namespace ErcasCollect.Commands.PosCommand
 
             public async Task<SuccessfulResponse> Handle(AddPosCommand request, CancellationToken cancellationToken)
             {
+                var biller = GetBiller(request.AddPosDto.BillerId);
+
                 var pos = new Pos()
                 {
                     CreatedDate = DateTime.UtcNow,
@@ -65,11 +67,11 @@ namespace ErcasCollect.Commands.PosCommand
 
                     ActivationPin = Helpers.IdGenerator.IdGenerator.RandomInt(5),
 
-                    BillerId = GetBiller(request.AddPosDto.BillerId),
+                    BillerId = biller.Id,
 
                     PosImei = request.AddPosDto.PosImei,
 
-                    ReferenceKey = Helpers.IdGenerator.IdGenerator.RandomInt(15)
+                    ReferenceKey = JsonXmlObjectConverter.GetBillerRandomString(biller.Abbreviation, 15)
                     
                 };
 
@@ -91,9 +93,9 @@ namespace ErcasCollect.Commands.PosCommand
                 return _levelTwoRepository.FindFirst(x => x.ReferenceKey == levelTwoId).Id;
             }
 
-            private int GetBiller(string billerId)
+            private Biller GetBiller(string billerId)
             {
-                return _billerRepository.FindFirst(x => x.ReferenceKey == billerId).Id;
+                return _billerRepository.FindFirst(x => x.ReferenceKey == billerId);
             }
         }
     }

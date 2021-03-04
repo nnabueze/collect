@@ -30,6 +30,8 @@ namespace ErcasCollect.Commands.Collection
 
             private readonly IGenericRepository<User> _userRepository;
 
+            private readonly IGenericRepository<Biller> _billerRepository;
+
             private readonly IMapper _mapper;
 
             private readonly IGenericRepository<CategoryTwoService> _categoryTwoServiceRepository;
@@ -38,11 +40,11 @@ namespace ErcasCollect.Commands.Collection
 
             private readonly IGenericRepository<CloseBatchTransaction> _closeBatchTransactionRepository;
 
-            public PosInvoiceCommandHandler(IOptions<ResponseCode> responseCode, IGenericRepository<Transaction> transactionRepository, IGenericRepository<Batch> batchRepository, 
-                
+            public PosInvoiceCommandHandler(IOptions<ResponseCode> responseCode, IGenericRepository<Transaction> transactionRepository, IGenericRepository<Batch> batchRepository,
+
                 IGenericRepository<Pos> posRespository, IGenericRepository<User> userRepository, IMapper mapper, IGenericRepository<CategoryTwoService> categoryTwoServiceRepository,
-                
-                IGenericRepository<LevelTwo> levelTwoRepository, IGenericRepository<CloseBatchTransaction> closeBatchTransactionRepository)
+
+                IGenericRepository<LevelTwo> levelTwoRepository, IGenericRepository<CloseBatchTransaction> closeBatchTransactionRepository, IGenericRepository<Biller> billerRepository)
             {
                 _responseCode = responseCode.Value;
 
@@ -61,6 +63,8 @@ namespace ErcasCollect.Commands.Collection
                 _levelTwoRepository = levelTwoRepository;
 
                 _closeBatchTransactionRepository = closeBatchTransactionRepository;
+
+                _billerRepository = billerRepository;
             }
 
             public async Task<SuccessfulResponse> Handle(PosInvoiceCommand request, CancellationToken cancellationToken)
@@ -98,16 +102,17 @@ namespace ErcasCollect.Commands.Collection
 
                     return userCheck;
 
+                var biller = GetBiller(levelTwo.BillerId);
 
                 //add batch tranasction
-                var savedBatch = await AddBatchTransaction(request, levelTwo, user.Id, pos.Id);
+                var savedBatch = await AddBatchTransaction(request, levelTwo, user.Id, pos.Id, biller);
 
                 //add trabsaction
 
-                await SaveTransaction(request, savedBatch.Id);
+                await SaveTransaction(request, savedBatch.Id, biller);
 
                 //add close batch
-                var savedClocsBatchTransaction = await SaveCloseBatchTransaction(request, levelTwo, user.Id);
+                var savedClocsBatchTransaction = await SaveCloseBatchTransaction(request, levelTwo, user.Id, biller);
 
                 await UpdateBatchTransaction(savedBatch.Id, savedClocsBatchTransaction.Id, user);
 
@@ -135,7 +140,7 @@ namespace ErcasCollect.Commands.Collection
                await _BatchRepository.CommitAsync();
             }
 
-            private async Task<CloseBatchTransaction> SaveCloseBatchTransaction(PosInvoiceCommand request, LevelTwo levelTwo, int userId)
+            private async Task<CloseBatchTransaction> SaveCloseBatchTransaction(PosInvoiceCommand request, LevelTwo levelTwo, int userId, Biller biller)
             {
                 var saveCloseBatchTransaction = new CloseBatchTransaction()
                 {
@@ -151,7 +156,7 @@ namespace ErcasCollect.Commands.Collection
 
                     PaymentChannelId = 1,
 
-                    ReferenceKey = Helpers.IdGenerator.IdGenerator.RandomInt(15),
+                    ReferenceKey = JsonXmlObjectConverter.GetBillerRandomString(biller.Abbreviation, 15),
 
                     TotalAmount = Convert.ToDecimal(request.posInvoiceDto.TotalAmount),
 
@@ -167,7 +172,7 @@ namespace ErcasCollect.Commands.Collection
                 return savedBatch;
             }
 
-            private async Task SaveTransaction(PosInvoiceCommand request, int batchId)
+            private async Task SaveTransaction(PosInvoiceCommand request, int batchId, Biller biller)
             {
                 foreach (var item in request.posInvoiceDto.Invoices)
                 {
@@ -189,7 +194,7 @@ namespace ErcasCollect.Commands.Collection
 
                         PayerPhone = item.PayerPhone,
 
-                        ReferenceKey = Helpers.IdGenerator.IdGenerator.RandomInt(15)                        
+                        ReferenceKey = JsonXmlObjectConverter.GetBillerRandomString(biller.Abbreviation, 15)                       
                     };
 
                     await _transactionRepository.Add(trasaction);
@@ -210,7 +215,7 @@ namespace ErcasCollect.Commands.Collection
                 return await _levelTwoRepository.FindSingleInclude(x => x.ReferenceKey == levelTwoId, x => x.Biller, x => x.LevelOne);
             }
 
-            private async Task<Batch> AddBatchTransaction(PosInvoiceCommand request, LevelTwo levelTwo, int userId, int posId)
+            private async Task<Batch> AddBatchTransaction(PosInvoiceCommand request, LevelTwo levelTwo, int userId, int posId, Biller biller)
             {
                 var batch = new Batch()
                 {
@@ -234,7 +239,7 @@ namespace ErcasCollect.Commands.Collection
 
                     UserId = userId,
 
-                    ReferenceKey = Helpers.IdGenerator.IdGenerator.RandomInt(15),
+                    ReferenceKey = JsonXmlObjectConverter.GetBillerRandomString(biller.Abbreviation, 15),
 
                     TotalAmount = Convert.ToDecimal(request.posInvoiceDto.TotalAmount),
 
@@ -285,6 +290,11 @@ namespace ErcasCollect.Commands.Collection
             private int GetItemCount(PosInvoiceCommand request)
             {
                 return request.posInvoiceDto.Invoices.Count();
+            }
+
+            private Biller GetBiller(int billerId)
+            {
+                return _billerRepository.FindFirst(x => x.Id == billerId);
             }
         }
     }

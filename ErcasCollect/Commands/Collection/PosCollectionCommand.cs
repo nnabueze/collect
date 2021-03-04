@@ -113,10 +113,11 @@ namespace ErcasCollect.Commands.Collection
                     return verifyCollectionLimit;
                 }
 
+                var biller = GetBiller(request);
+
+                var batchReferenceKay = await SaveBatchTransaction(request, biller);
                 
-                var batchReferenceKay = await SaveBatchTransaction(request);
-                
-                await SaveTransactionItem(request, batchReferenceKay);
+                await SaveTransactionItem(request, batchReferenceKay, biller);
 
                 return ResponseGenerator.Response("Transaction successful", _responseCode.TransactionSuccessful, true);
 
@@ -172,7 +173,7 @@ namespace ErcasCollect.Commands.Collection
                 return request.posCollectionDto.TransactionItems.Count();
             }
 
-            private async Task SaveTransactionItem(PosCollectionCommand request, int batchReferenceKey)
+            private async Task SaveTransactionItem(PosCollectionCommand request, int batchReferenceKey, Biller biller)
             {
                 foreach (var item in request.posCollectionDto.TransactionItems)
                 {
@@ -192,7 +193,7 @@ namespace ErcasCollect.Commands.Collection
 
                         PayerPhone = item.PayerPhone,
 
-                        ReferenceKey = Helpers.IdGenerator.IdGenerator.RandomInt(15)
+                        ReferenceKey = JsonXmlObjectConverter.GetBillerRandomString(biller.Abbreviation, 15)
                     };
 
                     await _transactionRepository.Add(transaction);
@@ -206,11 +207,9 @@ namespace ErcasCollect.Commands.Collection
                 return _categoryTwoServiceRepository.FindFirst(x => x.ReferenceKey == categoryTwoId).Id;
             }
 
-            private async Task<int> SaveBatchTransaction(PosCollectionCommand request)
+            private async Task<int> SaveBatchTransaction(PosCollectionCommand request, Biller biller)
             {
-                var totalAmount = GetTransactionTotal(request);
-
-                var biller = GetBiller(request);
+                var totalAmount = GetTransactionTotal(request);                
 
                 var pos = GetPos(request);
 
@@ -238,7 +237,7 @@ namespace ErcasCollect.Commands.Collection
 
                     LevelTwoId = levelTwo.Id,
 
-                    ReferenceKey = Helpers.IdGenerator.IdGenerator.RandomInt(15),
+                    ReferenceKey = JsonXmlObjectConverter.GetBillerRandomString(biller.Abbreviation, 15),
 
                     TransactionTypeId = 1,
 

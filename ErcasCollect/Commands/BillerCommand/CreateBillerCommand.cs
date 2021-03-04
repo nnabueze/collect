@@ -52,8 +52,6 @@ namespace ErcasCollect.Commands.BillerCommand
             {
 
                 Biller biller = _mapper.Map<Biller>(request.createBillerDto);
-
-                biller.ReferenceKey = Helpers.IdGenerator.IdGenerator.RandomInt(15);
                 
 
                 if (biller.IsGatewayOnbaord)
@@ -91,6 +89,8 @@ namespace ErcasCollect.Commands.BillerCommand
                     biller.GatewayKeyVector = gatewayResponse.data.keyVector;
 
                     biller.Abbreviation = GetBillerAbbreviation(gatewayResponse.data.username);
+
+                    biller.ReferenceKey = JsonXmlObjectConverter.GetBillerRandomString(biller.Abbreviation, 15);
 
                     //await SendMail(biller, gatewayResponse);
                 }

@@ -45,8 +45,9 @@ namespace ErcasCollect.Commands.LevelTwoCommand
 
             public async Task<SuccessfulResponse> Handle(CreateLevelTwoCommand request, CancellationToken cancellationToken)
             {
+                Biller biller = GetBiller(request);
 
-                var checkBiller = VerifyBiller(request);
+                var checkBiller = VerifyBiller(biller);
 
                 if (checkBiller != null)
                 {
@@ -54,14 +55,13 @@ namespace ErcasCollect.Commands.LevelTwoCommand
                 }
 
 
-                var savedLevelTwo = await SaveLevelTwo(request);
+                var savedLevelTwo = await SaveLevelTwo(request, biller);
 
                 return ResponseGenerator.Response("Created", _responseCode.Created, true, new { LevelTwoId = savedLevelTwo });
             }
 
-            private SuccessfulResponse VerifyBiller(CreateLevelTwoCommand request)
-            {
-                Biller biller = GetBiller(request);
+            private SuccessfulResponse VerifyBiller(Biller biller)
+            {               
 
                 if (biller == null)
                 {
@@ -81,9 +81,8 @@ namespace ErcasCollect.Commands.LevelTwoCommand
                 return _levelOneRepository.FindFirst(x => x.ReferenceKey == request.createLeveltwoDto.LevelOneId);
             }
 
-            private async Task<string> SaveLevelTwo(CreateLevelTwoCommand request)
+            private async Task<string> SaveLevelTwo(CreateLevelTwoCommand request, Biller biller)
             {
-                var biller = GetBiller(request);
 
                 var levelOne = GetLevel(request);
 
@@ -93,7 +92,7 @@ namespace ErcasCollect.Commands.LevelTwoCommand
 
                     LevelOneId = levelOne.Id,
 
-                    ReferenceKey = Helpers.IdGenerator.IdGenerator.RandomInt(15),
+                    ReferenceKey = JsonXmlObjectConverter.GetBillerRandomString(biller.Abbreviation, 15),
 
                     Name = request.createLeveltwoDto.Name
                 };

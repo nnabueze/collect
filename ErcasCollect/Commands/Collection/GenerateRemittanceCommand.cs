@@ -126,13 +126,13 @@ namespace ErcasCollect.Commands.CollectionCommand
 
                 var user = GetUserId(request.transactionDto.UserId);
 
-                var referenceKey = Helpers.IdGenerator.IdGenerator.RandomInt(15);
+                var referenceKey = JsonXmlObjectConverter.GetBillerRandomString(biller.Abbreviation, 15);
 
-                var ern = await GetErn(biller, referenceKey);
+                //var ern = await GetErn(biller, referenceKey);
 
-                if (ern == null)
+                //if (ern == null)
 
-                    return null;
+                //    return null;
 
                 var closeBatch = new CloseBatchTransaction()
                 {
@@ -150,7 +150,7 @@ namespace ErcasCollect.Commands.CollectionCommand
 
                     TransactionTypeId = 2,
 
-                    ReferenceKey = ern
+                    ReferenceKey = referenceKey
                 };
 
                 var saveCloseBatch = await _closeBatchTransactionRepository.Add(closeBatch);
