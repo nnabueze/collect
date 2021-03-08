@@ -338,6 +338,12 @@
             </summary>
             <returns></returns>
         </member>
+        <member name="M:ErcasCollect.Controllers.ReportController.GetFlexTransactionByPhoneNumber(System.String)">
+            <summary>
+            Return flex transaction by user phome
+            </summary>
+            <returns></returns>
+        </member>
         <member name="M:ErcasCollect.Controllers.SettlementController.EbillsNotification(ErcasCollect.Domain.Models.Nibss.NotificationRequest)">
             <summary>
             Ebills notification endpoint for all biller
