@@ -45,6 +45,10 @@ namespace ErcasCollect.Domain.Models
 
         public TransactionType TransactionType { get; set; }
 
+        public int? PaymentProcessorId { get; set; }
+
+        public PaymentProcessor PaymentProcessor { get; set; }
+
         public int? PaymentChannelId { get; set; }
 
         public PaymentChannel PaymentChannel { get; set; }

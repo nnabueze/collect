@@ -19,6 +19,22 @@ namespace ErcasCollect.Helpers.Seeder
 
                     new PaymentChannel() { Id = 3, Name = "Flex" }
                 );
+
+
+            builder.Entity<PaymentProcessor>().HasData(
+
+                    new PaymentProcessor() { Id = 1, Name = "Pos" },
+
+                    new PaymentProcessor() { Id = 2, Name = "Nibss" },
+
+                    new PaymentProcessor() { Id = 3, Name = "Interswitch" },
+
+                    new PaymentProcessor() { Id = 4, Name = "Remitta" },
+
+                    new PaymentProcessor() { Id = 5, Name = "PayStack" }
+                );
+
+
         }
     }
 }

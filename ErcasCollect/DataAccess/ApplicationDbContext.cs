@@ -25,6 +25,8 @@ namespace ErcasCollect.DataAccess
         public DbSet<LevelTwo> LevelTwo{ get; set; }
         public DbSet<OS> Os{ get; set; }
         public DbSet<PaymentChannel> PaymentChannels { get; set; }
+
+        public DbSet<PaymentProcessor> PaymentProcessors { get; set; }
         public DbSet<Pos> Poses { get; set; }
         public DbSet<Role> Roles { get; set; }
         public DbSet<State> State { get; set; }
