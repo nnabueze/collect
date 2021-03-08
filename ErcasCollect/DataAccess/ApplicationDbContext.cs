@@ -95,6 +95,14 @@ namespace ErcasCollect.DataAccess
 
         public DbSet<BillerAgentCashAtHand> BillerAgentCashAtHand { get; set; }
 
+        public DbSet<MonthlyFlexTotalAmount> MonthlyFlexTotalAmount { get; set; }
+
+        public DbSet<MonthlyFlexFailedCount> MonthlyFlexFailedCount { get; set; }
+
+        public DbSet<MonthlyFlexSuccessCount> MonthlyFlexSuccessCount { get; set; }
+
+        public DbSet<MonthlyFlexTransactionCount> MonthlyFlexTransactionCount { get; set; }
+
 
 
 

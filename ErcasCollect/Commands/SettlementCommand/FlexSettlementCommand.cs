@@ -60,6 +60,8 @@ namespace ErcasCollect.Commands.SettlementCommand
             {
                 //automapper
 
+                //varification
+
                 if (request.FlexSettlementDto.IsSuccess)
                 {
                     Biller biller = await GetBiller(request);

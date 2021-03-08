@@ -15,6 +15,42 @@ namespace ErcasCollect.Helpers
 
 
             builder
+                .Entity<MonthlyFlexTransactionCount>(
+                    eb =>
+                    {
+                        eb.HasNoKey();
+                        eb.ToView("MonthlyFlexTransactionCount");
+                        eb.Property(v => v.TotalTransaction).HasColumnName("TotalTransaction");
+                    });
+
+            builder
+                .Entity<MonthlyFlexSuccessCount>(
+                    eb =>
+                    {
+                        eb.HasNoKey();
+                        eb.ToView("MonthlyFlexSuccessCount");
+                        eb.Property(v => v.TotalTransaction).HasColumnName("TotalTransaction");
+                    });
+
+            builder
+                .Entity<MonthlyFlexFailedCount>(
+                    eb =>
+                    {
+                        eb.HasNoKey();
+                        eb.ToView("MonthlyFlexFailedCount");
+                        eb.Property(v => v.TotalTransaction).HasColumnName("TotalTransaction");
+                    });
+
+            builder
+                .Entity<MonthlyFlexTotalAmount>(
+                    eb =>
+                    {
+                        eb.HasNoKey();
+                        eb.ToView("MonthlyFlexTotalAmount");
+                        eb.Property(v => v.TotalAmountProcessed).HasColumnName("TotalAmountProcessed");
+                    });
+
+            builder
                 .Entity<BillerAgentCashAtHand>(
                     eb =>
                     {
