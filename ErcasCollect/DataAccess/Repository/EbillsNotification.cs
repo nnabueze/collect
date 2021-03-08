@@ -33,15 +33,17 @@ namespace ErcasCollect.DataAccess.Repository
 
         private readonly IGenericRepository<LevelDisplayName> _levelDisplayNameRepository;
 
+        private readonly IGenericRepository<Batch> _batchRepository;
+
         private Biller _billerDetail = null;
 
         public EbillsNotification(IOptions<NameConstant> nameConstant, IGenericRepository<Biller> billerRepository, IGenericRepository<BillerValidation> billerValidationRepository,
 
             IGenericRepository<BillerEbillsProduct> billerEbillsProductRepository, IGenericRepository<CloseBatchTransaction> closeBatchTransactionRepository,
 
-            IGenericRepository<LevelOne> levelOneRepository, IGenericRepository<LevelTwo> levelTwoRepository, IOptions<ResponseCode> responseCode, IGenericRepository<Settlement> settlementRepository, 
-            
-            IGenericRepository<LevelDisplayName> levelDisplayNameRepository)
+            IGenericRepository<LevelOne> levelOneRepository, IGenericRepository<LevelTwo> levelTwoRepository, IOptions<ResponseCode> responseCode, IGenericRepository<Settlement> settlementRepository,
+
+            IGenericRepository<LevelDisplayName> levelDisplayNameRepository, IGenericRepository<Batch> batchRepository)
         {
             _nameConstant = nameConstant.Value;
 
@@ -62,6 +64,8 @@ namespace ErcasCollect.DataAccess.Repository
             _settlementRepository = settlementRepository;
 
             _levelDisplayNameRepository = levelDisplayNameRepository;
+
+            _batchRepository = batchRepository;
         }
 
         public async Task<NotificationResponse> Push(NotificationRequest request)
@@ -72,9 +76,28 @@ namespace ErcasCollect.DataAccess.Repository
 
                 return NotificationFailedResponse(request, _nameConstant.DuplicateTransaction);
 
-            await SaveClosedBatchTransaction(request, saveSettlement.TransactionNumber);
+            var savedClosedId = await SaveClosedBatchTransaction(request, saveSettlement.TransactionNumber);
+
+            await UpdateBatchPaymentProcessor(savedClosedId);
 
             return NotificationSuccessResponse(request);
+        }
+
+        private async Task UpdateBatchPaymentProcessor(int closedBatchId)
+        {
+            var batches = _batchRepository.Find(x => x.CloseBatchTransactionId == closedBatchId);
+
+            if(batches != null)
+            {
+                foreach (var item in batches)
+                {
+                    item.PaymentProcessorId = 2;
+
+                    _batchRepository.Update(item);
+                }
+
+                await _batchRepository.CommitAsync();
+            }
         }
 
         private NotificationResponse NotificationSuccessResponse(NotificationRequest request)
@@ -107,7 +130,7 @@ namespace ErcasCollect.DataAccess.Repository
             return notificationResponse;
         }
 
-        private async Task SaveClosedBatchTransaction(NotificationRequest request, string transactionId)
+        private async Task<int> SaveClosedBatchTransaction(NotificationRequest request, string transactionId)
         {
             var closeBatchTransaction = _closeBatchTransactionRepository.FindFirst(x => x.ReferenceKey == transactionId && x.BillerId == _billerDetail.Id);
 
@@ -122,6 +145,8 @@ namespace ErcasCollect.DataAccess.Repository
                 _closeBatchTransactionRepository.Update(closeBatchTransaction);
 
                 await _closeBatchTransactionRepository.CommitAsync();
+
+                return closeBatchTransaction.Id;
             }
             else
             {
@@ -142,9 +167,11 @@ namespace ErcasCollect.DataAccess.Repository
                     ReferenceKey = request.SessionID
                 };
 
-                await _closeBatchTransactionRepository.Add(savedBatchTransaction);
+                var savedClosed = await _closeBatchTransactionRepository.Add(savedBatchTransaction);
 
                 await _closeBatchTransactionRepository.CommitAsync();
+
+                return savedClosed.Id;
             }
         }
 
