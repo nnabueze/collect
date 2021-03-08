@@ -191,6 +191,8 @@ namespace ErcasCollect.Commands.Collection
 
                         PayerName = item.PayerName,
 
+                        PaymentChannelId = 1,
+
                         PayerPhone = item.PayerPhone,
 
                         ReferenceKey = JsonXmlObjectConverter.GetBillerRandomString(biller.Abbreviation, 15)

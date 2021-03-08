@@ -221,6 +221,8 @@ namespace ErcasCollect.Commands.SettlementCommand
 
                         CreatedDate = DateTime.UtcNow,
 
+                        PaymentChannelId = 3,
+
                         PayerName = request.FlexSettlementDto.PayerName,
 
                         PayerPhone = request.FlexSettlementDto.PayerPhone,

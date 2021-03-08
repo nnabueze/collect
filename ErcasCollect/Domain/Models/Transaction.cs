@@ -22,6 +22,10 @@ namespace ErcasCollect.Domain.Models
 
         public Batch Batch { get; set; }
 
+        public int? PaymentChannelId { get; set; }
+
+        public PaymentChannel PaymentChannel { get; set; }
+
         public string ReferenceKey { get; set; }        
 
         public int? CategoryTwoServiceId { get; set; }
