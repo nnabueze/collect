@@ -41,7 +41,7 @@ namespace ErcasCollect
             var server = Configuration["DBServer"] ?? "localhost";
             var port = Configuration["DBPort"] ?? "1433";
             var user = Configuration["DBUser"] ?? "SA";
-            var password = Configuration["DBPassword"] ?? "Pa55w0rd";
+            var password = Configuration["DBPassword"] ?? "Pa$$w0rd2019";
             var database = Configuration["Database"] ?? "collect";
 
             services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(
