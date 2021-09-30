@@ -1,0 +1,431 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>ErcasCollect</name>
+    </assembly>
+    <members>
+        <member name="M:ErcasCollect.Controllers.ApplicationDataController.GetAllStatus">
+            <summary>
+            Listing all system status response
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:ErcasCollect.Controllers.ApplicationDataController.GetAllRole">
+            <summary>
+            Get list of roles
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:ErcasCollect.Controllers.ApplicationDataController.PaymentChannels">
+            <summary>
+            List of payment channels
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:ErcasCollect.Controllers.ApplicationDataController.TransactionType">
+            <summary>
+            Get system transaction type
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:ErcasCollect.Controllers.ApplicationDataController.BillerTypes">
+            <summary>
+            Get system billers
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:ErcasCollect.Controllers.ApplicationDataController.AllStates">
+            <summary>
+            List al states
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:ErcasCollect.Controllers.BillerController.CreateBiller(ErcasCollect.Commands.BillerCommand.CreateBillerCommand)">
+            <summary>
+            Adding biller on the platform setting isGatwayOnboard to true onboard the biller on api gateway. Point gateway to live server
+            </summary>
+            <param name="request"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ErcasCollect.Controllers.BillerController.UpdateBiller(Ercas.Pay.Service.Commands.UpdateBillerDetailCommand)">
+            <summary>
+            Update  Biller Detail
+            </summary>
+            <param name="request"></param>
+            <returns>uthj</returns>
+        </member>
+        <member name="M:ErcasCollect.Controllers.BillerController.AddEbillsValidationParameter(ErcasCollect.Commands.BillerCommand.EbillsValidationCommand)">
+            <summary>
+            Add ebills validation parameter for a specifie biller onboarded on api gateway
+            </summary>
+            <param name="request"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ErcasCollect.Controllers.BillerController.AddBillerDsplayName(ErcasCollect.Commands.BillerCommand.AddBillerDisplayNameCommand)">
+            <summary>
+            Add biller display names
+            </summary>
+            <param name="request"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ErcasCollect.Controllers.BillerController.GetBillerDsplayName(System.String)">
+            <summary>
+            Get displayname by biller Id
+            </summary>
+            <param name="request"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ErcasCollect.Controllers.BillerController.AddEbillsNotificationParameter(ErcasCollect.Commands.BillerCommand.EbillsNotificationCommand)">
+            <summary>
+            Add ebills notification parameter for a specifie biller onboarded on api gateway
+            </summary>
+            <param name="request"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ErcasCollect.Controllers.BillerController.GetBillerByID(System.String)">
+            <summary>
+            Get a single biler bybille Id.
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ErcasCollect.Controllers.BillerController.GetAllBillers">
+            <summary>
+            List active biller on the paltform
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:ErcasCollect.Controllers.BillerController.GetAllBillersByCategory(System.Int32)">
+            <summary>
+            List billers by category eg Igr, School, etc
+            </summary>
+            <param name="query"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ErcasCollect.Controllers.BillerController.GetAllBillersEbillsProduct(System.String)">
+            <summary>
+            List billers ebills product by billerId
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:ErcasCollect.Controllers.BillerController.GetErcasEbillsProduct">
+            <summary>
+            Get list of all ercas ebills products
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:ErcasCollect.Controllers.BillerController.GetBillerValidationParameter(System.String)">
+            <summary>
+            Get list biller validation parameter
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:ErcasCollect.Controllers.BillerController.GetBillerNotificationParameter(System.String)">
+            <summary>
+            Get list biller notification parameter
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:ErcasCollect.Controllers.CategoryOneController.CreateCategoryOne(ErcasCollect.Commands.CategoryOnCommand.CreateCategoryOneCommand)">
+            <summary>
+            Adding category one  eg adding revenue heads on the system.
+            </summary>
+            <param name="request"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ErcasCollect.Controllers.CategoryOneController.UpdateCategoryOne(ErcasCollect.Commands.CategoryOnCommand.UpdateCategoryOneCommand)">
+            <summary>
+            Updating category one records
+            </summary>
+        </member>
+        <member name="M:ErcasCollect.Controllers.CategoryOneController.GetCategoryOne(System.String,System.String)">
+            <summary>
+            Listing all category one by level one eg mda to renvenue head
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ErcasCollect.Controllers.CategoryTwoController.CreateCategoryTwo(ErcasCollect.Commands.CategoryTwoCommand.CreateCategoryTwoCommand)">
+            <summary>
+            Adding category two  eg adding subheads heads on the system.
+            </summary>
+            <param name="request"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ErcasCollect.Controllers.CategoryTwoController.UpdateCategoryTwo(ErcasCollect.Commands.CategoryTwoCommand.UpdateCategoryTwoCommand)">
+            <summary>
+            Updating category two records
+            </summary>
+        </member>
+        <member name="M:ErcasCollect.Controllers.CategoryTwoController.GetCategoryOne(System.String,System.String)">
+            <summary>
+            Listing all category two by category one eg revenue to subhead head
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ErcasCollect.Controllers.CategoryTwoController.GetAllCategoryTwoByBiller(System.String)">
+            <summary>
+            Listing all category two by biller Id
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ErcasCollect.Controllers.CollectionController.Activation(ErcasCollect.Commands.PosCommand.ActivatePosCommand)">
+            <summary>
+            Pos Activation
+            </summary>
+            <param name="request"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ErcasCollect.Controllers.CollectionController.PosLogin(ErcasCollect.Commands.Collection.PosLoginCommand)">
+            <summary>
+            Pos user Login that return biller list of level one eg List of Mda's
+            </summary>
+            <param name="request"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ErcasCollect.Controllers.CollectionController.PosInvoice(ErcasCollect.Commands.Collection.PosInvoiceCommand)">
+            <summary>
+            Pos invoice collection
+            </summary>
+            <param name="request"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ErcasCollect.Controllers.CollectionController.PosLogout(ErcasCollect.Commands.Collection.PosLogoutCommand)">
+            <summary>
+            Pos user Log out
+            </summary>
+            <param name="request"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ErcasCollect.Controllers.CollectionController.PosCategoryOneService(ErcasCollect.Commands.Collection.PosCategoryOneCommand)">
+            <summary>
+            Listing category one service via pos eg revenue heads
+            </summary>
+            <param name="request"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ErcasCollect.Controllers.CollectionController.PosCategoryTwoService(ErcasCollect.Commands.Collection.PosCategoryTwoCommand)">
+            <summary>
+            Listing category two service via pos eg subheads heads
+            </summary>
+            <param name="request"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ErcasCollect.Controllers.CollectionController.PosBatchTransaction(ErcasCollect.Commands.Collection.PosCollectionCommand)">
+            <summary>
+            Cash batch transaction from pos eg pos collection
+            </summary>
+            <param name="request"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ErcasCollect.Controllers.CollectionController.MultiplePosBatchTransaction(ErcasCollect.Commands.Collection.PosCollectionCommand)">
+            <summary>
+            List of batch transaction from pos eg lis of pos collection
+            </summary>
+            <param name="request"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ErcasCollect.Controllers.CollectionController.PosCloseBatchTransaction(ErcasCollect.Commands.CollectionCommand.GenerateRemittanceCommand)">
+            <summary>
+            Calculate total batch transaction amount for a period eg generate remittance
+            </summary>
+            <param name="request"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ErcasCollect.Controllers.CollectionController.PosLocation">
+            <summary>
+            Pos periodical latitude and logitude //Yet to implement
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:ErcasCollect.Controllers.LevelOneController.CreateLevelOne(ErcasCollect.Commands.BranchCommand.CreateLevelOneCommand)">
+            <summary>
+            Add level one into the system that is create mda's
+            </summary>
+            <param name="request"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ErcasCollect.Controllers.LevelOneController.UpdateLevelOne(ErcasCollect.Commands.LevelOneCommand.UpdateLevelOneCommand)">
+            <summary>
+            Updating level one records
+            </summary>
+        </member>
+        <member name="M:ErcasCollect.Controllers.LevelOneController.GetLevelOne(System.String)">
+            <summary>
+            Listing all level one by biller
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ErcasCollect.Controllers.LevelTwoController.CreateLevelTwo(ErcasCollect.Commands.LevelTwoCommand.CreateLevelTwoCommand)">
+            <summary>
+            Add level two into the system that is create station's
+            </summary>
+        </member>
+        <member name="M:ErcasCollect.Controllers.LevelTwoController.UpdateLevelTwo(ErcasCollect.Commands.LevelTwoCommand.UpdateLevelTwoCommand)">
+            <summary>
+            Updating level Two records
+            </summary>
+        </member>
+        <member name="M:ErcasCollect.Controllers.LevelTwoController.GetLevelOne(System.String,System.String)">
+            <summary>
+            Listing all level two by level One id  eg mda to station
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ErcasCollect.Controllers.PosController.AllPos">
+            <summary>
+            List all  Pos on the platform
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:ErcasCollect.Controllers.PosController.GetPosByBillerID(System.String)">
+            <summary>
+            Get biller list of posed
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ErcasCollect.Controllers.PosController.AddPos(ErcasCollect.Commands.PosCommand.AddPosCommand)">
+            <summary>
+            Adding pos into the platform
+            </summary>
+            <param name="request"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ErcasCollect.Controllers.ReportController.GetHqTotalCount">
+            <summary>
+            Return HQ Total monthly amount procceed, total biller, total users, total monthly transaction and total pos
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:ErcasCollect.Controllers.ReportController.GetHqPeriodicCount">
+            <summary>
+            Return HQ Total weekly, dayly and yestarday proceeds amount
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:ErcasCollect.Controllers.ReportController.GetHqMonthlyTopPerformingBillers">
+            <summary>
+            Return HQ monthly top performing billers
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:ErcasCollect.Controllers.ReportController.GetBillerTotalCount(System.String)">
+            <summary>
+            Return Biller monthly amount processed , monthly transaction, total user, monthly total cash at hand, today, yestarday and weekly total amount
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:ErcasCollect.Controllers.ReportController.GetBillerTopPerformingLevelOne(System.String)">
+            <summary>
+            Return Biller top performing level one eg Top performing Mda
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:ErcasCollect.Controllers.ReportController.GetBillerTopAgentCashAtHand(System.String)">
+            <summary>
+            Return Biller top agent cash at hand
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:ErcasCollect.Controllers.ReportController.GetFlexTransactionReport">
+            <summary>
+            Flex transaction report
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:ErcasCollect.Controllers.ReportController.GetFlexTransactionByPhoneNumber(System.String)">
+            <summary>
+            Return flex transaction by user phome
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:ErcasCollect.Controllers.SettlementController.EbillsNotification(ErcasCollect.Domain.Models.Nibss.NotificationRequest)">
+            <summary>
+            Ebills notification endpoint for all biller
+            </summary>
+            <param name="request"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ErcasCollect.Controllers.SettlementController.FlexSettlement(ErcasCollect.Commands.SettlementCommand.FlexSettlementCommand)">
+            <summary>
+            Self service notification endpoint
+            </summary>
+            <param name="request"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ErcasCollect.Controllers.TransactionController.VerifyCloseBatchTransaction(System.String)">
+            <summary>
+            Verify close transaction detail  by passing close Transaction Id. eg Verify remittance Id
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ErcasCollect.Controllers.TransactionController.EbillsValidation(ErcasCollect.Domain.Models.Nibss.ValidationRequest)">
+            <summary>
+            All ebills valldations is received here!!
+            </summary>
+            <param name="request"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ErcasCollect.Controllers.TransactionController.GetAllBatchTransaction">
+            <summary>
+            Get list of batch transactions
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ErcasCollect.Controllers.TransactionController.GetAllTransactionByBatchId(System.String)">
+            <summary>
+            Get list of transactions by Batch Id
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ErcasCollect.Controllers.TransactionController.GetAllTransactionByBillerId(System.String)">
+            <summary>
+            Get list of batch transactions by biller Id
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ErcasCollect.Controllers.UserController.CreateUser(ErcasCollect.Commands.UserCommand.CreateUserCommand)">
+            <summary>
+            Create user on the platform
+            </summary>
+            <param name="request"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ErcasCollect.Controllers.UserController.GetAllUsers">
+            <summary>
+            Get List of all the users on the platform
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:ErcasCollect.Controllers.UserController.GetUserByID(System.String)">
+            <summary>
+            Get User by Id
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ErcasCollect.Controllers.UserController.GetUserBySsoID(System.Int32)">
+            <summary>
+            Get user details by paasing SSO user Id
+            </summary>
+            <param name="ssoId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ErcasCollect.Controllers.UserController.GetUserByBiller(System.String)">
+            <summary>
+            Get list of users by biller Id
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
+    </members>
+</doc>

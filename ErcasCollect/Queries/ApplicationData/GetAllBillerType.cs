@@ -6,6 +6,7 @@ using AutoMapper;
 using ErcasCollect.Commands.Dto.BillerDto;
 using ErcasCollect.Domain.Interfaces;
 using ErcasCollect.Domain.Models;
+using ErcasCollect.Helpers.EnumClasses;
 using ErcasCollect.Queries.Dto;
 using MediatR;
 
@@ -40,7 +41,6 @@ namespace ErcasCollect.Queries.BillerQuery
                 {
                     return null;
                 }
-
             }
 
 

@@ -6,39 +6,47 @@ using AutoMapper;
 using ErcasCollect.Commands.Dto.BillerDto;
 using ErcasCollect.Domain.Interfaces;
 using ErcasCollect.Domain.Models;
+using ErcasCollect.Helpers;
+using ErcasCollect.Responses;
 using MediatR;
+using Microsoft.Extensions.Options;
 
 namespace ErcasCollect.Queries.BillerQuery
 {
-    public class GetAllBillerByCategoryQuery : IRequest<IEnumerable<ReadBillerDto>>
+    public class GetAllBillerByCategoryQuery : IRequest<SuccessfulResponse>
     {
 
-        public string id { get; set; }
-        public class GetAllBillerByCategoryHandler : IRequestHandler<GetAllBillerByCategoryQuery, IEnumerable<ReadBillerDto>>
+        public int id { get; set; }
+        public class GetAllBillerByCategoryHandler : IRequestHandler<GetAllBillerByCategoryQuery, SuccessfulResponse>
         {
             private readonly IGenericRepository<Biller> billerRepository;
+
             private readonly IMapper mapper;
 
-            public GetAllBillerByCategoryHandler(IGenericRepository<Biller> billerRepository, IMapper mapper)
+            private readonly ResponseCode _responseCode;
+
+            public GetAllBillerByCategoryHandler(IGenericRepository<Biller> billerRepository, IMapper mapper, IOptions<ResponseCode> responseCode)
             {
                 this.billerRepository = billerRepository ?? throw new ArgumentNullException(nameof(billerRepository));
+
                 this.mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
 
-            }
+                _responseCode = responseCode.Value;
+            }            
 
-            public async Task<IEnumerable<ReadBillerDto>> Handle(GetAllBillerByCategoryQuery query, CancellationToken cancellationToken)
+            public async Task<SuccessfulResponse> Handle(GetAllBillerByCategoryQuery query, CancellationToken cancellationToken)
             {
 
-                var result = await billerRepository.FindAllInclude(x => x.BillerTypeId == query.id, x => x.State, x => x.BillerType);
-                if (result != null)
+                var result = await billerRepository.FindAllInclude(x => x.BillerTypeId == query.id);
+
+                if (result == null)
                 {
-                    var biller = mapper.Map<IEnumerable<ReadBillerDto>>(result);
-                    return biller;
+                    return ResponseGenerator.Response("Invalid billerTypeId", _responseCode.NotFound, false);
                 }
-                else
-                {
-                    return null;
-                }
+
+                var biller = mapper.Map<IEnumerable<ReadBillerDto>>(result);
+
+                return ResponseGenerator.Response("Successful", _responseCode.OK, true, biller);
 
             }
 

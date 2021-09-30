@@ -8,8 +8,7 @@ namespace ErcasCollect.Domain.BaseEntities
     public class TransactionBaseEntity
     {
         [Key]
-
-        public string Id{ get; set; }
+        public int Id{ get; set; }
         [Column(TypeName = "decimal(18,2)")]
         public decimal Amount { get; set; }
         public DateTime CreatedDate { get; set; }

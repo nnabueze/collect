@@ -9,14 +9,11 @@ namespace ErcasCollect.Domain.Models
     {
       
         public string Name { get; set; }
-        [Column(TypeName = "nvarchar(32)")]
-        public string BillerId { get; set; }
+        public int? BillerId { get; set; }
         public Biller Biller{ get; set; }
         public string Email{ get; set; }
         public string PhoneNumber{ get; set; }
-        [Column(TypeName = "nvarchar(32)")]
-        public string StatusId { get; set; }
-        public Status Status { get; set; }
+        public int StatusCode { get; set; }
         public DateTime LastPaidDate { get; set; }
 
     }

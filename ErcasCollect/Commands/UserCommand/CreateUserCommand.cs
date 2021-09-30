@@ -12,82 +12,179 @@ using ErcasCollect.Domain.Interfaces;
 using ErcasCollect.Domain.Models;
 using MediatR;
 using Newtonsoft.Json;
+using ErcasCollect.Helpers;
+using Microsoft.Extensions.Options;
+using ErcasCollect.Responses;
 
 namespace ErcasCollect.Commands.UserCommand
 {
-    public class CreateUserCommand : IRequest<string>
+    public class CreateUserCommand : IRequest<SuccessfulResponse>
     {
         public CreateUserDto createUserDto { get; set; }
-        public class CreateUserCommandHandler : IRequestHandler<CreateUserCommand, string>
+
+        public class CreateUserCommandHandler : IRequestHandler<CreateUserCommand, SuccessfulResponse>
         {
-            private readonly IUserRepository userRepository;
-            private readonly IMapper mapper;
-            public CreateUserCommandHandler(IUserRepository userRepository, IMapper mapper)
+            private readonly IGenericRepository<User> _userRepository;
+
+            private readonly IGenericRepository<Biller> _billerRepository;
+
+            private readonly IGenericRepository<LevelOne> _levelOneRepository;
+
+            private readonly IGenericRepository<LevelTwo> _levelTwoRepository;
+
+            private readonly NameConstant _nameConstant;
+
+            private readonly ResponseCode _responseCode;
+
+            private readonly IWebCallService _webCallService;
+
+            private readonly WebEndpoint _webEndpoint;
+
+            public CreateUserCommandHandler(IGenericRepository<User> userRepository, IOptions<NameConstant> nameConstant, IOptions<ResponseCode> responseCode,
+
+                IWebCallService webCallService, IOptions<WebEndpoint> webEndpoint, IGenericRepository<Biller> billerRepository, IGenericRepository<LevelOne> levelOneRepository, 
+                
+                IGenericRepository<LevelTwo> levelTwoRepository)
             {
-                this.userRepository = userRepository ?? throw new ArgumentNullException(nameof(userRepository));
-                this.mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
+                _userRepository = userRepository;
+
+                _nameConstant = nameConstant.Value;
+
+                _responseCode = responseCode.Value;
+
+                _webCallService = webCallService;
+
+                _webEndpoint = webEndpoint.Value;
+
+                _billerRepository = billerRepository;
+
+                _levelOneRepository = levelOneRepository;
+
+                _levelTwoRepository = levelTwoRepository;
             }
 
-            public async Task<string> Handle(CreateUserCommand request, CancellationToken cancellationToken)
+            public async Task<SuccessfulResponse> Handle(CreateUserCommand request, CancellationToken cancellationToken)
             {
-                using (var client = new HttpClient())
-                    {
+                var ssoUser = await SsoUserCreate(request);
 
-                     client.BaseAddress = new Uri("http://155.93.117.250/");
-                     client.DefaultRequestHeaders.TryAddWithoutValidation("Content-Type", "application/json; charset=utf-8");
-                     client.DefaultRequestHeaders
-                    .Accept
-                     .Add(new MediaTypeWithQualityHeaderValue("application/json"));
-                    client.DefaultRequestHeaders.Add("Authorization", "Bearer " + "sk_live_e1ee5fd989c97597e2f0431f09f8ccbacecbe215");
+                if (ssoUser == null)
 
+                    return ResponseGenerator.Response("Failed to create user on SSO", _responseCode.NotAccepted, false);
 
+                var biller = GetBillerId(request.createUserDto.BillerId);
 
-                      var result = client.PostAsync("/gateway/register", new
-                     {
-                          firstName= request.createUserDto.firstname,
-                          lastName= request.createUserDto.lastname,
-                          phone= request.createUserDto.phone,
-                         email= request.createUserDto.email,
-                         password= request.createUserDto.password,
-                       passwordConfirmation= request.createUserDto.password
+                var user = new User()
+                {
+                    BillerId = biller.Id,
 
-                      }, new JsonMediaTypeFormatter()).Result;
+                    CollectionLimit = request.createUserDto.CollectionLimit,
 
-                     if (result.IsSuccessStatusCode)
-                     {
-                     var response = new HttpResponseMessage(HttpStatusCode.OK);
-                     response.Content = new StringContent(result.Content.ReadAsStringAsync().Result, Encoding.UTF8, "application/json");
-                     var content = await response.Content.ReadAsStringAsync();
-                     var ItemsSet = JsonConvert.DeserializeObject<dynamic>(content);
-                     if (ItemsSet["id"] != null)
-                     {
+                    CreatedDate = DateTime.UtcNow,
 
-                      request.createUserDto.SsoId = ItemsSet["id"];
-                      request.createUserDto.Name = request.createUserDto.lastname +" "+ request.createUserDto.firstname;
-                      User user = mapper.Map<User>(request.createUserDto);
-                      await userRepository.Add(user);
-                      await userRepository.CommitAsync();
+                    IsActive = true,
 
-                       return user.Id;
+                    LevelOneId = GetLevelOne(request.createUserDto.LevelOneId),
 
+                    LevelTwoId = GetLevelTwo(request.createUserDto.LevelTwoId),
 
+                    Name = GetName(request.createUserDto.firstname, request.createUserDto.lastname),
 
+                    PhoneNumber = request.createUserDto.phone,
 
-                  }
-                  else
-                 {
-                   return "Ok";
-                 }
+                    ReferenceKey = JsonXmlObjectConverter.GetBillerRandomString(biller.Abbreviation, 15),
+
+                    RoleId = request.createUserDto.RoleId,
+
+                    SsoId = ssoUser.id
+                };
+
+                var saveUser = await _userRepository.Add(user);
+
+                await _userRepository.CommitAsync();
+
+                try
+                {
+                    await SendMail(request);
                 }
-               else
-               {
-                 return "Bad";
-              }
+                catch (Exception ex)
+                {
+
+                    Console.WriteLine(ex.Message.ToString());
+                }
+
+                return ResponseGenerator.Response("Created", _responseCode.Created, true, new { UserId = saveUser.ReferenceKey });
+            }
+
+            private async Task SendMail(CreateUserCommand request)
+            {
+                var msg = "Hi "+request.createUserDto.firstname+". \r\n You have been created as a user in Ercas collect. Kindly find below your login credentials \r\n Username: " + request.createUserDto.email + "\r\n password: "
+
+                    + request.createUserDto.password + "\r\n Login Url: https://collect.ercas.com.ng \r\n You are requested to change your password \n\n Thanks \n Ercas Team";
+
+                var mailToSend = new
+                {
+                    to = request.createUserDto.email,
+
+                    subject = "Login credentials",
+
+                    message = msg
+                };
+
+                var mailToSendJson = JsonConvert.SerializeObject(mailToSend);
+
+                await _webCallService.PostDataCall(_webEndpoint.Mail, mailToSendJson);
 
             }
-        }
-          
-            
+
+            private string GetName(string firstName, string  lastName)
+            {
+                return firstName + " " + lastName;
+            }
+
+            private int GetLevelOne(string levelOneId)
+            {
+                return _levelOneRepository.FindFirst(x => x.ReferenceKey == levelOneId).Id;
+            }
+
+            private int GetLevelTwo(string levelTwoId)
+            {
+                return _levelTwoRepository.FindFirst(x => x.ReferenceKey == levelTwoId).Id;
+            }
+
+
+            private Biller GetBillerId(string billerId)
+            {
+                return _billerRepository.FindFirst(x => x.ReferenceKey == billerId);
+            }
+
+
+
+            private async Task<SsoCreateUserResponseDto> SsoUserCreate(CreateUserCommand request)
+            {
+                var userRequest = new
+                {
+                    firstName = request.createUserDto.firstname,
+
+                    lastName = request.createUserDto.lastname,
+
+                    phone = request.createUserDto.phone,
+
+                    email = request.createUserDto.email,
+
+                    password = request.createUserDto.password,
+
+                    passwordConfirmation = request.createUserDto.password
+
+                };
+
+                var userRequestJson = JsonConvert.SerializeObject(userRequest);
+
+                var ssoResponseString = await _webCallService.PostDataCall(_webEndpoint.SsoUserCreate, userRequestJson);
+
+                var ssoUserDetails = JsonXmlObjectConverter.Deserialize<SsoCreateUserResponseDto>(ssoResponseString);
+
+                return ssoUserDetails;
+            }
         }
     }
 }

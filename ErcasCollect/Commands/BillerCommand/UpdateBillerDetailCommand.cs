@@ -1,8 +1,11 @@
 ﻿
 using ErcasCollect.Commands.Dto.BillerDto;
 using ErcasCollect.Domain.Interfaces;
+using ErcasCollect.Domain.Models;
+using ErcasCollect.Helpers;
 using ErcasCollect.Responses;
 using MediatR;
+using Microsoft.Extensions.Options;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,34 +21,54 @@ namespace Ercas.Pay.Service.Commands
 
         public class UpdateBillerDetailCommandHandler : IRequestHandler<UpdateBillerDetailCommand, SuccessfulResponse>
         {
-            private readonly IBillerRepository billerRepository;
+            private readonly IBillerRepository _billerRepository;
 
-            public UpdateBillerDetailCommandHandler(IBillerRepository billerRepository)
+            private readonly ResponseCode _responseCode;
+
+            public UpdateBillerDetailCommandHandler(IBillerRepository billerRepository, IOptions<ResponseCode> responseCode)
             {
-                this.billerRepository = billerRepository ?? throw new ArgumentNullException(nameof(billerRepository));
+                _billerRepository = billerRepository ?? throw new ArgumentNullException(nameof(billerRepository));
+
+                _responseCode = responseCode.Value;
             }
             public async Task<SuccessfulResponse> Handle(UpdateBillerDetailCommand request, CancellationToken cancellationToken)
             {
-                var biller = await billerRepository.GetSingle(x => x.Id.Equals(request.updateBillerDetailDto.Id));
+                var biller = await _billerRepository.GetSingle(x => x.ReferenceKey.Equals(request.updateBillerDetailDto.BillerId));
 
-                if (biller != null)
+                if (biller == null)
                 {
-
-                    biller.ModifiedDate = DateTime.UtcNow;
-
-
-                
-                    billerRepository.Update(biller);
-                        await billerRepository.CommitAsync();
-                    return new SuccessfulResponse { Message = "Updated Successfully", StatusCode = "200" };
-
+                    return ResponseGenerator.Response("Biller Not Fount", _responseCode.NotFound, false, request.updateBillerDetailDto);
                 }
-                else
-                {
-                    return new SuccessfulResponse { Message = "Opps Something Went Wrong", StatusCode = "400" };
-                }
-            
 
+                await UpdatebIller(request, biller);
+
+                return ResponseGenerator.Response("Updated Successfully", _responseCode.OK, true);
+
+            }
+
+            private async Task UpdatebIller(UpdateBillerDetailCommand request, Biller biller)
+            {
+                biller.ModifiedDate = DateTime.UtcNow;
+
+                biller.Address = request.updateBillerDetailDto.Address;
+
+                biller.PhoneNumber = request.updateBillerDetailDto.PhoneNumber;
+
+                biller.Description = request.updateBillerDetailDto.Description;
+
+                biller.StateId = request.updateBillerDetailDto.StateId;
+
+                biller.Latitude = request.updateBillerDetailDto.Latitude;
+
+                biller.Longitude = request.updateBillerDetailDto.Longitude;
+
+                biller.Abbreviation = request.updateBillerDetailDto.Abbreviation;
+
+                biller.BillerTin = request.updateBillerDetailDto.BillerTin;
+
+                _billerRepository.Update(biller);
+
+                await _billerRepository.CommitAsync();
             }
         }
     }

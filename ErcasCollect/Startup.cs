@@ -20,6 +20,8 @@ using FluentValidation.AspNetCore;
 using ErcasCollect.Validators;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Http;
+using ErcasCollect.Helpers;
+using System.IO;
 
 namespace ErcasCollect
 {
@@ -65,14 +67,17 @@ namespace ErcasCollect
             services.AddScoped<IPosRepository, PosRepository>();
             services.AddScoped<ITaxPayerRepository, TaxPayerRepository>();
             services.AddScoped<IBillerTinRepository, BillerTinRepository>();
-            services.AddScoped<ILevelThreeRepository, LevelThreeRepository>();
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
             services.AddScoped<IBillerBankRepository, BillerBankRepository>();
             services.AddScoped<IBillerRepository, BillerRepository>();
             services.AddScoped<IBatchRepository, BatchRepository>();
             services.AddScoped<ILevelOneRepository, LevelOneRepository>();
             services.AddScoped<ILevelTwoRepository, LevelTwoRepository>();
+            services.AddScoped<IWebCallService, WebCallService>();
             services.AddScoped<ITransactionRepository, TransactionRepository>();
+            services.AddScoped<INibssEbills, NibssEbills>();
+            services.AddScoped<IEbillsRemittance, EbillsRemittance>();
+            services.AddScoped<IEbillsNotification, EbillsNotification>();
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
             services.Configure<ApiBehaviorOptions>(options =>
             {
@@ -81,7 +86,16 @@ namespace ErcasCollect
             services.AddMvc().AddXmlSerializerFormatters();
 
             services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"), b => b.MigrationsAssembly(typeof(ApplicationDbContext).Assembly.FullName)));
-          
+
+            //adding api authentication settings
+            var responseCodeSection = Configuration.GetSection("ResponseCode");
+            var endpoint = Configuration.GetSection("WebEndpoint");
+            var nameConstant = Configuration.GetSection("NameConstant");
+            services
+                .Configure<ResponseCode>(responseCodeSection)
+                .Configure<WebEndpoint>(endpoint)
+                .Configure<NameConstant>(nameConstant);
+
             // Register the Swagger generator, defining 1 or more Swagger documents
             services.AddSwaggerGen(c =>
             {
@@ -90,7 +104,11 @@ namespace ErcasCollect
                     Version = "v1",
                     Title = "ERCAS Collect",
                 });
-                   
+
+                var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
+                var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
+                c.IncludeXmlComments(xmlPath);
+
             });
            
         }
@@ -109,10 +127,10 @@ namespace ErcasCollect
 
         
 
-            app.UseEndpoints(endpoints =>
-            {
-                endpoints.MapControllers();
-            });
+            //app.UseEndpoints(endpoints =>
+            //{
+            //    endpoints.MapControllers();
+            //});
         
             app.UseSwagger();
             // Enable middleware to serve swagger-ui (HTML, JS, CSS, etc.),

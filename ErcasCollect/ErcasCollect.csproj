@@ -4,9 +4,46 @@
     <TargetFramework>netcoreapp3.1</TargetFramework>
   </PropertyGroup>
 
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <DocumentationFile></DocumentationFile>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="Migrations\20210123054616_adjustBillerAndSettlement.cs" />
+    <Compile Remove="Migrations\20210123054616_adjustBillerAndSettlement.Designer.cs" />
+    <Compile Remove="Migrations\20210123062902_adjustBillerAndSettlement.cs" />
+    <Compile Remove="Migrations\20210123062902_adjustBillerAndSettlement.Designer.cs" />
+    <Compile Remove="Migrations\20210123070720_adjustBillerAndSettlement.cs" />
+    <Compile Remove="Migrations\20210123070720_adjustBillerAndSettlement.Designer.cs" />
+    <Compile Remove="Migrations\20210124100054_billerGatewayBillerId.cs" />
+    <Compile Remove="Migrations\20210124100054_billerGatewayBillerId.Designer.cs" />
+    <Compile Remove="Migrations\20210125041711_EbillsValidation.cs" />
+    <Compile Remove="Migrations\20210125041711_EbillsValidation.Designer.cs" />
+    <Compile Remove="Migrations\20210125213329_BillerLevelRelationship.cs" />
+    <Compile Remove="Migrations\20210125213329_BillerLevelRelationship.Designer.cs" />
+    <Compile Remove="Migrations\20210125213838_BillerLevelRelationship.cs" />
+    <Compile Remove="Migrations\20210125213838_BillerLevelRelationship.Designer.cs" />
+    <Compile Remove="Migrations\20210125220311_BillerLevelRelationship.cs" />
+    <Compile Remove="Migrations\20210125220311_BillerLevelRelationship.Designer.cs" />
+    <Compile Remove="Migrations\20210202015655_generalTest.cs" />
+    <Compile Remove="Migrations\20210202015655_generalTest.Designer.cs" />
+    <Compile Remove="Migrations\20210215090746_CreatingView.cs" />
+    <Compile Remove="Migrations\20210215090746_CreatingView.Designer.cs" />
+    <Compile Remove="Migrations\20210215224111_HQreport.cs" />
+    <Compile Remove="Migrations\20210215224111_HQreport.Designer.cs" />
+    <Compile Remove="Migrations\20210215225054_HQreport.cs" />
+    <Compile Remove="Migrations\20210215225054_HQreport.Designer.cs" />
+  </ItemGroup>
+
 
   <ItemGroup>
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="3.1.7" />
+    <PackageReference Include="Serilog.AspNetCore" Version="3.4.0" />
+    <PackageReference Include="Serilog.Enrichers.Environment" Version="2.1.3" />
+    <PackageReference Include="Serilog.Enrichers.Process" Version="2.0.1" />
+    <PackageReference Include="Serilog.Enrichers.Thread" Version="3.1.0" />
+    <PackageReference Include="Serilog.Settings.Configuration" Version="3.1.0" />
     <PackageReference Include="Swashbuckle.AspNetCore.Swagger" Version="5.5.1" />
     <PackageReference Include="Swashbuckle.AspNetCore.SwaggerUi" Version="5.5.1" />
     <PackageReference Include="Swashbuckle.AspNetCore.SwaggerGen" Version="5.5.1" />
@@ -33,44 +70,24 @@
     <PackageReference Include="Microsoft.OpenApi" Version="1.2.3" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Commands\" />
-    <Folder Include="Queries\" />
-    <Folder Include="Domain\" />
-    <Folder Include="DataAccess\" />
     <Folder Include="AutoMapper\" />
     <Folder Include="Validators\" />
-    <Folder Include="DataAccess\Repository\" />
-    <Folder Include="Domain\Models\" />
     <Folder Include="Domain\BaseEntities\" />
-    <Folder Include="Domain\Interfaces\" />
     <Folder Include="AutoMapper\Profiles\" />
-    <Folder Include="Helpers\" />
     <Folder Include="Helpers\IdGenerator.cs\" />
-    <Folder Include="Controllers\" />
-    <Folder Include="Commands\Dto\" />
-    <Folder Include="Commands\Dto\BillerDto\" />
-    <Folder Include="Commands\BillerCommand\" />
     <Folder Include="Exceptions\" />
     <Folder Include="Extentions\" />
     <Folder Include="PipelineBehaviour\" />
     <Folder Include="Commands\TransactionCommand\" />
     <Folder Include="Commands\UserCommand\" />
     <Folder Include="Commands\StatusCommand\" />
-    <Folder Include="Commands\PosCommand\" />
-    <Folder Include="Commands\LevelOneCommand\" />
-    <Folder Include="Commands\LevelTwoCommand\" />
     <Folder Include="Commands\LevelThreeCommand\" />
     <Folder Include="Commands\TaxPayerCommand\" />
     <Folder Include="Commands\Dto\LevelOneDto\" />
     <Folder Include="Commands\Dto\LevelTwoDto\" />
     <Folder Include="Commands\Dto\LevelThreeDto\" />
     <Folder Include="Helpers\Pagination\" />
-    <Folder Include="Queries\BillerQuery\" />
-    <Folder Include="Queries\Dto\" />
-    <Folder Include="Commands\Dto\PosDto\" />
     <Folder Include="Commands\Dto\UserDto\" />
-    <Folder Include="Commands\Dto\SettlementDto\" />
-    <Folder Include="Commands\SettlementCommand\" />
     <Folder Include="Commands\Dto\TaxpayerDto\" />
     <Folder Include="Commands\BatchCommand\" />
     <Folder Include="Commands\Dto\BatchDto\" />
@@ -78,9 +95,6 @@
     <Folder Include="Queries\LevelOneQuery\" />
     <Folder Include="Queries\LevelTwoQuery\" />
     <Folder Include="Queries\LevelThreeQuery\" />
-    <Folder Include="Commands\Collection\" />
-    <Folder Include="Commands\Dto\CollectionDto\" />
-    <Folder Include="Queries\Transaction\" />
     <Folder Include="Queries\Dto\ReadTransactionDto\" />
     <Folder Include="Queries\ApplicationData\" />
     <Folder Include="Queries\PosQuery\" />

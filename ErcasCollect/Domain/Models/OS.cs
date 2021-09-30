@@ -8,8 +8,7 @@ namespace ErcasCollect.Domain.Models
     public class OS
     {
         [Key]
-        [Column(TypeName = "nvarchar(32)")]
-        public string Id { get; set; }
+        public int Id { get; set; }
         [Column(TypeName = "nvarchar(32)")]
         public string Name { get; set; }
     }

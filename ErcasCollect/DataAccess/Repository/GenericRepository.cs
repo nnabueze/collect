@@ -20,18 +20,36 @@ namespace ErcasCollect.DataAccess.Repository
             _context = context;
         }
 
-        public virtual async Task Add(T entity)
+        public virtual async Task<T> Add(T entity)
         {
-            //EntityEntry dbEntityEntry = _context.Entry<T>(entity);
             await _context.Set<T>().AddAsync(entity);
+
+            return entity;
         }
 
-        public virtual async Task Add(List<T> entity)
+        public IEnumerable<T> FindAllEnumerable()
+        {
+            return _context.Set<T>();
+        }
+
+        public T FirstOrDefault()
+        {
+            return _context.Set<T>().FirstOrDefault();
+        }
+
+        public IEnumerable<T> Find(Expression<Func<T, bool>> predicate)
+        {
+            return _context.Set<T>().Where(predicate);
+        }
+
+        public virtual async Task<List<T>> Add(List<T> entity)
         {
             foreach (var item in entity)
             {
                 await _context.Set<T>().AddAsync(item);
             }
+
+            return entity;
         }
 
         public virtual async Task<IEnumerable<T>> AllIncluding(params Expression<Func<T, object>>[] includeProperties)
@@ -208,7 +226,7 @@ namespace ErcasCollect.DataAccess.Repository
             this.context = context;
             entities = context.Set<T>();
         }
-        public void Delete(string id)
+        public void Delete(int id)
         {
             T entity = entities.SingleOrDefault(s => s.Id == id);
             entities.Remove(entity);
@@ -221,7 +239,7 @@ namespace ErcasCollect.DataAccess.Repository
             return await entities.ToListAsync();
         }
 
-        public async Task<T> GetById(string id)
+        public async Task<T> GetById(int id)
         {
             return await entities.SingleOrDefaultAsync(s => s.Id == id);
         }

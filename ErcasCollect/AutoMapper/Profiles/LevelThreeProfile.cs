@@ -11,8 +11,8 @@ namespace ErcasCollect.AutoMapper.Profiles
         public ServiceProfile()
         {
 
-            CreateMap<CreateLevelThreeDto, LevelThree>().ReverseMap();
-            CreateMap<ReadLevelThreeDto, LevelThree>().ReverseMap();
+            //CreateMap<CreateLevelThreeDto, LevelThree>().ReverseMap();
+            //CreateMap<ReadLevelThreeDto, LevelThree>().ReverseMap();
 
         }
     }

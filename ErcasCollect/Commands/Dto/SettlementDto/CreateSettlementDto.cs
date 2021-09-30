@@ -7,11 +7,9 @@ namespace ErcasCollect.Commands.Dto.SettlementDto
 {
     public class CreateSettlementDto
     {
-        [JsonIgnore]
-        public string Id { get; set; } = Helpers.IdGenerator.IdGenerator.GetUniqueKey(10, 2);
-        public string BankId { get; set; }
+        public string Bank { get; set; }
    
-        public string BillerId { get; set; }
+        public int BillerId { get; set; }
    
         public int PaymentChannelId { get; set; }
   
@@ -25,10 +23,10 @@ namespace ErcasCollect.Commands.Dto.SettlementDto
         public string PayerPhone { get; set; }
 
         public string ReferenceID { get; set; }
-        public string TransactionID { get; set; }
+        public string TransactionNumber { get; set; }
         public decimal Amount { get; set; }
-        public string StatusId{ get; set; }
-        public string AgentId { get; set; }
+        public int StatusCode{ get; set; }
+        public int AgentId { get; set; }
 
     }
 

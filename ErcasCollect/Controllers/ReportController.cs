@@ -3,9 +3,15 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using ErcasCollect.DataAccess;
+using ErcasCollect.Domain.Models;
+using ErcasCollect.Helpers;
+using ErcasCollect.Queries.Report;
 using ErcasCollect.ViewModels;
+using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -14,81 +20,256 @@ namespace ErcasCollect.Controllers
     [Route("api/[controller]/[action]")]
     public class ReportController : Controller
     {
-        private readonly ApplicationDbContext _context;
-        public ReportController(ApplicationDbContext context)
-        {
+        private readonly IMediator _mediator;
 
-            _context = context;
+        private readonly ILogger<Biller> _logger;
+
+        private readonly ResponseCode _responseCode;
+
+        public ReportController(IMediator mediator, ILogger<Biller> logger, IOptions<ResponseCode> responseCode)
+        {
+            _mediator = mediator;
+
+            _logger = logger;
+
+            _responseCode = responseCode.Value;
         }
 
-      
-        // GET: api/values
+        /// <summary>
+        /// Return HQ Total monthly amount procceed, total biller, total users, total monthly transaction and total pos
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
-        public async Task<IActionResult> GetAdminCount()
+        public async Task<IActionResult> GetHqTotalCount()
         {
+            try
+            {
+                var result = await _mediator.Send(new GetHqTotalCountQuery());
 
-            var billercount = _context.Billers.Count();
-            var transactioncount = _context.Transactions.Count();
-            var usercount = _context.Users.Count();
-            return Ok(new AdminDashboardCount { NumberofBiller = billercount, TransactionVolume = transactioncount, NumberofUsers = usercount });
+                var response = new JsonResult(result);
+
+                response.StatusCode = result.StatusCode;
+
+                return response;
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message.ToString(), "An Application exception occurred on the Get Specific action of the Igr");
+
+                var response = new JsonResult(new { Message = ex.Message.ToString() });
+
+                response.StatusCode = _responseCode.InternalServerError;
+
+                return response;
+            }
         }
 
 
-
-        // GET: api/values
-        [HttpGet("{id}")]
-        public async Task<IActionResult> GetBillerCount( string id) 
-        {
-             
-        
-            var transactioncount = _context.Transactions.Where(x=>x.BillerId==id).Count();
-            var usercount = _context.Users.Where(x => x.BillerId == id).Count();
-            var taxpayercount = _context.TaxPayers.Where(x => x.BillerId == id).Count();
-            return Ok(new BillerDashboardCount {  TransactionVolume = transactioncount, NumberofUsers = usercount,NumberofTaxPayer=taxpayercount });
-        }
-
-      
-        // GET: api/values
+        /// <summary>
+        /// Return HQ Total weekly, dayly and yestarday proceeds amount
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
-        public async Task<IActionResult> GetAmountAdminCount()
+        public async Task<IActionResult> GetHqPeriodicCount()
         {
+            try
+            {
+                var result = await _mediator.Send(new GetHqPeriodicCountQuery());
 
+                var response = new JsonResult(result);
 
-            var amount = _context.Transactions.Sum(x=>x.Amount);
-           
-            return Ok(new AllTransactionSum { Amount= amount});
+                response.StatusCode = result.StatusCode;
+
+                return response;
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message.ToString(), "An Application exception occurred on the Get Specific action of the Igr");
+
+                var response = new JsonResult(new { Message = ex.Message.ToString() });
+
+                response.StatusCode = _responseCode.InternalServerError;
+
+                return response;
+            }
         }
 
 
-        [HttpGet("{id}")]
-        public async Task<IActionResult> GetAmountBillerCount(string id)
+        /// <summary>
+        /// Return HQ monthly top performing billers
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet]
+        public async Task<IActionResult> GetHqMonthlyTopPerformingBillers()
         {
+            try
+            {
+                var result = await _mediator.Send(new MonthlyTopPerformingBillersQuery());
 
+                var response = new JsonResult(result);
 
-            var amount = _context.Transactions.Where(x => x.BillerId == id).Sum(x => x.Amount);
+                response.StatusCode = result.StatusCode;
 
-            return Ok(new AllTransactionSum { Amount = amount });
+                return response;
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message.ToString(), "An Application exception occurred on the Get Specific action of the Igr");
+
+                var response = new JsonResult(new { Message = ex.Message.ToString() });
+
+                response.StatusCode = _responseCode.InternalServerError;
+
+                return response;
+            }
         }
-      
-
-        //[Route("dashboard/topfivebillers")]
-        //// GET: api/values
-        //[HttpGet]
-        //public async Task<IActionResult> GetTopFive([FromQuery] string id)
-        //{
-
-        //    var query = (from t in _context.Billers
-        //                 join s in _context.Transactions on t.Id equals s.BillerId into g
-        //                 from s in g.DefaultIfEmpty()
-        //                 select new { Title = t.Name, Total = g.Sum(x => x.Amount) } into ts
-        //                 orderby ts.Total descending
-        //                 select ts.Title).Take(5);
-
-        //    return Ok(query);
-        //}
-
-     
 
 
+        /// <summary>
+        /// Return Biller monthly amount processed , monthly transaction, total user, monthly total cash at hand, today, yestarday and weekly total amount
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet]
+        public async Task<IActionResult> GetBillerTotalCount(string billerId)
+        {
+            try
+            {
+                var result = await _mediator.Send(new GetBillerTotalCountQuery(billerId));
+
+                var response = new JsonResult(result);
+
+                response.StatusCode = result.StatusCode;
+
+                return response;
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message.ToString(), "An Application exception occurred on the Get Specific action of the Igr");
+
+                var response = new JsonResult(new { Message = ex.Message.ToString() });
+
+                response.StatusCode = _responseCode.InternalServerError;
+
+                return response;
+            }
+        }
+
+
+        /// <summary>
+        /// Return Biller top performing level one eg Top performing Mda
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet]
+        public async Task<IActionResult> GetBillerTopPerformingLevelOne(string billerId)
+        {
+            try
+            {
+                var result = await _mediator.Send(new GetBillerTopPerformingLevelOneQuery(billerId));
+
+                var response = new JsonResult(result);
+
+                response.StatusCode = result.StatusCode;
+
+                return response;
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message.ToString(), "An Application exception occurred on the Get Specific action of the Igr");
+
+                var response = new JsonResult(new { Message = ex.Message.ToString() });
+
+                response.StatusCode = _responseCode.InternalServerError;
+
+                return response;
+            }
+        }
+
+        /// <summary>
+        /// Return Biller top agent cash at hand
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet]
+        public async Task<IActionResult> GetBillerTopAgentCashAtHand(string billerId)
+        {
+            try
+            {
+                var result = await _mediator.Send(new GetBillerTopPerformingAgentQuery(billerId));
+
+                var response = new JsonResult(result);
+
+                response.StatusCode = result.StatusCode;
+
+                return response;
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message.ToString(), "An Application exception occurred on the Get Specific action of the Igr");
+
+                var response = new JsonResult(new { Message = ex.Message.ToString() });
+
+                response.StatusCode = _responseCode.InternalServerError;
+
+                return response;
+            }
+        }
+
+
+        /// <summary>
+        /// Flex transaction report
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet]
+        public async Task<IActionResult> GetFlexTransactionReport()
+        {
+            try
+            {
+                var result = await _mediator.Send(new GetFlexTransactionQuery());
+
+                var response = new JsonResult(result);
+
+                response.StatusCode = result.StatusCode;
+
+                return response;
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message.ToString(), "An Application exception occurred on the Get Specific action of the Igr");
+
+                var response = new JsonResult(new { Message = ex.Message.ToString() });
+
+                response.StatusCode = _responseCode.InternalServerError;
+
+                return response;
+            }
+        }
+
+        /// <summary>
+        /// Return flex transaction by user phome
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet]
+        public async Task<IActionResult> GetFlexTransactionByPhoneNumber(string userPhoneNumber)
+        {
+            try
+            {
+                var result = await _mediator.Send(new GetGetFlexTransactionByPhoneNumberQuery(userPhoneNumber));
+
+                var response = new JsonResult(result);
+
+                response.StatusCode = result.StatusCode;
+
+                return response;
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message.ToString(), "An Application exception occurred on the Get Specific action of the Igr");
+
+                var response = new JsonResult(new { Message = ex.Message.ToString() });
+
+                response.StatusCode = _responseCode.InternalServerError;
+
+                return response;
+            }
+        }
     }
 }

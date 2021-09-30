@@ -14,7 +14,7 @@ namespace ErcasCollect.Queries.BillerQuery
     public class GetAllLevelOneByIDQuery : IRequest<ReadLevelOneDto>
     {
 
-        public string id { get; set; }
+        public int id { get; set; }
         public class GetAllLevelOneByIDHandler : IRequestHandler<GetAllLevelOneByIDQuery,ReadLevelOneDto>
         {
             private readonly IGenericRepository<LevelOne> leveloneRepository;
@@ -30,7 +30,7 @@ namespace ErcasCollect.Queries.BillerQuery
             public async Task<ReadLevelOneDto> Handle(GetAllLevelOneByIDQuery query, CancellationToken cancellationToken)
             {
 
-                var result = await leveloneRepository.FindSingleInclude(x => x.Id == query.id, x => x.Biller, x => x.Status);
+                var result = await leveloneRepository.FindSingleInclude(x => x.Id == query.id, x => x.Biller);
                 if (result != null)
                 {
                     var levelone = mapper.Map<ReadLevelOneDto>(result);

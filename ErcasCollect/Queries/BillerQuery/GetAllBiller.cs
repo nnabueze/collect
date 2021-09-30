@@ -6,39 +6,60 @@ using AutoMapper;
 using ErcasCollect.Commands.Dto.BillerDto;
 using ErcasCollect.Domain.Interfaces;
 using ErcasCollect.Domain.Models;
+using ErcasCollect.Helpers;
+using ErcasCollect.Responses;
 using MediatR;
+using Microsoft.Extensions.Options;
 
 namespace ErcasCollect.Queries.BillerQuery
 {
-    public class GetAllBillerQuery : IRequest<IEnumerable<ReadBillerDto>>
+    public class GetAllBillerQuery : IRequest<SuccessfulResponse>
     {
 
 
-        public class GetAllBillerHandler : IRequestHandler<GetAllBillerQuery, IEnumerable<ReadBillerDto>>
+        public class GetAllBillerHandler : IRequestHandler<GetAllBillerQuery, SuccessfulResponse>
         {
             private readonly IGenericRepository<Biller> billerRepository;
+
+            private readonly IGenericRepository<BillerType> billerTypeRepository;
+
+            private readonly IGenericRepository<State> stateRepository;
+
             private readonly IMapper mapper;
 
-            public GetAllBillerHandler(IGenericRepository<Biller> billerRepository, IMapper mapper)
+            private readonly ResponseCode _responseCode;
+
+            public GetAllBillerHandler(IGenericRepository<Biller> billerRepository, IMapper mapper, IOptions<ResponseCode> responseCode,
+
+                IGenericRepository<BillerType> billerTypeRepository, IGenericRepository<State> stateRepository)
             {
                 this.billerRepository = billerRepository ?? throw new ArgumentNullException(nameof(billerRepository));
+
                 this.mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
 
+                _responseCode = responseCode.Value;
+
+                this.billerTypeRepository = billerTypeRepository;
+
+                this.stateRepository = stateRepository;
             }
 
-            public async Task<IEnumerable<ReadBillerDto>> Handle(GetAllBillerQuery query, CancellationToken cancellationToken)
+            public async Task<SuccessfulResponse> Handle(GetAllBillerQuery query, CancellationToken cancellationToken)
             {
+                List<ReadBillerDto> listBiller = new List<ReadBillerDto>();
 
-                var result = await billerRepository.FindAllInclude(x=>x.IsDeleted==false,x=>x.State,x=>x.BillerType,x=>x.Status);
-                if (result != null)
+                var billers = mapper.Map<IEnumerable<ReadBillerDto>>(await billerRepository.FindAllInclude(x => x.IsDeleted == false));
+
+                foreach (var item in billers)
                 {
-                    var biller = mapper.Map<IEnumerable<ReadBillerDto>>(result);
-                    return biller;
+                    item.BillerType = billerTypeRepository.FindFirst(x => x.Id == item.BillerTypeId).Category;
+
+                    item.State = stateRepository.FindFirst(x => x.Id == item.StateId).Name;
+
+                    listBiller.Add(item);
                 }
-                else
-                {
-                    return null;
-                }
+
+                return ResponseGenerator.Response("Successful", _responseCode.OK, true, listBiller);
 
             }
 

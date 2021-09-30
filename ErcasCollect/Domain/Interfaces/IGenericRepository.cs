@@ -16,12 +16,17 @@ namespace ErcasCollect.Domain.Interfaces
         Task<int> Count();
         Task<T> GetSingle(Expression<Func<T, bool>> predicate);
         Task<T> GetLastAsync(Expression<Func<T, bool>> predicate);
+        public IEnumerable<T> Find(Expression<Func<T, bool>> predicate);
+        public IEnumerable<T> FindAllEnumerable();
         T GetSingle(Expression<Func<T, bool>> predicate, params Expression<Func<T, object>>[] includeProperties);
         Task<IEnumerable<T>> FindAllInclude(Expression<Func<T, bool>> predicate, params Expression<Func<T, object>>[] includeProperties);
         Task<T> FindSingleInclude(Expression<Func<T, bool>> predicate, params Expression<Func<T, object>>[] includeProperties);
         Task<IEnumerable<T>> FindBy(Expression<Func<T, bool>> predicate);
-        Task Add(T entity);
-        Task Add(List<T> entity);
+        Task<T> Add(T entity);
+        Task<List<T>> Add(List<T> entity);
+
+        public T FirstOrDefault();
+
         void Update(T entity);
         T FindFirst(Expression<Func<T, bool>> predicate);
         void UndoAdd(T entity);
@@ -36,10 +41,10 @@ namespace ErcasCollect.Domain.Interfaces
     public interface IGenericTransactionRepository<T> where T : TransactionBaseEntity
     {
         Task<IEnumerable<T>> GetAll();
-        Task<T> GetById(string id);
+        Task<T> GetById(int id);
         Task Insert(T entity);
         void Update(T entity);
-        void Delete(string id);
+        void Delete(int id);
 
     }
 }

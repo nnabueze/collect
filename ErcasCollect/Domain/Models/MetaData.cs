@@ -4,7 +4,7 @@ namespace ErcasCollect.Domain.Models
     public class MetaData
     {
         public int Id { get; set; }
-        public string  BillerTypeId { get; set; }
+        public int?  BillerTypeId { get; set; }
         public  BillerType BillerTypes{ get; set; }
         public string FieldOne{ get; set; }
         public string FieldTwo { get; set; }
