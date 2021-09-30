@@ -38,10 +38,10 @@ namespace ErcasCollect
         public void ConfigureServices(IServiceCollection services)
         {
             //connection for containerize application (fix later)
-            var server = Configuration["DBServer"] ?? "localhost";
+            var server = Configuration["DBServer"] ?? "192.168.43.33";
             var port = Configuration["DBPort"] ?? "1433";
             var user = Configuration["DBUser"] ?? "SA";
-            var password = Configuration["DBPassword"] ?? "Pa$$w0rd2019";
+            var password = Configuration["DBPassword"] ?? "Pa@@w0rd2019";
             var database = Configuration["Database"] ?? "collect";
 
             services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(
