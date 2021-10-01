@@ -29,15 +29,6 @@
           "lib/netstandard2.0/AutoMapper.Extensions.Microsoft.DependencyInjection.dll": {}
         }
       },
-      "DynamicApis.Api.Documentation/2.26.0": {
-        "type": "package",
-        "compile": {
-          "lib/net45/DynamicApis.Api.Documentation.dll": {}
-        },
-        "runtime": {
-          "lib/net45/DynamicApis.Api.Documentation.dll": {}
-        }
-      },
       "FluentValidation/9.1.3": {
         "type": "package",
         "compile": {
@@ -1658,19 +1649,6 @@
           }
         }
       },
-      "System.Net.Http.Formatting.Extension/5.2.3": {
-        "type": "package",
-        "compile": {
-          "lib/System.Net.Http.Extensions.dll": {},
-          "lib/System.Net.Http.Formatting.dll": {},
-          "lib/System.Net.Http.Primitives.dll": {}
-        },
-        "runtime": {
-          "lib/System.Net.Http.Extensions.dll": {},
-          "lib/System.Net.Http.Formatting.dll": {},
-          "lib/System.Net.Http.Primitives.dll": {}
-        }
-      },
       "System.Net.NameResolution/4.3.0": {
         "type": "package",
         "dependencies": {
@@ -2598,18 +2576,6 @@
         "automapper.extensions.microsoft.dependencyinjection.nuspec",
         "icon.png",
         "lib/netstandard2.0/AutoMapper.Extensions.Microsoft.DependencyInjection.dll"
-      ]
-    },
-    "DynamicApis.Api.Documentation/2.26.0": {
-      "sha512": "sb6yvWbApJGXAI2I0KyblHdS+FtY4ALuHYVth4+SvnnlgwXEsIry6dkrW+648eoMYsR4S3OPVjld4Lhg4ia/Qw==",
-      "type": "package",
-      "path": "dynamicapis.api.documentation/2.26.0",
-      "files": [
-        ".nupkg.metadata",
-        ".signature.p7s",
-        "dynamicapis.api.documentation.2.26.0.nupkg.sha512",
-        "dynamicapis.api.documentation.nuspec",
-        "lib/net45/DynamicApis.Api.Documentation.dll"
       ]
     },
     "FluentValidation/9.1.3": {
@@ -5722,20 +5688,6 @@
         "system.net.http.nuspec"
       ]
     },
-    "System.Net.Http.Formatting.Extension/5.2.3": {
-      "sha512": "BlYwj3Mbgc2i+NqtBZ+bea3LiN9WuGpE8PCylBvhxV0wBs0XTkXJmDuzkNnUyPhDBqKMBwDK0ZCnwJ8LpQ0aEg==",
-      "type": "package",
-      "path": "system.net.http.formatting.extension/5.2.3",
-      "files": [
-        ".nupkg.metadata",
-        ".signature.p7s",
-        "lib/System.Net.Http.Extensions.dll",
-        "lib/System.Net.Http.Formatting.dll",
-        "lib/System.Net.Http.Primitives.dll",
-        "system.net.http.formatting.extension.5.2.3.nupkg.sha512",
-        "system.net.http.formatting.extension.nuspec"
-      ]
-    },
     "System.Net.NameResolution/4.3.0": {
       "sha512": "AFYl08R7MrsrEjqpQWTZWBadqXyTzNDaWpMqyxhb0d6sGhV6xMDKueuBXlLL30gz+DIRY6MpdgnHWlCh5wmq9w==",
       "type": "package",
@@ -8293,7 +8245,6 @@
     ".NETCoreApp,Version=v3.1": [
       "AutoMapper >= 10.0.0",
       "AutoMapper.Extensions.Microsoft.DependencyInjection >= 8.0.1",
-      "DynamicApis.Api.Documentation >= 2.26.0",
       "FluentValidation >= 9.1.3",
       "FluentValidation.AspNetCore >= 9.1.3",
       "FluentValidation.DependencyInjectionExtensions >= 9.1.3",
@@ -8313,8 +8264,7 @@
       "Serilog.Settings.Configuration >= 3.1.0",
       "Swashbuckle.AspNetCore.Swagger >= 5.5.1",
       "Swashbuckle.AspNetCore.SwaggerGen >= 5.5.1",
-      "Swashbuckle.AspNetCore.SwaggerUi >= 5.5.1",
-      "System.Net.Http.Formatting.Extension >= 5.2.3"
+      "Swashbuckle.AspNetCore.SwaggerUi >= 5.5.1"
     ]
   },
   "packageFolders": {
@@ -8363,10 +8313,6 @@
           "AutoMapper.Extensions.Microsoft.DependencyInjection": {
             "target": "Package",
             "version": "[8.0.1, )"
-          },
-          "DynamicApis.Api.Documentation": {
-            "target": "Package",
-            "version": "[2.26.0, )"
           },
           "FluentValidation": {
             "target": "Package",
@@ -8451,10 +8397,6 @@
           "Swashbuckle.AspNetCore.SwaggerUi": {
             "target": "Package",
             "version": "[5.5.1, )"
-          },
-          "System.Net.Http.Formatting.Extension": {
-            "target": "Package",
-            "version": "[5.2.3, )"
           }
         },
         "imports": [
@@ -8484,27 +8426,5 @@
         "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.303\\RuntimeIdentifierGraph.json"
       }
     }
-  },
-  "logs": [
-    {
-      "code": "NU1701",
-      "level": "Warning",
-      "warningLevel": 1,
-      "message": "Package 'DynamicApis.Api.Documentation 2.26.0' was restored using '.NETFramework,Version=v4.6.1, .NETFramework,Version=v4.6.2, .NETFramework,Version=v4.7, .NETFramework,Version=v4.7.1, .NETFramework,Version=v4.7.2, .NETFramework,Version=v4.8' instead of the project target framework '.NETCoreApp,Version=v3.1'. This package may not be fully compatible with your project.",
-      "libraryId": "DynamicApis.Api.Documentation",
-      "targetGraphs": [
-        ".NETCoreApp,Version=v3.1"
-      ]
-    },
-    {
-      "code": "NU1701",
-      "level": "Warning",
-      "warningLevel": 1,
-      "message": "Package 'System.Net.Http.Formatting.Extension 5.2.3' was restored using '.NETFramework,Version=v4.6.1, .NETFramework,Version=v4.6.2, .NETFramework,Version=v4.7, .NETFramework,Version=v4.7.1, .NETFramework,Version=v4.7.2, .NETFramework,Version=v4.8' instead of the project target framework '.NETCoreApp,Version=v3.1'. This package may not be fully compatible with your project.",
-      "libraryId": "System.Net.Http.Formatting.Extension",
-      "targetGraphs": [
-        ".NETCoreApp,Version=v3.1"
-      ]
-    }
-  ]
+  }
 }

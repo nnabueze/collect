@@ -6,7 +6,6 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using AutoMapper;
-using System.Net.Http.Formatting;
 using ErcasCollect.Commands.Dto.UserDto;
 using ErcasCollect.Domain.Interfaces;
 using ErcasCollect.Domain.Models;
