@@ -29,6 +29,8 @@ namespace ErcasCollect
 
             try
             {
+                Console.WriteLine("Ercas Collect service started");
+
                 Log.Information("Ercas Collect service started");
 
                 CreateHostBuilder(args).Build().Run();
@@ -36,6 +38,10 @@ namespace ErcasCollect
             catch (Exception ex)
             {
                 Log.Fatal(ex, "Ercas Collect failed");
+
+                Console.WriteLine("Ercas Collect service failed....");
+
+                Console.WriteLine(ex);
             }
             finally
             {

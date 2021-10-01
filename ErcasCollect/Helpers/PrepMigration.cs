@@ -24,6 +24,8 @@ namespace ErcasCollect.Helpers
             Console.WriteLine("Applying Migration");
 
             context.Database.Migrate();
+
+            Console.WriteLine("Migration completed");
         }
     }
 }
