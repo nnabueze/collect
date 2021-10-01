@@ -10,11 +10,11 @@ WORKDIR /Source/ercascollect
 
 RUN dotnet publish -c release -o /app
 
-EXPOSE 80
+EXPOSE 5000
 
 WORKDIR /app
 
-ENV ASPNETCORE_URLS http://*:80
+ENV ASPNETCORE_URLS http://*:5000
 
 CMD dotnet ercascollect.dll
 
