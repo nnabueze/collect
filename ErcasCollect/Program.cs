@@ -14,30 +14,15 @@ namespace ErcasCollect
     {
         public static void Main(string[] args)
         {
-            //setting serilog
-            var configuration = new ConfigurationBuilder()
-
-                .AddJsonFile("appsettings.json")
-
-                .Build();
-
-            Log.Logger = new LoggerConfiguration()
-
-                .ReadFrom.Configuration(configuration)
-
-                .CreateLogger();
 
             try
             {
                 Console.WriteLine("Ercas Collect service started");
 
-                Log.Information("Ercas Collect service started");
-
                 CreateHostBuilder(args).Build().Run();
             }
             catch (Exception ex)
             {
-                Log.Fatal(ex, "Ercas Collect failed");
 
                 Console.WriteLine("Ercas Collect service failed....");
 
@@ -51,7 +36,6 @@ namespace ErcasCollect
 
         public static IHostBuilder CreateHostBuilder(string[] args) =>
             Host.CreateDefaultBuilder(args)
-            .UseSerilog()
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
                     webBuilder.UseStartup<Startup>();
