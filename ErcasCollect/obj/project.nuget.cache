@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "cql4FpNPv4SwENn10HEHDPybxodmBvY18d3Vtxoz7pQU6I058TOkuSBOF0mSx4bl9wl73KyWR8YzrZCQhEpNzg==",
+  "dgSpecHash": "dKF/1LCX6g0b+7eVxOFn8xjVELNWb6lZIwfZBGLYPdLj0NObxMRYq+t+0+Du7Rn2hwR82zKD7Wf3lrDJHHbUzw==",
   "success": true,
   "projectFilePath": "C:\\Users\\Eze\\Documents\\Visual Studio 2019\\source\\repos\\ErcasNewCollectService\\ErcasCollect\\ErcasCollect.csproj",
   "expectedPackageFiles": [
@@ -49,6 +49,7 @@
     "C:\\Users\\Eze\\.nuget\\packages\\microsoft.netcore.platforms\\2.0.0\\microsoft.netcore.platforms.2.0.0.nupkg.sha512",
     "C:\\Users\\Eze\\.nuget\\packages\\microsoft.netcore.targets\\1.1.0\\microsoft.netcore.targets.1.1.0.nupkg.sha512",
     "C:\\Users\\Eze\\.nuget\\packages\\microsoft.openapi\\1.2.3\\microsoft.openapi.1.2.3.nupkg.sha512",
+    "C:\\Users\\Eze\\.nuget\\packages\\microsoft.visualstudio.azure.containers.tools.targets\\1.10.14\\microsoft.visualstudio.azure.containers.tools.targets.1.10.14.nupkg.sha512",
     "C:\\Users\\Eze\\.nuget\\packages\\microsoft.win32.primitives\\4.3.0\\microsoft.win32.primitives.4.3.0.nupkg.sha512",
     "C:\\Users\\Eze\\.nuget\\packages\\microsoft.win32.registry\\4.5.0\\microsoft.win32.registry.4.5.0.nupkg.sha512",
     "C:\\Users\\Eze\\.nuget\\packages\\netstandard.library\\1.6.1\\netstandard.library.1.6.1.nupkg.sha512",
