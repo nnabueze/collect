@@ -44,9 +44,9 @@ namespace ErcasCollect
             var password = Configuration["DBPassword"] ?? "Pa@@w0rd2019";
             var database = Configuration["Database"] ?? "collect";
 
-            services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(
-                $"Server={server},{port};Initial Catalog={database};User Id={user};Password={password}"
-            ));
+            // services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(
+            //     $"Server={server},{port};Initial Catalog={database};User Id={user};Password={password}"
+            // ));
 
 
             services.AddControllers();
@@ -168,7 +168,7 @@ namespace ErcasCollect
                 endpoints.MapControllers();
             });
 
-            PrepMigration.PrepPopulation(app);
+            //PrepMigration.PrepPopulation(app);
         }
     }
 }

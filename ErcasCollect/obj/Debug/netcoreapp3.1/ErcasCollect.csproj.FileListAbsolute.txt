@@ -6,7 +6,6 @@ C:\Users\Eze\Documents\Visual Studio 2019\source\repos\ErcasNewCollectService\Er
 C:\Users\Eze\Documents\Visual Studio 2019\source\repos\ErcasNewCollectService\ErcasCollect\bin\Debug\netcoreapp3.1\ErcasCollect.runtimeconfig.dev.json
 C:\Users\Eze\Documents\Visual Studio 2019\source\repos\ErcasNewCollectService\ErcasCollect\bin\Debug\netcoreapp3.1\ErcasCollect.dll
 C:\Users\Eze\Documents\Visual Studio 2019\source\repos\ErcasNewCollectService\ErcasCollect\bin\Debug\netcoreapp3.1\ErcasCollect.pdb
-C:\Users\Eze\Documents\Visual Studio 2019\source\repos\ErcasNewCollectService\ErcasCollect\bin\Debug\netcoreapp3.1\ErcasCollect.xml
 C:\Users\Eze\Documents\Visual Studio 2019\source\repos\ErcasNewCollectService\ErcasCollect\bin\Debug\netcoreapp3.1\AutoMapper.dll
 C:\Users\Eze\Documents\Visual Studio 2019\source\repos\ErcasNewCollectService\ErcasCollect\bin\Debug\netcoreapp3.1\AutoMapper.Extensions.Microsoft.DependencyInjection.dll
 C:\Users\Eze\Documents\Visual Studio 2019\source\repos\ErcasNewCollectService\ErcasCollect\bin\Debug\netcoreapp3.1\FluentValidation.dll
@@ -87,6 +86,6 @@ C:\Users\Eze\Documents\Visual Studio 2019\source\repos\ErcasNewCollectService\Er
 C:\Users\Eze\Documents\Visual Studio 2019\source\repos\ErcasNewCollectService\ErcasCollect\obj\Debug\netcoreapp3.1\ErcasCollect.RazorTargetAssemblyInfo.cache
 C:\Users\Eze\Documents\Visual Studio 2019\source\repos\ErcasNewCollectService\ErcasCollect\obj\Debug\netcoreapp3.1\ErcasCollect.csproj.CopyComplete
 C:\Users\Eze\Documents\Visual Studio 2019\source\repos\ErcasNewCollectService\ErcasCollect\obj\Debug\netcoreapp3.1\ErcasCollect.dll
-C:\Users\Eze\Documents\Visual Studio 2019\source\repos\ErcasNewCollectService\ErcasCollect\obj\Debug\netcoreapp3.1\ErcasCollect.xml
 C:\Users\Eze\Documents\Visual Studio 2019\source\repos\ErcasNewCollectService\ErcasCollect\obj\Debug\netcoreapp3.1\ErcasCollect.pdb
 C:\Users\Eze\Documents\Visual Studio 2019\source\repos\ErcasNewCollectService\ErcasCollect\obj\Debug\netcoreapp3.1\ErcasCollect.genruntimeconfig.cache
+C:\Users\Eze\Documents\Visual Studio 2019\source\repos\ErcasNewCollectService\ErcasCollect\bin\Debug\netcoreapp3.1\Comments.xml
