@@ -16,7 +16,12 @@ pipeline {
         }
         stage('Deploy to staging server') {
             steps {
-                ftpPublisher alwaysPublishFromMaster: false, continueOnError: false, failOnError: false, publishers: [[configName: 'ercas_collect', transfers: [[asciiMode: true, cleanRemote: false, excludes: '', flatten: false, makeEmptyDirs: false, noDefaultExcludes: false, patternSeparator: '[, ]+', remoteDirectory: '', remoteDirectorySDF: false, removePrefix: 'Output', sourceFiles: 'Output/*']], usePromotionTimestamp: false, useWorkspaceInPromotion: false, verbose: false]]
+                ftpPublisher alwaysPublishFromMaster: false, 
+                continueOnError: false, 
+                failOnError: false,
+                masterNodeName: '',
+                paramPublish: null, 
+                publishers: [[configName: 'ercas_collect', transfers: [[asciiMode: true, cleanRemote: false, excludes: '', flatten: false, makeEmptyDirs: false, noDefaultExcludes: false, patternSeparator: '[, ]+', remoteDirectory: '', remoteDirectorySDF: false, removePrefix: 'Output', sourceFiles: 'Output/*']], usePromotionTimestamp: false, useWorkspaceInPromotion: false, verbose: false]]
             }
         }
     }
