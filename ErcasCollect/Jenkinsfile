@@ -1,0 +1,19 @@
+pipleine{
+    agent any
+    stages{
+        stage('Build Application'){
+            steps{
+                echo 'Starts building of project'
+                sh 'dotnet restore ErcasCollect/ErcasCollect.csproj'
+                sh 'dotnet build ErcasCollect/ErcasCollect.csproj -c Release -o Build'
+                sh 'dotnet publish ErcasCollect/ErcasCollect.csproj -c Release -o Output'
+            }
+        }
+        stage('Archive Artifacts'){
+            archiveArtifacts artifacts: 'Output/*', followSymlinks: false, onlyIfSuccessful: true
+        }
+        stage('Deploy to staging server'){
+            ftpPublisher alwaysPublishFromMaster: false, continueOnError: false, failOnError: false, publishers: [[configName: 'ercas_collect', transfers: [[asciiMode: true, cleanRemote: false, excludes: '', flatten: false, makeEmptyDirs: false, noDefaultExcludes: false, patternSeparator: '[, ]+', remoteDirectory: '', remoteDirectorySDF: false, removePrefix: 'Output', sourceFiles: 'Output/*']], usePromotionTimestamp: false, useWorkspaceInPromotion: false, verbose: false]]
+        }
+    }
+}

@@ -77,6 +77,8 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="AutoMapper\" />
+    <Folder Include="Build\" />
+    <Folder Include="Output\" />
     <Folder Include="Validators\" />
     <Folder Include="Domain\BaseEntities\" />
     <Folder Include="AutoMapper\Profiles\" />
