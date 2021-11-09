@@ -11,7 +11,7 @@ pipeline {
         }
         stage('Archive Artifacts') {
             steps {
-                archiveArtifacts artifacts: 'Output/*', followSymlinks: false, onlyIfSuccessful: true
+                archiveArtifacts artifacts: 'Output/**/*', followSymlinks: false, onlyIfSuccessful: true
             }
         }
         stage('Deploy to window staging server') {
@@ -21,7 +21,7 @@ pipeline {
                 failOnError: false,
                 masterNodeName: '',
                 paramPublish: null, 
-                publishers: [[configName: 'ercas_collect', transfers: [[asciiMode: true, cleanRemote: false, excludes: '', flatten: false, makeEmptyDirs: false, noDefaultExcludes: false, patternSeparator: '[, ]+', remoteDirectory: '', remoteDirectorySDF: false, removePrefix: 'Output', sourceFiles: 'Output/*']], usePromotionTimestamp: false, useWorkspaceInPromotion: false, verbose: false]]
+                publishers: [[configName: 'ercas_collect', transfers: [[asciiMode: true, cleanRemote: false, excludes: '', flatten: false, makeEmptyDirs: false, noDefaultExcludes: false, patternSeparator: '[, ]+', remoteDirectory: '', remoteDirectorySDF: false, removePrefix: 'Output', sourceFiles: 'Output/**/*']], usePromotionTimestamp: false, useWorkspaceInPromotion: false, verbose: false]]
             }
         }
     }
