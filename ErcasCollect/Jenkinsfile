@@ -14,7 +14,7 @@ pipeline {
                 archiveArtifacts artifacts: 'Output/*', followSymlinks: false, onlyIfSuccessful: true
             }
         }
-        stage('Deploy to staging server') {
+        stage('Deploy to window staging server') {
             steps {
                 ftpPublisher alwaysPublishFromMaster: false, 
                 continueOnError: false, 
