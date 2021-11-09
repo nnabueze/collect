@@ -15,7 +15,7 @@ pipleine{
         stage('Archive Artifacts'){
             archiveArtifacts artifacts: 'Output/*', followSymlinks: false, onlyIfSuccessful: true
         }
-        stage('Deploy to staging server'){
+        stage('Deploy to window staging server'){
             ftpPublisher alwaysPublishFromMaster: false, continueOnError: false, failOnError: false, publishers: [[configName: 'ercas_collect', transfers: [[asciiMode: true, cleanRemote: false, excludes: '', flatten: false, makeEmptyDirs: false, noDefaultExcludes: false, patternSeparator: '[, ]+', remoteDirectory: '', remoteDirectorySDF: false, removePrefix: 'Output', sourceFiles: 'Output/*']], usePromotionTimestamp: false, useWorkspaceInPromotion: false, verbose: false]]
         }
     }
