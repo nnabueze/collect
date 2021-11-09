@@ -1,7 +1,7 @@
 pipleine{
     agent any
     triggers {
-        pollSCM 'H/5 * * * *'
+        cron('* * * * *')
     }
     stages{
         stage('Build Application'){
