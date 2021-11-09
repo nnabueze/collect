@@ -1,8 +1,5 @@
 pipleine{
     agent any
-    triggers {
-        cron('* * * * *')
-    }
     stages{
         stage('Build Application'){
             steps{
@@ -12,11 +9,15 @@ pipleine{
                 sh 'dotnet publish ErcasCollect/ErcasCollect.csproj -c Release -o Output'
             }
         }
-        stage('Archive Artifacts'){
-            archiveArtifacts artifacts: 'Output/*', followSymlinks: false, onlyIfSuccessful: true
+        stage('Archive Artifects'){
+            steps{
+                archiveArtifacts artifacts: 'Output/*', followSymlinks: false, onlyIfSuccessful: true
+            }
         }
-        stage('Deploy to window staging server'){
-            ftpPublisher alwaysPublishFromMaster: false, continueOnError: false, failOnError: false, publishers: [[configName: 'ercas_collect', transfers: [[asciiMode: true, cleanRemote: false, excludes: '', flatten: false, makeEmptyDirs: false, noDefaultExcludes: false, patternSeparator: '[, ]+', remoteDirectory: '', remoteDirectorySDF: false, removePrefix: 'Output', sourceFiles: 'Output/*']], usePromotionTimestamp: false, useWorkspaceInPromotion: false, verbose: false]]
+        stage('Deploy to staging server'){
+           steps{
+                ftpPublisher alwaysPublishFromMaster: false, continueOnError: false, failOnError: false, publishers: [[configName: 'ercas_collect', transfers: [[asciiMode: true, cleanRemote: false, excludes: '', flatten: false, makeEmptyDirs: false, noDefaultExcludes: false, patternSeparator: '[, ]+', remoteDirectory: '', remoteDirectorySDF: false, removePrefix: 'Output', sourceFiles: 'Output/*']], usePromotionTimestamp: false, useWorkspaceInPromotion: false, verbose: false]]
+           }
         }
     }
 }
