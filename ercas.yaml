@@ -1,0 +1,13 @@
+---
+all:
+  hosts:
+    linux01:
+      ansible_host: 69.64.69.79
+    linux02:
+      ansible_host: 143.198.177.167
+      ansible_ssh_pass: toMorr2o      
+
+  children:
+    ercas_linux:
+      linux01:
+    
