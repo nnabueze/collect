@@ -18,6 +18,8 @@
     ports:
       - "8000:80"
     state: started
+    networks:
+      - name: collect_network
     restart_policy: always
   register: __docker_compose
 

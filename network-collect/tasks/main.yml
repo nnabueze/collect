@@ -1,0 +1,8 @@
+---
+# tasks file for network-collect
+- name: create custom network
+  docker_network:
+    name: collect_network
+    connected:
+      - web
+      - db
