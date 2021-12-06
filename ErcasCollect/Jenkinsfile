@@ -28,7 +28,7 @@ pipeline {
         //deploying with ansible
         stage('Building a custom image') {
             steps{
-                sh 'docker build -t villavelle101/ercas-collect -f ErcasCollect/Dockerfile .'
+                sh 'docker build -t villavelle101/ercas-collect:2.0 -f ErcasCollect/Dockerfile .'
             }
         }
 
