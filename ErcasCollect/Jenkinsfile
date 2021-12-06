@@ -43,12 +43,12 @@ pipeline {
         }
         stage('Deploy with Ansible') {
             steps{
-                // ansiblePlaybook credentialsId: 'linux02_ssh', 
-                // disableHostKeyChecking: true, installation: 'ansible', 
-                // inventory: 'ercas.ini', playbook: 'playbook.yaml'
-                ansiblePlaybook credentialsId: 'linux02_ssh', disableHostKeyChecking: true, 
-                installation: 'ansible', inventory: 'ercas.yaml', playbook: 'playbook.yaml', 
-                vaultCredentialsId: 'linux02_ssh_password'
+                ansiblePlaybook credentialsId: 'linux02_ssh', 
+                disableHostKeyChecking: true, installation: 'ansible', 
+                inventory: 'ercas.ini', playbook: 'playbook.yaml'
+                // ansiblePlaybook credentialsId: 'linux02_ssh', disableHostKeyChecking: true, 
+                // installation: 'ansible', inventory: 'ercas.yaml', playbook: 'playbook.yaml', 
+                // vaultCredentialsId: 'linux02_ssh_password'
             }
         }
     }
