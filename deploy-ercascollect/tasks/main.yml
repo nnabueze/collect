@@ -19,4 +19,9 @@
       - "8000:80"
     state: started
     restart_policy: always
+  register: __docker_compose
+
+- name: debug
+  debug:
+    var: __docker_compose
 
