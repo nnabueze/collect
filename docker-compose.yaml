@@ -5,7 +5,7 @@ services:
     build:
       context: .
       dockerfile: ErcasCollect/Dockerfile
-    image: customcollect
+    image: villavelle101/customcollect
     container_name: web
     environment:
       DBServer: "db"

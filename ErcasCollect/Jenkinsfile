@@ -1,27 +1,51 @@
 pipeline {
     agent any    
     stages {
-        stage('Build Application') {
-            steps {
-                echo 'Starts building of project'
-                sh 'dotnet restore ErcasCollect/ErcasCollect.csproj'
-                sh 'dotnet build ErcasCollect/ErcasCollect.csproj -c Release -o Build'
-                sh 'dotnet publish ErcasCollect/ErcasCollect.csproj -c Release -o Output'
+        // stage('Build Application') {
+        //     steps {
+        //         echo 'Starts building of project'
+        //         sh 'dotnet restore ErcasCollect/ErcasCollect.csproj'
+        //         sh 'dotnet build ErcasCollect/ErcasCollect.csproj -c Release -o Build'
+        //         sh 'dotnet publish ErcasCollect/ErcasCollect.csproj -c Release -o Output'
+        //     }
+        // }
+        // stage('Archive Artifacts') {
+        //     steps {
+        //         archiveArtifacts artifacts: 'Output/**/*', followSymlinks: false, onlyIfSuccessful: true
+        //     }
+        // }
+        // stage('Deploy to staging server') {
+        //     steps {
+        //         ftpPublisher alwaysPublishFromMaster: false, 
+        //         continueOnError: false, 
+        //         failOnError: false,
+        //         masterNodeName: '',
+        //         paramPublish: null, 
+        //         publishers: [[configName: 'ercas_collect', transfers: [[asciiMode: false, cleanRemote: true, excludes: '', flatten: false, makeEmptyDirs: false, noDefaultExcludes: false, patternSeparator: '[, ]+', remoteDirectory: '', remoteDirectorySDF: false, removePrefix: 'Output', sourceFiles: 'Output/**/*']], usePromotionTimestamp: false, useWorkspaceInPromotion: false, verbose: false]]
+        //     }
+        // }
+        
+        //deploying with ansible
+        stage('Building a custom image') {
+            steps{
+                sh 'docker build -t villavelle101/ercas-collect -f ErcasCollect/Dockerfile .'
             }
         }
-        stage('Archive Artifacts') {
-            steps {
-                archiveArtifacts artifacts: 'Output/**/*', followSymlinks: false, onlyIfSuccessful: true
+
+        stage('Push image to docker hub') {
+            steps{
+                withCredentials([string(credentialsId: 'dockerhub', variable: 'docker_login')]) {
+                    // some block
+                    sh "docker login -u villavelle101 -p ${docker_login}"
+                    sh "docker push villavelle101/ercas-collect:2.0"
+                }
             }
         }
-        stage('Deploy to staging server') {
-            steps {
-                ftpPublisher alwaysPublishFromMaster: false, 
-                continueOnError: false, 
-                failOnError: false,
-                masterNodeName: '',
-                paramPublish: null, 
-                publishers: [[configName: 'ercas_collect', transfers: [[asciiMode: false, cleanRemote: true, excludes: '', flatten: false, makeEmptyDirs: false, noDefaultExcludes: false, patternSeparator: '[, ]+', remoteDirectory: '', remoteDirectorySDF: false, removePrefix: 'Output', sourceFiles: 'Output/**/*']], usePromotionTimestamp: false, useWorkspaceInPromotion: false, verbose: false]]
+        stage('Deploy with Ansible') {
+            steps{
+                ansiblePlaybook credentialsId: 'linux02_ssh', 
+                disableHostKeyChecking: true, installation: 'ansible', 
+                inventory: 'ercas.ini', playbook: 'playbook.yaml'
             }
         }
     }

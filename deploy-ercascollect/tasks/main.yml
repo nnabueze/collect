@@ -1,0 +1,22 @@
+---
+# tasks file for deploy-ercascollect
+- name: install docker-py
+  pip:
+    name: docker-py
+    state: present
+
+- name: deploy ercas collect
+  community.docker.docker_container:
+    name: web
+    image: villavelle101/ercas-collect:2.0
+    env:
+      DBServer: "db"
+      DBPort: "1433"
+      DBUser: "SA"
+      DBPassword: "Pelemo@1"
+      Database: "Collect"
+    ports:
+      - "8000:80"
+    state: started
+    restart_policy: always
+

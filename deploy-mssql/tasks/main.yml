@@ -1,0 +1,21 @@
+---
+# tasks file for deploy-mssql
+- name: install docker-py
+  pip:
+    name: docker-py
+    state: present
+    
+- name: deploy mssql server
+  community.docker.docker_container:
+    name: db
+    image: mcr.microsoft.com/mssql/server:2019-latest
+    env:
+      ACCEPT_EULA: "Y"
+      SA_PASSWORD: "Pelemo@1"
+      MSSQL_PID: Express
+    ports:
+      - "1433:1433"
+    state: started
+    restart_policy: always
+    volumes:
+      - sqlvolume:/var/opt/mssql
