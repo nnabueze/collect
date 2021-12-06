@@ -1,0 +1,41 @@
+version: "3"
+
+services:
+  web:
+    build:
+      context: .
+      dockerfile: ErcasCollect/Dockerfile
+    image: customcollect
+    container_name: web
+    environment:
+      DBServer: "db"
+      DBPort: "1433"
+      DBUser: "SA"
+      DBPassword: "Pelemo@1"
+      Database: "Collect"
+    ports:
+      - "8000:80"
+    restart: always
+    depends_on:
+      - db
+    networks:
+      - isolated_network
+  db:
+    image: mcr.microsoft.com/mssql/server:2019-latest
+    container_name: db
+    ports:
+      - "1433:1433"
+    environment:
+      ACCEPT_EULA: "Y"
+      SA_PASSWORD: "Pelemo@1"
+      MSSQL_PID: Express
+    volumes:
+      - sqlvolume:/var/opt/mssql
+    networks:
+      - isolated_network
+      
+volumes:
+  sqlvolume:
+networks:
+  isolated_network:
+    driver: bridge

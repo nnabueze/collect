@@ -23,7 +23,8 @@ namespace ErcasCollect.Helpers
         {
             Console.WriteLine("Applying Migration");
 
-            context.Database.Migrate();
+            //context.Database.Migrate();
+            context.Database.EnsureCreated();
 
             Console.WriteLine("Migration completed");
         }
