@@ -3,6 +3,3 @@
 - name: create custom network
   docker_network:
     name: collect_network
-    connected:
-      - web
-      - db
