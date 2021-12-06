@@ -6,7 +6,7 @@ all:
     linux02:
       ansible_host: 143.198.177.167
       ansible_ssh_pass: "{{ ssh_pass }}"
-  var:
+  vars:
     ssh_pass: !vault |
         $ANSIBLE_VAULT;1.2;AES256;userid
         35656539316334613335636533303933323936343831613464646631336462653731633837663364
